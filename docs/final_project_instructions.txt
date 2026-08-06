@@ -1,0 +1,61 @@
+Final Project - AI-Driven Intrusion Detection
+In this final project you will design and implement an AI-driven detection model tailored to a specific cyber threat profile of your choice. You will go end-to-end: select an attack technique (ideally aligned with MITRE ATT&CK), source two public datasets, harmonize them into a unified feature schema, train and evaluate four ML / DL models from three different paradigms, conduct forensic error analysis, and engineer a hybrid ensemble pipeline.
+
+What you'll do:
+
+Select an attack technique and map its observable behavior to specific telemetry fields
+
+Review two peer-reviewed academic papers on detecting that technique with ML / DL
+
+Perform comprehensive EDA across two datasets and empirically justify every feature
+
+Apply tree-based feature ranking and reconcile it against your domain-driven choices
+
+Build a Unified Feature Schema across both datasets to prove cross-environment robustness
+
+Train and tune four models spanning Traditional Supervised, Deep Learning, and Unsupervised paradigms
+
+Conduct forensic, sample-level error analysis to understand WHY each model fails
+
+Implement a hybrid behavioural cascading ensemble for production-grade detection
+
+(Optional bonus) Integrate an LLM-driven triage layer for arbitration on edge cases
+
+Deliverables:
+
+Final Submission Due: August 15th, 2026
+
+Final submission format: A single ZIP file named Group_XX_Final_Project.zip containing:
+
+Code Implementation Repository (modular Python codebase + main.py entry point + requirements.txt + README.md)
+
+Final Technical Report (.docx, max 15 pages, 1.5 spacing)
+
+AI Conversation Logs (one .txt or .json file per AI tool used, full unedited conversations - see AI Policy)
+
+Collaboration: Work in teams (group size per course policy).
+
+AI Tools - Mandatory Disclosure with Full Logs:
+
+GenAI tools are encouraged. This includes standalone chat (ChatGPT, Claude, Gemini), agentic / IDE tools (Claude Code, Cursor, Copilot), and local LLMs.
+
+However: you must submit the FULL conversation logs alongside your project. One log file per tool used (e.g., ai_logs/chatgpt_log.txt, ai_logs/claude_code_log.json). We want to estimate how you actually used agentic / LLM-driven development - not just whether the final code works. Submissions with no logs but obvious AI fingerprints in the code or report will be treated as undisclosed AI use.
+
+Key technical requirements:
+
+Strict Dataset Dependency Rule: only the Data Ingestion module is dataset-aware; everything downstream must be agnostic
+
+No data leakage: scaling and sampling must be fit on training folds only
+
+Explicit hyperparameter configuration with sensitivity analysis (no library defaults)
+
+Stratified k-fold cross-validation; report Precision / Recall / F1 / ROC-AUC / FPR
+
+LLM Hosting (Bonus Chapter):
+
+We strongly recommend using Hugging Face Inference with a free / academic HF token (e.g., Llama 3.1 8B Instruct via Inference Providers) rather than running a heavy local LLM. Local LLMs on CPU laptops can take 5-30 seconds per inference, which is unworkable for any meaningful ensemble. Read the assignment for full guidance.
+
+Total: 100 points + 10 bonus
+
+Final Submission Due Date: August 15th, 2026
+

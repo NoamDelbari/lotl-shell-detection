@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+*.bak
+*.bak-*
+
+# Re-downloadable caches (build_dataset.py fetches these; scripts/raw/extracted/*.cm
+# are vendored and ARE committed)
+scripts/raw/*.cm
+scripts/raw/*.json
+scripts/raw/*.parquet

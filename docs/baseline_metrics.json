@@ -1,0 +1,1940 @@
+{
+  "seed": 42,
+  "threshold": 0.5,
+  "z95": 1.959963984540054,
+  "small_n": 30,
+  "scores": [
+    {
+      "dataset": "dataset1",
+      "setting": "full test (in-distribution)",
+      "note": "",
+      "n": 3049,
+      "n_mal": 762,
+      "p": 0.24991800590357494,
+      "floor": 0.39989504067173964,
+      "precision": 0.8871794871794871,
+      "recall": 0.9081364829396326,
+      "f1": 0.8975356679636836,
+      "f1_minus_floor": 0.4976406272919439,
+      "f1_norm": 0.8292559819018793,
+      "roc_auc": 0.9832796233876974,
+      "pr_auc": 0.9619177096861102,
+      "pr_auc_base": 0.24991800590357494
+    },
+    {
+      "dataset": "dataset1",
+      "setting": "ablation: length-matched 1:1 test subset",
+      "note": "PREVALENCE DIFFERS from the full-test row (0.5000 by construction); only 749/762 attacks (98.3%) could be matched -- same model, subset of the same test set",
+      "n": 1498,
+      "n_mal": 749,
+      "p": 0.5,
+      "floor": 0.6666666666666666,
+      "precision": 0.9549929676511955,
+      "recall": 0.9065420560747663,
+      "f1": 0.9301369863013699,
+      "f1_minus_floor": 0.26347031963470324,
+      "f1_norm": 0.7904109589041096,
+      "roc_auc": 0.9819278397008204,
+      "pr_auc": 0.983176976474601,
+      "pr_auc_base": 0.5
+    },
+    {
+      "dataset": "dataset1",
+      "setting": "ablation: addresses stripped (full test)",
+      "note": "same rows and same prevalence as the full-test row",
+      "n": 3049,
+      "n_mal": 762,
+      "p": 0.24991800590357494,
+      "floor": 0.39989504067173964,
+      "precision": 0.887468030690537,
+      "recall": 0.910761154855643,
+      "f1": 0.8989637305699482,
+      "f1_minus_floor": 0.4990686898982085,
+      "f1_norm": 0.8316356699615534,
+      "roc_auc": 0.9827717889658196,
+      "pr_auc": 0.9610255999123801,
+      "pr_auc_base": 0.24991800590357494
+    },
+    {
+      "dataset": "dataset1",
+      "setting": "ablation: addresses stripped + length-matched 1:1",
+      "note": "PREVALENCE DIFFERS from the full-test row (0.5000 by construction); 750/762 attacks (98.4%) matched",
+      "n": 1500,
+      "n_mal": 750,
+      "p": 0.5,
+      "floor": 0.6666666666666666,
+      "precision": 0.9592123769338959,
+      "recall": 0.9093333333333333,
+      "f1": 0.9336071184120466,
+      "f1_minus_floor": 0.26694045174537995,
+      "f1_norm": 0.8008213552361397,
+      "roc_auc": 0.9820062222222221,
+      "pr_auc": 0.9833993346041707,
+      "pr_auc_base": 0.5
+    },
+    {
+      "dataset": "dataset2",
+      "setting": "full test (in-distribution)",
+      "note": "",
+      "n": 1915,
+      "n_mal": 479,
+      "p": 0.25013054830287207,
+      "floor": 0.4001670843776107,
+      "precision": 0.8796680497925311,
+      "recall": 0.8851774530271399,
+      "f1": 0.882414151925078,
+      "f1_minus_floor": 0.48224706754746727,
+      "f1_norm": 0.8039689970115854,
+      "roc_auc": 0.9714295683323544,
+      "pr_auc": 0.9364795080062374,
+      "pr_auc_base": 0.25013054830287207
+    },
+    {
+      "dataset": "dataset2",
+      "setting": "ablation: length-matched 1:1 test subset",
+      "note": "PREVALENCE DIFFERS from the full-test row (0.5000 by construction); only 472/479 attacks (98.5%) could be matched -- same model, subset of the same test set",
+      "n": 944,
+      "n_mal": 472,
+      "p": 0.5,
+      "floor": 0.6666666666666666,
+      "precision": 0.9480812641083521,
+      "recall": 0.8898305084745762,
+      "f1": 0.9180327868852459,
+      "f1_minus_floor": 0.2513661202185793,
+      "f1_norm": 0.7540983606557378,
+      "roc_auc": 0.9723813200229819,
+      "pr_auc": 0.9761049126789811,
+      "pr_auc_base": 0.5
+    },
+    {
+      "dataset": "dataset2",
+      "setting": "ablation: addresses stripped (full test)",
+      "note": "same rows and same prevalence as the full-test row",
+      "n": 1915,
+      "n_mal": 479,
+      "p": 0.25013054830287207,
+      "floor": 0.4001670843776107,
+      "precision": 0.8833333333333333,
+      "recall": 0.8851774530271399,
+      "f1": 0.8842544316996872,
+      "f1_minus_floor": 0.4840873473220765,
+      "f1_norm": 0.8070369843238517,
+      "roc_auc": 0.971984926814801,
+      "pr_auc": 0.938714389580983,
+      "pr_auc_base": 0.25013054830287207
+    },
+    {
+      "dataset": "dataset2",
+      "setting": "ablation: addresses stripped + length-matched 1:1",
+      "note": "PREVALENCE DIFFERS from the full-test row (0.5000 by construction); 472/479 attacks (98.5%) matched",
+      "n": 944,
+      "n_mal": 472,
+      "p": 0.5,
+      "floor": 0.6666666666666666,
+      "precision": 0.9480812641083521,
+      "recall": 0.8898305084745762,
+      "f1": 0.9180327868852459,
+      "f1_minus_floor": 0.2513661202185793,
+      "f1_norm": 0.7540983606557378,
+      "roc_auc": 0.9707654050560184,
+      "pr_auc": 0.9746233677079167,
+      "pr_auc_base": 0.5
+    },
+    {
+      "dataset": "dataset1 -> dataset2",
+      "setting": "transfer (all rows of target)",
+      "note": "target's own prevalence, not the source's",
+      "n": 9576,
+      "n_mal": 2394,
+      "p": 0.25,
+      "floor": 0.4,
+      "precision": 0.5127719962157048,
+      "recall": 0.6791979949874687,
+      "f1": 0.584366576819407,
+      "f1_minus_floor": 0.18436657681940694,
+      "f1_norm": 0.30727762803234493,
+      "roc_auc": 0.809489000278474,
+      "pr_auc": 0.6110211469699224,
+      "pr_auc_base": 0.25
+    },
+    {
+      "dataset": "dataset2 -> dataset1",
+      "setting": "transfer (all rows of target)",
+      "note": "target's own prevalence, not the source's",
+      "n": 15248,
+      "n_mal": 3812,
+      "p": 0.25,
+      "floor": 0.4,
+      "precision": 0.7653429602888087,
+      "recall": 0.16684155299055614,
+      "f1": 0.2739608012061167,
+      "f1_minus_floor": -0.1260391987938833,
+      "f1_norm": -0.21006533132313887,
+      "roc_auc": 0.7320647927220864,
+      "pr_auc": 0.5400611895837975,
+      "pr_auc_base": 0.25
+    }
+  ],
+  "probes": [
+    {
+      "dataset": "dataset1",
+      "setting": "RE_MAL_MARKERS as the classifier",
+      "note": "whole dataset",
+      "n": 15248,
+      "n_mal": 3812,
+      "p": 0.25,
+      "floor": 0.4,
+      "precision": 0.6151368760064412,
+      "recall": 0.10020986358866736,
+      "f1": 0.17234378524701105,
+      "f1_minus_floor": -0.22765621475298897,
+      "f1_norm": -0.37942702458831495,
+      "roc_auc": null,
+      "pr_auc": null,
+      "pr_auc_base": 0.25,
+      "ci": [
+        0.09107634443812339,
+        0.11014833093347855
+      ],
+      "false_positives": 239
+    },
+    {
+      "dataset": "dataset1",
+      "setting": "RE_MAL_MARKERS as the classifier",
+      "note": "test split",
+      "n": 3049,
+      "n_mal": 762,
+      "p": 0.24991800590357494,
+      "floor": 0.39989504067173964,
+      "precision": 0.6853146853146853,
+      "recall": 0.12860892388451445,
+      "f1": 0.2165745856353591,
+      "f1_minus_floor": -0.18332045503638053,
+      "f1_norm": -0.3054806533203525,
+      "roc_auc": null,
+      "pr_auc": null,
+      "pr_auc_base": 0.24991800590357494,
+      "ci": [
+        0.10668933664420793,
+        0.1542543045219762
+      ],
+      "false_positives": 45
+    },
+    {
+      "dataset": "dataset1",
+      "setting": "do-nothing (always malicious)",
+      "note": "test split",
+      "n": 3049,
+      "n_mal": 762,
+      "p": 0.24991800590357494,
+      "floor": 0.39989504067173964,
+      "precision": 0.24991800590357494,
+      "recall": 1.0,
+      "f1": 0.3998950406717397,
+      "f1_minus_floor": 5.551115123125783e-17,
+      "f1_norm": 9.250240373516553e-17,
+      "roc_auc": null,
+      "pr_auc": null,
+      "pr_auc_base": 0.24991800590357494
+    },
+    {
+      "dataset": "dataset1",
+      "setting": "'contains an IPv4' rule",
+      "note": "whole dataset",
+      "n": 15248,
+      "n_mal": 3812,
+      "p": 0.25,
+      "floor": 0.4,
+      "precision": 0.8072916666666666,
+      "recall": 0.0813221406086044,
+      "f1": 0.14775977121067682,
+      "f1_minus_floor": -0.2522402287893232,
+      "f1_norm": -0.42040038131553864,
+      "roc_auc": null,
+      "pr_auc": null,
+      "pr_auc_base": 0.25
+    },
+    {
+      "dataset": "dataset1",
+      "setting": "'contains an IPv4' rule",
+      "note": "test split",
+      "n": 3049,
+      "n_mal": 762,
+      "p": 0.24991800590357494,
+      "floor": 0.39989504067173964,
+      "precision": 0.8604651162790697,
+      "recall": 0.09711286089238845,
+      "f1": 0.17452830188679244,
+      "f1_minus_floor": -0.2253667387849472,
+      "f1_norm": -0.3755455362962106,
+      "roc_auc": null,
+      "pr_auc": null,
+      "pr_auc_base": 0.24991800590357494
+    },
+    {
+      "dataset": "dataset1",
+      "setting": "length-only classifier",
+      "note": "test split",
+      "n": 3049,
+      "n_mal": 762,
+      "p": 0.24991800590357494,
+      "floor": 0.39989504067173964,
+      "precision": 0.34285714285714286,
+      "recall": 0.4409448818897638,
+      "f1": 0.3857634902411022,
+      "f1_minus_floor": -0.014131550430637463,
+      "f1_norm": -0.023548464666007594,
+      "roc_auc": 0.6112384044473672,
+      "pr_auc": 0.3673177992912845,
+      "pr_auc_base": 0.24991800590357494
+    },
+    {
+      "dataset": "dataset1",
+      "setting": "length-only classifier",
+      "note": "length-matched 1:1 subset (p = 0.5000)",
+      "n": 1498,
+      "n_mal": 749,
+      "p": 0.5,
+      "floor": 0.6666666666666666,
+      "precision": 0.5,
+      "recall": 0.43124165554072097,
+      "f1": 0.46308243727598564,
+      "f1_minus_floor": -0.203584229390681,
+      "f1_norm": -0.6107526881720429,
+      "roc_auc": 0.5004991078447275,
+      "pr_auc": 0.5057366467620189,
+      "pr_auc_base": 0.5
+    },
+    {
+      "dataset": "dataset2",
+      "setting": "RE_MAL_MARKERS as the classifier",
+      "note": "whole dataset",
+      "n": 9576,
+      "n_mal": 2394,
+      "p": 0.25,
+      "floor": 0.4,
+      "precision": 0.7120799273387829,
+      "recall": 0.32748538011695905,
+      "f1": 0.4486409155937053,
+      "f1_minus_floor": 0.04864091559370526,
+      "f1_norm": 0.08106819265617543,
+      "roc_auc": null,
+      "pr_auc": null,
+      "pr_auc_base": 0.25,
+      "ci": [
+        0.3089758707683458,
+        0.34654764311474334
+      ],
+      "false_positives": 317
+    },
+    {
+      "dataset": "dataset2",
+      "setting": "RE_MAL_MARKERS as the classifier",
+      "note": "test split",
+      "n": 1915,
+      "n_mal": 479,
+      "p": 0.25013054830287207,
+      "floor": 0.4001670843776107,
+      "precision": 0.7120418848167539,
+      "recall": 0.2839248434237996,
+      "f1": 0.4059701492537313,
+      "f1_minus_floor": 0.005803064876120589,
+      "f1_norm": 0.009674468881220538,
+      "roc_auc": null,
+      "pr_auc": null,
+      "pr_auc_base": 0.25013054830287207,
+      "ci": [
+        0.2453886143229978,
+        0.32589923551163996
+      ],
+      "false_positives": 55
+    },
+    {
+      "dataset": "dataset2",
+      "setting": "do-nothing (always malicious)",
+      "note": "test split",
+      "n": 1915,
+      "n_mal": 479,
+      "p": 0.25013054830287207,
+      "floor": 0.4001670843776107,
+      "precision": 0.25013054830287207,
+      "recall": 1.0,
+      "f1": 0.40016708437761067,
+      "f1_minus_floor": -5.551115123125783e-17,
+      "f1_norm": -9.25443565791304e-17,
+      "roc_auc": null,
+      "pr_auc": null,
+      "pr_auc_base": 0.25013054830287207
+    },
+    {
+      "dataset": "dataset2",
+      "setting": "'contains an IPv4' rule",
+      "note": "whole dataset",
+      "n": 9576,
+      "n_mal": 2394,
+      "p": 0.25,
+      "floor": 0.4,
+      "precision": 0.6108597285067874,
+      "recall": 0.05639097744360902,
+      "f1": 0.10325047801147227,
+      "f1_minus_floor": -0.2967495219885278,
+      "f1_norm": -0.4945825366475463,
+      "roc_auc": null,
+      "pr_auc": null,
+      "pr_auc_base": 0.25
+    },
+    {
+      "dataset": "dataset2",
+      "setting": "'contains an IPv4' rule",
+      "note": "test split",
+      "n": 1915,
+      "n_mal": 479,
+      "p": 0.25013054830287207,
+      "floor": 0.4001670843776107,
+      "precision": 0.5952380952380952,
+      "recall": 0.05219206680584551,
+      "f1": 0.09596928982725528,
+      "f1_minus_floor": -0.30419779455035545,
+      "f1_norm": -0.5071375488534478,
+      "roc_auc": null,
+      "pr_auc": null,
+      "pr_auc_base": 0.25013054830287207
+    },
+    {
+      "dataset": "dataset2",
+      "setting": "length-only classifier",
+      "note": "test split",
+      "n": 1915,
+      "n_mal": 479,
+      "p": 0.25013054830287207,
+      "floor": 0.4001670843776107,
+      "precision": 0.25983037779491136,
+      "recall": 0.7035490605427975,
+      "f1": 0.3795045045045045,
+      "f1_minus_floor": -0.020662579873106213,
+      "f1_norm": -0.03444722577730938,
+      "roc_auc": 0.5703342618384402,
+      "pr_auc": 0.3082804709906683,
+      "pr_auc_base": 0.25013054830287207
+    },
+    {
+      "dataset": "dataset2",
+      "setting": "length-only classifier",
+      "note": "length-matched 1:1 subset (p = 0.5000)",
+      "n": 944,
+      "n_mal": 472,
+      "p": 0.5,
+      "floor": 0.6666666666666666,
+      "precision": 0.5,
+      "recall": 0.7139830508474576,
+      "f1": 0.5881326352530541,
+      "f1_minus_floor": -0.07853403141361248,
+      "f1_norm": -0.23560209424083742,
+      "roc_auc": 0.5041362934501581,
+      "pr_auc": 0.5065409399967854,
+      "pr_auc_base": 0.5
+    }
+  ],
+  "per_source": [
+    {
+      "dataset": "dataset1",
+      "source": "atomic_red_team",
+      "class": "malicious",
+      "label": 1,
+      "metric": "recall",
+      "k": 120,
+      "n": 133,
+      "rate": 0.9022556390977443,
+      "ci": [
+        0.8399415745714786,
+        0.9419851961757119
+      ],
+      "small_n": false
+    },
+    {
+      "dataset": "dataset1",
+      "source": "gtfobins",
+      "class": "malicious",
+      "label": 1,
+      "metric": "recall",
+      "k": 171,
+      "n": 189,
+      "rate": 0.9047619047619048,
+      "ci": [
+        0.8544911132601121,
+        0.9389067428630409
+      ],
+      "small_n": false
+    },
+    {
+      "dataset": "dataset1",
+      "source": "hacktricks",
+      "class": "malicious",
+      "label": 1,
+      "metric": "recall",
+      "k": 306,
+      "n": 344,
+      "rate": 0.8895348837209303,
+      "ci": [
+        0.852011153751758,
+        0.9184547961916877
+      ],
+      "small_n": false
+    },
+    {
+      "dataset": "dataset1",
+      "source": "payloads",
+      "class": "malicious",
+      "label": 1,
+      "metric": "recall",
+      "k": 15,
+      "n": 15,
+      "rate": 1.0,
+      "ci": [
+        0.7961166989641515,
+        1.0
+      ],
+      "small_n": true
+    },
+    {
+      "dataset": "dataset1",
+      "source": "quasarnix",
+      "class": "malicious",
+      "label": 1,
+      "metric": "recall",
+      "k": 58,
+      "n": 58,
+      "rate": 1.0,
+      "ci": [
+        0.9378821442127971,
+        1.0
+      ],
+      "small_n": false
+    },
+    {
+      "dataset": "dataset1",
+      "source": "slp",
+      "class": "malicious",
+      "label": 1,
+      "metric": "recall",
+      "k": 22,
+      "n": 23,
+      "rate": 0.9565217391304348,
+      "ci": [
+        0.7900884492974114,
+        0.9922833338565469
+      ],
+      "small_n": true
+    },
+    {
+      "dataset": "dataset1",
+      "source": "bash6k",
+      "class": "benign",
+      "label": 0,
+      "metric": "false-positive rate",
+      "k": 18,
+      "n": 116,
+      "rate": 0.15517241379310345,
+      "ci": [
+        0.10046608139198115,
+        0.23198530240087312
+      ],
+      "small_n": false
+    },
+    {
+      "dataset": "dataset1",
+      "source": "bash_instruct",
+      "class": "benign",
+      "label": 0,
+      "metric": "false-positive rate",
+      "k": 2,
+      "n": 785,
+      "rate": 0.0025477707006369425,
+      "ci": [
+        0.0006989688976658821,
+        0.009241506128097831
+      ],
+      "small_n": false
+    },
+    {
+      "dataset": "dataset1",
+      "source": "linlm",
+      "class": "benign",
+      "label": 0,
+      "metric": "false-positive rate",
+      "k": 16,
+      "n": 145,
+      "rate": 0.1103448275862069,
+      "ci": [
+        0.06907133530711956,
+        0.17173159087134193
+      ],
+      "small_n": false
+    },
+    {
+      "dataset": "dataset1",
+      "source": "nl2bash",
+      "class": "benign",
+      "label": 0,
+      "metric": "false-positive rate",
+      "k": 25,
+      "n": 306,
+      "rate": 0.08169934640522876,
+      "ci": [
+        0.05594908799418673,
+        0.11782190774545147
+      ],
+      "small_n": false
+    },
+    {
+      "dataset": "dataset1",
+      "source": "tldr",
+      "class": "benign",
+      "label": 0,
+      "metric": "false-positive rate",
+      "k": 27,
+      "n": 935,
+      "rate": 0.028877005347593583,
+      "ci": [
+        0.019920762533348096,
+        0.04168863730435235
+      ],
+      "small_n": false
+    },
+    {
+      "dataset": "dataset2",
+      "source": "honeypot",
+      "class": "malicious",
+      "label": 1,
+      "metric": "recall",
+      "k": 424,
+      "n": 479,
+      "rate": 0.8851774530271399,
+      "ci": [
+        0.8535119624293185,
+        0.9107140443871969
+      ],
+      "small_n": false
+    },
+    {
+      "dataset": "dataset2",
+      "source": "bash_history",
+      "class": "benign",
+      "label": 0,
+      "metric": "false-positive rate",
+      "k": 44,
+      "n": 1026,
+      "rate": 0.042884990253411304,
+      "ci": [
+        0.032099521132381806,
+        0.05708067066710627
+      ],
+      "small_n": false
+    },
+    {
+      "dataset": "dataset2",
+      "source": "commandlinefu",
+      "class": "benign",
+      "label": 0,
+      "metric": "false-positive rate",
+      "k": 14,
+      "n": 410,
+      "rate": 0.03414634146341464,
+      "ci": [
+        0.020447350593438045,
+        0.05649385029888274
+      ],
+      "small_n": false
+    }
+  ],
+  "source_pairs": [
+    {
+      "dataset": "dataset1",
+      "a": "atomic_red_team",
+      "b": "gtfobins",
+      "a_k_n": [
+        120,
+        133
+      ],
+      "b_k_n": [
+        171,
+        189
+      ],
+      "a_ci": [
+        0.8399415745714786,
+        0.9419851961757119
+      ],
+      "b_ci": [
+        0.8544911132601121,
+        0.9389067428630409
+      ],
+      "overlap": true
+    },
+    {
+      "dataset": "dataset1",
+      "a": "atomic_red_team",
+      "b": "hacktricks",
+      "a_k_n": [
+        120,
+        133
+      ],
+      "b_k_n": [
+        306,
+        344
+      ],
+      "a_ci": [
+        0.8399415745714786,
+        0.9419851961757119
+      ],
+      "b_ci": [
+        0.852011153751758,
+        0.9184547961916877
+      ],
+      "overlap": true
+    },
+    {
+      "dataset": "dataset1",
+      "a": "atomic_red_team",
+      "b": "payloads",
+      "a_k_n": [
+        120,
+        133
+      ],
+      "b_k_n": [
+        15,
+        15
+      ],
+      "a_ci": [
+        0.8399415745714786,
+        0.9419851961757119
+      ],
+      "b_ci": [
+        0.7961166989641515,
+        1.0
+      ],
+      "overlap": true
+    },
+    {
+      "dataset": "dataset1",
+      "a": "atomic_red_team",
+      "b": "quasarnix",
+      "a_k_n": [
+        120,
+        133
+      ],
+      "b_k_n": [
+        58,
+        58
+      ],
+      "a_ci": [
+        0.8399415745714786,
+        0.9419851961757119
+      ],
+      "b_ci": [
+        0.9378821442127971,
+        1.0
+      ],
+      "overlap": true
+    },
+    {
+      "dataset": "dataset1",
+      "a": "atomic_red_team",
+      "b": "slp",
+      "a_k_n": [
+        120,
+        133
+      ],
+      "b_k_n": [
+        22,
+        23
+      ],
+      "a_ci": [
+        0.8399415745714786,
+        0.9419851961757119
+      ],
+      "b_ci": [
+        0.7900884492974114,
+        0.9922833338565469
+      ],
+      "overlap": true
+    },
+    {
+      "dataset": "dataset1",
+      "a": "gtfobins",
+      "b": "hacktricks",
+      "a_k_n": [
+        171,
+        189
+      ],
+      "b_k_n": [
+        306,
+        344
+      ],
+      "a_ci": [
+        0.8544911132601121,
+        0.9389067428630409
+      ],
+      "b_ci": [
+        0.852011153751758,
+        0.9184547961916877
+      ],
+      "overlap": true
+    },
+    {
+      "dataset": "dataset1",
+      "a": "gtfobins",
+      "b": "payloads",
+      "a_k_n": [
+        171,
+        189
+      ],
+      "b_k_n": [
+        15,
+        15
+      ],
+      "a_ci": [
+        0.8544911132601121,
+        0.9389067428630409
+      ],
+      "b_ci": [
+        0.7961166989641515,
+        1.0
+      ],
+      "overlap": true
+    },
+    {
+      "dataset": "dataset1",
+      "a": "gtfobins",
+      "b": "quasarnix",
+      "a_k_n": [
+        171,
+        189
+      ],
+      "b_k_n": [
+        58,
+        58
+      ],
+      "a_ci": [
+        0.8544911132601121,
+        0.9389067428630409
+      ],
+      "b_ci": [
+        0.9378821442127971,
+        1.0
+      ],
+      "overlap": true
+    },
+    {
+      "dataset": "dataset1",
+      "a": "gtfobins",
+      "b": "slp",
+      "a_k_n": [
+        171,
+        189
+      ],
+      "b_k_n": [
+        22,
+        23
+      ],
+      "a_ci": [
+        0.8544911132601121,
+        0.9389067428630409
+      ],
+      "b_ci": [
+        0.7900884492974114,
+        0.9922833338565469
+      ],
+      "overlap": true
+    },
+    {
+      "dataset": "dataset1",
+      "a": "hacktricks",
+      "b": "payloads",
+      "a_k_n": [
+        306,
+        344
+      ],
+      "b_k_n": [
+        15,
+        15
+      ],
+      "a_ci": [
+        0.852011153751758,
+        0.9184547961916877
+      ],
+      "b_ci": [
+        0.7961166989641515,
+        1.0
+      ],
+      "overlap": true
+    },
+    {
+      "dataset": "dataset1",
+      "a": "hacktricks",
+      "b": "quasarnix",
+      "a_k_n": [
+        306,
+        344
+      ],
+      "b_k_n": [
+        58,
+        58
+      ],
+      "a_ci": [
+        0.852011153751758,
+        0.9184547961916877
+      ],
+      "b_ci": [
+        0.9378821442127971,
+        1.0
+      ],
+      "overlap": false
+    },
+    {
+      "dataset": "dataset1",
+      "a": "hacktricks",
+      "b": "slp",
+      "a_k_n": [
+        306,
+        344
+      ],
+      "b_k_n": [
+        22,
+        23
+      ],
+      "a_ci": [
+        0.852011153751758,
+        0.9184547961916877
+      ],
+      "b_ci": [
+        0.7900884492974114,
+        0.9922833338565469
+      ],
+      "overlap": true
+    },
+    {
+      "dataset": "dataset1",
+      "a": "payloads",
+      "b": "quasarnix",
+      "a_k_n": [
+        15,
+        15
+      ],
+      "b_k_n": [
+        58,
+        58
+      ],
+      "a_ci": [
+        0.7961166989641515,
+        1.0
+      ],
+      "b_ci": [
+        0.9378821442127971,
+        1.0
+      ],
+      "overlap": true
+    },
+    {
+      "dataset": "dataset1",
+      "a": "payloads",
+      "b": "slp",
+      "a_k_n": [
+        15,
+        15
+      ],
+      "b_k_n": [
+        22,
+        23
+      ],
+      "a_ci": [
+        0.7961166989641515,
+        1.0
+      ],
+      "b_ci": [
+        0.7900884492974114,
+        0.9922833338565469
+      ],
+      "overlap": true
+    },
+    {
+      "dataset": "dataset1",
+      "a": "quasarnix",
+      "b": "slp",
+      "a_k_n": [
+        58,
+        58
+      ],
+      "b_k_n": [
+        22,
+        23
+      ],
+      "a_ci": [
+        0.9378821442127971,
+        1.0
+      ],
+      "b_ci": [
+        0.7900884492974114,
+        0.9922833338565469
+      ],
+      "overlap": true
+    }
+  ],
+  "length_matching": {
+    "dataset1/length-matched": {
+      "n_malicious": 762,
+      "n_matched": 749,
+      "coverage": 0.9829396325459318,
+      "n_benign_pool": 2287,
+      "tolerance": "max(5 chars, 10% of length)",
+      "median_len_mal_before": 39.0,
+      "median_len_ben_before": 29.0,
+      "median_len_mal_after": 38.0,
+      "median_len_ben_after": 38.0,
+      "mean_len_mal_after": 49.0720961281709,
+      "mean_len_ben_after": 48.4392523364486,
+      "median_abs_pair_diff": 0.0,
+      "max_abs_pair_diff": 25.0,
+      "medians_matched": true
+    },
+    "dataset1/no-addresses+length-matched": {
+      "n_malicious": 762,
+      "n_matched": 750,
+      "coverage": 0.984251968503937,
+      "n_benign_pool": 2287,
+      "tolerance": "max(5 chars, 10% of length)",
+      "median_len_mal_before": 38.0,
+      "median_len_ben_before": 29.0,
+      "median_len_mal_after": 37.0,
+      "median_len_ben_after": 37.0,
+      "mean_len_mal_after": 47.913333333333334,
+      "mean_len_ben_after": 47.242666666666665,
+      "median_abs_pair_diff": 0.0,
+      "max_abs_pair_diff": 25.0,
+      "medians_matched": true
+    },
+    "dataset2/length-matched": {
+      "n_malicious": 479,
+      "n_matched": 472,
+      "coverage": 0.9853862212943633,
+      "n_benign_pool": 1436,
+      "tolerance": "max(5 chars, 10% of length)",
+      "median_len_mal_before": 21.0,
+      "median_len_ben_before": 25.0,
+      "median_len_mal_after": 20.5,
+      "median_len_ben_after": 20.5,
+      "mean_len_mal_after": 30.521186440677965,
+      "mean_len_ben_after": 30.502118644067796,
+      "median_abs_pair_diff": 0.0,
+      "max_abs_pair_diff": 25.0,
+      "medians_matched": true
+    },
+    "dataset2/no-addresses+length-matched": {
+      "n_malicious": 479,
+      "n_matched": 472,
+      "coverage": 0.9853862212943633,
+      "n_benign_pool": 1436,
+      "tolerance": "max(5 chars, 10% of length)",
+      "median_len_mal_before": 20.0,
+      "median_len_ben_before": 25.0,
+      "median_len_mal_after": 20.0,
+      "median_len_ben_after": 20.0,
+      "mean_len_mal_after": 27.819915254237287,
+      "mean_len_ben_after": 27.80720338983051,
+      "median_abs_pair_diff": 0.0,
+      "max_abs_pair_diff": 25.0,
+      "medians_matched": true
+    }
+  },
+  "probe_verdicts": [
+    {
+      "dataset": "dataset1",
+      "probe": "P1 - selection-regex probe",
+      "verdict": "PASS"
+    },
+    {
+      "dataset": "dataset1",
+      "probe": "P2/P7 - rows-per-shape probe",
+      "verdict": "PASS"
+    },
+    {
+      "dataset": "dataset1",
+      "probe": "P3/P5 - single-feature shortcut probes",
+      "verdict": "INFO"
+    },
+    {
+      "dataset": "dataset1",
+      "probe": "P8 - source-separability probe",
+      "verdict": "FAIL"
+    },
+    {
+      "dataset": "dataset2",
+      "probe": "P1 - selection-regex probe",
+      "verdict": "PASS"
+    },
+    {
+      "dataset": "dataset2",
+      "probe": "P2/P7 - rows-per-shape probe",
+      "verdict": "PASS"
+    },
+    {
+      "dataset": "dataset2",
+      "probe": "P3/P5 - single-feature shortcut probes",
+      "verdict": "INFO"
+    },
+    {
+      "dataset": "dataset2",
+      "probe": "P8 - source-separability probe",
+      "verdict": "PASS"
+    }
+  ],
+  "source_separability": {
+    "dataset1": {
+      "benign_macro_f1": 0.7964518226112943,
+      "benign_macro_floor": 0.11607697082557418,
+      "benign_macro_f1_norm": 0.769721830215446,
+      "benign_macro_k": 5,
+      "benign_macro_n": 2287,
+      "mal_vs_ben_pairs": [
+        {
+          "a": "atomic_red_team",
+          "b": "bash6k",
+          "n_test": 249,
+          "q": 0.5341365461847389,
+          "floor": 0.3481675392670157,
+          "macro": 0.8991821200097174,
+          "norm": 0.8453316057980403
+        },
+        {
+          "a": "atomic_red_team",
+          "b": "bash_instruct",
+          "n_test": 918,
+          "q": 0.855119825708061,
+          "floor": 0.46095126247798,
+          "macro": 0.9847552802575423,
+          "norm": 0.9717192181684037
+        },
+        {
+          "a": "atomic_red_team",
+          "b": "linlm",
+          "n_test": 278,
+          "q": 0.5215827338129496,
+          "floor": 0.34278959810874704,
+          "macro": 0.9239398084815321,
+          "norm": 0.8842681258549929
+        },
+        {
+          "a": "atomic_red_team",
+          "b": "nl2bash",
+          "n_test": 439,
+          "q": 0.6970387243735763,
+          "floor": 0.41073825503355704,
+          "macro": 0.9625609161793373,
+          "norm": 0.9364644249512669
+        },
+        {
+          "a": "atomic_red_team",
+          "b": "tldr",
+          "n_test": 1068,
+          "q": 0.8754681647940075,
+          "floor": 0.46679980029955065,
+          "macro": 0.9608462935957702,
+          "norm": 0.9265684701051757
+        },
+        {
+          "a": "gtfobins",
+          "b": "bash6k",
+          "n_test": 305,
+          "q": 0.6196721311475409,
+          "floor": 0.3825910931174089,
+          "macro": 0.9420184512161028,
+          "norm": 0.9060889013139501
+        },
+        {
+          "a": "gtfobins",
+          "b": "bash_instruct",
+          "n_test": 974,
+          "q": 0.8059548254620124,
+          "floor": 0.44627629334849345,
+          "macro": 0.9763500388500388,
+          "norm": 0.9572892385392384
+        },
+        {
+          "a": "gtfobins",
+          "b": "linlm",
+          "n_test": 334,
+          "q": 0.5658682634730539,
+          "floor": 0.361376673040153,
+          "macro": 0.9159748427672956,
+          "norm": 0.8684276729559748
+        },
+        {
+          "a": "gtfobins",
+          "b": "nl2bash",
+          "n_test": 495,
+          "q": 0.6181818181818182,
+          "floor": 0.38202247191011235,
+          "macro": 0.9610740248846638,
+          "norm": 0.9370106948133652
+        },
+        {
+          "a": "gtfobins",
+          "b": "tldr",
+          "n_test": 1124,
+          "q": 0.8318505338078291,
+          "floor": 0.45410393394851867,
+          "macro": 0.945055970563794,
+          "norm": 0.8993507503477329
+        },
+        {
+          "a": "hacktricks",
+          "b": "bash6k",
+          "n_test": 460,
+          "q": 0.7478260869565218,
+          "floor": 0.42786069651741293,
+          "macro": 0.8915192743764172,
+          "norm": 0.8103945578231293
+        },
+        {
+          "a": "hacktricks",
+          "b": "bash_instruct",
+          "n_test": 1129,
+          "q": 0.6953055801594331,
+          "floor": 0.4101358411703239,
+          "macro": 0.9832765516219819,
+          "norm": 0.9716486446452377
+        },
+        {
+          "a": "hacktricks",
+          "b": "linlm",
+          "n_test": 489,
+          "q": 0.7034764826175869,
+          "floor": 0.4129651860744297,
+          "macro": 0.8747545462306838,
+          "norm": 0.7866473149492016
+        },
+        {
+          "a": "hacktricks",
+          "b": "nl2bash",
+          "n_test": 650,
+          "q": 0.5292307692307693,
+          "floor": 0.3460764587525151,
+          "macro": 0.9428027825673345,
+          "norm": 0.9125322551875855
+        },
+        {
+          "a": "hacktricks",
+          "b": "tldr",
+          "n_test": 1279,
+          "q": 0.7310398749022674,
+          "floor": 0.4223125564588979,
+          "macro": 0.9369623942977711,
+          "norm": 0.8908793909110749
+        },
+        {
+          "a": "payloads",
+          "b": "bash6k",
+          "n_test": 131,
+          "q": 0.8854961832061069,
+          "floor": 0.46963562753036436,
+          "macro": 0.9418380938286222,
+          "norm": 0.8903359479058753
+        },
+        {
+          "a": "payloads",
+          "b": "bash_instruct",
+          "n_test": 800,
+          "q": 0.98125,
+          "floor": 0.4952681388012618,
+          "macro": 0.982440352070941,
+          "norm": 0.965209947540552
+        },
+        {
+          "a": "payloads",
+          "b": "linlm",
+          "n_test": 160,
+          "q": 0.90625,
+          "floor": 0.47540983606557374,
+          "macro": 0.9608610567514677,
+          "norm": 0.9253913894324853
+        },
+        {
+          "a": "payloads",
+          "b": "nl2bash",
+          "n_test": 321,
+          "q": 0.9532710280373832,
+          "floor": 0.48803827751196177,
+          "macro": 0.9300653594771242,
+          "norm": 0.8633986928104577
+        },
+        {
+          "a": "payloads",
+          "b": "tldr",
+          "n_test": 950,
+          "q": 0.9842105263157894,
+          "floor": 0.4960212201591512,
+          "macro": 0.9637515262515263,
+          "norm": 0.9280753968253969
+        },
+        {
+          "a": "quasarnix",
+          "b": "bash6k",
+          "n_test": 174,
+          "q": 0.6666666666666666,
+          "floor": 0.4,
+          "macro": 0.9935619935619936,
+          "norm": 0.9892699892699893
+        },
+        {
+          "a": "quasarnix",
+          "b": "bash_instruct",
+          "n_test": 843,
+          "q": 0.9311981020166074,
+          "floor": 0.4821867321867322,
+          "macro": 1.0,
+          "norm": 1.0
+        },
+        {
+          "a": "quasarnix",
+          "b": "linlm",
+          "n_test": 203,
+          "q": 0.7142857142857143,
+          "floor": 0.41666666666666663,
+          "macro": 0.9939963919202673,
+          "norm": 0.989708100434744
+        },
+        {
+          "a": "quasarnix",
+          "b": "nl2bash",
+          "n_test": 364,
+          "q": 0.8406593406593407,
+          "floor": 0.45671641791044776,
+          "macro": 0.994908165120931,
+          "norm": 0.9906276665687467
+        },
+        {
+          "a": "quasarnix",
+          "b": "tldr",
+          "n_test": 993,
+          "q": 0.9415911379657603,
+          "floor": 0.4849585062240664,
+          "macro": 1.0,
+          "norm": 1.0
+        },
+        {
+          "a": "slp",
+          "b": "bash6k",
+          "n_test": 139,
+          "q": 0.8345323741007195,
+          "floor": 0.4549019607843137,
+          "macro": 0.9479010494752623,
+          "norm": 0.904422788605697
+        },
+        {
+          "a": "slp",
+          "b": "bash_instruct",
+          "n_test": 808,
+          "q": 0.9715346534653465,
+          "floor": 0.4927809165097301,
+          "macro": 1.0,
+          "norm": 1.0
+        },
+        {
+          "a": "slp",
+          "b": "linlm",
+          "n_test": 168,
+          "q": 0.8630952380952381,
+          "floor": 0.46325878594249204,
+          "macro": 1.0,
+          "norm": 1.0
+        },
+        {
+          "a": "slp",
+          "b": "nl2bash",
+          "n_test": 329,
+          "q": 0.9300911854103343,
+          "floor": 0.4818897637795276,
+          "macro": 0.9076563230937159,
+          "norm": 0.8217682831748013
+        },
+        {
+          "a": "slp",
+          "b": "tldr",
+          "n_test": 958,
+          "q": 0.975991649269311,
+          "floor": 0.49392498679344954,
+          "macro": 1.0,
+          "norm": 1.0
+        }
+      ],
+      "ben_vs_ben_pairs": [
+        {
+          "a": "bash6k",
+          "b": "bash_instruct",
+          "n_test": 901,
+          "q": 0.8712541620421753,
+          "floor": 0.4655990510083037,
+          "macro": 0.8962862427956109,
+          "norm": 0.8059252001702552
+        },
+        {
+          "a": "bash6k",
+          "b": "linlm",
+          "n_test": 261,
+          "q": 0.5555555555555556,
+          "floor": 0.35714285714285715,
+          "macro": 0.841082911326611,
+          "norm": 0.7527956398413949
+        },
+        {
+          "a": "bash6k",
+          "b": "nl2bash",
+          "n_test": 422,
+          "q": 0.7251184834123223,
+          "floor": 0.42032967032967034,
+          "macro": 0.8161347211176044,
+          "norm": 0.6828106089422181
+        },
+        {
+          "a": "bash6k",
+          "b": "tldr",
+          "n_test": 1051,
+          "q": 0.8896289248334919,
+          "floor": 0.47079556898288016,
+          "macro": 0.9194512568976088,
+          "norm": 0.8477927651747393
+        },
+        {
+          "a": "bash_instruct",
+          "b": "linlm",
+          "n_test": 930,
+          "q": 0.8440860215053764,
+          "floor": 0.45772594752186585,
+          "macro": 0.94991501709352,
+          "norm": 0.9076389831348244
+        },
+        {
+          "a": "bash_instruct",
+          "b": "nl2bash",
+          "n_test": 1091,
+          "q": 0.7195233730522457,
+          "floor": 0.4184434968017058,
+          "macro": 0.9717534602658437,
+          "norm": 0.9514294147192693
+        },
+        {
+          "a": "bash_instruct",
+          "b": "tldr",
+          "n_test": 1720,
+          "q": 0.5436046511627907,
+          "floor": 0.352165725047081,
+          "macro": 0.9877033065236819,
+          "norm": 0.9810187667560322
+        },
+        {
+          "a": "linlm",
+          "b": "nl2bash",
+          "n_test": 451,
+          "q": 0.6784922394678492,
+          "floor": 0.404227212681638,
+          "macro": 0.9192624418188328,
+          "norm": 0.8644826351593267
+        },
+        {
+          "a": "linlm",
+          "b": "tldr",
+          "n_test": 1080,
+          "q": 0.8657407407407407,
+          "floor": 0.4640198511166253,
+          "macro": 0.8158338306956733,
+          "norm": 0.6563936748627609
+        },
+        {
+          "a": "nl2bash",
+          "b": "tldr",
+          "n_test": 1241,
+          "q": 0.7534246575342466,
+          "floor": 0.42968750000000006,
+          "macro": 0.9674688057040999,
+          "norm": 0.9429590017825313
+        }
+      ],
+      "mean_mal_vs_ben": 0.9572684535817279,
+      "mean_ben_vs_ben": 0.9084891994239086,
+      "mean_mal_vs_ben_norm": 0.9257609822977705,
+      "mean_ben_vs_ben_norm": 0.8393246690543352,
+      "ben_vs_ben_boot95": [
+        0.871307869859432,
+        0.9452426496264477
+      ],
+      "style_gap": 0.04877925415781925,
+      "style_gap_norm": 0.08643631324343526
+    },
+    "dataset2": {
+      "benign_macro_f1": 0.8990438695163104,
+      "benign_macro_floor": 0.41673436230706745,
+      "benign_macro_f1_norm": 0.8269122609673789,
+      "benign_macro_k": 2,
+      "benign_macro_n": 1436,
+      "mal_vs_ben_pairs": [
+        {
+          "a": "honeypot",
+          "b": "bash_history",
+          "n_test": 1505,
+          "q": 0.6817275747508306,
+          "floor": 0.40537337020940345,
+          "macro": 0.9183896262282738,
+          "norm": 0.8627535840423661
+        },
+        {
+          "a": "honeypot",
+          "b": "commandlinefu",
+          "n_test": 889,
+          "q": 0.5388076490438695,
+          "floor": 0.3501461988304093,
+          "macro": 0.9356628919893806,
+          "norm": 0.9009975660758972
+        }
+      ],
+      "ben_vs_ben_pairs": [
+        {
+          "a": "bash_history",
+          "b": "commandlinefu",
+          "n_test": 1436,
+          "q": 0.7144846796657381,
+          "floor": 0.41673436230706745,
+          "macro": 0.8990438695163104,
+          "norm": 0.8269122609673789
+        }
+      ],
+      "mean_mal_vs_ben": 0.9270262591088272,
+      "mean_ben_vs_ben": 0.8990438695163104,
+      "mean_mal_vs_ben_norm": 0.8818755750591316,
+      "mean_ben_vs_ben_norm": 0.8269122609673789,
+      "ben_vs_ben_boot95": null,
+      "style_gap": 0.027982389592516754,
+      "style_gap_norm": 0.0549633140917527
+    }
+  },
+  "leave_one_source_out": [
+    {
+      "dataset": "dataset1",
+      "source": "atomic_red_team",
+      "n": 133,
+      "k_full": 120,
+      "k_out": 83,
+      "train_rows_removed": 552,
+      "ci_full": [
+        0.8399415745714786,
+        0.9419851961757119
+      ],
+      "ci_out": [
+        0.5393484782274185,
+        0.7018065071432105
+      ],
+      "skipped": null
+    },
+    {
+      "dataset": "dataset1",
+      "source": "gtfobins",
+      "n": 189,
+      "k_full": 171,
+      "k_out": 76,
+      "train_rows_removed": 768,
+      "ci_full": [
+        0.8544911132601121,
+        0.9389067428630409
+      ],
+      "ci_out": [
+        0.3348346644221837,
+        0.47329788017548524
+      ],
+      "skipped": null
+    },
+    {
+      "dataset": "dataset1",
+      "source": "hacktricks",
+      "n": 344,
+      "k_full": 306,
+      "k_out": 185,
+      "train_rows_removed": 1461,
+      "ci_full": [
+        0.852011153751758,
+        0.9184547961916877
+      ],
+      "ci_out": [
+        0.4849774632905732,
+        0.5897692333457312
+      ],
+      "skipped": null
+    },
+    {
+      "dataset": "dataset1",
+      "source": "payloads",
+      "n": 15,
+      "k_full": 15,
+      "k_out": 13,
+      "train_rows_removed": 45,
+      "ci_full": [
+        0.7961166989641515,
+        1.0
+      ],
+      "ci_out": [
+        0.6211801716767764,
+        0.9626387408969346
+      ],
+      "skipped": null
+    },
+    {
+      "dataset": "dataset1",
+      "source": "quasarnix",
+      "n": 58,
+      "k_full": 58,
+      "k_out": 57,
+      "train_rows_removed": 146,
+      "ci_full": [
+        0.9378821442127971,
+        1.0
+      ],
+      "ci_out": [
+        0.9085914190653199,
+        0.9969499615539326
+      ],
+      "skipped": null
+    },
+    {
+      "dataset": "dataset1",
+      "source": "slp",
+      "n": 23,
+      "k_full": 22,
+      "k_out": 22,
+      "train_rows_removed": 78,
+      "ci_full": [
+        0.7900884492974114,
+        0.9922833338565469
+      ],
+      "ci_out": [
+        0.7900884492974114,
+        0.9922833338565469
+      ],
+      "skipped": null
+    },
+    {
+      "dataset": "dataset2",
+      "source": "honeypot",
+      "n": 479,
+      "k_full": null,
+      "k_out": null,
+      "skipped": "removing it leaves train single-class",
+      "ci_full": [],
+      "ci_out": []
+    }
+  ],
+  "near_duplicate": {
+    "dataset1": [
+      {
+        "source": "atomic_red_team",
+        "n_test": 133,
+        "n_train": 552,
+        "median": 0.47619047619047616,
+        "p90": 0.7586956521739131,
+        "max": 0.9523809523809523,
+        "share_ge": 0.015037593984962405,
+        "share_loose": 0.06766917293233082,
+        "difflib": {
+          "n": 133,
+          "hits": 26,
+          "share": 0.19548872180451127,
+          "sampled": false,
+          "ci": [
+            0.13704385003730257,
+            0.27103027678024477
+          ]
+        }
+      },
+      {
+        "source": "bash6k",
+        "n_test": 116,
+        "n_train": 490,
+        "median": 0.27060462759668974,
+        "p90": 0.6113157013726147,
+        "max": 0.9166666666666666,
+        "share_ge": 0.008620689655172414,
+        "share_loose": 0.02586206896551724,
+        "difflib": {
+          "n": 116,
+          "hits": 11,
+          "share": 0.09482758620689655,
+          "sampled": false,
+          "ci": [
+            0.053777363581140936,
+            0.16185301237546282
+          ]
+        }
+      },
+      {
+        "source": "bash_instruct",
+        "n_test": 785,
+        "n_train": 3150,
+        "median": 0.5142857142857142,
+        "p90": 0.7432967032967034,
+        "max": 0.9444444444444444,
+        "share_ge": 0.0025477707006369425,
+        "share_loose": 0.03949044585987261,
+        "difflib": {
+          "n": 476,
+          "hits": 113,
+          "share": 0.23739495798319327,
+          "sampled": true,
+          "ci": [
+            0.20136911933703155,
+            0.2776254623016106
+          ]
+        }
+      },
+      {
+        "source": "gtfobins",
+        "n_test": 189,
+        "n_train": 768,
+        "median": 0.45652173913043476,
+        "p90": 0.8009756097560977,
+        "max": 0.9758064516129032,
+        "share_ge": 0.015873015873015872,
+        "share_loose": 0.1111111111111111,
+        "difflib": {
+          "n": 189,
+          "hits": 36,
+          "share": 0.19047619047619047,
+          "sampled": false,
+          "ci": [
+            0.14087796358983723,
+            0.25240602878657525
+          ]
+        }
+      },
+      {
+        "source": "hacktricks",
+        "n_test": 344,
+        "n_train": 1461,
+        "median": 0.3689931350114416,
+        "p90": 0.7365441906653425,
+        "max": 0.90625,
+        "share_ge": 0.005813953488372093,
+        "share_loose": 0.05813953488372093,
+        "difflib": {
+          "n": 344,
+          "hits": 43,
+          "share": 0.125,
+          "sampled": false,
+          "ci": [
+            0.09414058323790624,
+            0.1641421962941499
+          ]
+        }
+      },
+      {
+        "source": "linlm",
+        "n_test": 145,
+        "n_train": 607,
+        "median": 0.2631578947368421,
+        "p90": 0.5575,
+        "max": 0.7647058823529411,
+        "share_ge": 0.0,
+        "share_loose": 0.0,
+        "difflib": {
+          "n": 145,
+          "hits": 3,
+          "share": 0.020689655172413793,
+          "sampled": false,
+          "ci": [
+            0.007060912231321711,
+            0.05905950138643182
+          ]
+        }
+      },
+      {
+        "source": "nl2bash",
+        "n_test": 306,
+        "n_train": 1261,
+        "median": 0.27334993773349936,
+        "p90": 0.5866708385481852,
+        "max": 0.9139784946236559,
+        "share_ge": 0.0032679738562091504,
+        "share_loose": 0.0196078431372549,
+        "difflib": {
+          "n": 306,
+          "hits": 12,
+          "share": 0.0392156862745098,
+          "sampled": false,
+          "ci": [
+            0.022572978647778463,
+            0.06728413384666675
+          ]
+        }
+      },
+      {
+        "source": "payloads",
+        "n_test": 15,
+        "n_train": 45,
+        "median": 0.41379310344827586,
+        "p90": 0.5940559440559441,
+        "max": 0.6842105263157895,
+        "share_ge": 0.0,
+        "share_loose": 0.0,
+        "difflib": {
+          "n": 15,
+          "hits": 1,
+          "share": 0.06666666666666667,
+          "sampled": false,
+          "ci": [
+            0.011866895493268553,
+            0.2981652987378003
+          ]
+        }
+      },
+      {
+        "source": "quasarnix",
+        "n_test": 58,
+        "n_train": 146,
+        "median": 0.41060765718299963,
+        "p90": 0.5251812788398155,
+        "max": 0.6527777777777778,
+        "share_ge": 0.0,
+        "share_loose": 0.0,
+        "difflib": {
+          "n": 58,
+          "hits": 0,
+          "share": 0.0,
+          "sampled": false,
+          "ci": [
+            0.0,
+            0.062117855787202914
+          ]
+        }
+      },
+      {
+        "source": "slp",
+        "n_test": 23,
+        "n_train": 78,
+        "median": 0.5652173913043478,
+        "p90": 0.8544420753375978,
+        "max": 0.9146341463414634,
+        "share_ge": 0.043478260869565216,
+        "share_loose": 0.17391304347826086,
+        "difflib": {
+          "n": 23,
+          "hits": 9,
+          "share": 0.391304347826087,
+          "sampled": false,
+          "ci": [
+            0.22157622792477952,
+            0.592144776086183
+          ]
+        }
+      },
+      {
+        "source": "tldr",
+        "n_test": 935,
+        "n_train": 3641,
+        "median": 0.2916666666666667,
+        "p90": 0.5909090909090909,
+        "max": 0.9142857142857143,
+        "share_ge": 0.0032085561497326204,
+        "share_loose": 0.0106951871657754,
+        "difflib": {
+          "n": 411,
+          "hits": 21,
+          "share": 0.051094890510948905,
+          "sampled": true,
+          "ci": [
+            0.033659036790849264,
+            0.07684452510243793
+          ]
+        }
+      }
+    ],
+    "dataset2": [
+      {
+        "source": "bash_history",
+        "n_test": 1026,
+        "n_train": 4001,
+        "median": 0.3,
+        "p90": 0.6461100569259962,
+        "max": 1.0,
+        "share_ge": 0.009746588693957114,
+        "share_loose": 0.02729044834307992,
+        "difflib": {
+          "n": 374,
+          "hits": 23,
+          "share": 0.06149732620320856,
+          "sampled": true,
+          "ci": [
+            0.041325058753411914,
+            0.09058597868609403
+          ]
+        }
+      },
+      {
+        "source": "commandlinefu",
+        "n_test": 410,
+        "n_train": 1745,
+        "median": 0.1694915254237288,
+        "p90": 0.36261363636363636,
+        "max": 0.8028169014084507,
+        "share_ge": 0.0,
+        "share_loose": 0.0024390243902439024,
+        "difflib": {
+          "n": 410,
+          "hits": 5,
+          "share": 0.012195121951219513,
+          "sampled": false,
+          "ci": [
+            0.005219969784433533,
+            0.02822631387244687
+          ]
+        }
+      },
+      {
+        "source": "honeypot",
+        "n_test": 479,
+        "n_train": 1915,
+        "median": 0.42857142857142855,
+        "p90": 0.7647058823529411,
+        "max": 0.9880952380952381,
+        "share_ge": 0.020876826722338204,
+        "share_loose": 0.05845511482254697,
+        "difflib": {
+          "n": 479,
+          "hits": 115,
+          "share": 0.24008350730688935,
+          "sampled": false,
+          "ci": [
+            0.20399663148350333,
+            0.2803061444045392
+          ]
+        }
+      }
+    ]
+  },
+  "thresholds": {
+    "MAX_REGEX_RECALL": 0.5,
+    "WARN_REGEX_RECALL": 0.3,
+    "MIN_MODEL_MARGIN": 0.1,
+    "WARN_MODEL_MARGIN": 0.25,
+    "MIN_POOL_ROWS_PER_SHAPE": 1.5,
+    "WARN_POOL_ROWS_PER_SHAPE": 10.0,
+    "MIN_BUILT_ROWS_PER_SHAPE": 1.05,
+    "NEARDUP_SIM": 0.9,
+    "NEARDUP_LOOSE": 0.8,
+    "NEARDUP_DIFFLIB_SIM": 0.9,
+    "NEARDUP_DIFFLIB_BUDGET": 1500000,
+    "NEARDUP_FAIL_SHARE": 0.1,
+    "NEARDUP_WARN_SHARE": 0.1,
+    "SEP_FAIL": 0.9,
+    "SEP_FAIL_NORM": 0.85,
+    "SEP_WARN": 0.75,
+    "TEMPLATED_SOURCES": [
+      "honeypot",
+      "quasarnix"
+    ]
+  }
+}

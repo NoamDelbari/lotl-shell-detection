@@ -1,0 +1,5442 @@
+!!
+!$
+!123
+#!/bin/bash
+#!/usr/bin/env python3
+. torsocks on
+./benchmark --threads=4
+./gradlew build
+./gradlew buildFatJar
+./gradlew installDist
+./gradlew run
+./gradlew shadowJar
+./main -m models/phi-3.gguf -n -1 --interactive-first
+./main -m models/phi-3.gguf -ngl 32 -p 'Prompt'
+./main -m models/phi-3.gguf -p 'ÐÐ°Ð¿Ð¸ÑÐ¸ ÐºÐ¾Ð´ Ð½Ð° Python' -n 100
+./main -m models/phi-3.gguf -p 'ÐÑÐ¸Ð²ÐµÑ'
+./mvnw clean package
+./mvnw compile quarkus:dev
+./mvnw exec:java
+./mvnw jooby:run
+./mvnw package
+./mvnw spring-boot:run
+./program
+./program arg1 arg2
+./program-name
+./script.sh
+4kvideodownloader
+7z a archive.7z directory/
+7z t archive.7z
+7z x archive.7z
+Add ""IgnorePkg = firefox"" to pacman.conf
+CREATE DATABASE database_name;
+Ctrl+R then type ""ssh""
+Ctrl+b d
+Ctrl-p Ctrl-q
+DELETE FROM table_name WHERE condition;
+DESCRIBE table_name;
+DROP DATABASE database_name;
+Don't kill zombies
+Don't run this
+Edit /etc/default/grub
+Edit /etc/fstab and add ""discard"" to options
+Edit GRUB and add "quiet splash" to linux line
+INSERT INTO table_name (column1, column2) VALUES (value1, value2);
+Press F2 then navigate to Setup
+Press F3 in htop
+Press F4 in htop
+Press F5 in htop
+Press F9 in htop
+R --version
+R -e "install.packages('ggplot2')"
+R -e \install.packages('package-name')\""
+R -e \rmarkdown::render('report.Rmd')\""
+R -e \update.packages(ask=FALSE)\""
+RAILS_ENV=production bundle exec rake assets:precompile
+RAPL
+Rscript analysis.R
+Rscript script.R
+SELECT * FROM table_name;
+SHOW DATABASES;
+SHOW TABLES;
+Sed '5, 10s/old/new/g' file.txt
+UPDATE table_name SET column1 = value1 WHERE condition;
+USE database_name;
+WINEPREFIX=~/.wine-games winecfg
+\c database_name
+\d table_name
+\dt
+\l
+^old^new
+aafire
+ab -n 1000 -c 10 http://localhost:8000/
+ab -n 10000 -c 100 http://localhost:8000/
+abduco
+acpi -V
+acpi_listen
+adb connect 192.168.1.100:5555
+adb devices
+aerc
+aircrack-ng --version
+airflow db reset
+airflow scheduler
+airmon-ng start wlan0
+alacritty
+alertmanager --config.file=alertmanager.yml
+alias
+alias ll='ls -la'
+alpine
+amarok
+ambari-server reload
+ambari-server start
+ambari-server stop
+android-studio
+ansible --version
+ansible all -m ping
+ant build
+anydesk
+apachectl -v
+apachectl configtest
+apachectl reload
+apachectl restart
+apachectl start
+apachectl status
+apachectl stop
+apfs-fuse /dev/sda1 /mnt
+aplay -l
+appd-controller
+arangodb restart
+arangodb start
+arangodb stop
+arangosh
+arch
+arch-audit
+arch-chroot /mnt
+archivemount archive.zip /mnt
+arduino
+asgiref app:app
+aspell check document.txt
+aspell check file.txt
+atlas_reload.py
+atlas_start.py
+atlas_stop.py
+atom
+atom --version
+attic create /path/to/repo::backup ~/Documents
+attic init /path/to/repo
+audacious
+auditbeat -c auditbeat.yml
+auditbeat reload
+auditctl -a always,exit -F arch=b64 -S open -k file_access
+auditctl -l
+auditctl -s
+auditctl -w /etc/passwd -p wa -k passwd_changes
+aureport
+ausearch -k file_access
+ausearch -k passwd_changes
+avahi-browse -a
+avdmanager create avd -n test -k "system-images;android-30;google_apis;x86_64"
+avidemux
+awk -f script.awk
+babel input.js --out-file output.js
+babel src --out-dir dist
+babel src --out-dir dist --presets=@babel/preset-env
+babel src --out-dir dist --watch
+backintime
+badblocks -v /dev/sda
+banner "Warning"
+barrier
+bash
+bash -n script.sh
+bash -x script.sh
+bash 10_1_1.sh
+bash install.sh
+bash script.sh
+bash vst-install.sh
+basket
+beam
+bettercap --version
+bettercap -iface eth0
+bfdd-control status
+bg %1
+bibtex document
+birdc show protocols
+bjoern app:app
+black .
+blackbox
+blender
+blitz build
+blitz dev
+blkid
+blkid -s UUID -o value /dev/sda1
+bloodhound
+bloodhound --version
+bluetoothctl
+bluetoothctl connect 00:11:22:33:44:55
+bluetoothctl pair 00:11:22:33:44:55
+bluetoothctl scan on
+bluetoothctl show
+bluetoothctl trust 00:11:22:33:44:55
+boostnote
+bootctl --path=/boot install
+borg create /path/to/repo::backup-{now} ~/Documents
+borg init --encryption=repokey /path/to/repo
+bpython
+brctl show
+brctl showstp bridge0
+brunch build --production
+brunch watch --server
+bt
+btrfs subvolume create /mnt/@ && btrfs subvolume create /mnt/@home && btrfs subvolume create /mnt/@snapshots
+build/bin/random-trimming -m models/Phi-3-mini-4k-instruct-q4.gguf -trim_pct 15
+buildah --version
+buildah commit container_id image_name
+buildah from ubuntu:latest
+buildah images
+buildah info
+buildah mount container_id
+buildah pull nginx
+buildah push image_name
+buildah rmi image_name
+buildah unmount container_id
+buildah version
+bully --version
+bully -b MAC -e ESSID wlan0mon
+bun
+bun run script.js
+bundle exec jekyll build
+bundle exec jekyll serve
+bundle exec middleman build
+bundle exec middleman server
+bundle install
+bunzip2 document.txt.bz2
+bunzip2 file.txt.bz2
+burpsuite
+busybox ash
+busybox sh
+bwrap --version
+byobu
+byzanz-record
+bzip2 document.txt
+bzip2 file.txt
+caddy reload
+caddy run
+caddy stop
+caddy validate
+cal
+cal -3
+calicoctl get policies
+cantata
+caprover serversetup
+capsh --print
+carbon-cache.py reload
+carbon-cache.py start
+cargo
+cargo --version
+cargo bench
+cargo build
+cargo build --release
+cargo check
+cargo clippy
+cargo fmt
+cargo new project-name
+cargo run
+cargo test
+cargo update
+cassandra -f
+cat -A script.sh
+cat /boot/config-$(uname -r) | grep CONFIG_HZ
+cat /boot/config-$(uname -r) | grep NO_HZ
+cat /dev/urandom > /var/lib/random-seed
+cat /dev/urandom | hexdump -C | head -5
+cat /etc/fstab
+cat /etc/mkinitcpio.conf
+cat /etc/mtab
+cat /etc/os-release
+cat /etc/pacman.conf
+cat /etc/pacman.d/mirrorlist
+cat /etc/passwd
+cat /etc/resolv.conf
+cat /proc/$(docker inspect -f '{{.State.Pid}}' nginx)/cgroup
+cat /proc/acpi/wakeup
+cat /proc/buddyinfo
+cat /proc/bus/pci/devices
+cat /proc/bus/usb/devices
+cat /proc/cgroups
+cat /proc/cmdline
+cat /proc/cpuinfo
+cat /proc/cpuinfo | grep bugs
+cat /proc/cpuinfo | grep rdrand
+cat /proc/cpuinfo | grep tsc
+cat /proc/devices
+cat /proc/dma
+cat /proc/driver/rtc
+cat /proc/filesystems
+cat /proc/interrupts
+cat /proc/interrupts | grep -i lapic
+cat /proc/ioports
+cat /proc/irq/*/smp_affinity
+cat /proc/loadavg
+cat /proc/mdstat
+cat /proc/meminfo
+cat /proc/meminfo | grep -i "^Cached"
+cat /proc/meminfo | grep -i active
+cat /proc/meminfo | grep AnonHugePages
+cat /proc/meminfo | grep AnonPages
+cat /proc/meminfo | grep Buffers
+cat /proc/meminfo | grep Committed_AS
+cat /proc/meminfo | grep DirectMap
+cat /proc/meminfo | grep Dirty
+cat /proc/meminfo | grep HardwareCorrupted
+cat /proc/meminfo | grep Hugepagesize
+cat /proc/meminfo | grep KernelStack
+cat /proc/meminfo | grep Mapped
+cat /proc/meminfo | grep MemAvailable
+cat /proc/meminfo | grep PageTables
+cat /proc/meminfo | grep Shmem
+cat /proc/meminfo | grep Slab
+cat /proc/meminfo | grep SwapCached
+cat /proc/meminfo | grep VmallocTotal
+cat /proc/meminfo | grep Writeback
+cat /proc/modules
+cat /proc/mounts
+cat /proc/net/bonding/bond0
+cat /proc/net/ip_tables_names
+cat /proc/partitions
+cat /proc/self/status | grep NoNewPrivs
+cat /proc/softirqs
+cat /proc/stat
+cat /proc/swaps
+cat /proc/sys/fs/file-max
+cat /proc/sys/fs/inotify/max_user_watches
+cat /proc/sys/kernel/pid_max
+cat /proc/sys/kernel/random/entropy_avail
+cat /proc/sys/kernel/randomize_va_space
+cat /proc/sys/kernel/sched_autogroup_enabled
+cat /proc/sys/kernel/sched_cfs_bandwidth_slice_us
+cat /proc/sys/kernel/sched_migration_cost_ns
+cat /proc/sys/kernel/sched_rt_period_us
+cat /proc/sys/kernel/sched_rt_runtime_us
+cat /proc/sys/kernel/sched_schedstats
+cat /proc/sys/kernel/threads-max
+cat /proc/sys/kernel/timer_migration
+cat /proc/sys/kernel/timer_rate
+cat /proc/sys/kernel/yama/ptrace_scope
+cat /proc/sys/vm/dirty_background_ratio
+cat /proc/sys/vm/dirty_ratio
+cat /proc/sys/vm/min_free_kbytes
+cat /proc/sys/vm/nr_hugepages
+cat /proc/sys/vm/overcommit_memory
+cat /proc/sys/vm/overcommit_ratio
+cat /proc/sys/vm/swappiness
+cat /proc/sys/vm/vfs_cache_pressure
+cat /proc/timer_list | grep "resolution"
+cat /proc/timer_list | grep hpet -i
+cat /proc/timer_list | head -20
+cat /proc/uptime
+cat /proc/version
+cat /proc/zoneinfo | grep -A5 Node
+cat /sys/block/sda/queue/scheduler
+cat /sys/bus/usb/devices/*/power/control
+cat /sys/class/backlight/intel_backlight/brightness
+cat /sys/class/power_supply/AC/online
+cat /sys/class/power_supply/BAT0/capacity
+cat /sys/class/power_supply/BAT0/charge_control_end_threshold
+cat /sys/class/power_supply/BAT0/charge_full
+cat /sys/class/power_supply/BAT0/charge_full_design
+cat /sys/class/power_supply/BAT0/current_now
+cat /sys/class/power_supply/BAT0/cycle_count
+cat /sys/class/power_supply/BAT0/health
+cat /sys/class/power_supply/BAT0/power_now
+cat /sys/class/power_supply/BAT0/status
+cat /sys/class/power_supply/BAT0/temp
+cat /sys/class/power_supply/BAT0/voltage_now
+cat /sys/class/powercap/intel-rapl/intel-rapl:0/constraint_0_power_limit_uw
+cat /sys/class/powercap/intel-rapl/intel-rapl:0/constraint_0_time_window_us
+cat /sys/class/powercap/intel-rapl/intel-rapl:0/energy_uj
+cat /sys/class/powercap/intel-rapl/intel-rapl:0/max_energy_range_uj
+cat /sys/class/powercap/intel-rapl/intel-rapl:0:0/energy_uj
+cat /sys/class/powercap/intel-rapl/intel-rapl:0:1/energy_uj
+cat /sys/class/powercap/intel-rapl/intel-rapl:0:2/energy_uj
+cat /sys/class/rtc/rtc0/since_epoch
+cat /sys/class/thermal/cooling_device*/type
+cat /sys/class/thermal/thermal_zone*/temp
+cat /sys/class/thermal/thermal_zone*/type
+cat /sys/devices/system/clockevents/clockevent0/current_device
+cat /sys/devices/system/clocksource/clocksource0/available_clocksource
+cat /sys/devices/system/clocksource/clocksource0/current_clocksource
+cat /sys/devices/system/clocksource/clocksource0/current_clocksource | grep tsc
+cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+cat /sys/devices/system/cpu/cpu0/thermal_throttle/*
+cat /sys/devices/system/cpu/intel_pstate/no_turbo
+cat /sys/devices/system/cpu/vulnerabilities/*
+cat /sys/devices/system/cpu/vulnerabilities/meltdown
+cat /sys/devices/system/cpu/vulnerabilities/spectre_v2
+cat /sys/devices/system/node/node*/hugepages*
+cat /sys/fs/cgroup/blkio/blkio.throttle.read_bps_device
+cat /sys/fs/cgroup/cpu/cpu.shares
+cat /sys/fs/cgroup/memory/memory.usage_in_bytes
+cat /sys/kernel/mm/transparent_hugepage/enabled
+cat /sys/kernel/security/evm
+cat /sys/kernel/security/ima/ascii_runtime_measurements
+cat /sys/kernel/security/lockdown
+cat /sys/power/disk
+cat /sys/power/image_size
+cat /sys/power/pm_async
+cat /sys/power/pm_print_times
+cat /sys/power/resume
+cat /sys/power/state
+cat /sys/power/wakeup_count
+cat /sys/power/wakeup_time
+cat /var/lib/random-seed
+cat /var/log/boot.log
+cat /var/log/pacman.log
+cat > /etc/alertmanager/alertmanager.yml << 'EOF' route: group_by: ['alertname'] group_wait: 10s group_interval: 10s repeat_interval: 1h receiver: 'web.hook' receivers: - name: 'web.hook' webhook_configs: - url: 'http://127.0.0.1:5001/' inhibit_rules: - source_match: severity: 'critical' target_match: severity: 'warning' equal: ['alertname', 'dev', 'instance'] EOF
+cat > /etc/blackbox_exporter/config.yml << 'EOF' modules: http_2xx: prober: http timeout: 5s http: valid_status_codes: [] method: GET EOF
+cat > /etc/drone/drone.env << 'EOF' DRONE_GITEA_SERVER=https://git.example.com DRONE_GITEA_CLIENT_ID=your-client-id DRONE_GITEA_CLIENT_SECRET=your-client-secret DRONE_RPC_SECRET=your-rpc-secret DRONE_SERVER_HOST=drone.example.com DRONE_SERVER_PROTO=https EOF
+cat > /etc/fluent-bit/fluent-bit.conf << 'EOF' [SERVICE] Flush 5 Daemon Off Log_Level info [INPUT] Name cpu Interval_Sec 1 [OUTPUT] Name stdout Match * EOF
+cat > /etc/fluent/fluent.conf << 'EOF' <source> @type forward port 24224 </source> <match **> @type stdout </match> EOF
+cat > /etc/heartbeat/heartbeat.yml << 'EOF' heartbeat.monitors: - type: http urls: ["http://localhost:80"] schedule: '@every 5s' output.elasticsearch: hosts: ["localhost:9200"] EOF
+cat > /etc/journalbeat/journalbeat.yml << 'EOF' journalbeat.inputs: - paths: [] seek: cursor output.elasticsearch: hosts: ["localhost:9200"] EOF
+cat > /etc/kapacitor/kapacitor.conf << 'EOF' data_dir = "/var/lib/kapacitor hostname = "localhost" [http] bind-address = ":9092" auth-enabled = false log-enabled = true [[influxdb]] enabled = true urls = ["http://localhost:8086"] EOF
+cat > /etc/logstash/conf.d/example.conf << 'EOF' input { beats { port => 5044 } } filter { grok { match => { "message" => "%{COMBINEDAPACHELOG}" } } } output { elasticsearch { hosts => ["localhost:9200"] index => "apache-%{+YYYY.MM.dd}" } } EOF
+cat > /etc/loki/loki.yml << 'EOF' auth_enabled: false server: http_listen_port: 3100 ingester: lifecycler: address: 127.0.0.1 ring: kvstore: store: inmemory replication_factor: 1 final_sleep: 0s chunk_idle_period: 5m chunk_retain_period: 30s schema_config: configs: - from: 2020-10-24 store: boltdb-shipper object_store: filesystem schema: v11 index: prefix: index_ period: 24h storage_config: boltdb_shipper: active_index_directory: /tmp/loki/boltdb-shipper-active cache_location: /tmp/loki/boltdb-shipper-cache shared_store: filesystem filesystem: directory: /tmp/loki/chunks limits_config: enforce_metric_name: false reject_old_samples: true reject_old_samples_max_age: 168h chunk_store_config: max_look_back_period: 0s table_manager: retention_deletes_enabled: false retention_period: 0s EOF
+cat > /etc/otel-collector/config.yaml << 'EOF' receivers: otlp: protocols: grpc: http: exporters: logging: loglevel: debug service: pipelines: traces: receivers: [otlp] exporters: [logging] EOF
+cat > /etc/prometheus/prometheus.yml << 'EOF' global: scrape_interval: 15s scrape_configs: - job_name: 'node' static_configs: - targets: ['localhost:9100'] EOF
+cat > /etc/promtail/promtail.yml << 'EOF' server: http_listen_port: 9080 grpc_listen_port: 0 positions: filename: /tmp/positions.yaml clients: - url: http://localhost:3100/loki/api/v1/push scrape_configs: - job_name: system static_configs: - targets: - localhost labels: job: varlogs __path__: /var/log/*log EOF
+cat > /etc/telegraf/telegraf.conf << 'EOF' [agent] interval = "10s round_interval = true metric_batch_size = 1000 metric_buffer_limit = 10000 collection_jitter = "0s" flush_interval = "10s" flush_jitter = "0s" precision = "" hostname = "" omit_hostname = false [[outputs.influxdb]] urls = ["http://localhost:8086"] database = "telegraf" timeout = "5s" [[inputs.cpu]] percpu = true totalcpu = true collect_cpu_time = false report_active = false [[inputs.mem]] [[inputs.disk]] [[inputs.diskio]] [[inputs.net]] [[inputs.processes]] [[inputs.system]] EOF
+cat > /etc/vector/vector.toml << 'EOF' [sources.in] type = "stdin [sinks.out] type = "console" inputs = ["in"] encoding.codec = "json" EOF
+cat > CMakeLists.txt << 'EOF' cmake_minimum_required(VERSION 3.16) project(MyApp) set(CMAKE_CXX_STANDARD 17) set(CMAKE_AUTOMOC ON) set(CMAKE_AUTOUIC ON) find_package(Qt5 COMPONENTS Core Widgets REQUIRED) add_executable(myapp main.cpp) target_link_libraries(myapp Qt5::Core Qt5::Widgets) EOF
+cat > file.txt << EOF\nline1\nline2\nEOF
+cat > traefik.yml << 'EOF' entryPoints: web: Address: ":80 providers: file: filename: /etc/traefik/rules.yml EOF
+cat README.md
+cat backup.tar.gz.part* > backup.tar.gz
+cat file.txt | curl -F 'clbin=<-' https://clbin.com
+cat file.txt | curl -F 'f:1=<-' ix.io
+cat file.txt | curl -F 'sprunge=<-' http://sprunge.us
+cat file.txt | nc localhost 9999
+cat filename
+cat part_* > combined.iso
+cat ~/.ssh/config
+cat ~/.ssh/known_hosts
+cd -
+cd ..
+cd /
+cd /etc/openvpn && sudo ./easyrsa init-pki
+cd /etc/openvpn/easy-rsa && sudo ./easyrsa gen-dh
+cd /etc/openvpn/easy-rsa && sudo ./easyrsa gen-req client1 nopass && sudo ./easyrsa sign-req client client1
+cd /etc/openvpn/easy-rsa && sudo ./easyrsa gen-req server nopass && sudo ./easyrsa sign-req server server
+cd /usr/src/linux && sudo make menuconfig && sudo make -j$(nproc) && sudo make modules_install && sudo make install
+cd folder
+cd my-project && npm run develop
+cd package-name && makepkg -si
+cd ~
+celluloid
+cf-agent --version
+chattr +a filename
+chattr +i filename
+chattr -a filename
+chattr -i filename
+checksec --file=/usr/bin/bash
+checkupdates
+checkupdates-aur
+chef-client --version
+cherokee-admin
+cherokee-admin -x
+cherrytree
+chgrp -R groupname directory/
+chgrp groupname filename
+chiaki
+chmod +t directory
+chmod +x script.sh
+chmod -R 755 directory/
+chmod -R 755 folder/
+chmod 755 filename
+chmod 755 script.sh
+chmod 755 setup.sh && ./setup.sh
+chmod g+s filename
+chmod permissions file
+chmod u+s filename
+chmod u+x filename
+chown -R http:http /usr/share/webapps/chevereto
+chown -R http:http /usr/share/webapps/filerun
+chown -R http:http /usr/share/webapps/lychee
+chown -R http:http /usr/share/webapps/piwigo
+chown -R http:http /usr/share/webapps/pydio
+chown -R user:group directory/
+chown user:group file
+chown user:group filename
+chroma create_index --collection documents
+chroma run --path /path/to/db
+chroma run --path /var/lib/chroma
+chromium file://$(pwd)/file.html
+chromium http://localhost:3000
+chromium https://example.com
+chronograf
+cilium status
+cinelerra
+clamscan -r /home
+claws-mail
+clear
+clementine
+clickhouse-client
+clickhouse-client --query=""SYSTEM RELOAD CONFIG""
+clickhouse-client --query=""SYSTEM SHUTDOWN""
+clickhouse-server
+clickhouse-server --config-file=/etc/clickhouse-server/config.xml
+clion
+cloc /home/user/project
+clojure
+clojure --version
+clojure script.clj
+clonezilla
+cloudron init
+cmake --build build --target install
+cmake --build build -j4
+cmake --build build/
+cmake -B build -DCMAKE_BUILD_TYPE=Debug && cmake --build build -j4
+cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build
+cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS=\-march=native -O3\""
+cmake -B build -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_BUILD_TYPE=Release
+cmake -B build/
+cmatrix -a
+cmus
+cockroach node drain --insecure
+cockroach quit --insecure
+cockroach start-single-node --insecure
+code
+code --version
+code .
+code /path/to/project
+coffee
+coffee -c script.coffee
+coffee -w -c script.coffee
+collectd
+collectd -h
+command --debug
+command --dry-run
+command --force
+command --help
+command --interactive
+command --progress
+command --quiet
+command --recursive
+command --verbose
+command --version
+command -v command-name
+composer
+composer --version
+composer install --no-dev --optimize-autoloader
+conntrack -C
+conntrack -E
+conntrack -L
+convert header.png -resize 1920x1080 header_small.jpg
+convert input.jpg -quality 80 output.jpg
+convert input.jpg output.pdf
+convert input.jpg output.png
+convert input.png -resize 32x32 favicon.ico
+convert input.png output.jpg
+convert input.svg output.png
+cool-retro-term
+coolify setup
+coredumpctl debug 1234
+coredumpctl dump 1234 -o core.dump
+coredumpctl info 1234
+coredumpctl list
+cortex -config.file=/etc/cortex/cortex.yml
+cortex -config.file=cortex.yml
+couchbase-cli rebalance -c localhost:8091
+couchbase-server
+couchbase-server -- -noinput
+couchdb
+cowsay "Hello Arch!"
+cp -a sourcedir/ destdir/
+cp -i source.txt dest.txt
+cp -r sourcedir/ destdir/
+cp -v source.txt dest.txt
+cp /etc/X11/xinit/xinitrc ~/.xinitrc
+cp /etc/pound/pound.cfg.example /etc/pound/pound.cfg
+cp /usr/share/envoy/configs/google_com_proxy.yaml /etc/envoy/envoy.yaml
+cp /usr/share/milvus/configs/milvus.yaml /etc/milvus/
+cp /usr/share/weaviate/docker-compose.yml /etc/weaviate/
+cp /usr/share/webapps/chevereto/app/settings.php.example /usr/share/webapps/chevereto/app/settings.php
+cp /usr/share/webapps/filerun/.user.ini /usr/share/webapps/filerun/
+cp /usr/share/webapps/lychee/.env.example /usr/share/webapps/lychee/.env
+cp /usr/share/webapps/piwigo/local/config/database.inc.php.dist /usr/share/webapps/piwigo/local/config/database.inc.php
+cp /usr/share/webapps/pydio/data/files/.htaccess /usr/share/webapps/pydio/data/
+cp file.txt destination/
+cp source.txt dest.txt
+cpan
+cpan --version
+cpuidle-info
+cpupower frequency-info
+cpupower frequency-info | grep governors
+cpupower frequency-set -d 800MHz
+cpupower frequency-set -g performance
+cpupower frequency-set -g powersave
+cpupower frequency-set -u 3.5GHz
+cpuset
+cqlsh
+crackmapexec --version
+crackmapexec smb 192.168.1.0/24
+crate
+createdb database_name
+crio --version
+croc CODE
+croc send file.txt
+cryptsetup --version
+cryptsetup luksFormat /dev/sda2
+cryptsetup open /dev/sda2 cryptroot
+csh
+ctags -R .
+ctest -j4 --output-on-failure
+ctr version
+curl -# -O https://example.com/large-file.zip
+curl --compressed https://example.com
+curl --limit-rate 100k -O https://example.com/file.zip
+curl --max-time 10 https://example.com
+curl --max-time 5 https://api.example.com
+curl --upload-file file.txt https://transfer.sh/file.txt
+curl -A "Mozilla/5.0" https://example.com
+curl -C - -O http://example.com/file.iso
+curl -C - -O https://example.com/large-file.iso
+curl -C - -O https://example.com/largefile.iso
+curl -F "file=@file.txt" https://0x0.st
+curl -F "file=@file.txt" https://file.io
+curl -F "file=@localfile.zip" https://example.com/upload
+curl -F "text=@file.txt" https://vpaste.net
+curl -H 'Authorization: Bearer token' -H 'User-Agent: MyApp' https://api.example.com
+curl -H 'Authorization: Bearer token' -O https://example.com/file
+curl -I URL
+curl -I https://archlinux.org
+curl -I https://example.com
+curl -L https://example.com
+curl -L https://umbrel.sh | bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+curl -O URL
+curl -O http://vestacp.com/pub/vst-install.sh
+curl -O https://example.com/file.zip
+curl -O https://www.directadmin.com/setup.sh
+curl -X DELETE localhost:9200/index_name
+curl -X GET http://localhost:3000/api/health
+curl -X GET http://localhost:8000/api/health
+curl -X GET https://api.example.com/data
+curl -X GET https://api.example.com/data -H 'Authorization: Bearer token'
+curl -X GET localhost:9200
+curl -X GET localhost:9200 | jq .version.number
+curl -X GET localhost:9200/_cat/indices?v
+curl -X GET localhost:9200/_cat/nodes?v
+curl -X GET localhost:9200/_cluster/health?pretty
+curl -X GET localhost:9200/index_name/_search?q=key:value
+curl -X POST ""localhost:5601/api/saved_objects/_import""
+curl -X POST ""localhost:9200/_nodes/reload_secure_settings""
+curl -X POST -H "Content-Type: application/json" -d '{\"key\":\"value\"}' https://example.com
+curl -X POST -H 'Content-Type: application/json' -d '{\key\":\"value\"}' https://api.example.com"
+curl -X POST -d "key=value" https://example.com
+curl -X POST http://localhost:4200/_sql -H 'Content-Type: application/json' -d '{"stmt":"RELOAD CONFIG;"}'
+curl -X POST http://localhost:5984/_restart
+curl -X POST localhost:9200/index_name/_doc -H 'Content-Type: application/json' -d '{"key": "value"}'
+curl -X PUT localhost:9200/index_name
+curl -b cookies.txt https://example.com
+curl -b cookies.txt https://example.com/dashboard
+curl -c cookies.txt https://example.com/login
+curl -fsSL https://cdn.coollabs.io/coolify/install.sh | bash
+curl -fsSL https://get.casaos.io | bash
+curl -i https://example.com
+curl -o custom.zip https://example.com/file.zip
+curl -s "https://haveibeenpwned.com/api/v3/breachedaccount/test@example.com" -H "hibp-api-key: xxx"
+curl -s http://checkip.amazonaws.com
+curl -s https://api.example.com/data | jq '.results[0].name'
+curl -s https://archlinux.org/mirrors/status/json/
+curl -s https://archlinux.org/mirrors/status/json/ | jq '.urls[] | select(.country_code=="US") | .url'
+curl -s https://centos-webpanel.com/cwp-latest
+curl -s https://cloudron.io/install.sh | bash
+curl -s https://install.yunohost.org | bash
+curl -s https://ploi.io/install.sh | bash
+curl -s https://raw.githubusercontent.com/github/gitignore/main/Python.gitignore > .gitignore
+curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
+curl -s https://software.virtualmin.com/install.sh | bash
+curl -sL https://get.keptn.sh | bash
+curl -sfL https://get.k3s.io | sh
+curl -sfL https://get.rke2.io | sh
+curl -u username:password https://example.com
+curl -v https://example.com 2>&1 | grep -i ssl
+curl -x http://proxy:8080 https://example.com
+curl cheat.sh/tar
+curl https://api.example.com/data
+curl https://api.openai.com/v1/chat/completions -H 'Content-Type: application/json' -H 'Authorization: Bearer $OPENAI_API_KEY' -d '{\"model\":\"gpt-3.5-turbo\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello!\",\"temperature\":0.7}]}'
+curl https://install.sandstorm.io | bash
+curl ifconfig.me
+curl localhost:15000/config_dump
+curl localhost:16686
+curl localhost:19999
+curl localhost:5601
+curl localhost:8005
+curl localhost:8005/arkime
+curl localhost:8200
+curl localhost:9090/api/v1/targets
+curl localhost:9200
+curl localhost:9200/_cluster/health?pretty
+curl localhost:9411
+curlftpfs ftp://user:pass@host /mnt
+cut -c5-10 file.txt
+cut -d delimiter -f fields
+cut -d, -f1 data.csv
+cut -d, -f1, 3, 5 data.csv
+cut -d: -f2- /etc/passwd
+cwebp input.jpg -o output.webp
+cyberpanel setup
+cypher-shell
+daphne app.asgi:application
+darktable
+dart run script.dart
+dash
+datadog-agent restart
+datadog-agent start
+datadog-agent stop
+datagrip
+date
+date "+%Y-%m-%d %H:%M:%S"
+date -R
+davinci-resolve
+db.collection.createIndex({key: 1})
+db.collection.drop()
+db.collection.find()
+db.collection.getIndexes()
+db.collection.insert({key: value})
+db.collection.remove({query})
+db.collection.update({query}, {update})
+db.dropDatabase()
+dd if=/dev/random of=/dev/null bs=1 count=1
+dd if=/dev/sda bs=512 count=1 | file -
+dd if=/dev/sda of=/dev/null bs=1M count=1024 iflag=direct
+dd if=/dev/sda of=disk.img bs=4M
+dd if=/dev/sda of=mbr.backup bs=512 count=1
+dd if=/dev/zero of=sparse.img bs=1 count=0 seek=1G
+dd if=/dev/zero of=testfile bs=1G count=1 oflag=direct
+dd if=/dev/zero of=testfile bs=1M count=1024 oflag=direct
+dd if=disk.img of=/dev/sda bs=4M
+dd if=mbr.backup of=/dev/sda bs=512 count=1
+dd if=testfile of=/dev/null bs=1G count=1
+dd if=testfile of=/dev/null bs=1G count=1 iflag=direct
+deactivate
+deadbeef
+declare -f
+deepin-screenshot
+deepin-terminal
+deja-dup
+deno
+deno run script.ts
+dentries and inodes, sync && echo 3 > /proc/sys/vm/drop_caches
+df -H
+df -Th
+df -h
+df -h /home
+df -i
+dgraph reload
+dgraph zero
+diff -r dir1 dir2
+diff -u old.txt new.txt
+diff -w file1.txt file2.txt
+diff -y file1.txt file2.txt
+diff <(ls dir1) <(ls dir2)
+diff file1 file2
+diff file1.txt file2.txt
+dig +short example.com
+dig +short google.com
+dig +trace google.com
+dig -x 8.8.8.8
+dig -x IP
+dig @8.8.8.8 google.com
+dig domain @server
+dig example.com
+dig example.com A
+dig google.com
+dig google.com +stats
+dig google.com MX
+digikam
+dino
+directus bootstrap
+directus start
+discord
+disown %1
+dmesg
+dmesg -C
+dmesg -H
+dmesg -T
+dmesg -T -l warn
+dmesg -l err
+dmesg -l err,crit,alert,emerg
+dmesg -w
+dmesg | grep -i dma
+dmesg | grep -i iommu
+dmesg | grep -i sda
+dmesg | grep -i sda | grep -i error
+dmesg | less
+dmesg | tail -20
+dmidecode
+dmsetup ls
+docker --version
+docker attach container_name
+docker build --build-arg VAR=value -t image_name .
+docker build --no-cache -t image_name .
+docker build -t image-name .
+docker build -t image_name -f Dockerfile.custom .
+docker build -t image_name .
+docker build -t myapp .
+docker commit container_name image_name
+docker container prune
+docker cp /host/path container_name:/path/to/file
+docker cp container_name:/path/to/file /host/path
+docker create --name mycontainer nginx
+docker diff container_name
+docker events
+docker events --filter type=container
+docker events --since now
+docker exec -d container_name command
+docker exec -it container_name /bin/bash
+docker exec -it container_name bash
+docker export container_name > container.tar
+docker history --no-trunc image_name
+docker history image_name
+docker image prune
+docker image prune -a
+docker images
+docker images --digests
+docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}" | grep image_name
+docker images -a
+docker images -f dangling=true
+docker import container.tar image_name
+docker import image.tar image_name
+docker info
+docker inspect --format='{{.HostConfig.SecurityOpt}}' nginx
+docker inspect --format='{{.NetworkSettings.IPAddress}}' container_name
+docker inspect container_name
+docker inspect image_name
+docker kill container_name
+docker load < image.tar
+docker login
+docker login registry.example.com
+docker logout
+docker logs --since "10m" container_name
+docker logs --tail 100 container_name
+docker logs -f container_name
+docker logs -t container_name
+docker logs container_name
+docker network connect network_name container_name
+docker network create network_name
+docker network disconnect network_name container_name
+docker network inspect network_name
+docker network ls
+docker network prune
+docker network rm network_name
+docker node ls
+docker pause container_name
+docker port container_name
+docker ps
+docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Status}}"
+docker ps -a
+docker ps -q
+docker pull --platform linux/amd64 nginx
+docker pull nginx
+docker pull nginx:alpine
+docker rename old_name new_name
+docker restart container_name
+docker rm $(docker ps -aq)
+docker rm container_name
+docker rmi $(docker images -q)
+docker rmi image_name
+docker run --entrypoint /bin/bash nginx
+docker run --memory=512m --cpus=1.0 nginx
+docker run --name airflow -p 8080:8080 -d puckel/docker-airflow
+docker run --name alertmanager -p 9093:9093 -d prom/alertmanager
+docker run --name apache -p 80:80 -d httpd
+docker run --name auditbeat -d docker.elastic.co/beats/auditbeat:7.17.0
+docker run --name blackbox-exporter -p 9115:9115 -d prom/blackbox-exporter
+docker run --name cassandra -p 9042:9042 -d cassandra
+docker run --name chronograf -p 8888:8888 -d chronograf
+docker run --name clickhouse -p 8123:8123 -p 9000:9000 -d yandex/clickhouse-server
+docker run --name cockroachdb -p 26257:26257 -p 8080:8080 -d cockroachdb/cockroach
+docker run --name community-beats -d docker.elastic.co/beats/community-beats:7.17.0
+docker run --name consul -p 8500:8500 -d consul
+docker run --name couchdb -p 5984:5984 -d couchdb
+docker run --name cratedb -p 4200:4200 -p 5432:5432 -d crate
+docker run --name druid -p 8888:8888 -d apache/druid
+docker run --name elasticsearch -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -d elasticsearch:7.17.0
+docker run --name filebeat -d docker.elastic.co/beats/filebeat:7.17.0
+docker run --name fluent-bit -p 2020:2020 -d fluent/fluent-bit
+docker run --name fluentd -p 24224:24224 -p 24224:24224/udp -d fluent/fluentd
+docker run --name functionbeat -d docker.elastic.co/beats/functionbeat:7.17.0
+docker run --name gitlab -p 80:80 -p 443:443 -p 22:22 -d gitlab/gitlab-ce
+docker run --name grafana -p 3000:3000 -d grafana/grafana
+docker run --name graphite -p 80:80 -p 2003:2003 -p 2004:2004 -p 2023:2023 -p 2024:2024 -p 8125:8125 -p 8126:8126 -d graphiteapp/graphite-statsd
+docker run --name heartbeat -d docker.elastic.co/beats/heartbeat:7.17.0
+docker run --name icinga -p 80:80 -p 5665:5665 -d icinga/icinga2
+docker run --name influxdb -p 8086:8086 -d influxdb
+docker run --name influxdb2 -p 8086:8086 -d influxdb:2.0
+docker run --name jaeger -p 16686:16686 -p 6831:6831/udp -p 6832:6832/udp -p 5778:5778 -p 5775:5775/udp -p 14268:14268 -p 14250:14250 -p 9411:9411 -d jaegertracing/all-in-one
+docker run --name jenkins -p 8080:8080 -p 50000:50000 -d jenkins/jenkins
+docker run --name journalbeat -d docker.elastic.co/beats/journalbeat:7.17.0
+docker run --name jupyter -p 8888:8888 -d jupyter/datascience-notebook
+docker run --name kafka -p 9092:9092 -d wurstmeister/kafka
+docker run --name kapacitor -d kapacitor
+docker run --name logstash -p 5044:5044 -p 9600:9600 -d docker.elastic.co/logstash/logstash:7.17.0
+docker run --name loki -p 3100:3100 -d grafana/loki
+docker run --name mariadb -e MYSQL_ROOT_PASSWORD=password -d mariadb
+docker run --name metabase -p 3000:3000 -d metabase/metabase
+docker run --name metricbeat -d docker.elastic.co/beats/metricbeat:7.17.0
+docker run --name mimir -p 9009:9009 -p 9095:9095 -p 8080:8080 -d grafana/mimir
+docker run --name minio -p 9000:9000 -d minio/minio server /data
+docker run --name mongo -d mongo
+docker run --name mysql -e MYSQL_ROOT_PASSWORD=password -d mysql
+docker run --name nagios -p 80:80 -d jasonrivers/nagios
+docker run --name neo4j -p 7474:7474 -p 7687:7687 -d neo4j
+docker run --name nextcloud -p 80:80 -d nextcloud
+docker run --name nginx -p 80:80 -d nginx
+docker run --name node-exporter -p 9100:9100 -d prom/node-exporter
+docker run --name otel-collector -p 4317:4317 -p 4318:4318 -p 55679:55679 -d otel/opentelemetry-collector
+docker run --name packetbeat -d docker.elastic.co/beats/packetbeat:7.17.0
+docker run --name portainer -p 8000:8000 -p 9000:9000 -d portainer/portainer
+docker run --name postgres -e POSTGRES_PASSWORD=password -d postgres
+docker run --name postgres -e POSTGRES_PASSWORD=secret -d postgres
+docker run --name presto -p 8080:8080 -d prestodb/presto
+docker run --name prometheus -p 9090:9090 -d prom/prometheus
+docker run --name questdb -p 9000:9000 -p 8812:8812 -p 9009:9009 -d questdb/questdb
+docker run --name rabbitmq -p 5672:5672 -p 15672:15672 -d rabbitmq:management
+docker run --name redash -p 5000:5000 -d redash/redash
+docker run --name redis -d redis
+docker run --name registry -p 5000:5000 -d registry
+docker run --name sonarqube -p 9000:9000 -d sonarqube
+docker run --name statsd -p 8125:8125/udp -p 8126:8126 -d graphiteapp/docker-statsd
+docker run --name superset -p 8088:8088 -d apache/superset
+docker run --name telegraf -d telegraf
+docker run --name tempo -p 3200:3200 -p 9095:9095 -d grafana/tempo
+docker run --name timescaledb -p 5432:5432 -d timescale/timescaledb
+docker run --name traefik -p 80:80 -p 8080:8080 -d traefik
+docker run --name trino -p 8080:8080 -d trinodb/trino
+docker run --name vault -p 8200:8200 -d vault
+docker run --name wordpress -p 80:80 -d wordpress
+docker run --name yugabytedb -p 5433:5433 -p 9042:9042 -p 6379:6379 -d yugabytedb/yugabyte
+docker run --name zabbix -p 80:80 -p 10051:10051 -d zabbix/zabbix-web-nginx-mysql
+docker run --name zipkin -p 9411:9411 -d openzipkin/zipkin
+docker run --network=host nginx
+docker run --restart=always nginx
+docker run --user=1000:1000 nginx
+docker run -d --name appwrite -p 80:80 -p 443:443 appwrite/appwrite
+docker run -d --name mycontainer nginx
+docker run -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher
+docker run -d -p 3000:3000 cryptpad/cryptpad
+docker run -d -p 3000:3000 outlinewiki/outline
+docker run -d -p 3000:3000 quay.io/hedgedoc/hedgedoc
+docker run -d -p 3000:3000 requarks/wiki
+docker run -d -p 8000:8000 -p 9000:9000 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+docker run -d -p 8001:8000 -v /var/run/docker.sock:/var/run/docker.sock -v yacht:/config selfhostedpro/yacht
+docker run -d -p 8080:80 -v privatebin_data:/srv/data privatebin/nginx-fpm-alpine
+docker run -d -p 8080:80 mediawiki
+docker run -d -p 8080:80 solidnerd/bookstack
+docker run -d -p 8080:8080 -p 80:80 -v /var/run/docker.sock:/var/run/docker.sock traefik:v2.10
+docker run -d -p 8080:8080 xwiki/xwiki
+docker run -d -p 80:80 bigbluebutton/bigbluebutton
+docker run -d -p 80:80 bitnami/dokuwiki
+docker run -d -p 80:80 pmwiki/pmwiki
+docker run -d -p 9001:9001 etherpad/etherpad
+docker run -e VAR=value nginx
+docker run -it alpine sh
+docker run -it archlinux bash
+docker run -it centos bash
+docker run -it debian bash
+docker run -it dragonflybsd sh
+docker run -it exokernel bash
+docker run -it fedora bash
+docker run -it fiasco-oc bash
+docker run -it freebsd sh
+docker run -it genode bash
+docker run -it gentoo bash
+docker run -it guix bash
+docker run -it haiku bash
+docker run -it helenos bash
+docker run -it illumos bash
+docker run -it includeos bash
+docker run -it inferno sh
+docker run -it l4linux bash
+docker run -it libraryos bash
+docker run -it mbox bash
+docker run -it microkernel bash
+docker run -it minix sh
+docker run -it minix3 bash
+docker run -it nanos bash
+docker run -it netbsd sh
+docker run -it nixos bash
+docker run -it openbsd ksh
+docker run -it opensuse bash
+docker run -it osv bash
+docker run -it plan9 rc
+docker run -it reactos cmd
+docker run -it redox bash
+docker run -it rumpkernel bash
+docker run -it rumprun bash
+docker run -it sel4 bash
+docker run -it serenityos bash
+docker run -it slackware bash
+docker run -it solaris bash
+docker run -it ubuntu bash
+docker run -it ubuntu:latest
+docker run -it unikernel bash
+docker run -it unikraft bash
+docker run -it voidlinux bash
+docker run -p 8080:80 nginx
+docker run -p 80:80 -p 443:443 -p 3000:3000 -v /var/run/docker.sock:/var/run/docker.sock -v captain:/captain caprover/caprover
+docker run -v $(pwd):/app node:latest
+docker run -v /host/path:/container/path nginx
+docker run image-name
+docker save image_name > image.tar
+docker search --filter stars=1000 nginx
+docker search term
+docker service create --name service_name nginx
+docker service logs service_name
+docker service ls
+docker service ps service_name
+docker service rm service_name
+docker service scale service_name=5
+docker service update --image nginx:alpine service_name
+docker stack deploy -c docker-compose.yml stack_name
+docker stack ls
+docker stack ps stack_name
+docker stack rm stack_name
+docker stack services stack_name
+docker start container_name
+docker stats
+docker stats --no-stream
+docker stats container_name
+docker stop $(docker ps -q)
+docker stop container-id
+docker stop container_name
+docker swarm init
+docker swarm join --token token manager_ip:2377
+docker swarm leave
+docker swarm leave --force
+docker system df
+docker system info
+docker system prune
+docker system prune -a
+docker system prune -f
+docker tag source_image:tag target_image:tag
+docker top container_name
+docker unpause container_name
+docker update --memory=1g container_name
+docker version
+docker volume create volume_name
+docker volume inspect volume_name
+docker volume ls
+docker volume prune
+docker volume rm volume_name
+docker-compose --version
+docker-compose build
+docker-compose config
+docker-compose down
+docker-compose down -v
+docker-compose exec service_name command
+docker-compose logs
+docker-compose logs -f
+docker-compose ps
+docker-compose pull
+docker-compose restart
+docker-compose up
+docker-compose up --scale service=3
+docker-compose up -d
+docker-compose version
+dos2unix script.sh
+dotnet
+dotnet --version
+dotnet add package Newtonsoft.Json
+dotnet build
+dotnet fsi script.fsx
+dotnet new console -n MyProject
+dotnet new webapi -n MyApi
+dotnet publish -c Release
+dotnet restore
+dotnet run
+dotnet test
+dropbox
+dropdb database_name
+druid
+druid reload
+dtach
+du -ah --max-depth=1 | sort -h
+du -ah / | sort -rh | head -20
+du -h --max-depth=1
+du -sh *
+du -sh * | sort -h
+du -sh .
+du -sh .git
+du -sh /var/cache/pacman/pkg/
+du -sh directory/
+du -sh project/
+du -sh Ð¿ÑÐ¾ÐµÐºÑ/
+duckdb
+dukto
+duplicity ~/Documents file:///path/to/backup
+dynatrace
+ebook-convert input.azw3 output.epub
+ebook-convert input.epub output.pdf
+ebook-convert input.mobi output.epub
+echo "+3600" | sudo tee /sys/class/rtc/rtc0/wakealarm
+echo "--api-key=xyz --data-dir=/var/lib/typesense" > /etc/typesense.conf
+echo "--transparent --on-timeout ssl --ssh 127.0.0.1:22 --ssl 127.0.0.1:443 --http 127.0.0.1:80" > /etc/sslh.cfg
+echo ".mode csv\n.import input.csv table" | sqlite3 database.db
+echo "500M" | sudo tee /sys/power/image_size
+echo "8:3" | sudo tee /sys/power/resume
+echo "<VirtualHost *:80>" > /etc/httpd/conf/extra/proxy.conf
+echo "Address = 10.0.0.1/24" >> /etc/wireguard/wg0.conf
+echo "Address=192.168.1.100/24" >> /etc/systemd/network/20-wired.network
+echo "DNS=8.8.8.8 8.8.4.4" >> /etc/systemd/network/20-wired.network
+echo "Gateway=192.168.1.1" >> /etc/systemd/network/20-wired.network
+echo "HOOKS=(base udev autodetect keyboard keymap consolefont modconf block encrypt filesystems fsck)" > /etc/mkinitcpio.conf
+echo "HiddenServiceDir /var/lib/tor/my_service/" | sudo tee -a /etc/tor/torrc
+echo "Include conf/extra/proxy.conf" >> /etc/httpd/conf/httpd.conf
+echo "ListenPort = 51820" >> /etc/wireguard/wg0.conf
+echo "MEILI_ENV=production" > /etc/meilisearch.env
+echo "PrivateKey = $(cat privatekey)" >> /etc/wireguard/wg0.conf
+echo "ProxyPass / http://localhost:3000/" >> /etc/httpd/conf/extra/proxy.conf
+echo "QDRANT__SERVICE__API_KEY=your-api-key" > /etc/qdrant.conf
+echo "Text content" | enscript -B -o - | ps2pdf - output.pdf
+echo "Today is $(date)"
+echo "XHC" | sudo tee /proc/acpi/wakeup
+echo "[Interface]" > /etc/wireguard/wg0.conf
+echo "[Match]" > /etc/systemd/network/20-wired.network
+echo "[entryPoints]" > /etc/traefik/traefik.toml
+echo "[https]" > /etc/stunnel/stunnel.conf
+echo "[platform]" | sudo tee /sys/power/disk
+echo "archhost" > /etc/hostname
+echo "auto" | sudo tee /sys/bus/usb/devices/usb1/power/control
+echo "backend = "[127.0.0.1]:8080"" > /etc/hitch/hitch.conf
+echo "backend default { .host = "127.0.0.1"; .port = "8080"; }" > /etc/varnish/default.vcl
+echo "bind *:443 ssl crt /etc/ssl/private/example.com.pem" >> /etc/haproxy/haproxy.cfg
+echo "blacklist module_name" | sudo tee /etc/modprobe.d/blacklist.conf
+echo "blacklist nouveau" | sudo tee /etc/modprobe.d/blacklist.conf
+echo "default arch" > /boot/loader/loader.conf
+echo "discharge" | sudo tee /sys/class/power_supply/BAT0/status
+echo "disk" | sudo tee /sys/power/state
+echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen
+echo "example.com { reverse_proxy localhost:8080 }" > /etc/caddy/Caddyfile
+echo "example.com { root * /var/www/html php_fastcgi unix//run/php-fpm/php-fpm.sock }" > /etc/caddy/Caddyfile
+echo "foo:1|c" | nc -u -w0 localhost 8125
+echo "frontend = "*:443"" > /etc/stud/stud.conf
+echo "mem" | sudo tee /sys/power/state
+echo "net.ipv4.ip_forward=1" | sudo tee /etc/sysctl.d/99-forwarding.conf
+echo "on" | sudo tee /sys/bus/usb/devices/usb1/power/control
+echo "package_name" >> /etc/pacman.conf
+echo "password" | pwscore
+echo "proxyAddress = "0.0.0.0"" > /etc/polipo/config
+echo "server { listen 80; server_name example.com; location / { proxy_pass http://localhost:3000; } }" > /etc/nginx/sites-available/example
+echo "show info" | sudo socat stdio /run/haproxy/admin.sock
+echo "stats" | nc localhost 2003
+echo "step_wise" | sudo tee /sys/class/thermal/thermal_zone0/policy
+echo "suspend" | sudo tee /sys/power/disk; echo "platform" | sudo tee /sys/power/state
+echo "title Arch Linux" > /boot/loader/entries/arch.conf
+echo "vboxdrv" | sudo tee /etc/modules-load.d/virtualbox.conf
+echo $DISPLAY
+echo $PATH
+echo $TERM
+echo '#!/bin/bash' > script.sh
+echo '#!/bin/bash\nawk \"{sum+=\$1} END {print sum}\" data.txt' > sum.sh
+echo '#!/bin/bash\nconvert \"$1\" -resize 50% \"small_$1\"' > resize_images.sh
+echo '#!/bin/bash\ncp \"$1\" \"$1.backup.$(date +%Y%m%d)\"' > safe_copy.sh
+echo '#!/bin/bash\necho \"CPU: $(lscpu | grep \"Model name\")\"\necho \"Memory: $(free -h)\"' > sysinfo.sh
+echo '#!/bin/bash\necho \Hello World\"' > hello.sh
+echo '#!/bin/bash\nfind /var/log -name \"*.log\" -mtime +30 -delete' > clean_logs.sh
+echo '#!/bin/bash\npdfunite \"$@\" merged.pdf' > merge_pdf.sh
+echo '#!/bin/bash\ntail -f /var/log/syslog | grep -i error' > monitor_errors.sh
+echo '#!/bin/bash\ntar -czf backup-$(date +%Y%m%d).tar.gz $1' > backup.sh
+echo '#!/bin/bash\nwget -c \"$1\" -O \"$2\"' > downloader.sh
+echo '#!/usr/bin/env python3\nprint(\"Hello Python\")' > hello.py
+echo 'API_KEY=secret' > .env
+echo 'DATABASE_URL=localhost' > .env
+echo 'HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)' | sudo tee /etc/mkinitcpio.conf
+echo 'example.com { reverse_proxy localhost:3000 }' | sudo tee /etc/caddy/Caddyfile
+echo 'export MYVAR=value' >> ~/.bashrc
+echo 'export PATH=$PATH:/home/user/bin' >> ~/.bashrc
+echo 'for i in {1..5}; do echo \"Number: $i\"; done' > count.sh
+echo 'hello world' > file.txt
+echo 'new line' >> file.txt
+echo 'vm.swappiness=10' | sudo tee -a /etc/sysctl.d/99-gaming.conf
+echo -e 'Acquire::http::Proxy \"http://proxy.example.com:8080\";\nAcquire::https::Proxy \"http://proxy.example.com:8080\";' | sudo tee /etc/apt/apt.conf.d/00proxy
+echo -e '\a'
+echo -e '\n[custom]\nServer = https://example.com/repo' >> /etc/pacman.conf
+echo 0 | sudo tee /proc/sys/kernel/randomize_va_space
+echo 0 | sudo tee /proc/sys/kernel/sched_autogroup_enabled
+echo 0 | sudo tee /proc/sys/kernel/timer_migration
+echo 0 | sudo tee /sys/class/powercap/intel-rapl/intel-rapl:0/energy_uj
+echo 0 | sudo tee /sys/class/rtc/rtc0/wakealarm
+echo 0 | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo
+echo 1 > /proc/sys/kernel/hrtimer
+echo 1 | sudo tee /proc/irq/10/smp_affinity
+echo 1 | sudo tee /proc/sys/kernel/sched_schedstats
+echo 1 | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo
+echo 1 | sudo tee /sys/power/pm_async
+echo 1 | sudo tee /sys/power/pm_print_times
+echo 10 | sudo tee /proc/sys/vm/dirty_background_ratio
+echo 10 | sudo tee /proc/sys/vm/swappiness
+echo 100 | sudo tee /proc/sys/kernel/timer_rate
+echo 100 | sudo tee /proc/sys/vm/vfs_cache_pressure
+echo 100000 | sudo tee /proc/sys/kernel/threads-max
+echo 1000000 | sudo tee /proc/sys/fs/file-max
+echo 1000000 | sudo tee /proc/sys/kernel/sched_rt_period_us
+echo 10000000 | sudo tee /sys/class/powercap/intel-rapl/intel-rapl:0/constraint_0_time_window_us
+echo 1024 | sudo tee /proc/sys/vm/nr_hugepages
+echo 15000000 | sudo tee /sys/class/powercap/intel-rapl/intel-rapl:0/constraint_0_power_limit_uw
+echo 1642245000 | sudo tee /sys/class/rtc/rtc0/wakealarm
+echo 2 | sudo tee /proc/sys/kernel/randomize_va_space
+echo 2 | sudo tee /proc/sys/vm/overcommit_memory
+echo 20 | sudo tee /proc/sys/vm/dirty_ratio
+echo 3 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+echo 500 | sudo tee /sys/class/backlight/intel_backlight/brightness
+echo 5000 | sudo tee /proc/sys/kernel/sched_cfs_bandwidth_slice_us
+echo 500000 | sudo tee /proc/sys/kernel/sched_migration_cost_ns
+echo 512 | sudo tee /sys/devices/system/node/node0/hugepages/hugepages-2048kB/nr_hugepages
+echo 524288 | sudo tee /proc/sys/fs/inotify/max_user_watches
+echo 65536 | sudo tee /proc/sys/vm/min_free_kbytes
+echo 80 | sudo tee /proc/sys/vm/overcommit_ratio
+echo 80 | sudo tee /sys/class/power_supply/BAT0/charge_control_end_threshold
+echo 80000 | sudo tee /sys/class/thermal/thermal_zone0/trip_point_0_temp
+echo 950000 | sudo tee /proc/sys/kernel/sched_rt_runtime_us
+echo always | sudo tee /sys/kernel/mm/transparent_hugepage/enabled
+echo deadline | sudo tee /sys/block/sda/queue/scheduler
+echo hpet | sudo tee /sys/devices/system/clocksource/clocksource0/current_clocksource
+echo lapic | sudo tee /sys/devices/system/clockevents/clockevent0/current_device
+echo never | sudo tee /sys/kernel/mm/transparent_hugepage/enabled
+echo tsc | sudo tee /sys/devices/system/clocksource/clocksource0/current_clocksource
+echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/null | openssl x509 -noout -dates
+ecryptfs-verify
+efibootmgr -v
+elasticsearch
+electerm
+element-desktop
+elixir
+elixir --version
+elixir script.exs
+elvish
+emacs
+emacs --version
+emacs -nw
+ember build --environment=production
+ember serve
+empathy
+emulator -avd test -no-audio -no-window
+encfs ~/.encrypted ~/decrypted
+ent random.bin
+env
+envoy --mode validate -c config.yaml
+envoy -c config.yaml
+erl
+erl -version
+es
+eslint --init
+eslint file.js
+eslint src/
+eslint src/ && prettier --check src/
+eslint src/ --fix
+eval "$(ssh-agent -s)"
+evolution
+exit
+export API_KEY=secret123
+export LD_LIBRARY_PATH=/opt/app/lib:$LD_LIBRARY_PATH
+export MYVAR=value
+export PATH=$PATH:/home/user/bin
+export PATH=$PATH:/new/path
+export TERM=xterm-256color
+export VAR_NAME=value
+export http_proxy=http://proxy.example.com:8080 && export https_proxy=http://proxy.example.com:8080
+fail2ban-client set sshd unbanip 1.2.3.4
+fail2ban-client status sshd
+faillock --user john
+falcon serve
+falcon-reload
+falcon-start
+falcon-stop
+fastapi dev app.py
+faunadb
+faunadb reload
+fc-cache -fv
+fc-list | head -20
+fc-match "Arial"
+fdupes -r .
+fdupes -r folder/
+feh
+ferdium
+fern-wifi-cracker
+ffmpeg
+ffmpeg -f video4linux2 -i /dev/video0 -frames 1 test.jpg
+ffmpeg -f x11grab -s 1920x1080 -i :0.0 output.mp4
+ffmpeg -i input.avi output.mp4
+ffmpeg -i input.flac -codec:a libmp3lame output.mp3
+ffmpeg -i input.mkv -codec copy output.mp4
+ffmpeg -i input.mov -vcodec h264 -acodec aac output.mp4
+ffmpeg -i input.mp3 output.wav
+ffmpeg -i input.mp4 -ss 00:00:10 -to 00:00:20 -c copy output.mp4
+ffmpeg -i input.mp4 output.mpg
+ffmpeg -i input.video output.mp4
+ffmpeg -i input.wav -codec:a libmp3lame output.mp3
+ffmpeg -i input.webm output.mp4
+ffmpeg -i video.mp4 -q:a 0 -map a audio.mp3
+ffmpeg -i video.mp4 -ss 00:00:10 -vframes 1 preview.jpg
+ffmpeg -i video.mp4 video.webm
+fg %1
+fiche
+figlet "Hello"
+file -i document.txt
+file -i filename
+file /usr/bin/bash
+file /usr/bin/bash | grep stripped
+file archive.gz | grep compressed
+file filename
+filebeat -c filebeat.yml
+filebeat reload
+find -L . -type l
+find . -atime -1/24
+find . -cmin -30
+find . -group groupname
+find . -iname "*.jpg"
+find . -mtime -1
+find . -name "*.conf" -ls
+find . -name "*.jpg" -exec cp {} /backup/ \+
+find . -name "*.log" -exec ls -lh {} \;
+find . -name "*.log" -mtime +7 | tar -czf oldlogs.tar.gz -T -
+find . -name "*.py"
+find . -name "*.tmp" -exec rm {} \;
+find . -name '*.py' | xargs wc -l
+find . -name '*.tmp' -delete
+find . -name '.env*'
+find . -name \*.h\""
+find . -name core -delete
+find . -path ./node_modules -prune -o -name "*.js" -print
+find . -regex ".*\.\(py\|sh\)$"
+find . -size +100M
+find . -size -1k
+find . -type d -empty
+find . -type d -empty -delete
+find . -type f -delete
+find . -type f -empty
+find . -type f -exec du -ch {} + | tail -1
+find . -type f -exec grep -l "pattern" {} \;
+find . -type f -mtime +30 -delete
+find . -type f -mtime +30 -exec gzip {} \;
+find . -type f -name "*.log" -size +1M -mtime +7
+find . -type f -perm 644
+find . -type f -size +100M -exec ls -lh {} \;
+find . -type f -size +100M | grep -v '.git'
+find . -type f | wc -l
+find . -type l
+find . -user username
+find . | cpio -o | gzip > archive.cpio.gz
+find / -name "core" -o -name "core.*" -delete 2>/dev/null
+find / -name "core" -o -name "core.*" 2>/dev/null
+find / -name filename 2>/dev/null
+find / -nouser -o -nogroup 2>/dev/null
+find / -perm -0002 -type f ! -path "/proc/*" 2>/dev/null
+find / -perm -4000 2>/dev/null
+find / -perm /4000 -type f 2>/dev/null
+find / -type f -perm /6000 -ls 2>/dev/null
+find / -type f -size +100M
+find / -type f -size +100M -exec ls -lh {} \; 2>/dev/null | sort -k5 -hr
+find / -type f -size +100M 2>/dev/null
+find / -type l -xtype l 2>/dev/null
+find /path -mtime -N
+find /path -name "pattern"
+find /path -name "pattern" -delete
+find /tmp -type f -atime +10 -delete
+find /usr -name "libc.so*"
+find /var/cache/pacman/pkg -type f | wc -l
+find /var/log -name "*.log" -exec gzip {} \;
+find /var/log -name "*.log" -mtime +30 -exec gzip {} \;
+find /var/log -type f -name "*.log" -mtime +30 -delete
+find ~ -name \*.cpp\""
+findmnt
+fio --name=test --ioengine=libaio --rw=randread --bs=4k --numjobs=1 --size=1G --runtime=60 --time_based --group_reporting
+firefox
+firefox --new-window http://localhost:3000
+firefox file://$(pwd)/file.html
+firefox http://localhost:3000
+firefox https://example.com
+firejail --version
+fish
+fish script.fish
+flameshot
+flask routes
+flask run
+flask run --debug
+flask run --host=0.0.0.0
+flask run --port=5000
+flink reload
+flink run -m localhost:8081 examples/streaming/WordCount.jar
+flink run /usr/share/flink/examples/streaming/WordCount.jar
+flink stop
+flowblade
+fluent-bit -c /etc/fluent-bit/fluent-bit.conf
+fluent-bit -c fluent-bit.conf
+fluent-bit reload
+fluentd --version
+fluentd -c /etc/fluent/fluent.conf
+fluentd -c fluent.conf
+fluffychat
+flutter create myapp
+flutter run
+flux bootstrap github --owner=my-github-username --repository=my-repository --branch=main --path=./clusters/my-cluster
+foot
+fortune
+fractal
+franz
+free -h
+free -m
+freefilesync
+freshclam
+froxlor install
+fscrypt setup
+fscrypt status
+function mkcd { mkdir -p "$1" && cd "$1"; }
+functionbeat -c functionbeat.yml
+functionbeat reload
+fuseiso image.iso /mnt
+fuseki-server --update --mem /ds
+futon
+g++ -O2 -march=native -pipe main.cpp -o program
+g++ -O3 -flto -march=native main.cpp -o program
+g++ -Og -g main.cpp -o program
+g++ -g -o program main.cpp
+g++ -j4 main.cpp -o program
+g++ -pg main.cpp -o program
+g++ -static main.cpp -o program
+gajim
+gallery-dl https://imgur.com/gallery/XXX
+gamemoderun steam
+gateway build
+gateway start
+gateway.sh reload
+gateway.sh start
+gateway.sh stop
+gatsby build
+gatsby develop
+gcc -g -o program file.c
+gcc -o program file.c
+gdb -c core.dump /usr/bin/program
+gdb ./my_program
+gearbox serve
+geary
+gedit filename.txt
+gem --version
+gem install gem-name
+gem list
+gem update
+genfstab -U /mnt >> /mnt/etc/fstab
+getcap -r / 2>/dev/null
+getconf CLK_TCK
+getconf PAGE_SIZE
+getenforce
+getfacl document.txt
+getfacl filename
+getfattr -d document.txt
+getfattr filename
+ghc
+ghc --version
+ghci
+ghost install local
+ghost start
+gifcurry
+gimp
+gio mount -l
+gist file.txt
+git --version
+git add -A
+git add -A && git commit -m \fix: adaptive layout\""
+git add -p
+git add .
+git add file.txt
+git am --signoff patch_file
+git am patch_file
+git archive --format=zip --output=repo.zip HEAD
+git bisect bad
+git bisect good commit_hash
+git bisect log
+git bisect reset
+git bisect run command
+git bisect start
+git blame -L 10, 20 script.sh
+git blame file.txt
+git branch
+git branch --merged
+git branch --no-merged
+git branch --set-upstream-to=origin/branch_name
+git branch --show-current
+git branch -D branch_name
+git branch -a
+git branch -d -r origin/branch_name
+git branch -d branch-name
+git branch -d branch_name
+git branch -m old_name new_name
+git branch -r
+git branch -v
+git branch -vv
+git branch branch_name
+git checkout -
+git checkout -- filename
+git checkout -b branch_name
+git checkout -b branch_name v1.0.0
+git checkout -b feature
+git checkout -b feature-branch
+git checkout -b feature/new-awesome-feature
+git checkout -b new-feature
+git checkout HEAD -- file.txt
+git checkout HEAD@{1}
+git checkout branch_name
+git checkout commit_hash -- file.txt
+git checkout main
+git checkout main && git merge feature/new-awesome-feature
+git checkout v1.0.0
+git cherry-pick --abort
+git cherry-pick --continue
+git cherry-pick commit_hash
+git cherry-pick start_commit^..end_commit
+git clean -X
+git clean -fd
+git clean -n
+git clean -xfd
+git clone --depth 1 https://github.com/user/repo.git
+git clone --recurse-submodules https://github.com/user/repo.git
+git clone --recursive https://github.com/user/repo.git
+git clone -b branch_name https://github.com/user/repo.git
+git clone -o upstream https://github.com/user/repo.git
+git clone https://aur.archlinux.org/package-name.git
+git clone https://github.com/archlinux/archlinux.org.git
+git clone https://github.com/user/repo.git
+git commit --amend
+git commit --amend --no-edit
+git commit -a -m "Commit message"
+git commit -m ""Update config""
+git commit -m "Commit message"
+git commit -m "Title" -m "Description"
+git commit -m 'Ð¿ÑÐ°Ð²ÐºÐ¸'
+git commit -m 'ÑÐ¸ÐºÑ Ð±Ð°Ð³Ð°'
+git config --global --list
+git config --global alias.co checkout
+git config --global core.editor "vim"
+git config --global credential.helper store
+git config --global http.proxy http://proxy.example.com:8080
+git config --global merge.tool "vimdiff"
+git config --global pull.rebase true
+git config --global user.email "email@example.com"
+git config --global user.name "Your Name"
+git config --global user.name 'Your Name'
+git config --list
+git config --local --list
+git count-objects -v
+git diff
+git diff --staged
+git diff HEAD~1
+git diff commit1 commit2
+git diff file.txt
+git fetch --all
+git fetch --prune
+git fetch origin
+git flow branch
+git flow feature finish feature_name
+git flow feature start feature_name
+git flow hotfix finish hotfix_name
+git flow hotfix start hotfix_name
+git flow init
+git flow release finish 1.0.0
+git flow release start 1.0.0
+git format-patch -1 commit_hash
+git format-patch -N
+git fsck
+git gc
+git gc --aggressive
+git help command
+git init
+git init --bare
+git log
+git log --author="Author Name"
+git log --author="Author" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }'
+git log --follow file.txt
+git log --graph --oneline
+git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+git log --grep="search string"
+git log --name-only --oneline | grep -vE "^[a-f0-9]{7}" | sort | uniq -c | sort -rn | head -20
+git log --oneline
+git log --oneline --graph
+git log --oneline --graph --all
+git log --oneline -n 10
+git log --oneline | grep 'feature'
+git log --pretty=format:"%an" | sort | uniq -c | sort -rn
+git log --since="2024-01-01" --until="2024-01-31"
+git log --stat
+git log -n 5
+git log -p
+git log commit1..commit2
+git merge --abort
+git merge --no-ff branch_name
+git merge --squash branch_name
+git merge branch_name
+git merge feature --no-ff
+git merge feature-branch
+git prune
+git pull --rebase origin branch_name
+git pull origin branch_name
+git pull origin main
+git push --force origin branch_name
+git push --tags origin
+git push -u origin branch_name
+git push origin --delete branch_name
+git push origin --delete v1.0.0
+git push origin --tags
+git push origin branch_name
+git push origin main
+git push origin v1.0.0
+git rebase --abort
+git rebase --continue
+git rebase --skip
+git rebase -i HEAD~5
+git rebase branch_name
+git reflog
+git reflog expire --expire=90.days.ago
+git reflog show branch_name
+git remote -v
+git remote add origin https://github.com/user/repo.git
+git remote get-url origin
+git remote remove origin
+git remote set-url origin https://github.com/user/newrepo.git
+git repack -a -d --depth=50 --window=100
+git repack -a -d -f --depth=50 --window=100
+git reset --hard commit_hash
+git reset --mixed commit_hash
+git reset --soft HEAD~1
+git reset --soft commit_hash
+git revert --abort
+git revert --continue
+git revert -m 1 merge_commit_hash
+git revert commit_hash
+git shortlog -sn
+git shortlog -sne
+git show --stat commit_hash
+git show -p commit_hash
+git show commit_hash
+git show v1.0.0
+git stash
+git stash --keep-index
+git stash -a
+git stash -u
+git stash apply stash@{0}
+git stash clear
+git stash drop stash@{0}
+git stash list
+git stash pop stash@{0}
+git stash save ""WIP""
+git stash save "Stash message"
+git stash show stash@{0}
+git status
+git status -s
+git status -sb
+git submodule add https://github.com/user/repo.git path
+git submodule deinit -f path && rm -rf .git/modules/path && git rm -f path
+git submodule foreach git pull origin main
+git submodule init
+git submodule status
+git submodule update
+git submodule update --init --recursive
+git tag
+git tag -a v1.0 -m ""Release 1.0""
+git tag -a v1.0.0 -m "Version 1.0.0"
+git tag -d v1.0.0
+git tag -n
+git tag v1.0.0
+git tag v1.0.0 commit_hash
+git worktree add ../hotfix hotfix-branch
+git worktree add ../new-branch branch_name
+git worktree list
+git worktree prune
+git worktree remove ../new-branch
+glances
+glxgears
+glxinfo | grep OpenGL
+glxinfo | grep renderer
+gnome-connections
+gnome-control-center
+gnome-control-center user-accounts
+gnome-disks
+gnome-screenshot
+gnome-terminal
+gnote
+gnuplot
+go
+go build -o program main.go
+go env
+go mod download
+go mod tidy
+go mod vendor
+go run main.go
+go test ./...
+go version
+gocryptfs -init ~/encrypted
+godot
+godot --create-project ./my-game
+gofmt -w .
+goland
+golangci-lint run
+google-chrome file://$(pwd)/file.html
+google-chrome http://localhost:8080
+google-chrome https://example.com
+google-drive-ocamlfuse ~/google-drive
+gparted
+gpasswd -a user group
+gpg --detach-sign --yes -u me@example.com package.pkg.tar.zst
+gpg --detach-sign file.txt
+gpg --export -a "John Doe" > public.key
+gpg --export -a "Name" > public.key
+gpg --full-generate-key
+gpg --gen-revoke "Name" > revoke.asc
+gpg --import key.asc
+gpg --import public.key
+gpg --keyserver hkps://keys.openpgp.org --recv-keys 4A5B1C5A5A49B30D
+gpg --list-keys
+gpg --list-secret-keys
+gpg --recv-keys KEY_ID
+gpg --sign file.txt
+gpg --verify document.txt.sig document.txt
+gpg --verify file.sig file.txt
+gpg --verify package.pkg.tar.zst.sig package.pkg.tar.zst
+gpg --version
+gpg -c file.txt
+gpg -c secret-file.txt
+gpg -d backup.tar.gz.gpg | tar -xzvf -
+gpg -d encrypted-file.gpg
+gpg -d file.txt.gpg > file.txt
+gpg -d secret.txt.gpg > secret.txt
+gpg -e -r "John Doe" secret.txt
+gpg -s document.txt
+gradle
+gradle --version
+grafana-cli --version
+grafana-cli admin reset-admin-password
+grafana-server
+grafana-server --homepath /usr/share/grafana
+greenshot
+grep "\bword\b" file.txt
+grep "pattern" *.py
+grep "pattern" file.txt | sort
+grep 'pattern' --exclude-dir={.git,node_modules} .
+grep 'pattern' --include='*.py' .
+grep 'pattern' file.txt
+grep 'pattern' file.txt | sort
+grep 'pattern' file.txt | sort | uniq
+grep 'pattern' file.txt | wc -l
+grep --color=always "pattern" file.txt
+grep --color=auto 'pattern' file.txt
+grep -A 3 -B 3 'pattern' file.txt
+grep -C 3 "pattern" file.txt
+grep -E "pattern" file
+grep -E 'regex_pattern' file.txt
+grep -I 'pattern' .
+grep -P "\d{3}-\d{3}" file.txt
+grep -c "pattern" file.txt
+grep -c 'pattern' file.txt
+grep -e "error" -e "fail" file.txt
+grep -i "url" /var/lib/pacman/sync/repo_name.db | head -1
+grep -i "warning" file.txt
+grep -i 'pattern' file.txt
+grep -l "pattern" *.txt
+grep -l 'pattern' ./*
+grep -n "pattern" file.txt
+grep -n 'pattern' file.txt | head -20
+grep -o "pattern" file.txt
+grep -o "pattern" file.txt | sort | uniq -c
+grep -r "TODO\|FIXME" src/
+grep -r "error" /var/log
+grep -r "text" /path
+grep -r "text" /path 2>/dev/null
+grep -r 'pattern' .
+grep -r \llama_kv_cache\" ."
+grep -r \malloc\" --include=\"*.c\" ."
+grep -rI "text" .
+grep -v "exclude" file.txt
+grep -v 'pattern' file.txt
+grep -w "word" file.txt
+grep -w 'word' file.txt
+grep \text\" filename"
+grim
+groovy
+groovy --version
+groovy script.groovy
+groups username
+grsync
+grub-install --target=i386-pc /dev/sda && grub-mkconfig -o /boot/grub/grub.cfg
+grunt
+grunt --help
+grunt task-name
+gsettings set org.gnome.desktop.background picture-uri file:///path/to/image.jpg
+gthumb
+guake
+guile
+guile script.scm
+gulp
+gulp --tasks
+gulp task-name
+gulp watch
+gunicorn app:app
+gunzip document.txt.gz
+gunzip file.txt.gz
+gzip -1 file.txt
+gzip -9 file.txt
+gzip -c file.txt > file.txt.gz
+gzip document.txt
+gzip file.txt
+hanami assets precompile
+hanami server
+handbrake
+haproxy -c -f haproxy.cfg
+haproxy -f haproxy.cfg
+hardinfo
+hashcat --version
+hashcat -m 0 -a 0 hashes.txt rockyou.txt
+haste file.txt
+haveged -v
+hbase-daemon.sh reload master
+hbase-daemon.sh start master
+hbase-daemon.sh stop master
+hdparm -T /dev/sda
+hdparm -Tt /dev/sda
+hdparm -t /dev/sda
+head -20 /etc/pacman.d/endeavouros-mirrorlist
+head -5 dataset.jsonl | jq .
+head -c 1024 file.txt
+head -n 10 file.txt
+head -n 10 filename
+head filename
+heartbeat -c heartbeat.yml
+heartbeat reload
+helm create chart_name
+helm dependency list chart_name
+helm dependency update chart_name
+helm get hooks release_name
+helm get manifest release_name
+helm get notes release_name
+helm get values release_name
+helm history release_name
+helm install elasticsearch elastic/elasticsearch
+helm install filebeat elastic/filebeat
+helm install grafana grafana/grafana
+helm install jaeger jaegertracing/jaeger
+helm install kibana elastic/kibana
+helm install loki grafana/loki
+helm install metricbeat elastic/metricbeat
+helm install prometheus prometheus-community/prometheus
+helm install rancher rancher-latest/rancher --namespace cattle-system --create-namespace --set hostname=rancher.example.com
+helm install release_name chart_name
+helm install tempo grafana/tempo
+helm lint chart_directory
+helm list
+helm package chart_directory
+helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
+helm repo add repo_name https://repo.example.com
+helm repo list
+helm repo remove repo_name
+helm repo update
+helm rollback release_name revision
+helm search repo keyword
+helm show chart chart_name
+helm show readme chart_name
+helm show values chart_name
+helm status release_name
+helm template release_name chart_directory
+helm uninstall release_name
+helm upgrade release_name chart_name
+helm version
+heron kill local ExclamationTopology
+heron submit local examples/heron-examples.jar com.twitter.heron.examples.ExclamationTopology ExclamationTopology
+hexchat
+hexdump -C /usr/bin/ls | head -20
+hexo generate
+hexo server
+history
+history -c
+history 10
+history | grep 'command'
+history | grep command
+history | grep ssh
+hive --service metastore
+hive --service reload
+host -a google.com
+host google.com
+hostname -I
+hping3 --flood --rand-source -p 80 target.com
+htop
+htop --only-running
+htop -d 5
+htop -s PERCENT_CPU
+htop -s PERCENT_MEM
+htpasswd -c /etc/squid/passwd myuser
+http GET https://api.example.com/data Authorization:"Bearer token"
+hue runserver
+hue syncdb
+hug -f app.py
+hugo
+hugo server -D
+hwclock --systohc
+hwclock -r
+hx
+hx --version
+hydra
+hydra -l admin -P passwords.txt example.com http-post-form "/login:username=^USER^&password=^PASS^:F=incorrect"
+hyper
+hypercorn app:app
+iconv -f ISO-8859-1 -t UTF-8 old.txt -o new.txt
+id
+idea
+idevice_id -l
+iex
+ifconfig
+ifconfig -a
+ifconfig eth0
+ifconfig eth0 192.168.1.100 netmask 255.255.255.0
+ifconfig eth0 down
+ifconfig eth0 up
+ifconfig eth0:0 192.168.1.101
+ifconfig eth0:0 down
+iftop
+iftop -i eth0
+ifuse /mnt/iphone
+ii
+impalad
+impalad reload
+imv
+influx
+influx -execute "CREATE DATABASE telegraf"
+influx -execute "SHOW DATABASES"
+influx version
+influxd
+influxd reload
+info --apropos=""file system""
+info coreutils
+inkscape
+inotifywait -m path
+input-leap
+insync
+integritysetup --version
+iodine -p 3000 -t 1 -w 1 app.ru
+iostat -d 1
+iostat -d 1 5
+iostat -x 1
+iostat -x 1 5
+iostat 1 5
+iotop
+ip -4 addr show
+ip -6 addr show
+ip -br addr show
+ip -d link show
+ip -d link show type geneve
+ip -d link show type ipvlan
+ip -d link show type macvlan
+ip -d link show type vxlan
+ip -f mpls route
+ip -s link show
+ip addr show
+ip addr show eth0
+ip link add link eth0 name eth0.10 type vlan id 10
+ip link add name br0 type bridge
+ip link del eth0.10
+ip link set eth0 address 00:11:22:33:44:55
+ip link set eth0 down
+ip link set eth0 master br0
+ip link set eth0 mtu 9000
+ip link set eth0 nomaster
+ip link set eth0 up
+ip link show eth0 | grep link/ether
+ip link show wlan0
+ip neigh add 192.168.1.100 lladdr 00:11:22:33:44:55 dev eth0
+ip neigh del 192.168.1.100 dev eth0
+ip neigh flush all
+ip neigh show
+ip netns add ns1
+ip netns del ns1
+ip netns exec ns1 ip addr show
+ip netns list
+ip route add 10.0.0.0/8 via 192.168.1.1
+ip route add default via 192.168.1.1
+ip route del 10.0.0.0/8
+ip route show
+ip route | grep default
+ip tunnel show
+ip vrf show
+ipcrm -m 12345
+ipcrm -q 12345
+ipcrm -s 12345
+ipcs -a
+ipcs -m
+ipcs -q
+ipcs -s
+iperf3 -c 192.168.1.100
+iperf3 -c server-ip
+iperf3 -s
+ipsec status
+ipython
+ipython --version
+irb
+irssi
+isoinfo -d -i backup.iso
+ispconfig setup
+istioctl proxy-status
+iwconfig
+j4-dmenu-desktop
+j4-dmenu-desktop --dmenu='dmenu -i -l 20'
+j4-dmenu-desktop --dmenu='rofi -dmenu'
+j4status
+j4status -c ~/.config/j4status/config.toml
+jaeger-all-in-one
+jaeger-all-in-one --collector.zipkin.host-port=:9411
+jaeger-all-in-one reload
+janusgraph.sh restart
+janusgraph.sh start
+janusgraph.sh stop
+java
+java -jar burpsuite.jar
+java -version
+java Main
+java Main.class
+javac -version
+javac Main.java
+jdownloader2
+jitsi-meet
+jmtpfs /mnt/android
+jobs -l
+john --format=raw-md5 hashes.txt
+john --version
+join file1 file2
+joplin
+journalbeat -c journalbeat.yml
+journalbeat reload
+journalctl --disk-usage
+journalctl --list-boots
+journalctl --since "-1 hour"
+journalctl --since "-10min"
+journalctl --since "2024-01-01" --until "2024-01-02"
+journalctl --since "today" --no-pager > today.log
+journalctl --since \1 hour ago\""
+journalctl --since today
+journalctl --vacuum-files=5
+journalctl --vacuum-size=500M
+journalctl --vacuum-time=2days
+journalctl -b
+journalctl -b -1
+journalctl -b 0 -k
+journalctl -b 2
+journalctl -f
+journalctl -f | grep test
+journalctl -fu nginx
+journalctl -k
+journalctl -k -f
+journalctl -o json
+journalctl -o json-pretty
+journalctl -o verbose
+journalctl -p alert
+journalctl -p crit
+journalctl -p crit..emerg
+journalctl -p debug
+journalctl -p emerg
+journalctl -p err
+journalctl -p err -b
+journalctl -p info
+journalctl -p notice
+journalctl -p warning
+journalctl -u nginx -n 50 -f
+journalctl -u service_name
+journalctl -u sshd
+journalctl -u sshd --since today
+journalctl -u sshd -b
+journalctl -u sshd -f
+journalctl -u sshd -p err
+journalctl -xe
+journalctl > logfile.txt
+journalctl > logs.txt
+journalctl | grep -i 'error'
+jpegoptim image.jpg
+jq -r '[.prompt, .completion] | @csv' dataset.jsonl > dataset.csv
+jq . dataset.jsonl > /dev/null && echo 'Valid'
+julia
+julia --version
+julia script.jl
+jupyter --version
+jupyter console
+jupyter notebook
+jx install
+k3d cluster create mycluster
+kafka-configs.sh --entity-type brokers --entity-name 0 --alter --add-config ""listeners=PLAINTEXT://:9092""
+kafka-console-consumer.sh --topic topic_name --from-beginning --bootstrap-server localhost:9092
+kafka-console-producer.sh --topic topic_name --bootstrap-server localhost:9092
+kafka-server-start.sh /etc/kafka/server.properties
+kafka-server-start.sh config/server.properties
+kafka-server-stop.sh
+kafka-topics.sh --create --topic topic_name --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+kafka-topics.sh --describe --topic topic_name --bootstrap-server localhost:9092
+kafka-topics.sh --list --bootstrap-server localhost:9092
+kafka-topics.sh --version
+kapacitor reload tasks
+kapacitord -config kapacitor.conf
+kata-runtime --version
+kazam
+kbackup
+kdeconnect-indicator
+kdenlive
+keepnote
+kgx
+kibana
+kill -9 -1234
+kill -CONT 1234
+kill -HUP $(cat alertmanager.pid)
+kill -HUP $(cat collectd.pid)
+kill -HUP $(cat cortex.pid)
+kill -HUP $(cat fluentd.pid)
+kill -HUP $(cat gunicorn.pid)
+kill -HUP $(cat logstash.pid)
+kill -HUP $(cat loki.pid)
+kill -HUP $(cat mimir.pid)
+kill -HUP $(cat netdata.pid)
+kill -HUP $(cat prometheus.pid)
+kill -HUP $(cat telegraf.pid)
+kill -HUP $(cat tempo.pid)
+kill -HUP 1234
+kill -KILL 1234
+kill -STOP 1234
+kill -TERM 1234
+kill 1234
+kill PID
+killall firefox
+killall process_name
+kind create cluster
+kitty
+kmail
+knife node show webserver
+kong reload
+kong start
+kong stop
+konsole
+konversation
+kotlin
+kotlin -version
+kotlinc -script script.kts
+kotlinc main.kt -include-runtime -d main.jar
+krdc
+krfb
+krita
+ksh
+ksnip
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.yaml
+kubectl apply -f https://github.com/fluxcd/flux2/releases/latest/download/install.yaml
+kubectl apply -f https://github.com/kubevirt/kubevirt/releases/download/v0.59.0/kubevirt-operator.yaml
+kubectl apply -f https://github.com/minio/operator/releases/latest/download/minio-operator.yaml
+kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
+kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/cloud/deploy.yaml
+kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/v1.4.0/deploy/longhorn.yaml
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.7/config/manifests/metallb-native.yaml
+kubectl apply -f https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
+kubectl apply -f manifest.yaml
+kubectl cluster-info
+kubectl config get-contexts
+kubectl config set-context --current --namespace=my-namespace
+kubectl config use-context context_name
+kubectl config view
+kubectl create deployment nginx --image=nginx
+kubectl create namespace argocd && kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl create namespace crossplane-system && kubectl apply -f https://raw.githubusercontent.com/crossplane/crossplane/master/install.yaml
+kubectl create namespace my-namespace
+kubectl delete -f manifest.yaml
+kubectl delete deployment nginx
+kubectl describe pod pod_name
+kubectl exec -it pod -- bash
+kubectl exec -it pod_name -- /bin/bash
+kubectl expose deployment nginx --port=80
+kubectl get configmaps
+kubectl get deployments
+kubectl get events
+kubectl get namespaces
+kubectl get nodes
+kubectl get pods
+kubectl get pods --all-namespaces
+kubectl get secrets
+kubectl get services
+kubectl logs -f pod_name
+kubectl logs pod_name
+kubectl port-forward service/nginx 8080:80
+kubectl scale deployment nginx --replicas=3
+kubectl top nodes
+kubectl top pods
+kubectl version
+kubectl version --short
+kvirc
+kylin.sh reload
+kylin.sh start
+kylin.sh stop
+lapce
+last
+last -n 20
+lastb
+lastb | grep sshd
+laverna
+lcpu | grep Virtualization
+ldd /usr/bin/bash
+ldd /usr/bin/customapp | grep "not found"
+lein
+lein --version
+lein ring server
+lein ring uberjar
+lein run
+lein uberjar
+less filename
+lessc --clean-css styles.less styles.css
+lessc --source-map styles.less styles.css
+lessc styles.less styles.css
+libreoffice --headless --convert-to docx file.pdf
+libreoffice --headless --convert-to pdf input.docx
+lighthouse http://localhost:3000 --view
+lighttpd -f /etc/lighttpd/lighttpd.conf
+lighttpd -s /etc/lighttpd/lighttpd.conf
+lighttpd -t -f /etc/lighttpd/lighttpd.conf
+lilyterm
+litespeed
+live-server
+lives
+livy-server reload
+livy-server start
+livy-server stop
+ln -s target linkname
+ln -s targetfile linkname
+ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
+ln target linkname
+locale
+localectl list-keymaps
+localectl set-locale LANG=en_US.UTF-8
+localectl status
+localsend
+logger "Test message"
+logseq
+logstash --version
+logstash -f logstash.conf
+loki -config.file=/etc/loki/loki.yml
+loki -config.file=loki.yml
+losetup -a
+ls
+ls --color=auto
+ls --color=never
+ls --group-directories-first
+ls -1
+ls -1 | wc -l
+ls -F
+ls -F | grep '*$'
+ls -Q
+ls -R
+ls -R | grep \:$\" | sed -e 's/:$//' -e 's/[^-][^\\/]*\\//--/g' -e 's/^/ /' -e 's/-/|/'"
+ls -Z
+ls -a
+ls -d */
+ls -d .*
+ls -g
+ls -i
+ls -l
+ls -l --checksum
+ls -l --si
+ls -l /etc/localtime
+ls -l | awk '{sum += $5} END {print sum}'
+ls -lR
+ls -lS
+ls -lS | head -10
+ls -lSR
+ls -lX
+ls -la
+ls -la --time-style=+%D | grep $(date +%D)
+ls -la /dev/random
+ls -la /etc/pacman.d/endeavouros-mirrorlist
+ls -la | awk '$5 > 1000000 {print $9}'
+ls -la | file -f -
+ls -la | grep '^----------'
+ls -la | grep '^-rwx'
+ls -la | grep '^l'
+ls -lc
+ls -lh
+ls -lr
+ls -lt
+ls -lt | head -10
+ls -ltr
+ls -lu
+ls -m
+ls -n
+ls -s
+ls /boot/vmlinuz*
+ls /dev/video*
+ls /etc/udev/rules.d/
+ls /sys/class/power_supply/
+ls /sys/devices/system/node/
+ls /sys/firmware/efi
+ls /sys/firmware/efi/efivars/
+ls | grep pattern
+ls | sort
+ls | tar -czf archive.tar.gz -T -
+lsattr document.txt
+lsattr filename
+lsblk
+lsblk -a
+lsblk -f
+lsblk -o NAME, SIZE, TYPE, MOUNTPOINT
+lscpu
+lscpu | grep NUMA
+lshw
+lshw -html > hardware.html
+lshw -short
+lsmod
+lsmod | grep amdgpu
+lsmod | sort -k 2 -n
+lsns
+lsof
+lsof -c firefox
+lsof -i
+lsof -i -a -p 1234
+lsof -i -sTCP:LISTEN
+lsof -i :80
+lsof -p 1234
+lsof /var/log/syslog
+lsof | wc -l
+lspci
+lspci -k
+lspci -t
+lspci -v
+lspci -vv | grep -A 5 "LnkSta"
+lspci | grep -i vga
+lsscsi
+lsscsi -g
+lsscsi -s
+lsusb
+lsusb -t
+lsusb -v
+lsusb -v | less
+lswsctrl reload
+lswsctrl stop
+lua
+lua -v
+lua script.lua
+luarocks
+luarocks --version
+luckybackup
+lvcreate -L 20G -n root vg0 && lvcreate -L 8G -n swap vg0 && lvcreate -l 100%FREE -n home vg0
+lxc exec container -- bash
+lxc list
+lxc-ls
+lxd version
+lxterminal
+lynis audit system
+lz4 -d document.txt.lz4
+lz4 document.txt
+mahout
+mailspring
+maim
+make
+make && ./build/myapp
+make -j$(nproc)
+make -j4
+make -j4 VERBOSE=1
+make -j4 build
+make -j4 clean all
+make -j4 target_name
+makemkv
+makepkg
+makepkg --clean
+makepkg --cleanbuild
+makepkg --install
+makepkg --printsrcinfo
+makepkg --printsrcinfo > .SRCINFO
+makepkg --syncdeps
+makepkg -i
+makepkg -s
+makepkg -si
+makepkg -sr
+man -k "network"
+man -t bash | ps2pdf - > bash.pdf
+man 5 passwd
+man ascii
+man command-name
+mangohud %command%
+masscan --version
+mate-terminal
+matlab -version
+mattermost-desktop
+maxima
+maxima --version
+md5sum *.iso
+md5sum -c checksum.md5
+md5sum file.txt
+md5sum image.iso
+megasync
+meinheld app:app
+memcached
+memtester 1G 1
+metricbeat -c metricbeat.yml
+metricbeat reload
+micro
+micro --version
+microk8s enable dashboard dns registry istio
+mimikatz.exe
+mimir -config.file=/etc/mimir/mimir.yml
+mimir -config.file=mimir.yml
+minikube start
+minikube start --driver=docker
+mitmproxy --mode transparent --showhost
+mitmweb
+mix phx.server
+mix release
+mkdir -p $HOME/.kube && sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config && sudo chown $(id -u):$(id -g) $HOME/.kube/config
+mkdir -p /etc/traefik && cp /usr/share/traefik/traefik.example.yml /etc/traefik/traefik.yml
+mkdir -p path/to/newdir
+mkdir -p project/{src,include,test,docs}
+mkdir -p ~/.config/mpv/scripts && cp /usr/share/mpv/scripts/* ~/.config/mpv/scripts/
+mkdir new-project
+mkdir newdir
+mkdir Ð½Ð¾Ð²Ð°Ñ-Ð¿Ð°Ð¿ÐºÐ°
+mkfs.btrfs -L arch /dev/sda2
+mkfs.ext4 /dev/mapper/cryptroot
+mkfs.ext4 /dev/vg0/root && mkswap /dev/vg0/swap && mkfs.ext4 /dev/vg0/home
+mkinitcpio -L
+mkinitcpio -P
+mkisofs -b boot.img -o bootable.iso /path/to/dir
+mkisofs -o image.iso /path/to/dir
+mksh
+mksquashfs source destination.squashfs
+mlr --ijsonl --ocsv cat dataset.jsonl > dataset.csv
+mocp
+modinfo -p vboxdrv
+modinfo ext4
+modinfo module_name
+mogrify -resize 50% *.jpg
+mokutil --sb-state
+mongo
+mongo --eval "db.createCollection('cache')"
+mongo --version
+mongod --dbpath /data/db
+mongod --dbpath /path/to/data
+mongod --dbpath /var/lib/mongodb --fork --logpath /var/log/mongodb/mongod.log
+mongod --reload
+mongod --shutdown
+mongodump --db database_name --out /backup/path
+mongorestore --db database_name /backup/path/database_name
+monkey -c /etc/monkey/monkey.conf
+moonlight
+morepath_run app
+mosh user@host
+mount -o compress=zstd,subvol=@ /dev/sda2 /mnt
+mount -o loop image.iso /mnt
+mount -t ecryptfs
+mount -t ecryptfs source target
+mount /dev/mapper/cryptroot /mnt
+mount /dev/sda1 /mnt/boot/efi
+mount /dev/vg0/root /mnt && swapon /dev/vg0/swap && mkdir /mnt/home && mount /dev/vg0/home /mnt/home
+mount | column -t
+mount | grep /dev/sda1
+mount | grep barrier
+mount | grep discard
+mount | grep noatime
+mount | grep relatime
+mpstat -P ALL
+mpstat -P ALL 1 1
+mpstat -P ALL 1 5
+mpstat 1
+mpstat 1 5
+mpv
+msfconsole
+msfconsole -v
+mutt
+mv *.txt documents/
+mv -b file.txt destination/
+mv -f file.txt destination/
+mv -i file.txt destination/
+mv -i oldname newname
+mv -p file.txt destination/
+mv -v file.txt destination/
+mv -v oldname newname
+mv file.txt /path/to/directory/
+mv olddir/ newdir/
+mv oldname newname
+mv oldname.txt newname.txt
+mvn
+mvn --version
+mvn archetype:generate
+mvn compile
+mvn package
+mvn spring-boot:run
+mvn test
+mxnet
+mypy myapp/
+mysql
+mysql --version
+mysql -V
+mysql -u root -p -e "CREATE DATABASE cache; USE cache; CREATE TABLE cache_data (cache_key VARCHAR(255) PRIMARY KEY, cache_value LONGBLOB, cache_expiration INT);"
+mysql -u username -p
+mysql -u username -p database_name < backup.sql
+mysql.server restart
+mysql.server start
+mysql.server stop
+mysqladmin processlist
+mysqladmin reload
+mysqladmin shutdown
+mysqladmin status
+mysqladmin variables
+mysqld
+mysqldump -u username -p database_name > backup.sql
+nagios --version
+nagios -d /etc/nagios/nagios.cfg
+nagios -s /etc/nagios/nagios.cfg
+nagios -v /etc/nagios/nagios.cfg
+namcap PKGBUILD
+namcap package.pkg.tar.zst
+nano
+nano --version
+nano filename
+nautilus .
+nc -l -p 8000 < backup.tar.gz
+nc -l -p 9999
+nc -zv hostname port
+nc -zv localhost 8080
+nc 192.168.1.100 8000 > backup.tar.gz
+nc termbin.com 9999 < file.txt
+ncdu
+ncdu /path
+ncmpcpp
+neo4j restart
+neo4j start
+neo4j stop
+neomutt
+netdata
+netstat -i
+netstat -rn
+netstat -tulpn
+newrelic-admin status
+newrelic-daemon
+nextcloud
+nft list ruleset
+ng build
+ng serve
+ng test
+nginx
+nginx -V
+nginx -s reload
+nginx -s stop
+nginx -t
+nginx -v
+nheko
+nice -n 19 command
+nifi.sh reload
+nifi.sh start
+nifi.sh stop
+nikto -Version
+nikto -h example.com
+ninja -j4
+nitroshare
+nixnote
+nm /usr/bin/ls
+nm-connection-editor
+nmap --script vuln localhost
+nmap --script vuln target-ip
+nmap -F 192.168.1.0/24
+nmap -V
+nmap -p 80,443,22 remote-host
+nmap -sP 192.168.1.0/24
+nmap -sS 192.168.1.1
+nmap -sS localhost
+nmap -sV -sC example.com
+nmap -sV 192.168.1.1
+nmap -sn 192.168.1.0/24
+nmcli connection add type ethernet ifname eth0 con-name MyEth
+nmcli connection delete MyEth
+nmcli connection show --active
+nmcli device disconnect wlan0
+nmcli device status
+nmcli device wifi connect MyWifi password MyPass
+nmcli device wifi list
+node
+node --inspect app.js
+node --prof app.js
+node --trace-events-enabled app.js
+node --version
+node app.js
+node script.js
+node server.js
+nodemon server.js
+nodetool reload
+nodetool stopdaemon
+nohup myapp &
+notable
+notes-up
+npm --version
+npm audit
+npm audit fix
+npm cache clean --force
+npm config set proxy http://proxy.example.com:8080 && npm config set https-proxy http://proxy.example.com:8080
+npm init -y
+npm install
+npm install --save-dev package-name
+npm install -g directus
+npm install -g npm
+npm install -g package-name
+npm install -g typescript
+npm install package-name
+npm list
+npm list -g --depth=0
+npm outdated
+npm run
+npm run build
+npm run dev
+npm run docs:build && npm run docs:deploy
+npm run script-name
+npm run serve
+npm run test:coverage
+npm start
+npm test
+npm uninstall package-name
+npm update
+nproc
+npx @11ty/eleventy
+npx @11ty/eleventy --serve
+npx artillery quick --count 100 --num 10 http://localhost:3000
+npx astro build
+npx create-react-app my-app
+npx create-strapi-app my-project --quickstart
+npx eslint .
+npx grunt
+npx gulp
+npx knex migrate:latest
+npx next build
+npx next dev
+npx nuxt build
+npx parcel build index.html
+npx react-native init MyApp
+npx react-native run-android
+npx remix build
+npx rollup -c
+npx serve docs/
+npx svelte-kit build
+npx tsc --noEmit
+npx tsx script.ts
+npx typedoc --out docs src/
+npx vite build
+npx webpack build
+nsenter --version
+nslookup -type=MX google.com
+nslookup domain.com
+nslookup google.com
+nsxiv
+nu
+numactl --hardware
+numactl --interleave=all python3 script.py
+numactl --localalloc python3 script.py
+numactl --membind=0 --cpunodebind=0 python3 script.py
+numactl --preferred=1 python3 script.py
+numactl --show
+numastat
+nvidia-smi
+nvim
+nvim --version
+nxplayer
+nyx
+nyx -i
+objdump -d /usr/bin/ls
+objdump -f /usr/bin/ls | grep architecture
+objdump -g /usr/bin/program
+obs
+obsidian
+ocaml script.ml
+octave
+octave --version
+octave-cli --version
+olive-editor
+ollama pull llama2
+ollama run llama2 'ÐÐ°Ð¿Ð¸ÑÐ¸ hello world Ð½Ð° Rust'
+ollama serve
+onedrive
+oozied.sh reload
+oozied.sh start
+oozied.sh stop
+opennlp
+openshift-install create cluster
+openshot-qt
+openssl crl -in crl.pem -noout -text
+openssl dhparam -check -in dhparams.pem
+openssl dhparam -out dhparams.pem 2048
+openssl ocsp -issuer issuer.pem -cert cert.pem -url http://ocsp.example.com
+openssl rand -base64 32
+openssl req -new -newkey rsa:2048 -nodes -keyout domain.key -out domain.csr
+openssl req -x509 -newkey rsa:2048 -nodes -keyout domain.key -out domain.csr
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
+openssl rsa -in domain.key -check
+openssl s_client -connect example.com:443
+openssl s_client -connect example.com:443 -servername example.com < /dev/null
+openssl s_client -connect example.com:443 2>/dev/null | openssl x509 -noout -dates
+openssl s_client -connect example.com:443 2>/dev/null | openssl x509 -noout -text
+openssl s_client -connect example.com:443 < /dev/null
+openssl s_client -connect example.com:443 </dev/null
+openssl verify -CAfile ca-bundle.crt cert.pem
+openssl x509 -in cert.pem -out cert.der -outform DER
+optipng image.png
+orientdb.sh restart
+orientdb.sh start
+orientdb.sh stop
+oscap info /usr/share/xml/scap/ssg/content/ssg-rhel7-ds.xml
+oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_standard --results scan.xml /usr/share/xml/scap/ssg/content/ssg-rhel7-ds.xml
+osh
+otel-collector
+otel-collector --config /etc/otel-collector/config.yaml
+otel-collector --version
+otel-collector reload
+paccache -r
+paccache -rk3
+paccache -ruk0
+paccheck --md5sum --quiet
+pacgraph -c
+pacgraph -r package_name
+pacgraph -t
+packetbeat -c packetbeat.yml
+packetbeat reload
+paclog
+paclog --last 10
+paclog --pkg package_name
+pacman --asexplicit package_name
+pacman --disable repo_name -Syu
+pacman -Dk
+pacman -F /usr/bin/firefox
+pacman -Fl package_name
+pacman -Q
+pacman -Q package-name
+pacman -Q | grep linux
+pacman -Q | wc -l
+pacman -Qc package-name
+pacman -Qdt
+pacman -Qdtt
+pacman -Qe
+pacman -Qe | wc -l
+pacman -Qeq > explicit.txt
+pacman -Qi firefox
+pacman -Qi firefox | grep Depends
+pacman -Qi firefox | grep Size
+pacman -Qi git
+pacman -Qi package-name
+pacman -Qi package_name
+pacman -Qi package_name | grep "Build Date"
+pacman -Qi package_name | grep "Install Date"
+pacman -Qi package_name | grep "Install Reason"
+pacman -Qi package_name | grep "Validated By"
+pacman -Qi package_name | grep Architecture
+pacman -Qi package_name | grep Conflicts
+pacman -Qi package_name | grep Depends
+pacman -Qi package_name | grep Groups
+pacman -Qi package_name | grep Licenses
+pacman -Qi package_name | grep Optional
+pacman -Qi package_name | grep Provides
+pacman -Qi package_name | grep Replaces
+pacman -Qi package_name | grep Required
+pacman -Qi package_name | grep Size
+pacman -Qi package_name | grep URL
+pacman -Qi | awk '/^Name/ {name=$3} /^Installed Size/ {print name " : " $4$5}'
+pacman -Qi | awk '/^Name/ {name=$3} /^Installed Size/ {print name ": " $4$5}' | tail -n +2
+pacman -Qi | awk '/^Name/ {name=$3} /^Installed Size/ {print name, $4,$5}' | sort -k2 -n
+pacman -Qi | grep 'Installed Size' | awk '{sum+=$4} END {print sum " MiB"}'
+pacman -Qii firefox | grep ^MODIFIED
+pacman -Qk
+pacman -Qk package_name
+pacman -Qkk
+pacman -Qkk 2>&1 | grep -i conflict
+pacman -Qkq | grep -v "OK$"
+pacman -Ql firefox
+pacman -Ql package-name
+pacman -Ql package_name
+pacman -Qm
+pacman -Qm | wc -l
+pacman -Qmq > foreign.txt
+pacman -Qn
+pacman -Qo /path/to/file
+pacman -Qo /usr/bin/firefox
+pacman -Qo /usr/bin/python
+pacman -Qq > fullpkglist.txt
+pacman -Qq | wc -l
+pacman -Qqe > pkglist.txt
+pacman -Qqm
+pacman -Qs python
+pacman -Qs search_term
+pacman -Qu
+pacman -Qu | grep linux
+pacman -R package_name
+pacman -Rns $(pacman -Qdtq)
+pacman -Rns package_name
+pacman -Rs package_name
+pacman -S $(pacman -Qnq)
+pacman -S - < pkglist.txt
+pacman -S --dbonly $(pacman -Qq)
+pacman -S --needed package_name
+pacman -S archlinux-keyring
+pacman -S package1 package2 package3
+pacman -S package_name
+pacman -Sc
+pacman -Scc
+pacman -Sdd package_name
+pacman -Sg
+pacman -Sg gnome
+pacman -Sg group_name
+pacman -Si package-name
+pacman -Si package_name
+pacman -Si package_name | grep "Download Size"
+pacman -Si package_name | grep "Last Updated"
+pacman -Si package_name | grep "Out-of-date"
+pacman -Si package_name | grep Description
+pacman -Si package_name | grep Maintainer
+pacman -Si package_name | grep Repository
+pacman -Si package_name | grep Version
+pacman -Ss c++
+pacman -Ss pdf
+pacman -Ss python
+pacman -Ss search_term
+pacman -Sw package_name
+pacman -Sy
+pacman -Sy --force
+pacman -Syu
+pacman -U /path/to/package.pkg.tar.zst
+pacman -U /var/cache/pacman/pkg/package-oldver.pkg.tar.zst
+pacman -V
+pacman-conf
+pacman-conf --repo-list
+pacman-conf repo_name | grep Server
+pacman-key --add key.pub
+pacman-key --delete keyid
+pacman-key --init
+pacman-key --lsign-key keyid
+pacman-key --populate archlinux
+pacman-key --refresh-keys
+pacman-key -l
+pacstrap /mnt base base-devel linux linux-firmware
+pacstrap /mnt base base-devel linux linux-firmware efibootmgr
+pacstrap /mnt base base-devel linux-raspberrypi linux-raspberrypi-headers
+pacstrap /mnt base linux linux-firmware networkmanager nano vim
+pacstrap /mnt base linux linux-firmware openssh networkmanager
+pactl info
+pactl list sinks short
+pactl set-default-sink alsa_output.pci-0000_00_1b.0.analog-stereo
+pactl set-sink-mute @DEFAULT_SINK@ toggle
+pactl set-sink-volume @DEFAULT_SINK@ +10%
+pactree -g package_name
+pactree -r glibc
+pactree -r package_name
+pactree firefox
+pactree package_name
+padrino rake assets:precompile
+padrino start
+pandoc document.md -o document.html
+pandoc document.md -o document.html --template template.html
+pandoc document.md -o document.pdf
+pandoc document.md -o document.pdf --pdf-engine=xelatex
+pandoc input.html -o output.md -t markdown
+pandoc input.md -o output.html
+pantheon-terminal
+parcel build index.html
+parcel index.html
+parsecd
+partitionmanager
+paru --version
+paru -S package_name
+paru -Sc
+paru -Ss search_term
+paru -Syu
+pass generate email/gmail 20
+pass insert email/gmail
+pass ls
+pass show email/gmail
+pass version
+passenger start
+passenger stop
+passwd
+paste
+pastebinit file.txt
+patch file.txt < patch.diff
+pavucontrol
+pdflatex document.tex
+pdflatex document.tex && bibtex document && pdflatex document.tex && pdflatex document.tex
+pdflatex presentation.tex
+pdftoppm input.pdf output -png
+pdftotext input.pdf output.txt
+peek
+perf record ./program && perf report
+perl
+perl --version
+perl script.pl
+pg_ctl reload
+pg_ctl restart
+pg_ctl start
+pg_ctl status
+pg_ctl stop
+pg_dump -U username database_name > backup.sql
+pg_dump database_name > backup.sql
+pg_dump mydb > backup.sql
+pgbench -U username -d database_name -T 60 -c 10
+pgrep process-name
+photoprism config
+php
+php --version
+php -S localhost:8000
+php -a
+php -m
+php -v
+php artisan optimize
+php artisan serve
+php script.php
+phpstorm
+pidgin
+ping -D 8.8.8.8
+ping -M do -s 1500 8.8.8.8
+ping -M do -s 1500 example.com
+ping -c 10 -q 8.8.8.8
+ping -c 3 8.8.8.8
+ping -c 4 8.8.8.8
+ping -c 4 host
+ping -c 5 example.com
+ping -i 2 8.8.8.8
+ping -s 1472 8.8.8.8
+ping 8.8.8.8
+ping archlinux.org
+ping example.com
+ping google.com
+ping keys.openpgp.org
+ping server.com
+pinot-admin ReloadServer
+pinot-admin StartServer
+pinot-admin StopServer
+pio-reload-all
+pio-start-all
+pio-stop-all
+pip check package_name
+pip download package_name
+pip freeze
+pip freeze > requirements.txt
+pip install --extra-index-url https://pypi.org/simple package_name
+pip install --index-url https://pypi.org/simple package_name
+pip install --no-binary :all: package_name
+pip install --no-deps package_name
+pip install --only-binary :all: package_name
+pip install --proxy http://proxy:port package_name
+pip install --retries 5 package_name
+pip install --timeout 60 package_name
+pip install --trusted-host pypi.org package_name
+pip install --upgrade package_name
+pip install --upgrade pip
+pip install -e /path/to/package
+pip install -r requirements.txt
+pip install /path/to/package
+pip install alembic
+pip install bandit
+pip install beautifulsoup4
+pip install black
+pip install chromadb
+pip install datasets
+pip install django
+pip install fastapi[all]
+pip install flask
+pip install git+https://github.com/user/repo.git
+pip install isort
+pip install jupyter
+pip install library-name
+pip install magic-wormhole
+pip install matplotlib
+pip install mypy
+pip install numpy
+pip install openai
+pip install opencv-python
+pip install package-name
+pip install package_name
+pip install package_name==1.0.0
+pip install pandas
+pip install pinecone-client
+pip install plotly
+pip install pre-commit
+pip install ptpython
+pip install pydantic
+pip install pylint
+pip install pytest
+pip install requests
+pip install safety
+pip install scikit-learn
+pip install seaborn
+pip install sqlalchemy
+pip install tensorflow
+pip install torch torchvision torchaudio
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+pip install torch transformers datasets
+pip install transformers
+pip list
+pip list --outdated
+pip search package_name
+pip show -f package_name
+pip show package_name
+pip uninstall package_name
+pip3 --version
+pip3 list
+pitivi
+pkg audit
+pkgfile nano
+pkill airflow
+pkill alertmanager
+pkill appd-controller
+pkill asgiref
+pkill auditbeat
+pkill beam
+pkill bjoern
+pkill carbon-cache.py
+pkill chronograf
+pkill collectd
+pkill cortex
+pkill couchbase-server
+pkill couchdb
+pkill crate
+pkill daphne
+pkill dgraph
+pkill druid
+pkill dynatrace
+pkill elasticsearch
+pkill falcon
+pkill fastapi
+pkill faunadb
+pkill filebeat
+pkill firefox
+pkill fluent-bit
+pkill fluentd
+pkill functionbeat
+pkill gearbox
+pkill grafana-server
+pkill gunicorn
+pkill heartbeat
+pkill hive
+pkill hue
+pkill hug
+pkill hypercorn
+pkill impalad
+pkill influxd
+pkill iodine
+pkill jaeger-all-in-one
+pkill journalbeat
+pkill kapacitord
+pkill kibana
+pkill logstash
+pkill loki
+pkill mahout
+pkill meinheld
+pkill memcached
+pkill metricbeat
+pkill mimir
+pkill monkey
+pkill morepath_run
+pkill mxnet
+pkill nagios
+pkill netdata
+pkill newrelic-daemon
+pkill opennlp
+pkill otel-collector
+pkill packetbeat
+pkill process-name
+pkill process_name
+pkill prometheus
+pkill pserve
+pkill puma
+pkill python
+pkill quart
+pkill rackup
+pkill rainbows
+pkill samza
+pkill sanic
+pkill singa
+pkill spark
+pkill starlette
+pkill statsd
+pkill superset
+pkill systemml
+pkill telegraf
+pkill tempo
+pkill thanos
+pkill tika-server
+pkill timescaledb
+pkill traefik
+pkill uima
+pkill unicorn
+pkill unomi
+pkill uvicorn
+pkill vector
+pkill victoria-metrics-prod
+pkill vxquery
+pkill waitress-serve
+pkill wayang
+pkill zabbix_agentd
+pkill zabbix_server
+pkill zipkin-server
+ploi init
+pmap 1234
+pmount /dev/sda1
+pnpm
+pnpm --version
+pnpm add package-name
+pnpm init
+pnpm install
+pnpm run script-name
+pnpm start
+pocketbase serve
+podman build -t image_name .
+podman exec -it container_name /bin/bash
+podman images
+podman info
+podman logs container_name
+podman pod create --name mypod
+podman pod list
+podman pod rm mypod
+podman pod start mypod
+podman pod stats
+podman pod stop mypod
+podman ps
+podman ps -a
+podman pull nginx
+podman push image_name
+podman rm container_name
+podman rmi image_name
+podman run -d --name microshift -p 6443:6443 -p 80:80 -p 443:443 quay.io/microshift/microshift-aio
+podman run -d --name mycontainer nginx
+podman run -it ubuntu bash
+podman run -it ubuntu:latest
+podman start container_name
+podman stop container_name
+podman version
+polari
+posh
+postcss input.css -o output.css
+postcss input.css -o output.css --config postcss.config.js
+postcss input.css -o output.css --watch
+postgres -D /var/lib/postgres/data
+potrace input.png -s -o output.svg
+powerstat -d 0
+prctl no_new_privs=1
+prettier --check src/
+prettier --write file.js
+prettier --write src/
+printenv
+profanity
+prometheus --config.file=/etc/prometheus/prometheus.yml
+prometheus --config.file=prometheus.yml
+prometheus --version
+promtool check config prometheus.yml
+ps -T -p 1234
+ps -eLf | wc -l
+ps -ef --forest
+ps -eo pid, comm, etime
+ps -eo pid, comm, lstart
+ps -eo pid, comm, pcpu, pmem --sort=-pcpu
+ps aux
+ps aux --sort=-%cpu | head -5
+ps aux --sort=-%mem | head
+ps aux --sort=-%mem | head -5
+ps aux --sort=-rss | head -10
+ps aux | grep "process"
+ps aux | grep 'Z'
+ps aux | grep 'process-name'
+ps aux | grep -E '(crypto|miner|backdoor)'
+ps aux | grep defunct
+ps aux | grep python
+ps eww -p 1234
+pserve development.ini
+psql
+psql --version
+psql -U username -d database_name
+psql -U username -d database_name < backup.sql
+psql -c "SELECT count(*) FROM pg_stat_activity;"
+psql mydb < backup.sql
+pstree
+pstree -a
+pstree -p
+pstree username
+ptpython
+pug --watch templates/ --out dist/
+pug template.pug --pretty
+pug template.pug -o output.html
+puma -C puma.rb
+puppet --version
+puppet agent --test
+pvcreate /dev/sda2
+pwd
+pwqcheck
+pwsh
+pwsh --version
+pwsh script.ps1
+pycharm
+pycharm .
+pylint myapp/
+pytest
+pytest --benchmark-autosave
+pytest --benchmark-calibration
+pytest --benchmark-calibration-compare=calibration.json
+pytest --benchmark-calibration-disable
+pytest --benchmark-calibration-disable-gc
+pytest --benchmark-calibration-group-by=all
+pytest --benchmark-calibration-group-by=class
+pytest --benchmark-calibration-group-by=fullfunc
+pytest --benchmark-calibration-group-by=fullname
+pytest --benchmark-calibration-group-by=func
+pytest --benchmark-calibration-group-by=group
+pytest --benchmark-calibration-group-by=module
+pytest --benchmark-calibration-group-by=name
+pytest --benchmark-calibration-group-by=param
+pytest --benchmark-calibration-histogram=calibration_histogram
+pytest --benchmark-calibration-iterations=100
+pytest --benchmark-calibration-json=calibration.json
+pytest --benchmark-calibration-max-time=1.0
+pytest --benchmark-calibration-name=calibration
+pytest --benchmark-calibration-only-overwrite
+pytest --benchmark-calibration-precision=1e-6
+pytest --benchmark-calibration-rounds=10
+pytest --benchmark-calibration-save=calibration
+pytest --benchmark-calibration-skip
+pytest --benchmark-calibration-sort=mean
+pytest --benchmark-calibration-timer=time.perf_counter
+pytest --benchmark-calibration-verbose
+pytest --benchmark-calibration-warmup-iterations=5
+pytest --benchmark-compare
+pytest --benchmark-compare=benchmark.json
+pytest --benchmark-disable
+pytest --benchmark-disable-gc
+pytest --benchmark-group-by=all
+pytest --benchmark-group-by=class
+pytest --benchmark-group-by=fullfunc
+pytest --benchmark-group-by=fullname
+pytest --benchmark-group-by=func
+pytest --benchmark-group-by=group
+pytest --benchmark-group-by=module
+pytest --benchmark-group-by=name
+pytest --benchmark-group-by=param
+pytest --benchmark-histogram=histogram
+pytest --benchmark-json=benchmark.json
+pytest --benchmark-max-time=1.0
+pytest --benchmark-min-rounds=5
+pytest --benchmark-name=benchmark
+pytest --benchmark-only
+pytest --benchmark-only-overwrite
+pytest --benchmark-rounds=10
+pytest --benchmark-save=benchmark
+pytest --benchmark-skip
+pytest --benchmark-sort=mean
+pytest --benchmark-timer=time.perf_counter
+pytest --benchmark-verbose
+pytest --benchmark-warmup
+pytest --benchmark-warmup-iterations=5
+pytest --cov=module_name
+pytest --ff
+pytest --html=report.html
+pytest --junitxml=report.xml
+pytest --lf
+pytest --maxfail=3
+pytest --memray
+pytest --pdb
+pytest --profile
+pytest --random-order
+pytest --random-order-seed=42
+pytest --stepwise
+pytest --tb=short
+pytest --timeout=30
+pytest -benchmark-calibration-columns=min, max, mean, stddev, median
+pytest -benchmark-columns=min, max, mean, stddev, median
+pytest -m "not slow"
+pytest -n 4
+pytest -n auto
+pytest -q
+pytest -s
+pytest -v
+pytest -x
+pytest test_file.py::test_function
+python
+python -B script.py
+python -I script.py
+python -O script.py
+python -R script.py
+python -S script.py
+python -W all script.py
+python -W error script.py
+python -X dev script.py
+python -X faulthandler script.py
+python -X showrefcount script.py
+python -X tracemalloc script.py
+python -X utf8 script.py
+python -c \import json
+python -c \import package_name\""
+python -d script.py
+python -i script.py
+python -m cProfile script.py
+python -m http.server 8000
+python -m http.server 8080
+python -m module.name
+python -m module_name
+python -m pdb script.py
+python -m py_compile script.py
+python -m pytest
+python -m pytest --cov
+python -m pytest --cov=myapp tests/
+python -m pytest tests/
+python -m unittest discover
+python -m venv --prompt "MyEnv" venv
+python -m venv --system-site-packages venv
+python -m venv --upgrade venv
+python -m venv venv
+python -v script.py
+python app.py
+python convert.py models/original/ --outtype f16
+python manage.py createsuperuser
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+python manage.py runserver 0.0.0.0:8000
+python manage.py runserver 8080
+python manage.py showmigrations
+python manage.py test
+python quantize.py models/f16.gguf models/q4.gguf q4_0
+python script.py
+python web2py.py
+python3
+python3 --version
+python3 -c "from datasets import load_dataset; dataset = load_dataset('glue', 'mrpc')"
+python3 -c "from torch.utils.data import DataLoader; loader = DataLoader(dataset, batch_size=32 shuffle=True)"
+python3 -c "from torchvision import datasets; dataset = datasets.CIFAR10(root='./data', train=True download=True)"
+python3 -c "from transformers import AutoModel; model = AutoModel.from_pretrained('bert-base-uncased')"
+python3 -c "from transformers import Trainer, TrainingArguments; trainer = Trainer(model=model args=training_args)"
+python3 -c "from transformers import pipeline; classifier = pipeline('sentiment-analysis')"
+python3 -c "from transformers import pipeline; generator = pipeline('text-generation'. model='gpt2'); print(generator('Hello '))"
+python3 -c "import csv, Json, sys; data=json.load(open(sys.argv[1])); w=csv.DictWriter(open(sys.argv[2], 'w'), data[0].keys()); w.writeheader(); w.writerows(data)" input.json output.csv
+python3 -c "import csv, json, sys; data=list(csv.DictReader(open(sys.argv[1]))); json.dump(data, open(sys.argv[2], 'w'), indent=2)" input.csv output.json
+python3 -c "import impacket; print(impacket.__version__)"
+python3 -c "import pandas as pd; df = pd.read_csv('data.csv')"
+python3 -c "import pandas as pd; pd.read_csv('input.csv').to_excel('output.xlsx', index=False)"
+python3 -c "import torch.nn as nn; import torch.optim as optim; criterion = nn.CrossEntropyLoss(); optimizer = optim.Adam(model.parameters())"
+python3 -c "import xmltodict, json, sys; data=json.load(open(sys.argv[1])); with open(sys.argv[2, 'w') as f: f.write(xmltodict.unparse(data, pretty=True))" input.json output.xml
+python3 -c "import xmltodict, json, sys; with open(sys.argv[1]) as f: data=xmltodict.parse(f.read()); json.dump(data, open(sys.argv[2], 'w'), indent=2)" input.xml output.json
+python3 -c "import yaml, json, sys; data=json.load(open(sys.argv[1])); yaml.dump(data, open(sys.argv[2], 'w'), default_flow_style=False)" input.json output.yaml
+python3 -c "import yaml, json, sys; data=yaml.safe_load(open(sys.argv[1])); json.dump(data, open(sys.argv[2], 'w'), indent=2)" input.yaml output.json
+python3 -c "model.eval(); with torch.no_grad(): outputs = model(inputs)"
+python3 -c "model.load_state_dict(torch.load('model.pth'))"
+python3 -c "torch.save(model.state_dict(), 'model.pth')"
+python3 -m http.server
+python3 -m http.server --directory /share 8000
+python3 -m http.server 8000
+python3 /usr/share/doc/impacket/examples/smbserver.py
+python3 app.py
+python3 script.py
+python3.9 -m venv venv
+qemu-img convert -f raw -O qcow2 disk.img disk.qcow2
+qemu-img resize disk.img +10G
+qmake && make
+qmake -project
+qownnotes
+qtcreator
+qterminal
+quart run
+quassel
+questdb.sh reload
+questdb.sh restart
+questdb.sh start
+questdb.sh stop
+quodlibet
+quota -v
+quota -vg
+rabbitmqctl add_user username password
+rabbitmqctl cluster_status
+rabbitmqctl delete_queue queue_name
+rabbitmqctl list_bindings
+rabbitmqctl list_exchanges
+rabbitmqctl list_queues
+rabbitmqctl list_users
+rabbitmqctl purge_queue queue_name
+rabbitmqctl set_permissions -p / username ".*" ".*" ".*"
+rabbitmqctl status
+rabbitmqctl version
+racket
+rackup
+rails db:migrate
+rails new project-name
+rails server
+rails server -p 3000
+rainbows -c rainbows.rb
+rambox
+ranger-admin reload
+ranger-admin start
+ranger-admin stop
+rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
+rawtherapee
+rc
+rclone config
+rclone mount remote:path ~/mountpoint
+readelf -d /usr/bin/bash | grep NEEDED
+reaver --version
+reaver -i wlan0mon -b MAC -vv
+reboot
+redis-cli
+redis-cli config get *
+redis-cli config rewrite
+redis-cli config set parameter value
+redis-cli del key
+redis-cli flushall
+redis-cli flushdb
+redis-cli get key
+redis-cli info
+redis-cli info clients
+redis-cli info memory
+redis-cli info stats
+redis-cli keys *
+redis-cli ping
+redis-cli set key value
+redis-cli shutdown
+redis-server
+rednotebook
+reflector --country US --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+reflector --fastest 5 --save /etc/pacman.d/mirrorlist
+reflector --latest 20 --country US --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+reflector --latest 20 --protocol https --sort rate
+reflector --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+remmina
+renice -n 10 -p 1234
+reset
+responder --version
+responder -I eth0
+restic --repo /path/to/repo backup ~/Documents
+restic init --repo /path/to/repo
+rhythmbox
+riak reload
+riak start
+riak stop
+rider
+riot-desktop
+ripme
+rm -f *.aux *.log *.out *.toc *.bbl *.blg
+rm -i file.txt
+rm -r folder/
+rm -rf /* # ÐÐÐÐ¡ÐÐ! ÐÐ ÐÐ«ÐÐÐÐÐ¯Ð ÐÐÐ ÐÐÐÐ¢ÐÐÐ ÐÐÐÐÐÐ¯
+rm -rf directory
+rm -rf folder/
+rm -rf folder/*
+rm -rf node_modules && npm install
+rm -rf venv
+rm -rf ~/.local/share/Trash/*
+rm file.txt
+rmdir emptydir
+rngd -v
+rngtest < /dev/random
+rnote
+rocketchat-desktop
+rollup -c
+rollup -c -w
+route -n
+route add default gw 192.168.1.1
+route del -net 10.0.0.0 netmask 255.0.0.0
+roxterm
+rslsync
+rspec
+rstudio
+rstudio --version
+rsync -av --link-dest=/path/to/previous/ /source/ /backup/current/
+rsync -av --progress source/ destination/
+rsync -av source/ destination/
+rsync -avz ./dist/ user@server:/var/www/
+rsync -avz source/ destination/
+ruby --version
+ruby app.rb
+ruby script.rb
+rubymine
+runc --version
+runghc script.hs
+runsc --version
+rustc --version
+rustdesk
+rustup component add clippy
+rxvt
+sage
+sage --version
+sakura
+salt '*' test.ping
+salt --version
+samza
+sanic app.app
+sar -d 1 5
+sash
+sass --watch input.scss:output.css
+sass --watch src/styles:dist/css
+sass input.scss output.css
+sass input.scss output.css --source-map
+sass input.scss output.css --style=compressed
+sbcl --script script.lisp
+sbt
+sbt --version
+sbt assembly
+sbt dist
+sbt run
+scala
+scala -version
+scala script.scala
+scp -r dir/ user@host:/remote/
+scrcpy
+screen
+screen -S mysession
+script session.log
+scriptreplay timing.txt session.log
+scrot
+scrot screenshot.png
+seafile-applet
+seafile-setup
+seccomp-tools dump /proc/self/status
+sed '/^$/d' file.txt
+sed '/pattern/d' file.txt
+sed '5a\new line' file.txt
+sed '5c\new content' file.txt
+sed '5i\new line' file.txt
+sed 's/old/new/g' file.txt
+sed -f script.sed
+sed -i '/^#\[multilib\]/{n;s/^#//}' /etc/pacman.conf
+sed -i 's/old/new/g' filename
+sed -i.bak 's/old/new/g' file.txt
+sed -n '10, 20p' file.txt
+sensors
+sensors | grep -i temp
+sensors | grep Core
+sestatus
+set
+setcap cap_net_raw+ep /usr/bin/ping
+setfacl -b document.txt
+setfacl -b filename
+setfacl -d -m u:john:rwx /shared
+setfacl -d -m u:username:rw directory
+setfacl -m u:john:rwx document.txt
+setfacl -m u:username:rw filename
+setfacl -x u:john document.txt
+setfacl -x u:username filename
+setfattr -n user.comment -v "Important" document.txt
+setfattr -n user.comment -v "Important" filename
+setfattr -x user.comment document.txt
+setfattr -x user.comment filename
+setxkbmap -layout us
+sftp user@example.com
+sh <(curl https://raw.githubusercontent.com/usmannasir/cyberpanel/stable/preInstall.sh)
+sh cwp-latest
+sh kloxo-installer.sh
+sha1sum file.txt
+sha256sum file.txt
+sha512sum file.txt
+shopt
+shopt -s option
+shopt -u option
+shotcut
+shotwell
+show collections
+show dbs
+showmount -e 192.168.1.100
+shuf -n 1 /usr/share/fortune/*
+shutdown -c
+shutdown -h +10
+shutdown -h now
+shutdown -r +5
+shutter
+sic
+signal-desktop
+simplenote
+simplescreenrecorder
+singa
+skopeo --version
+skopeo copy docker://nginx docker://localhost:5000/nginx
+skopeo inspect docker://nginx
+skopeo list-tags docker://nginx
+skopeo version
+skypeforlinux
+slabtop
+slack
+sleep 30 &
+sleep 5 && echo ""Done""
+slowhttptest -c 1000 -H -g -o slow_read -i 10 -r 200 -t GET -u http://localhost -x 24 -p 3
+slowloris --sleeptime 1 --https target.com
+smackctl
+smbclient -L 192.168.1.100 -U user
+smplayer
+smuxi
+snap install microk8s --classic
+snort -V
+snowpack build
+snowpack dev
+solr
+sort -f file.txt
+sort -k1, 1 -k2, 2n data.txt
+sort -k2,2 data.txt
+sort -m file1.txt file2.txt
+sort -n numbers.txt
+sort -r file.txt
+sort file.txt
+sort filename
+sostat
+source .venv/bin/activate
+source venv/bin/activate
+source ~/.bashrc
+spark-submit --class org.apache.spark.examples.SparkPi --master local[*] /usr/share/spark/examples/jars/spark-examples_*.jar 10
+spark-submit --class org.apache.spark.examples.SparkPi --master local[*] examples/jars/spark-examples_2.12-3.2.1.jar 10
+speaker-test -c 2 -t wav
+spectacle
+speedtest-cli
+split -b 100M backup.tar.gz "backup.tar.gz.part"
+split -b 100M bigfile.iso part_
+split -l 1000 bigfile.txt chunk_
+splunk
+splunk reload
+splunk start
+splunk stop
+splunk version
+spotify
+spyder
+spyder --version
+sqlite3
+sqlite3 -header -csv database.db 'SELECT * FROM table;' > data.csv
+sqlite3 database.db
+sqlite3 database.db "SELECT * FROM table;" > output.csv
+sqlite3 database.db < query.sql
+sqlmap --version
+sqlmap -u "http://example.com/page.php?id=1"
+squid -f /etc/squid/squid.conf
+squid -k parse -f /etc/squid/squid.conf
+squid -k reconfigure
+ss -4
+ss -6
+ss -a
+ss -ltn
+ss -lun
+ss -s
+ss -t
+ss -t state established
+ss -to
+ss -tp
+ss -tulpn
+ss -u
+ssh -D 1080 user@example.com
+ssh -G example.com
+ssh -G hostname
+ssh -L 8080:localhost:80 user@example.com
+ssh -L 8080:localhost:8080 user@remote
+ssh -R 2222:localhost:22 user@example.com
+ssh -T git@github.com
+ssh -p 2222 user@example.com
+ssh user@hostname
+ssh user@server 'sudo systemctl restart nginx'
+ssh user@server 'tail -f /var/log/nginx/error.log'
+ssh-add -l
+ssh-add ~/.ssh/id_ed25519
+ssh-copy-id -i ~/.ssh/id_ed25519 user@host
+ssh-copy-id -i ~/.ssh/id_ed25519.pub user@example.com
+ssh-keygen -R example.com
+ssh-keygen -t ed25519 -C "laptop"
+ssh-keygen -t ed25519 -C "me@example.com"
+ssh-keygen -t ed25519 -C 'your_email@example.com'
+ssh-keygen -t rsa -b 4096
+sshfs user@host:/path /mnt
+st
+stack
+stack --version
+stack exec -- happstack-example
+stack exec -- miku-example
+stack exec -- scotty-example
+stack exec -- servant-example
+stack exec -- snap-example
+stack exec -- spock-example
+stack exec -- wai-example
+stack exec -- warp-example
+stack exec -- yesod devel
+standardnotes
+starlette app:app
+startx
+stat -c %U:%G filename
+stat -c %a filename
+stat -fc %T /sys/fs/cgroup
+stat filename
+statsd config.js
+steamlink
+stenographer --version
+storm kill topology-name
+storm nimbus
+storm reload
+strawberry
+stress --cpu 4 --timeout 30s
+stress --vm 2 --vm-bytes 1G --timeout 30s
+stress-ng --cpu 0 --io 4 --vm 2 --vm-bytes 1G --timeout 5m
+strings /usr/bin/ls | head -20
+stylus --compress style.styl
+stylus --watch style.styl
+stylus style.styl
+su -
+su - username
+subl
+subl --version
+sudo -u forgejo forgejo web
+sudo -u git gitea -c /etc/gitea/app.ini web
+sudo -u git gogs web
+sudo -u onedev onedev start
+sudo -u postgres createdb myapp
+sudo -u postgres initdb --locale en_US.UTF-8 -D '/var/lib/postgres/data'
+sudo -u postgres psql -c "CREATE TABLE cache (key VARCHAR PRIMARY KEY, value TEXT, expires TIMESTAMP);"
+sudo -u solr /usr/bin/solr create -c archcore
+sudo ./easyrsa build-ca nopass
+sudo ./easyrsa gen-dh
+sudo ./easyrsa gen-req server nopass
+sudo ./easyrsa sign-req server server
+sudo /usr/local/lsws/admin/misc/admpass.sh
+sudo /usr/share/webmin/setup.sh
+sudo a2enmod proxy proxy_http proxy_balancer lbmethod_byrequests
+sudo aa-status
+sudo aide --check
+sudo aide --init
+sudo aide --update
+sudo ajenti-ipc v
+sudo apparmor_status
+sudo arp-scan --localnet
+sudo atop
+sudo auditbeat setup --dashboards
+sudo auditctl -l
+sudo auditctl -w /etc/passwd -p wa
+sudo auditctl -w /etc/passwd -p wa -k passwd_changes
+sudo ausearch -m USER_LOGIN -ts today
+sudo badblocks -nsv /dev/sda
+sudo badblocks -v /dev/device
+sudo badblocks -v /dev/sda
+sudo badblocks -v /dev/sda 2>&1 | grep -i bad
+sudo badblocks -v /dev/sda > badblocks.txt
+sudo badblocks -v /dev/sda1 > badblocks.txt
+sudo badblocks -wsv /dev/sda
+sudo bamboo start
+sudo blockdev --getalignoff /dev/sda
+sudo blockdev --getbsz /dev/sda
+sudo blockdev --getra /dev/sda
+sudo blockdev --setra 4096 /dev/sda
+sudo brctl addbr br0
+sudo brctl addif br0 eth0
+sudo btrfs filesystem show
+sudo btrfs subvolume create /mnt/data
+sudo btrfs subvolume create /mnt/subvol
+sudo btrfs subvolume list /
+sudo btrfs subvolume snapshot /mnt/data /mnt/data-snapshot
+sudo btrfs subvolume snapshot /mnt/data /mnt/snapshot
+sudo buildbot create-master /var/lib/buildbot/master
+sudo cat /proc/meminfo
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+sudo cat /var/lib/tor/hidden_service/hostname
+sudo cdrecord backup.iso
+sudo cfdisk
+sudo chattr +a /var/log/secure
+sudo chattr +i /etc/passwd
+sudo chattr -a /var/log/secure
+sudo chattr -i /etc/passwd
+sudo chkrootkit
+sudo chmod -R 755 /etc /usr /bin 2>/dev/null
+sudo chmod u+s /usr/bin/program
+sudo chown -R http:http /usr/share/webapps/drupal/sites/default
+sudo chown -R http:http /usr/share/webapps/joomla
+sudo chown -R http:http /usr/share/webapps/mediawiki
+sudo chown -R http:http /usr/share/webapps/nextcloud
+sudo chown -R http:http /usr/share/webapps/owncloud
+sudo chown -R http:http /usr/share/webapps/wordpress
+sudo chown user:group file.txt
+sudo clamscan -r /home
+sudo command
+sudo community-beats setup
+sudo concourse web
+sudo cp /boot/initramfs-linux-backup.img /boot/initramfs-linux.img
+sudo cp /boot/initramfs-linux.img /boot/initramfs-linux-backup.img
+sudo cp /etc/haproxy/haproxy.cfg.example /etc/haproxy/haproxy.cfg
+sudo cp /etc/ipsec.conf.example /etc/ipsec.conf
+sudo cp /etc/squid/squid.conf.default /etc/squid/squid.conf
+sudo cp /etc/varnish/default.vcl.example /etc/varnish/default.vcl
+sudo cp /usr/share/openvpn/examples/server.conf /etc/openvpn/server/
+sudo cp /usr/share/webapps/drupal/sites/default/default.settings.php /usr/share/webapps/drupal/sites/default/settings.php
+sudo cp /usr/share/webapps/joomla/configuration.php-dist /usr/share/webapps/joomla/configuration.php
+sudo cp /usr/share/webapps/mediawiki/config/LocalSettings.php.example /usr/share/webapps/mediawiki/config/LocalSettings.php
+sudo cp /usr/share/webapps/nextcloud/config/config.sample.php /usr/share/webapps/nextcloud/config/config.php
+sudo cp /usr/share/webapps/owncloud/config/config.sample.php /usr/share/webapps/owncloud/config/config.php
+sudo cp /usr/share/webapps/wordpress/wp-config-sample.php /usr/share/webapps/wordpress/wp-config.php
+sudo cpupower frequency-set -d 800MHz
+sudo cpupower frequency-set -g performance
+sudo cpupower frequency-set -g powersave
+sudo cpupower frequency-set -u 3.5GHz
+sudo cryptsetup close encrypted
+sudo cryptsetup luksDump /dev/sda1
+sudo cryptsetup luksFormat /dev/sda1
+sudo cryptsetup open /dev/sda1 cryptroot
+sudo cryptsetup open /dev/sda1 encrypted
+sudo datadog-agent status
+sudo date -s "2024-01-15 10:30:00"
+sudo dd if=/dev/sda1 of=sb_backup bs=1024 count=1
+sudo dd if=/dev/zero of=/dev/sda bs=512 count=1 # ÐÐ ÐÐ¢ÐÐ§ÐÐ¡ÐÐ ÐÐÐÐ¡ÐÐ
+sudo dd if=/dev/zero of=/swapfile bs=1024 count=2097152 && sudo chmod 600 /swapfile && sudo mkswap /swapfile && sudo swapon /swapfile
+sudo dd if=/dev/zero of=/swapfile bs=1M count=4096
+sudo dd if=/dev/zero of=/tmp/test bs=1M count=1024 oflag=direct
+sudo dd if=archlinux.iso of=/dev/sdb bs=4M status=progress
+sudo dd if=sb_backup of=/dev/sda1 bs=1024 count=1 seek=0
+sudo ddrescue /dev/sda /dev/sdb mapfile
+sudo debsums -c
+sudo dmesg | tail -20
+sudo docker ps
+sudo drone server
+sudo du -sh /*
+sudo e2fsck -c -c /dev/sda1
+sudo e2fsck -c /dev/sda1
+sudo e2fsck -l badblocks.txt /dev/sda1
+sudo e2label /dev/sda1
+sudo e2label /dev/sda1 DATA
+sudo e4defrag -c /dev/sda1
+sudo e4defrag /dev/sda1
+sudo efibootmgr -b 0001 -B
+sudo efibootmgr -c -d /dev/sda -p 1 -L "Arch" -l /vmlinuz-linux -u "root=UUID=xxx rw initrd=/initramfs-linux.img"
+sudo efibootmgr -n 0001
+sudo efibootmgr -o 0001,0002,0003
+sudo extundelete /dev/sda1 --restore-all
+sudo fail2ban-client status
+sudo fallocate -l 2G /swapfile
+sudo fallocate -l 2G /swapfile && sudo chmod 600 /swapfile && sudo mkswap /swapfile
+sudo fc-cache -fv
+sudo fdisk -l
+sudo fdisk -l /dev/sda | grep heads
+sudo fdisk /dev/sda
+sudo fdisk /dev/sda # ÐÐÐÐ¡ÐÐ! Ð ÐÐÐ Ð£Ð¨ÐÐÐÐ Ð ÐÐÐÐÐÐÐ
+sudo firewall-cmd --add-port=80/tcp --permanent
+sudo firewall-cmd --list-all
+sudo firewall-cmd --reload
+sudo foremost -t jpg,pdf,doc -i /dev/sda1
+sudo freedombox-setup
+sudo fsarchiver savefs backup.fsa /dev/sda1
+sudo fsck -N /dev/sda1
+sudo fsck -f /dev/sda1
+sudo fsck /dev/device
+sudo fsck /dev/sda1
+sudo fstrim --all
+sudo fstrim -v /
+sudo functionbeat setup --dashboards
+sudo fuser -k /mnt/disk
+sudo fuser -m /mnt/disk
+sudo gdisk -l /dev/sda
+sudo gitlab-ctl reconfigure
+sudo gocd start
+sudo groupadd groupname
+sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+sudo grub-reboot "Windows Boot Manager" && sudo reboot
+sudo hal deploy apply
+sudo hddtemp /dev/sda
+sudo hdparm -B /dev/sda
+sudo hdparm -B 127 /dev/sda
+sudo hdparm -C /dev/sda
+sudo hdparm -I /dev/sda | grep -i ncq
+sudo hdparm -I /dev/sda | grep -i speed
+sudo hdparm -I /dev/sda | grep -i trim
+sudo hdparm -M /dev/sda
+sudo hdparm -M /dev/sda | grep -i acoustic
+sudo hdparm -S 120 /dev/sda
+sudo hdparm -Tt /dev/sda
+sudo hdparm -W /dev/sda
+sudo hdparm -W0 /dev/sda
+sudo hdparm -W1 /dev/sda
+sudo hdparm -X /dev/sda
+sudo hdparm -X udma5 /dev/sda
+sudo hdparm -d /dev/sda
+sudo hdparm -d0 /dev/sda
+sudo hdparm -d1 /dev/sda
+sudo hdparm -g /dev/sda
+sudo hdparm -tT /dev/sda
+sudo hparm -B 128 /dev/sda
+sudo hwclock --hctosys
+sudo hwclock --set --date="2024-01-15 10:30:00"
+sudo hwclock --systohc
+sudo iftop
+sudo iftop -i eth0
+sudo iotop
+sudo ip link add link eth0 name eth0.10 type vlan id 10
+sudo ip link set down # ÐÐÐ¢ÐÐ Ð¯ Ð¡ÐÐ¢Ð
+sudo ip neigh flush all
+sudo ip route add 192.168.2.0/24 via 192.168.1.1
+sudo ip route del 192.168.2.0/24
+sudo ip tunnel add gre1 mode gre remote 10.0.0.2 local 10.0.0.1 ttl 255
+sudo ipsec pki --gen --type rsa --size 4096 --outform pem > ca-key.pem
+sudo ipsec pki --self --ca --lifetime 365 --in ca-key.pem --type rsa --dn "CN=VPN CA" --outform pem > ca-cert.pem
+sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+sudo iptables -A INPUT -s 1.2.3.4 -j DROP
+sudo iptables -A INPUT -s 192.168.1.100 -j DROP
+sudo iptables -L -n -v
+sudo iptables-restore < /etc/iptables/iptables.rules
+sudo iptables-save > /etc/iptables/iptables.rules
+sudo iscsiadm -m discovery -t st -p 192.168.1.100
+sudo iscsiadm -m node -T iqn.2024-01.example.com:storage -p 192.168.1.100 -l
+sudo iscsiadm -m session
+sudo iwconfig wlan0 | grep -i quality
+sudo iwlist wlan0 scan | grep ESSID
+sudo java -jar /usr/share/java/jenkins/jenkins.war
+sudo john --show /etc/shadow
+sudo journalctl --disk-usage
+sudo journalctl --vacuum-time=2weeks
+sudo journalctl -f
+sudo journalctl -u ssh -f
+sudo journalctl -u tor -f
+sudo kill -9 $(lsof -t -i:8080)
+sudo killall -9 * # ÐÐÐÐ¡ÐÐ ÐÐÐ¯ Ð¡ÐÐ¡Ð¢ÐÐÐ«
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+sudo lastb
+sudo lldpctl
+sudo ln -s /etc/nginx/sites-available/example /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/mysite /etc/nginx/sites-enabled/
+sudo locale-gen
+sudo localectl set-keymap us
+sudo localectl set-locale LANG=en_US.UTF-8
+sudo localectl set-locale LANG=locale
+sudo logrotate -d /etc/logrotate.conf
+sudo logrotate -f /etc/logrotate.conf
+sudo losetup -d /dev/loop0
+sudo losetup -fP disk.img
+sudo lsof -i :80
+sudo lsof -i :8080
+sudo lsof /var/log/syslog
+sudo lsscsi -g
+sudo lvcreate -L 10G -n lv0 vg0
+sudo lvextend -L +5G /dev/vg0/lv0
+sudo lvs
+sudo lynis audit system
+sudo mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+sudo mdadm --assemble /dev/md0 /dev/sda1 /dev/sdb1
+sudo mdadm --create /dev/md0 --level=1 --raid-devices=2 /dev/sda1 /dev/sdb1
+sudo mdadm --detail /dev/md0
+sudo mdadm --stop /dev/md0
+sudo metricbeat modules enable system
+sudo mkdir -p /data/db && sudo chown -R mongodb:mongodb /data/db
+sudo mkfs.btrfs /dev/sda1
+sudo mkfs.ext4 /dev/sda1
+sudo mkfs.ext4 /dev/sdb1 # ÐÐÐÐ¡ÐÐ! ÐÐÐ¢ÐÐ Ð¯ ÐÐÐÐÐ«Ð¥
+sudo mkfs.f2fs /dev/sda1
+sudo mkfs.fat -F32 /dev/sda1
+sudo mkfs.jfs /dev/sda1
+sudo mkfs.nilfs2 /dev/sda1
+sudo mkfs.reiserfs /dev/sda1
+sudo mkfs.xfs /dev/sda1
+sudo mkinitcpio -P
+sudo mkinitcpio -p linux
+sudo mkisofs -o backup.iso /home/user
+sudo mkswap /swapfile
+sudo mkudffs /dev/sda1
+sudo modprobe -r vboxdrv
+sudo modprobe module_name
+sudo modprobe vboxdrv
+sudo modprobe zfs
+sudo mount -a
+sudo mount -o loop backup.iso /mnt
+sudo mount -o remount,discard /
+sudo mount -o remount,noatime /
+sudo mount -o remount,nobarrier /
+sudo mount -o remount,relatime /
+sudo mount -o remount,ro /dev/sda1
+sudo mount -o remount,rw /
+sudo mount -t cifs //192.168.1.100/share /mnt -o username=user
+sudo mount -t exfat /dev/sda1 /mnt
+sudo mount -t hfsplus /dev/sda1 /mnt
+sudo mount -t nfs 192.168.1.100:/share /mnt
+sudo mount -t ntfs-3g /dev/sda1 /mnt
+sudo mount /dev/sdX# /mnt
+sudo mount /dev/sda1 /mnt
+sudo mount /dev/sdb1 /mnt
+sudo multipath -ll
+sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+sudo mysql_secure_installation
+sudo mysqld --initialize --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+sudo nano /etc/default/grub
+sudo nano /etc/tor/torrc
+sudo nethogs eth0
+sudo netstat -tulpn
+sudo netstat -tulpn | grep LISTEN
+sudo nft add rule inet filter input tcp dport 22 accept
+sudo nginx -s reload
+sudo nginx -t
+sudo nice -n -20 command
+sudo npm install -g yarn
+sudo nvme error-log /dev/nvme0
+sudo nvme format /dev/nvme0
+sudo nvme fw-download /dev/nvme0 -f firmware.bin
+sudo nvme list
+sudo nvme smart-log /dev/nvme0
+sudo openconnect vpn.example.com
+sudo openvpn --genkey --secret ta.key
+sudo ossec-control status
+sudo packetbeat setup --dashboards
+sudo pacman --asexplicit firefox
+sudo pacman -Dk
+sudo pacman -Qk
+sudo pacman -Qkk
+sudo pacman -Qkk firefox
+sudo pacman -Qtdq | sudo pacman -Rns -
+sudo pacman -R package_name
+sudo pacman -Rns $(pacman -Qdtq)
+sudo pacman -Rns $(pacman -Qq | grep -E '^linux[0-9]*(-[a-z]*)?$' | grep -v $(uname -r))
+sudo pacman -Rns $(pacman -Qq) # Ð ÐÐÐ Ð£Ð¨ÐÐÐÐ Ð¡ÐÐ¡Ð¢ÐÐÐ«
+sudo pacman -Rns $(pacman -Qtdq)
+sudo pacman -Rns firefox
+sudo pacman -Rns linux # ÐÐ ÐÐ¢ÐÐ§ÐÐ¡ÐÐ ÐÐÐÐ¡ÐÐ
+sudo pacman -Rns package-name
+sudo pacman -Rs $(pacman -Qdtq)
+sudo pacman -Rs firefox
+sudo pacman -Rs package-name
+sudo pacman -Rs package_name
+sudo pacman -Rsn package_name
+sudo pacman -S $(pacman -Qnq)
+sudo pacman -S - < pkglist.txt
+sudo pacman -S --force package-name
+sudo pacman -S --force pacman
+sudo pacman -S --needed package
+sudo pacman -S abduco
+sudo pacman -S aerc
+sudo pacman -S aircrack-ng
+sudo pacman -S alacritty
+sudo pacman -S algoliasearch-client-python
+sudo pacman -S alpine
+sudo pacman -S amarok
+sudo pacman -S android-sdk android-sdk-build-tools android-sdk-platform-tools
+sudo pacman -S android-tools
+sudo pacman -S apache
+sudo pacman -S arangodb
+sudo pacman -S archivemount
+sudo pacman -S archlinuxarm-keyring && sudo pacman -Sy archlinuxarm
+sudo pacman -S arduino
+sudo pacman -S atom
+sudo pacman -S attic
+sudo pacman -S audacious
+sudo pacman -S auditbeat
+sudo pacman -S avidemux
+sudo pacman -S backintime
+sudo pacman -S barrier
+sudo pacman -S bash
+sudo pacman -S basket
+sudo pacman -S beam
+sudo pacman -S bettercap
+sudo pacman -S blender
+sudo pacman -S bloodhound
+sudo pacman -S borg
+sudo pacman -S bpython
+sudo pacman -S btrfs-progs
+sudo pacman -S busybox
+sudo pacman -S byobu
+sudo pacman -S byzanz
+sudo pacman -S caddy
+sudo pacman -S caddy php-fpm
+sudo pacman -S cantata
+sudo pacman -S cassandra
+sudo pacman -S celluloid
+sudo pacman -S cherrytree
+sudo pacman -S chiaki
+sudo pacman -S chromium
+sudo pacman -S chronograf
+sudo pacman -S cinelerra
+sudo pacman -S claws-mail
+sudo pacman -S clementine
+sudo pacman -S clickhouse
+sudo pacman -S clojure
+sudo pacman -S clonezilla
+sudo pacman -S cmus
+sudo pacman -S cockroachdb
+sudo pacman -S code
+sudo pacman -S community-beats
+sudo pacman -S composer
+sudo pacman -S cool-retro-term
+sudo pacman -S cortex
+sudo pacman -S couchbase-server
+sudo pacman -S couchdb
+sudo pacman -S cpanminus
+sudo pacman -S crackmapexec
+sudo pacman -S cran
+sudo pacman -S crate
+sudo pacman -S croc
+sudo pacman -S cryptsetup
+sudo pacman -S csh
+sudo pacman -S cuda
+sudo pacman -S curlftpfs
+sudo pacman -S darktable
+sudo pacman -S dash
+sudo pacman -S ddrescue
+sudo pacman -S deadbeef
+sudo pacman -S deepin-screenshot
+sudo pacman -S deepin-terminal
+sudo pacman -S deja-dup
+sudo pacman -S deno
+sudo pacman -S dgraph
+sudo pacman -S digikam
+sudo pacman -S dino
+sudo pacman -S discord
+sudo pacman -S docker
+sudo pacman -S docker-compose
+sudo pacman -S dosfstools
+sudo pacman -S dotnet-sdk
+sudo pacman -S drone
+sudo pacman -S druid
+sudo pacman -S drupal
+sudo pacman -S dtach
+sudo pacman -S duplicity
+sudo pacman -S e2fsprogs
+sudo pacman -S easy-rsa && sudo cp -r /usr/share/easy-rsa /etc/openvpn/ && cd /etc/openvpn/easy-rsa && sudo ./easyrsa init-pki && sudo ./easyrsa build-ca nopass
+sudo pacman -S ecryptfs-utils
+sudo pacman -S elasticsearch
+sudo pacman -S element-desktop
+sudo pacman -S elixir
+sudo pacman -S elvish
+sudo pacman -S emacs
+sudo pacman -S empathy
+sudo pacman -S encfs
+sudo pacman -S envoy
+sudo pacman -S erlang
+sudo pacman -S es
+sudo pacman -S evolution
+sudo pacman -S exfat-utils
+sudo pacman -S extundelete
+sudo pacman -S f2fs-tools
+sudo pacman -S faunadb
+sudo pacman -S feh
+sudo pacman -S ffmpeg
+sudo pacman -S filebeat
+sudo pacman -S firefox
+sudo pacman -S fish
+sudo pacman -S flameshot
+sudo pacman -S flink
+sudo pacman -S flowblade
+sudo pacman -S fluent-bit
+sudo pacman -S fluentd
+sudo pacman -S fluffychat
+sudo pacman -S flutter
+sudo pacman -S foot
+sudo pacman -S foremost
+sudo pacman -S fractal
+sudo pacman -S freedombox
+sudo pacman -S freerdp
+sudo pacman -S froxlor
+sudo pacman -S fsarchiver
+sudo pacman -S fscrypt
+sudo pacman -S functionbeat
+sudo pacman -S fuseiso
+sudo pacman -S gajim
+sudo pacman -S gallery-dl
+sudo pacman -S gamemode
+sudo pacman -S geary
+sudo pacman -S ghc
+sudo pacman -S gimp
+sudo pacman -S gist
+sudo pacman -S git
+sudo pacman -S gitea
+sudo pacman -S gitlab
+sudo pacman -S gnome gnome-extra
+sudo pacman -S gnome-connections
+sudo pacman -S gnome-disk-utility
+sudo pacman -S gnome-screenshot
+sudo pacman -S gnome-terminal
+sudo pacman -S gnote
+sudo pacman -S go
+sudo pacman -S gocryptfs
+sudo pacman -S godot
+sudo pacman -S gparted
+sudo pacman -S gptfdisk
+sudo pacman -S gradle
+sudo pacman -S grafana
+sudo pacman -S grim
+sudo pacman -S groovy
+sudo pacman -S grsync
+sudo pacman -S gthumb
+sudo pacman -S guake
+sudo pacman -S gvfs
+sudo pacman -S handbrake
+sudo pacman -S haproxy
+sudo pacman -S haproxy certbot
+sudo pacman -S hashcat
+sudo pacman -S haste-client
+sudo pacman -S hdparm
+sudo pacman -S heartbeat
+sudo pacman -S helix
+sudo pacman -S helm
+sudo pacman -S hexchat
+sudo pacman -S hfsprogs
+sudo pacman -S hitch
+sudo pacman -S httpie
+sudo pacman -S hydra
+sudo pacman -S i3-wm i3status i3blocks dmenu
+sudo pacman -S ifuse
+sudo pacman -S ii
+sudo pacman -S impacket
+sudo pacman -S imv
+sudo pacman -S influxdb
+sudo pacman -S inkscape
+sudo pacman -S ipython
+sudo pacman -S irssi
+sudo pacman -S jaeger
+sudo pacman -S janusgraph
+sudo pacman -S jdk-openjdk
+sudo pacman -S jenkins
+sudo pacman -S jfsutils
+sudo pacman -S jitsi-meet
+sudo pacman -S jmtpfs
+sudo pacman -S john
+sudo pacman -S joomla
+sudo pacman -S joplin
+sudo pacman -S journalbeat
+sudo pacman -S jq
+sudo pacman -S jre-openjdk
+sudo pacman -S julia
+sudo pacman -S jupyter
+sudo pacman -S jupyter-console
+sudo pacman -S kafka
+sudo pacman -S kapacitor
+sudo pacman -S kazam
+sudo pacman -S kbackup
+sudo pacman -S kdeconnect
+sudo pacman -S kdenlive
+sudo pacman -S keepnote
+sudo pacman -S kgx
+sudo pacman -S kibana
+sudo pacman -S kind
+sudo pacman -S kitty
+sudo pacman -S kmail
+sudo pacman -S konsole
+sudo pacman -S konversation
+sudo pacman -S kotlin
+sudo pacman -S krdc
+sudo pacman -S krfb
+sudo pacman -S krita
+sudo pacman -S ksh
+sudo pacman -S ksnip
+sudo pacman -S kubeadm kubectl kubelet
+sudo pacman -S kubectl kubeadm kubelet
+sudo pacman -S kvirc
+sudo pacman -S leiningen
+sudo pacman -S libimobiledevice
+sudo pacman -S lilyterm
+sudo pacman -S linux-headers
+sudo pacman -S linux-lts
+sudo pacman -S lives
+sudo pacman -S logstash
+sudo pacman -S loki
+sudo pacman -S lua
+sudo pacman -S luarocks
+sudo pacman -S luckybackup
+sudo pacman -S lutris
+sudo pacman -S lxterminal
+sudo pacman -S maim
+sudo pacman -S mariadb
+sudo pacman -S mate-terminal
+sudo pacman -S maven
+sudo pacman -S maxima
+sudo pacman -S mediawiki
+sudo pacman -S memcached
+sudo pacman -S metasploit
+sudo pacman -S metricbeat
+sudo pacman -S micro
+sudo pacman -S miller
+sudo pacman -S mimir
+sudo pacman -S minikube
+sudo pacman -S mitmproxy
+sudo pacman -S mksh
+sudo pacman -S moc
+sudo pacman -S mongodb
+sudo pacman -S moonlight
+sudo pacman -S mosh
+sudo pacman -S mpv
+sudo pacman -S mpv mpv-mpris
+sudo pacman -S mutt
+sudo pacman -S mysql
+sudo pacman -S nano
+sudo pacman -S ncmpcpp
+sudo pacman -S neo4j
+sudo pacman -S neomutt
+sudo pacman -S neovim
+sudo pacman -S nextcloud
+sudo pacman -S nextcloud-client
+sudo pacman -S nginx
+sudo pacman -S nginx-unit
+sudo pacman -S nheko
+sudo pacman -S nikto
+sudo pacman -S nilfs-utils
+sudo pacman -S nitroshare
+sudo pacman -S nmap
+sudo pacman -S nodejs
+sudo pacman -S nodejs npm android-studio
+sudo pacman -S notes-up
+sudo pacman -S npm
+sudo pacman -S ntfs-3g
+sudo pacman -S nvidia nvidia-utils
+sudo pacman -S obs-studio
+sudo pacman -S octave
+sudo pacman -S oilshell
+sudo pacman -S openconnect
+sudo pacman -S openlitespeed
+sudo pacman -S openshot
+sudo pacman -S opentelemetry-collector
+sudo pacman -S openvpn
+sudo pacman -S orientdb
+sudo pacman -S owncloud
+sudo pacman -S package1 package2
+sudo pacman -S package1 package2 package3
+sudo pacman -S package_name
+sudo pacman -S packetbeat
+sudo pacman -S pantheon-terminal
+sudo pacman -S parted
+sudo pacman -S partimage
+sudo pacman -S partitionmanager
+sudo pacman -S paste
+sudo pacman -S pastebinit
+sudo pacman -S peek
+sudo pacman -S perl
+sudo pacman -S php
+sudo pacman -S php php-fpm php-mysql
+sudo pacman -S php-fpm
+sudo pacman -S pidgin
+sudo pacman -S pinot
+sudo pacman -S pitivi
+sudo pacman -S plasma-desktop plasma-wayland-session kde-applications
+sudo pacman -S pmount
+sudo pacman -S pnpm
+sudo pacman -S podman
+sudo pacman -S podman-compose
+sudo pacman -S polari
+sudo pacman -S polipo
+sudo pacman -S posh
+sudo pacman -S postgresql
+sudo pacman -S postman-bin insomnia
+sudo pacman -S pound
+sudo pacman -S powershell
+sudo pacman -S privoxy
+sudo pacman -S profanity
+sudo pacman -S prometheus
+sudo pacman -S prometheus-alertmanager
+sudo pacman -S prometheus-blackbox-exporter
+sudo pacman -S prometheus-node-exporter
+sudo pacman -S promtail
+sudo pacman -S proton
+sudo pacman -S python
+sudo pacman -S python-csvkit
+sudo pacman -S qownnotes
+sudo pacman -S qt5-base qt5-doc qt5-tools
+sudo pacman -S qtcreator
+sudo pacman -S qterminal
+sudo pacman -S quassel
+sudo pacman -S questdb
+sudo pacman -S quodlibet
+sudo pacman -S r
+sudo pacman -S raspberrypi-firmware raspberrypi-bootloader
+sudo pacman -S rawtherapee
+sudo pacman -S rc
+sudo pacman -S rclone
+sudo pacman -S reaver
+sudo pacman -S redis
+sudo pacman -S rednotebook
+sudo pacman -S reiserfsprogs
+sudo pacman -S remmina
+sudo pacman -S responder
+sudo pacman -S restic
+sudo pacman -S rhythmbox
+sudo pacman -S riot-desktop
+sudo pacman -S roxterm
+sudo pacman -S rsync
+sudo pacman -S rust
+sudo pacman -S rxvt
+sudo pacman -S rxvt-unicode
+sudo pacman -S sage
+sudo pacman -S sakura
+sudo pacman -S sash
+sudo pacman -S sbt
+sudo pacman -S scala
+sudo pacman -S scalpel
+sudo pacman -S scrcpy
+sudo pacman -S screen
+sudo pacman -S scrot
+sudo pacman -S seafile-client
+sudo pacman -S shotcut
+sudo pacman -S shotwell
+sudo pacman -S shutter
+sudo pacman -S sic
+sudo pacman -S simplescreenrecorder
+sudo pacman -S smartmontools
+sudo pacman -S smplayer
+sudo pacman -S smuxi
+sudo pacman -S solr
+sudo pacman -S spark
+sudo pacman -S spectacle
+sudo pacman -S spyder
+sudo pacman -S sqlmap
+sudo pacman -S squashfs-tools
+sudo pacman -S squid
+sudo pacman -S sshfs
+sudo pacman -S sslh
+sudo pacman -S st
+sudo pacman -S stack
+sudo pacman -S steam
+sudo pacman -S storm
+sudo pacman -S strawberry
+sudo pacman -S strongswan
+sudo pacman -S strongswan charon-systemd
+sudo pacman -S stunnel
+sudo pacman -S surrealdb
+sudo pacman -S sway swaybg swaylock swayidle
+sudo pacman -S sxiv
+sudo pacman -S sylpheed
+sudo pacman -S syncthing
+sudo pacman -S synergy
+sudo pacman -S tailscale
+sudo pacman -S tcsh
+sudo pacman -S telegraf
+sudo pacman -S telegram-desktop
+sudo pacman -S tempo
+sudo pacman -S terminator
+sudo pacman -S terminology
+sudo pacman -S terminus
+sudo pacman -S testdisk
+sudo pacman -S thanos
+sudo pacman -S thunderbird
+sudo pacman -S tigervnc
+sudo pacman -S tightvnc
+sudo pacman -S tilda
+sudo pacman -S tilix
+sudo pacman -S timescaledb
+sudo pacman -S timeshift
+sudo pacman -S tiny
+sudo pacman -S tinyproxy
+sudo pacman -S titan
+sudo pacman -S tmux
+sudo pacman -S tomboy
+sudo pacman -S traefik
+sudo pacman -S udftools
+sudo pacman -S udisks2
+sudo pacman -S unison
+sudo pacman -S usbmuxd
+sudo pacman -S util-linux
+sudo pacman -S varnish
+sudo pacman -S varnish haproxy
+sudo pacman -S vector
+sudo pacman -S victoria-metrics
+sudo pacman -S vim
+sudo pacman -S vinagre
+sudo pacman -S visidata
+sudo pacman -S vlc
+sudo pacman -S vokoscreen
+sudo pacman -S warpinator
+sudo pacman -S webmin
+sudo pacman -S weechat
+sudo pacman -S wifite
+sudo pacman -S wine wine-mono wine-gecko
+sudo pacman -S wireguard-tools
+sudo pacman -S wordpress
+sudo pacman -S x11vnc
+sudo pacman -S x2goclient
+sudo pacman -S xchat
+sudo pacman -S xfce4 xfce4-goodies
+sudo pacman -S xfce4-screenshooter
+sudo pacman -S xfce4-terminal
+sudo pacman -S xfsprogs
+sudo pacman -S xonsh
+sudo pacman -S xorg
+sudo pacman -S xorg-apps
+sudo pacman -S xorg-server
+sudo pacman -S xorg-server xorg-xinit
+sudo pacman -S xorg-xinit
+sudo pacman -S xournal
+sudo pacman -S xournalpp
+sudo pacman -S xterm
+sudo pacman -S yakuake
+sudo pacman -S yarn
+sudo pacman -S yash
+sudo pacman -S yt-dlp
+sudo pacman -S yugabytedb
+sudo pacman -S zaproxy
+sudo pacman -S zerotier-one
+sudo pacman -S zfs-dkms
+sudo pacman -S zim
+sudo pacman -S zipkin
+sudo pacman -S zookeeper
+sudo pacman -S zsh
+sudo pacman -Sc
+sudo pacman -Scc
+sudo pacman -Sw package
+sudo pacman -Sw package_name
+sudo pacman -Sy
+sudo pacman -Sy --force
+sudo pacman -Syu
+sudo pacman -Syuw
+sudo pacman -U /path/to/pkg
+sudo pacman -U /var/cache/pacman/pkg/firefox-115.0-1-x86_64.pkg.tar.zst
+sudo pacman -U package.pkg.tar.zst
+sudo pacman -U zoom_x86_64.pkg.tar.xz
+sudo pacman-key --add key.pub
+sudo pacman-key --populate archlinuxarm
+sudo pacman-key --refresh-keys
+sudo pacman-key -l
+sudo pacman-mirrors --fasttrack
+sudo pacman-mirrors --fasttrack 5
+sudo pacman-mirrors --geoip
+sudo pacman-optimize
+sudo parted -l
+sudo parted /dev/sda align-check opt 1
+sudo parted /dev/sda mklabel gpt
+sudo partimage -z1 -o -d save /dev/sda1 backup.partimg
+sudo passwd username
+sudo photorec /dev/sda1
+sudo podman ps -a
+sudo podman run -d --name web nginx
+sudo poweroff -f # ÐÐ ÐÐÐ£ÐÐÐ¢ÐÐÐ¬ÐÐÐ ÐÐ«ÐÐÐ®Ð§ÐÐÐÐ
+sudo pvcreate /dev/sdb
+sudo pvs
+sudo quotacheck -cug /dev/sda1 && quotaon /dev/sda1
+sudo quotaon -v /dev/sda1
+sudo reboot
+sudo reboot -f
+sudo reboot now
+sudo renice -n -5 -p 1234
+sudo repquota -a
+sudo resize2fs /dev/device
+sudo resize2fs /dev/sda1
+sudo resize2fs /dev/sda1 -I 256
+sudo rkhunter --check
+sudo rkhunter --check --sk
+sudo rkhunter --update
+sudo sandstorm start
+sudo scalpel /dev/sda1 -o /recovery
+sudo sed -i 's/# maxmemory 100mb/maxmemory 256mb/' /etc/redis.conf
+sudo sed -i 's/# maxmemory-policy noeviction/maxmemory-policy allkeys-lru/' /etc/redis.conf
+sudo sed -i 's/#cluster.name: my-application/cluster.name: arch-cluster/' /etc/elasticsearch/elasticsearch.yml
+sudo sed -i 's/#dbms.connector.bolt.listen_address=:7687/dbms.connector.bolt.listen_address=:7687/' /etc/neo4j/neo4j.conf
+sudo sed -i 's/#network.host: 192.168.0.1/network.host: localhost/' /etc/elasticsearch/elasticsearch.yml
+sudo sed -i 's/#server.host: \"localhost\"/server.host: \"localhost\"/' /etc/kibana/kibana.yml
+sudo sed -i 's/-l 127.0.0.1/-l 0.0.0.0/' /etc/memcached.conf
+sudo sed -i 's/;bind_address = 127.0.0.1/bind_address = 127.0.0.1/' /etc/couchdb/local.ini
+sudo sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/' /etc/php/php.ini
+sudo sed -i 's/;listen = 127.0.0.1:9000/listen = /run/php-fpm/php-fpm.sock/' /etc/php/php-fpm.d/www.conf
+sudo sed -i 's/<listen-address>0.0.0.0</listen-address>/<listen-address>127.0.0.1</listen-address>/' /etc/orientdb/config/orientdb-server-config.xml
+sudo sed -i 's/Allow 127.0.0.1/#Allow 127.0.0.1/' /etc/tinyproxy/tinyproxy.conf
+sudo sed -i 's/^# bind 127.0.0.1/bind 127.0.0.1/' /etc/redis/redis.conf
+sudo sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
+sudo sed -i 's/^-l 127.0.0.1/-l 127.0.0.1/' /etc/memcached.conf
+sudo sed -i 's/^bind 127.0.0.1 ::1/bind 127.0.0.1/' /etc/redis/redis.conf
+sudo sed -i 's/bind 127.0.0.1/bind 0.0.0.0/' /etc/redis.conf
+sudo sed -i 's/endpoint = tcp://127.0.0.1:8529/endpoint = tcp://127.0.0.1:8529/' /etc/arangodb3/arangod.conf
+sudo sed -i 's/listen-address 127.0.0.1:8118/listen-address 0.0.0.0:8118/' /etc/privoxy/config
+sudo sed -i 's/output.elasticsearch:/#output.elasticsearch:/' /etc/filebeat/filebeat.yml && sudo sed -i 's/#output.logstash:/output.logstash:/' /etc/filebeat/filebeat.yml
+sudo service wazuh-manager status
+sudo setenforce Enforcing
+sudo setquota -g developers 500000 550000 0 0 /dev/sda1
+sudo setquota -u john 100000 110000 0 0 /dev/sda1
+sudo sfdisk -d /dev/sda > partition.table
+sudo sfdisk -l
+sudo sfdisk /dev/sda < partition.table
+sudo sh -c 'echo "IgnorePkg = firefox" >> /etc/pacman.conf"
+sudo shred -v -n 1 /dev/sdb # ÐÐÐÐÐÐ Ð£ÐÐÐ§Ð¢ÐÐÐÐÐÐ ÐÐÐÐÐ«Ð¥
+sudo shutdown +5
+sudo shutdown -c
+sudo shutdown -r +5
+sudo shutdown now
+sudo smartctl -A /dev/sda | grep Available_Spare
+sudo smartctl -A /dev/sda | grep Load_Cycle_Count
+sudo smartctl -A /dev/sda | grep Pending
+sudo smartctl -A /dev/sda | grep Percentage_Used
+sudo smartctl -A /dev/sda | grep Power_On_Hours
+sudo smartctl -A /dev/sda | grep Reallocated
+sudo smartctl -A /dev/sda | grep Temperature_Celsius
+sudo smartctl -A /dev/sda | grep Uncorrectable
+sudo smartctl -A /dev/sda | grep Wear_Leveling_Count
+sudo smartctl -H /dev/sda
+sudo smartctl -a /dev/device
+sudo smartctl -a /dev/sda | grep -E "(Reallocated|Pending|Uncorrectable)"
+sudo smartctl -t long /dev/sda
+sudo smartctl -t short /dev/sda
+sudo ss -tulpn
+sudo strace -p PID
+sudo su -
+sudo su - postgres -c "initdb --locale en_US.UTF-8 -D '/var/lib/postgres/data'"
+sudo su - postgres -c "initdb --locale en_US.UTF-8 -E UTF8 -D '/var/lib/postgres/data'"
+sudo swapoff /dev/zram0
+sudo swapon /dev/device
+sudo sync && echo 3 | sudo tee /proc/sys/vm/drop_caches
+sudo sysctl --system
+sudo sysctl -w net.ipv4.ip_forward=1
+sudo systemctl daemon-reload
+sudo systemctl daemon-reload && sudo systemctl restart docker
+sudo systemctl disable service-name
+sudo systemctl disable service_name
+sudo systemctl disable slow-service
+sudo systemctl edit --full --force daily-backup.timer
+sudo systemctl edit --full --force myservice.service
+sudo systemctl edit nginx.service
+sudo systemctl enable --now ajenti
+sudo systemctl enable --now bamboo
+sudo systemctl enable --now buildbot-master
+sudo systemctl enable --now caddy
+sudo systemctl enable --now concourse
+sudo systemctl enable --now daily-backup.timer
+sudo systemctl enable --now docker
+sudo systemctl enable --now drone
+sudo systemctl enable --now elasticsearch
+sudo systemctl enable --now envoy
+sudo systemctl enable --now forgejo
+sudo systemctl enable --now froxlor
+sudo systemctl enable --now gitea
+sudo systemctl enable --now gitlab
+sudo systemctl enable --now gocd
+sudo systemctl enable --now gogs
+sudo systemctl enable --now haproxy
+sudo systemctl enable --now hitch
+sudo systemctl enable --now jenkins
+sudo systemctl enable --now lsws
+sudo systemctl enable --now mariadb
+sudo systemctl enable --now meilisearch
+sudo systemctl enable --now memcached
+sudo systemctl enable --now milvus
+sudo systemctl enable --now mongodb
+sudo systemctl enable --now nginx
+sudo systemctl enable --now onedev
+sudo systemctl enable --now openvpn-server@server
+sudo systemctl enable --now php-fpm
+sudo systemctl enable --now polipo
+sudo systemctl enable --now postgresql
+sudo systemctl enable --now pound
+sudo systemctl enable --now pritunl
+sudo systemctl enable --now privoxy
+sudo systemctl enable --now qdrant
+sudo systemctl enable --now redis
+sudo systemctl enable --now solr
+sudo systemctl enable --now spinnaker
+sudo systemctl enable --now squid
+sudo systemctl enable --now sslh
+sudo systemctl enable --now strongswan
+sudo systemctl enable --now stud
+sudo systemctl enable --now stunnel
+sudo systemctl enable --now tailscaled
+sudo systemctl enable --now teamcity
+sudo systemctl enable --now tinyproxy
+sudo systemctl enable --now traefik
+sudo systemctl enable --now typesense
+sudo systemctl enable --now unit
+sudo systemctl enable --now varnish
+sudo systemctl enable --now weaviate
+sudo systemctl enable --now webmin
+sudo systemctl enable --now wg-quick@wg0
+sudo systemctl enable --now zerotier-one
+sudo systemctl enable --now zuul
+sudo systemctl enable docker
+sudo systemctl enable fstrim.timer
+sudo systemctl enable nginx
+sudo systemctl enable service-name
+sudo systemctl enable service_name
+sudo systemctl hibernate
+sudo systemctl hybrid-sleep
+sudo systemctl isolate rescue.target
+sudo systemctl kill -s SIGKILL nginx
+sudo systemctl list-unit-files --type=service
+sudo systemctl list-units --type=service
+sudo systemctl mask apache2
+sudo systemctl mask service_name
+sudo systemctl poweroff
+sudo systemctl poweroff --no-wall
+sudo systemctl reboot
+sudo systemctl reboot --boot-loader-entry=recovery
+sudo systemctl reboot --firmware-setup
+sudo systemctl reload apache2
+sudo systemctl reload nginx
+sudo systemctl reload service_name
+sudo systemctl reload tor
+sudo systemctl reload-or-restart nginx
+sudo systemctl reset-failed
+sudo systemctl restart NetworkManager
+sudo systemctl restart httpd
+sudo systemctl restart service-name
+sudo systemctl restart service_name
+sudo systemctl restart systemd-timesyncd
+sudo systemctl restart tor
+sudo systemctl set-default multi-user.target
+sudo systemctl set-environment http_proxy=http://proxy:8080
+sudo systemctl start arangodb
+sudo systemctl start auditbeat
+sudo systemctl start auditd
+sudo systemctl start caddy
+sudo systemctl start chronograf
+sudo systemctl start couchdb
+sudo systemctl start docker
+sudo systemctl start elasticsearch
+sudo systemctl start filebeat
+sudo systemctl start gamemoded
+sudo systemctl start grafana-server
+sudo systemctl start influxdb
+sudo systemctl start jenkins
+sudo systemctl start kibana
+sudo systemctl start mariadb
+sudo systemctl start memcached
+sudo systemctl start metricbeat
+sudo systemctl start mysqld
+sudo systemctl start neo4j
+sudo systemctl start nginx
+sudo systemctl start openvpn-server@server
+sudo systemctl start orientdb
+sudo systemctl start packetbeat
+sudo systemctl start php-fpm
+sudo systemctl start postgresql
+sudo systemctl start prometheus
+sudo systemctl start prometheus-node-exporter
+sudo systemctl start redis
+sudo systemctl start service-name
+sudo systemctl start service_name
+sudo systemctl start squid
+sudo systemctl start tailscaled
+sudo systemctl start tor
+sudo systemctl status openvpn-client@config
+sudo systemctl status sshd
+sudo systemctl status tor
+sudo systemctl stop apparmor
+sudo systemctl stop service-name
+sudo systemctl stop service_name
+sudo systemctl stop tor
+sudo systemctl suspend
+sudo systemctl try-restart nginx
+sudo systemctl unmask apache2
+sudo systemctl unmask service_name
+sudo systemctl unset-environment http_proxy
+sudo systemd-analyze plot > boot.svg
+sudo systemd-resolve --flush-caches
+sudo tail -f /var/log/auth.log
+sudo tailscale up
+sudo tcpdump -i any
+sudo tcpdump -i any port 8080
+sudo tcpdump -i eth0 -w capture.pcap
+sudo tcpdump -nn -v -i eth0 -s 1500 -c 1 'ether[20:2] == 0x2000'
+sudo teamcity-server start
+sudo tee /etc/nginx/sites-available/mysite << 'EOF' server { listen 80; server_name example.com; root /var/www/html; } EOF
+sudo tee /etc/nginx/sites-available/php-app << 'EOF' server { listen 80; server_name app.local; root /var/www/php-app; index index.php; location ~ \.php$ { fastcgi_pass unix:/run/php-fpm/php-fpm.sock; include fastcgi.conf; } } EOF
+sudo tee /etc/nginx/sites-available/reverse << 'EOF' server { listen 80; server_name api.example.com; location / { proxy_pass http://localhost:3000; proxy_set_header Host $host; proxy_set_header X-Real-IP $remote_addr; } } EOF
+sudo tee /etc/wireguard/wg0.conf << 'EOF' [Interface] Address = 10.0.0.1/24 ListenPort = 51820 PrivateKey = $(sudo cat /etc/wireguard/private.key) [Peer] PublicKey = client_public_key_here AllowedIPs = 10.0.0.2/32 EOF
+sudo testdisk /dev/sda
+sudo timedatectl set-local-rtc 0
+sudo timedatectl set-local-rtc 1
+sudo timedatectl set-ntp false
+sudo timedatectl set-ntp true
+sudo timedatectl set-time "2024-01-15 10:30:00"
+sudo timedatectl set-time "YYYY-MM-DD HH:MM:SS"
+sudo timedatectl set-timezone America/New_York
+sudo timescaledb-tune --quiet --yes
+sudo tripwire --check
+sudo tune2fs -O ^has_journal /dev/sda1
+sudo tune2fs -O ^metadata_csum /dev/sda1
+sudo tune2fs -O has_journal /dev/sda1
+sudo tune2fs -O metadata_csum /dev/sda1
+sudo tune2fs -c 0 -i 0 /dev/sda1
+sudo tune2fs -i 30d /dev/sda1
+sudo tune2fs -l /dev/sda1 | grep "Block size:"
+sudo tune2fs -l /dev/sda1 | grep "Inode count:"
+sudo tune2fs -l /dev/sda1 | grep "Inode size:"
+sudo tune2fs -l /dev/sda1 | grep -A5 "Filesystem features:"
+sudo tune2fs -l /dev/sda1 | grep -i check
+sudo tune2fs -l /dev/sda1 | grep -i superblock
+sudo tune2fs -l /dev/sda1 | grep Reserved
+sudo tune2fs -l /dev/sda1 | grep has_journal
+sudo tune2fs -m 5 /dev/sda1
+sudo udevadm control --reload
+sudo udevadm monitor --property
+sudo udevadm test /sys/class/net/eth0
+sudo udevadm trigger
+sudo ufw allow 22/tcp
+sudo ufw status verbose
+sudo umount -a
+sudo umount /mnt
+sudo unitd --control unix:/var/run/control.unit.sock
+sudo useradd -m username
+sudo useradd username
+sudo userdel -r username
+sudo usermod -aG docker $USER
+sudo usermod -aG group username
+sudo usermod -aG groupname username
+sudo usermod -aG wheel username
+sudo vgcreate vg0 /dev/sdb
+sudo vgs
+sudo vim /etc/fstab
+sudo vim /etc/hosts
+sudo vim /etc/mkinitcpio.conf
+sudo virsh list --all
+sudo virsh start win10
+sudo visudo
+sudo vpnserver start && sudo vpncmd
+sudo wg-quick up wg0
+sudo zerotier-cli join NETWORK_ID
+sudo zfs create pool0/dataset
+sudo zfs list
+sudo zfs snapshot pool0/dataset@snap1
+sudo zgenhostid $(hostid) && sudo mkinitcpio -P
+sudo zpool create pool0 /dev/sdb /dev/sdc
+sudo zpool create tank /dev/sdb
+sudo zpool status
+sudo zramctl --find --size 2G --algorithm lz4
+sudo zuul-server
+sudoedit filename
+supabase init
+supabase start
+superset init
+superset run -p 8088 --with-threads --reload --debugger
+suricata -V
+surrealdb reload
+surrealdb start
+surrealdb stop
+svgo --config svgo.config.js image.svg
+svgo -f src/svg/ -o dist/svg/
+svgo image.svg
+swapon --show
+swift script.swift
+sxiv
+sylpheed
+symfony serve
+symlinks -r / -d
+sync && echo 1 > /proc/sys/vm/drop_caches
+sync && echo 2 > /proc/sys/vm/drop_caches
+sync && eject /dev/sdb
+syncthing
+synergy
+sysctl --system
+sysctl -a
+sysctl -p /etc/sysctl.conf
+sysctl -w kernel.panic=10
+sysctl -w net.ipv4.ip_forward=1
+sysctl kernel.version
+system
+systemback
+systemctl --failed
+systemctl --failed --all
+systemctl --user edit --full --force my-service.service
+systemctl --user enable --now backup.timer
+systemctl --user enable mpd
+systemctl --user enable my-service
+systemctl --user list-units
+systemctl --version
+systemctl cat sshd
+systemctl cat sshd.service
+systemctl daemon-reload
+systemctl disable sshd
+systemctl edit --full sshd
+systemctl edit sshd
+systemctl emergency
+systemctl enable --now photoprism
+systemctl enable --now rke2-server
+systemctl enable --now seafile
+systemctl enable sshd
+systemctl enable systemd-networkd
+systemctl enable systemd-resolved
+systemctl enable wpa_supplicant@wlan0
+systemctl get-default
+systemctl hibernate
+systemctl hybrid-sleep
+systemctl is-active service-name
+systemctl is-active sshd
+systemctl is-enabled service-name
+systemctl is-enabled sshd
+systemctl is-failed sshd
+systemctl isolate rescue.target
+systemctl list-dependencies multi-user.target
+systemctl list-dependencies sshd
+systemctl list-dependencies sshd --reverse
+systemctl list-timers
+systemctl list-timers --all
+systemctl list-unit-files
+systemctl list-unit-files --type=service
+systemctl list-unit-files --type=service --state=disabled
+systemctl list-unit-files --type=service --state=enabled
+systemctl list-unit-files --type=service --state=masked
+systemctl list-unit-files -t service
+systemctl list-units
+systemctl list-units --type=service
+systemctl list-units --type=service --state=active
+systemctl list-units --type=service --state=running
+systemctl list-units -t service
+systemctl mask sshd
+systemctl poweroff
+systemctl reboot
+systemctl reload sshd
+systemctl rescue
+systemctl reset-failed
+systemctl restart elasticsearch
+systemctl restart rabbitmq-server
+systemctl restart sshd
+systemctl set-default multi-user.target
+systemctl set-environment VARIABLE=value
+systemctl show --property=ControlGroup sshd
+systemctl show sshd
+systemctl show sshd -p Environment
+systemctl start elasticsearch
+systemctl start rabbitmq-server
+systemctl start sshd
+systemctl status fstrim.timer
+systemctl status service-name
+systemctl status service_name
+systemctl status sshd
+systemctl status tor
+systemctl stop elasticsearch
+systemctl stop rabbitmq-server
+systemctl stop sshd
+systemctl suspend
+systemctl unmask sshd
+systemctl unset-environment VARIABLE
+systemd-analyze
+systemd-analyze blame
+systemd-analyze critical-chain
+systemd-analyze critical-chain sshd.service
+systemd-analyze plot > boot.svg
+systemd-cgls
+systemd-cgtop
+systemd-detect-virt
+systemd-nspawn --version
+systemd-resolve --statistics
+systemd-run --shell
+systemml
+tabby
+tail -f /var/log/syslog
+tail -f logfile | grep "error"
+tail -f logfile.log
+tail -n 20 file.txt
+tail -n 20 filename
+tail filename
+tar -cJf archive.tar.xz files/
+tar -cf archive.tar files/
+tar -cjf archive.tar.bz2 files/
+tar -cjf archive.tar.bz2 folder/
+tar -cjvf archive.tar.bz2 /path
+tar -czf - /home/user | wc -c
+tar -czf archive.tar.gz files/
+tar -czf archive.tar.gz folder/
+tar -czf backup-$(date +%Y%m%d).tar.gz /path/to/folder
+tar -czvf - /home/user | gpg -c > backup.tar.gz.gpg
+tar -czvf archive.tar.gz /path
+tar -czvf archive.tar.gz /path/to/directory
+tar -czvf backup.tar.gz /home/user/
+tar -rf archive.tar newfile.txt
+tar -tf archive.tar
+tar -tzf archive.tar.gz
+tar -tzf backup.tar.gz > /dev/null && echo 'Backup OK'
+tar -tzf backup.tar.gz >/dev/null && echo OK
+tar -tzvf archive.tar.gz
+tar -tzvf backup.tar.gz
+tar -xJf archive.tar.xz
+tar -xf archive.tar
+tar -xf archive.tar path/to/file
+tar -xjf archive.tar.bz2
+tar -xzf archive.tar.gz
+tar -xzf backup.tar.gz -C /restore/path
+tar -xzvf archive.tar.gz
+tar -xzvf backup.tar.gz
+taskset -cp 0-3 1234
+taskset -p 1234
+tclsh
+tcpdump -r capture.pcap -n
+tcsh
+teams
+teamserver --version
+teamviewer
+telegraf --config telegraf.conf
+telegraf --version
+telegram-desktop
+telnet example.com 80
+telnet towel.blinkenlights.nl
+tempo -config.file=/etc/tempo/tempo.yml
+tempo -config.file=tempo.yml
+terminator
+terminology
+terraform plan
+terraform version
+test -d /path/to/folder && echo 'Exists'
+test -f /path/to/file && echo 'Exists'
+test -w /path/to/file && echo 'Writable'
+testssl.sh example.com
+thanos
+thanos compact --data-dir /var/lib/thanos/compact
+thanos reload
+thin start
+thin stop
+thunderbird
+tidal-hifi
+tika-server
+tika-server reload
+tilda
+tilix
+time ./my_program
+time ./program
+time ls -R /
+timedatectl list-timezones
+timedatectl list-timezones | grep -i "new york"
+timedatectl set-ntp true
+timedatectl status
+timescaledb
+timescaledb reload
+timeshift
+tiny
+titan.sh restart
+titan.sh start
+titan.sh stop
+tldr command
+tldr tar
+tmux
+tmux ls
+tmux new -s work
+tomboy
+tomoyo-init
+top
+tor --version
+tor-browser
+torify --new-nym
+torsocks command
+torsocks curl http://example.com
+torsocks curl https://check.torproject.org
+torsocks curl https://check.torproject.org/api/ip
+torsocks curl ifconfig.me
+torsocks dig example.com
+torsocks ssh user@example.com
+touch .env
+touch config.json
+touch file1.txt file2.txt file3.txt
+touch main.py
+touch myscript.sh && chmod +x myscript.sh
+touch newfile.txt
+touch src/components/NewComponent.jsx
+tpm2_eventlog /sys/kernel/security/tpm0/binary_bios_measurements
+tpm2_getrandom 4
+tpm2_pcrread
+traceroute -I google.com
+traceroute -T google.com
+traceroute -n google.com
+traceroute -p 443 google.com
+traceroute archlinux.org
+traceroute example.com
+traceroute google.com
+traceroute host
+traceroute server.com
+traefik
+traefik checkconfig
+tree -L 2
+tree -h
+tree -p
+trilium
+tsc
+tsc --version
+tsc --watch
+tsc -p tsconfig.json
+tsc app.ts
+tshark -i eth0 -c 10
+turtl
+tusk
+tyk reload
+tyk start
+tyk stop
+udevadm control --reload
+udevadm info --export-db
+udevadm info -a -p /sys/class/net/eth0
+udevadm monitor
+udevadm test /sys/class/net/eth0
+udevadm trigger
+udisksctl mount -b /dev/sda1
+uima
+ulimit -a
+ulimit -n 4096
+umask value
+unalias ll
+uname -a
+uname -m
+uname -r
+uname -v
+unicorn -c unicorn.rb
+uniq -c file.txt
+uniq -d file.txt
+uniq -u file.txt
+uniq file.txt
+uniq filename
+unison profile
+unity
+unix2dos script.sh
+unomi
+unomi reload
+unrar x archive.rar
+unreal-editor
+unset MYVAR
+unset TEMP_VAR
+unshare --version
+unshare -U bash
+unshare -f -p --mount-proc bash
+unshare -m bash
+unxz document.txt.xz
+unxz file.txt.xz
+unzip -l archive.zip
+unzip -l backup.zip
+unzip archive.zip
+unzip archive.zip specific.txt
+unzip backup.zip
+unzstd document.txt.zst
+unzstd file.txt.zst
+upower -i /org/freedesktop/UPower/devices/battery_BAT0
+upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E "percentage|time to"
+uptime
+urxvt
+usbmuxd -f
+use database_name
+uv add pandas
+uv pip freeze > requirements.txt
+uv pip install --upgrade package
+uv pip install -r requirements.txt
+uv pip install requests
+uv pip list
+uv pip uninstall package
+uv run python --version
+uv run python script.py
+uv sync
+uv venv .venv
+uvicorn app:app
+uvicorn main:app --host=0.0.0.0 --reload
+uvicorn main:app --port=8000 --reload
+uvicorn main:app --reload
+uwsgi --ini app.ini
+uwsgi --reload /tmp/uwsgi.pid
+uwsgi --stop /tmp/uwsgi.pid
+valgrind --leak-check=yes ./my_program
+varnishd -C -f /etc/varnish/default.vcl
+varnishd -f /etc/varnish/default.vcl
+varnishreload
+vd
+vector -c /etc/vector/vector.toml
+vector -c vector.toml
+vector reload
+veracrypt
+veracrypt --version
+veritysetup --version
+vgcreate vg0 /dev/sda2
+victoria-metrics-prod
+victoria-metrics-prod -reload
+victoria-metrics-prod -storageDataPath=/var/lib/victoria-metrics
+vim
+vim --version
+vim filename
+vim frontend/src/components/MegaMenu.vue
+vim ~/.bashrc
+vinagre
+virtualmin setup
+vite
+vite build
+vite preview
+vkcube
+vlc
+vmstat 1
+vmstat 1 10
+vmstat 1 5 | tail -4
+vncviewer
+vokoscreen
+vtysh -c "show ip ospf"
+vulkaninfo
+vxquery
+waitress-serve --port=8080 app:app
+warpinator
+watch -n 1 'ps -p 1234 -o pid, pcpu, pmem'
+watch -n 1 free -h
+watch -n 1 ss -s
+watch -n 2 free -h
+watch -n 2 sensors
+watch df -h
+wavebox
+wayang
+wc -l dataset.jsonl
+wc -l file.txt
+wc -m file.txt
+wc -w file.txt
+wc filename
+webpack
+webpack --analyze
+webpack --mode=development
+webpack --mode=production
+webpack --watch
+webpack serve
+webstorm
+weechat
+wezterm
+wg genkey | sudo tee /etc/wireguard/private.key | wg pubkey | sudo tee /etc/wireguard/public.key
+wg genkey | tee privatekey | wg pubkey > publickey
+wg set wg0 peer ABC123... allowed-ips 10.0.0.2/32
+wg show
+wget --limit-rate=100k https://example.com/file.iso
+wget --limit-rate=100k https://example.com/file.zip
+wget --load-cookies cookies.txt https://example.com
+wget --mirror --convert-links https://example.com
+wget --mirror --page-requisites https://example.com
+wget --timeout=30 https://example.com
+wget --tries=5 https://example.com
+wget --user-agent="Mozilla/5.0" https://example.com
+wget --user-agent='Mozilla/5.0' https://example.com
+wget --user=user --password=pass https://example.com
+wget --user=username --password=password https://example.com/secure
+wget --wait=2 https://example.com
+wget -O - https://get.ispconfig.org | sh
+wget -O custom.zip https://example.com/file.zip
+wget -O newname.zip https://example.com/file
+wget -b https://example.com/file.iso
+wget -b https://example.com/file.zip
+wget -c https://example.com/large-file
+wget -c https://example.com/large-file.iso
+wget -c https://example.com/largefile.iso
+wget -mkEpnp http://example.com
+wget -qO- https://example.com/archive.tar.gz | tar -xz
+wget -r -l 2 http://example.com
+wget URL
+wget http://sentora.org/install
+wget https://example.com/file
+wget https://example.com/file.zip
+wget https://github.com/mustafaramadhan/kloxo/raw/rpms/release/neutral/noarch/kloxo-installer.sh
+wget https://raw.githubusercontent.com/zpanel/installers/master/install/Ubuntu-12_04/10_1_1.sh
+whatsie
+which command
+which program-name
+who
+whoami
+whois google.com
+wifi-pumpkin
+wifi-pumpkin --version
+wifite
+wmr
+wmr build
+wol 11:22:33:44:55:66
+words, characters, wc file.txt
+wormhole receive CODE
+wormhole send file.txt
+wpa_passphrase "SSID" "password" > /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+wpscan --version
+wrk -t12 -c400 -d30s http://localhost:8000/api
+x0vncserver
+x11vnc
+x2goclient
+xchat
+xclip -sel clip < ~/.ssh/id_rsa.pub
+xdpyinfo
+xelatex document.tex
+xfce4-power-manager-settings
+xfce4-screenshooter
+xfce4-terminal
+xfreerdp /v:server
+xinput disable "SynPS/2 Synaptics TouchPad"
+xinput enable "SynPS/2 Synaptics TouchPad"
+xinput list
+xinput list-props "SynPS/2 Synaptics TouchPad"
+xinput set-prop "device name" "libinput Natural Scrolling Enabled" 1
+xlsx2csv input.xlsx output.csv
+xonsh
+xournal
+xournalpp
+xrandr
+xrandr --output HDMI-1 --auto
+xrandr --output HDMI-1 --auto --right-of LVDS-1
+xrandr --output HDMI-1 --mode 1920x1080
+xrandr --output LVDS-1 --rotate left
+xrandr | grep "*"
+xset s 300
+xterm
+xz document.txt
+xz file.txt
+yakuake
+yakyak
+yarn
+yarn --version
+yarn add --dev package-name
+yarn add package-name
+yarn init -y
+yarn install
+yarn run script-name
+yarn rw build
+yarn rw dev
+yarn start
+yarn upgrade
+yarn-daemon.sh reload resourcemanager
+yarn-daemon.sh start resourcemanager
+yarn-daemon.sh stop resourcemanager
+yash
+yay --version
+yay -Gp package_name
+yay -Ps
+yay -Qm
+yay -Rs package-name
+yay -Rs package_name
+yay -S 4kvideodownloader
+yay -S ajenti
+yay -S android-studio
+yay -S anydesk
+yay -S apfs-fuse
+yay -S bamboo
+yay -S blackbox
+yay -S boostnote
+yay -S buildbot
+yay -S bully
+yay -S bun
+yay -S burpsuite
+yay -S chevereto
+yay -S clion
+yay -S concourse
+yay -S datagrip
+yay -S davinci-resolve
+yay -S drone
+yay -S dropbox
+yay -S dukto
+yay -S electerm
+yay -S evernote-tusk
+yay -S ferdium
+yay -S fern-wifi-cracker
+yay -S fiche
+yay -S filerun
+yay -S forgejo
+yay -S franz
+yay -S freefilesync
+yay -S ghost-cli
+yay -S gifcurry
+yay -S gitlab
+yay -S gnome-shell-extension-gsconnect
+yay -S gocd
+yay -S gogs
+yay -S goland
+yay -S google-drive-ocamlfuse
+yay -S greenshot
+yay -S hyper
+yay -S input-leap
+yay -S insync
+yay -S intellij-idea-ultimate-edition
+yay -S jdownloader2
+yay -S lapce
+yay -S laverna
+yay -S litespeed
+yay -S localsend
+yay -S logseq
+yay -S lychee
+yay -S mailspring
+yay -S makemkv
+yay -S mattermost-desktop
+yay -S megasync
+yay -S meilisearch
+yay -S milvus
+yay -S nixnote
+yay -S nomachine
+yay -S notable
+yay -S nsxiv
+yay -S nushell
+yay -S obsidian
+yay -S olive-editor
+yay -S onedev
+yay -S onedrive
+yay -S package-name
+yay -S package_name
+yay -S parsec
+yay -S photoprism
+yay -S phpstorm
+yay -S piwigo
+yay -S pocketbase
+yay -S powershell-empire
+yay -S pritunl
+yay -S pycharm-professional
+yay -S pydio
+yay -S qdrant
+yay -S rambox
+yay -S realvnc-vnc-viewer
+yay -S resilio-sync
+yay -S rider
+yay -S ripme
+yay -S rnote
+yay -S rocketchat-desktop
+yay -S rstudio-desktop
+yay -S rubymine
+yay -S rustdesk
+yay -S seafile
+yay -S signal-desktop
+yay -S simplenote
+yay -S skypeforlinux
+yay -S slack-desktop
+yay -S softethervpn
+yay -S spinnaker
+yay -S spotify
+yay -S standardnotes
+yay -S steamlink
+yay -S stud
+yay -S sublime-text
+yay -S supabase-cli
+yay -S systemback
+yay -S tabby
+yay -S teamcity
+yay -S teams
+yay -S teamviewer
+yay -S tidal-hifi
+yay -S trilium
+yay -S turtl
+yay -S typesense
+yay -S unity-editor
+yay -S unreal-engine
+yay -S veracrypt
+yay -S wavebox
+yay -S weaviate
+yay -S webstorm
+yay -S wezterm
+yay -S whatsie
+yay -S wifi-pumpkin
+yay -S yakyak
+yay -S youtube-music-bin
+yay -S zfs-fuse
+yay -S zoidberg
+yay -S zoom
+yay -S zuul
+yay -Sc
+yay -Scc
+yay -Si package_name
+yay -Si package_name | grep Popularity
+yay -Si package_name | grep Votes
+yay -Ss package-name
+yay -Ss search_term
+yay -Sua
+yay -Syu
+yay -Yc
+yes | sdkmanager --licenses
+ykman fido info
+ykman info
+ykman otp info
+ykman otp yubiotp --generate vvvccc --private-id 01234567 --key 00112233445566778899aabbccddeeff
+youtube-music
+yt-dlp https://youtube.com/watch?v=XXX
+yugabyted restart
+yugabyted start
+yugabyted stop
+yunohost tools postinstall
+zabbix_agentd
+zabbix_agentd -R config_cache_reload
+zabbix_server
+zabbix_server --version
+zabbix_server -R config_cache_reload
+zap.sh -version
+zaproxy
+zcat /proc/config.gz
+zcat archive.cpio.gz | cpio -id
+zeek -v
+zeppelin-daemon.sh reload
+zeppelin-daemon.sh start
+zeppelin-daemon.sh stop
+zfs create rpool/ROOT && zfs create rpool/ROOT/default && zfs create rpool/home
+zgrep "error" /var/log/*.gz
+zgrep 'pattern' file.gz
+zim
+zip -r archive.zip directory/
+zip -r archive.zip folder/
+zip -r backup.zip /home/user/
+zip -re archive.zip directory/
+zip -u archive.zip newfile.txt
+zipkin-server
+zipkin-server reload
+zoidberg
+zookeeper-server-start.sh /etc/zookeeper/zoo.cfg
+zookeeper-server-start.sh config/zookeeper.properties
+zookeeper-server-stop.sh
+zookeeper-shell localhost:2181 reconfig
+zoom
+zpool create -f -o ashift=12 -O compression=lz4 -O acltype=posixacl -O xattr=sa -O mountpoint=/ rpool /dev/sda2
+zpool import poolname
+zramctl
+zsh
+zsh script.zsh
+zstd document.txt
+zstd file.txt

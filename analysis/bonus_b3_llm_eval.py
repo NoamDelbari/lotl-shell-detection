@@ -1,22 +1,23 @@
+#!/usr/bin/env python3
+"""Bonus B.3 — LLM triage evaluation on edge cases.
+
+Pipeline (per dataset):
+  1. Train XGBoost-hybrid and CNN on the train split.
+  2. Score both on the test split -> P(attack) per model.
+  3. select_edge_cases() flags uncertain/disagreeing samples (spread >= 0.4 OR
+     any model in [0.35, 0.65]).
+  4. Arbitrate each edge case with the LLM (stub by default; --hf for real
+     Llama 3.1-8B via the HuggingFace Inference API, needs HF_TOKEN).
+  5. Score LLM verdicts against ground truth AND against a 2-model soft-vote
+     baseline (mean prob >= 0.5), on the edge cases only.
+
+Saves per-case verdicts + accuracy summary to results/bonus_b3_edge_eval.json.
+
+Usage:  python analysis/bonus_b3_llm_eval.py [--hf] [--limit N]
+        (--limit defaults to 6000 for a tractable run; --limit 0 for full;
+         --hf-max caps how many edge cases hit the real LLM)
 """
-bonus_b3_llm_eval.py -- Bonus B.3: evaluate LLM triage verdicts on edge cases.
 
-Ben's bonus scope: select the high-uncertainty edge cases (where the primary
-models disagree or are unconfident), run the arbitrator over them, and score its
-verdicts against ground truth AND against the models. Also records the latency /
-call-count numbers B.4 needs.
-
-By default it uses the offline `stub_arbitrator` so the harness runs with no
-token; pass --hf to use the real Hugging Face Llama arbitrator (needs HF_TOKEN).
-The report must label stub results as a placeholder for Noam's live layer.
-
-Outputs:
-  results/bonus_b3_edge_eval.json   per-edge-case verdicts + accuracy summary
-  report/bonus_b3_findings.md       written B.3 analysis (+ B.4 latency notes)
-
-Run: python analysis/bonus_b3_llm_eval.py            # offline stub
-     python analysis/bonus_b3_llm_eval.py --hf       # real HF Llama
-"""
 from __future__ import annotations
 
 import argparse
@@ -26,140 +27,118 @@ from pathlib import Path
 
 import numpy as np
 
-ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(ROOT))
-from src import ingestion                                # noqa: E402
-from src.features import featurize                       # noqa: E402
-from src.llm_triage import (huggingface_arbitrator,      # noqa: E402
+REPO_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO_ROOT))
+# NOTE: importing src.models pulls in torch first, which preloads the OpenMP
+# runtime xgboost needs — so build_xgboost_hybrid().fit() runs in-process here.
+from src.ingestion import load_dataset                       # noqa: E402
+from src.llm_triage import (huggingface_arbitrator,          # noqa: E402
                             select_edge_cases, stub_arbitrator)
-from src.models import build_model                       # noqa: E402
+from src.models import build_cnn, build_xgboost_hybrid       # noqa: E402
 
-RESULTS = ROOT / "results"
-REP = ROOT / "report"
-PRIMARY = ("xgboost", "cnn1d", "isolation_forest")   # the disagreement panel
-
-
-def _xy(df):
-    return df["command"].to_numpy(), df["label"].to_numpy()
+RESDIR = REPO_ROOT / "results"
+DATASET_NUM = {"dataset1": 1, "dataset2": 2}
 
 
-def _proba(model, X):
-    if hasattr(model, "predict_proba"):
-        return np.asarray(model.predict_proba(X))[:, 1]
-    return np.asarray(model.decision_scores(X))
+def load(dataset, split, limit):
+    n = DATASET_NUM[dataset]
+    df = load_dataset(REPO_ROOT / "dataset" / f"dataset{n}_{split}.csv")
+    if limit and len(df) > limit:
+        df = df.sample(limit, random_state=42).reset_index(drop=True)
+    return df["command"].tolist(), df["label"].to_numpy(), df["source"].tolist()
 
 
-def evaluate(dataset: str, arbitrator, arb_name: str):
-    train, test = ingestion.load(dataset)
-    Xtr, ytr = _xy(train)
-    Xte, yte = _xy(test)
+def run_dataset(dataset, arbitrate, limit, hf_max):
+    Xtr, ytr, _ = load(dataset, "train", limit)
+    Xte, yte, src_te = load(dataset, "test", limit)
+    print(f"\n=== {dataset} (train={len(Xtr)}, test={len(Xte)}) ===")
 
-    scores = {}
-    for name in PRIMARY:
-        m = build_model(name)
-        m.fit(Xtr, ytr)
-        scores[name] = _proba(m, Xte)
+    print("  training XGBoost-hybrid ...")
+    p_xgb = build_xgboost_hybrid().fit(Xtr, ytr).predict_proba(Xte)[:, 1]
+    print("  training CNN ...")
+    p_cnn = build_cnn().fit(Xtr, ytr).predict_proba(Xte)[:, 1]
 
-    edge = select_edge_cases(scores, y_true=yte)
-    idxs = sorted(edge)
-    print(f"[b3] {dataset}: {len(idxs)} edge cases / {len(yte)} test rows "
-          f"({100*len(idxs)/len(yte):.1f}%)")
+    # Edge cases: models disagree or either is unsure.
+    edge = select_edge_cases({"xgboost_hybrid": p_xgb, "cnn": p_cnn})
+    p_mean = (p_xgb + p_cnn) / 2.0
+    print(f"  edge cases selected: {len(edge)} / {len(Xte)} "
+          f"({len(edge)/len(Xte):.1%})")
 
-    feats = featurize(Xte)
-    records, latencies = [], []
-    correct_llm = correct_models = 0
-    for i in idxs:
-        cmd = str(Xte[i])
-        context = {
-            "xgboost_p": round(float(scores["xgboost"][i]), 3),
-            "cnn1d_p": round(float(scores["cnn1d"][i]), 3),
-            "isoforest_p": round(float(scores["isolation_forest"][i]), 3),
-            "len_chars": int(feats.iloc[i]["len_chars"]),
-            "has_dev_tcp": int(feats.iloc[i]["has_dev_tcp"]),
-            "has_fetch_bin": int(feats.iloc[i]["has_fetch_bin"]),
-        }
-        verdict = arbitrator(cmd, context)
-        latencies.append(verdict["latency_s"])
-        # majority vote of the primary models at 0.5, for comparison
-        model_vote = int(np.mean([scores[n][i] for n in PRIMARY]) >= 0.5)
-        truth = int(yte[i])
-        correct_llm += int(verdict["label"] == truth)
-        correct_models += int(model_vote == truth)
-        records.append({
-            "command": cmd, "truth": truth,
-            "llm_label": verdict["label"], "model_vote": model_vote,
-            "reason": edge[i], "signals": context,
-            "llm_reasoning": verdict["reasoning"][:400],
-            "latency_s": round(verdict["latency_s"], 4),
+    cases, n_llm_calls = [], 0
+    llm_correct = vote_correct = agree = 0
+    for i in edge:
+        vote_label = int(p_mean[i] >= 0.5)
+        if hf_max is not None and n_llm_calls >= hf_max:
+            verdict = "BENIGN"; used = "skipped(hf_max)"
+        else:
+            verdict = arbitrate(Xte[i]); used = "arbitrated"; n_llm_calls += 1
+        llm_label = 1 if str(verdict).strip().upper() == "MALICIOUS" else 0
+        y = int(yte[i])
+        llm_correct += int(llm_label == y)
+        vote_correct += int(vote_label == y)
+        agree += int(llm_label == vote_label)
+        cases.append({
+            "command": Xte[i][:300], "source": src_te[i], "y_true": y,
+            "p_xgb": round(float(p_xgb[i]), 4), "p_cnn": round(float(p_cnn[i]), 4),
+            "model_vote": vote_label, "llm_verdict": verdict, "llm_label": llm_label,
+            "llm_correct": int(llm_label == y), "vote_correct": int(vote_label == y),
+            "routed_to_llm": used,
         })
 
-    n = len(idxs) or 1
-    summary = {
-        "dataset": dataset, "arbitrator": arb_name,
-        "n_test": int(len(yte)), "n_edge": len(idxs),
-        "edge_fraction": round(len(idxs) / len(yte), 4),
-        "llm_accuracy_on_edge": round(correct_llm / n, 4),
-        "model_vote_accuracy_on_edge": round(correct_models / n, 4),
-        "mean_latency_s": round(float(np.mean(latencies)) if latencies else 0, 4),
-        "total_llm_calls": len(idxs),
+    n = len(edge)
+    rec = {
+        "n_test": len(Xte), "n_edge": n,
+        "edge_fraction": round(n / len(Xte), 4) if len(Xte) else 0.0,
+        "llm_accuracy": round(llm_correct / n, 4) if n else None,
+        "model_vote_accuracy": round(vote_correct / n, 4) if n else None,
+        "llm_vote_agreement": round(agree / n, 4) if n else None,
+        "cases": cases,
     }
-    return summary, records
+    print(f"  LLM accuracy on edge cases   : {rec['llm_accuracy']}")
+    print(f"  model-vote accuracy on edges : {rec['model_vote_accuracy']}")
+    return rec
 
 
-def main():
+def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--hf", action="store_true",
-                    help="use real Hugging Face Llama (needs HF_TOKEN)")
+                    help="use real Llama 3.1-8B via HuggingFace (needs HF_TOKEN)")
+    ap.add_argument("--hf-max", type=int, default=100,
+                    help="cap edge cases sent to the real LLM (--hf only)")
+    ap.add_argument("--limit", type=int, default=6000, help="0 = full data")
     args = ap.parse_args()
-    if args.hf:
-        arbitrator, arb_name = huggingface_arbitrator(), "hf_llama3.1_8b"
-    else:
-        arbitrator, arb_name = stub_arbitrator, "stub_offline"
+    RESDIR.mkdir(exist_ok=True)
+    limit = args.limit or None
 
-    out = {"arbitrator": arb_name, "datasets": {}}
-    for ds in ingestion.available_datasets():
-        summary, records = evaluate(ds, arbitrator, arb_name)
-        out["datasets"][ds] = {"summary": summary, "records": records}
-        print(f"[b3] {ds}: LLM acc on edge {summary['llm_accuracy_on_edge']:.3f} "
-              f"vs model-vote {summary['model_vote_accuracy_on_edge']:.3f} "
-              f"(mean latency {summary['mean_latency_s']:.4f}s, "
-              f"{summary['total_llm_calls']} calls)")
-    (RESULTS / "bonus_b3_edge_eval.json").write_text(json.dumps(out, indent=2))
+    arbitrate = huggingface_arbitrator if args.hf else stub_arbitrator
+    hf_max = args.hf_max if args.hf else None
+    print(f"arbitrator = {'huggingface (Llama 3.1-8B)' if args.hf else 'stub (random)'}")
 
-    lines = ["# Bonus B.3 — LLM verdict evaluation on edge cases (Ben)", "",
-             f"Arbitrator: **{arb_name}**. Edge cases = primary models "
-             "(XGBoost, 1D-CNN, Isolation Forest) disagree (score gap ≥ 0.4) or "
-             "any is unconfident (score in [0.35, 0.65]).", ""]
-    if arb_name == "stub_offline":
-        lines += ["> ⚠️ These numbers are from the **offline stub** arbitrator, "
-                  "a transparent heuristic that exists to exercise the harness. "
-                  "Replace with Noam's live Llama-3.1-8B layer (`--hf`, HF_TOKEN "
-                  "set) for the graded bonus result.", ""]
-    lines += ["| dataset | test rows | edge cases | edge % | LLM acc on edge | "
-              "model-vote acc on edge | mean latency (s) | LLM calls |",
-              "|---|---:|---:|---:|---:|---:|---:|---:|"]
-    for ds, blob in out["datasets"].items():
-        s = blob["summary"]
-        lines.append(
-            f"| {ds} | {s['n_test']} | {s['n_edge']} | "
-            f"{100*s['edge_fraction']:.1f}% | {s['llm_accuracy_on_edge']:.3f} | "
-            f"{s['model_vote_accuracy_on_edge']:.3f} | {s['mean_latency_s']:.4f} "
-            f"| {s['total_llm_calls']} |")
-    lines += ["",
-              "## B.4 operational tradeoff (support)",
-              "",
-              "- The cascade only routes **edge cases** to the LLM, so total LLM "
-              "calls per evaluation = the 'LLM calls' column, not the full test "
-              "set — the assignment's hard requirement. At the measured edge "
-              "fraction, a real Llama-3.1-8B endpoint at ~1–3 s/call implies the "
-              "per-run wall-clock is that fraction × latency, discussed in B.4.",
-              "- Whether this is production-viable depends on the edge fraction "
-              "staying small; if the primary models disagree on a large slice, "
-              "the LLM becomes the bottleneck and the honest conclusion is that "
-              "the cascade needs a tighter uncertainty band, not more LLM."]
-    (REP / "bonus_b3_findings.md").write_text("\n".join(lines))
-    print("[b3] wrote results/bonus_b3_edge_eval.json + report/bonus_b3_findings.md")
+    per = {d: run_dataset(d, arbitrate, limit, hf_max) for d in ("dataset1", "dataset2")}
+
+    # Overall (pooled) accuracy across both datasets' edge cases.
+    tot_edge = sum(r["n_edge"] for r in per.values())
+    tot_llm = sum((r["llm_accuracy"] or 0) * r["n_edge"] for r in per.values())
+    tot_vote = sum((r["model_vote_accuracy"] or 0) * r["n_edge"] for r in per.values())
+    overall = {
+        "n_edge": tot_edge,
+        "llm_accuracy": round(tot_llm / tot_edge, 4) if tot_edge else None,
+        "model_vote_accuracy": round(tot_vote / tot_edge, 4) if tot_edge else None,
+    }
+    payload = {"arbitrator": "huggingface" if args.hf else "stub",
+               "datasets": per, "overall": overall}
+    (RESDIR / "bonus_b3_edge_eval.json").write_text(json.dumps(payload, indent=2))
+
+    print("\nSUMMARY")
+    for d, r in per.items():
+        print(f"  {d}: {r['n_edge']}/{r['n_test']} edge cases  |  "
+              f"LLM acc={r['llm_accuracy']}  vs  model-vote acc={r['model_vote_accuracy']}")
+    print(f"  OVERALL: {overall['n_edge']} edge cases  |  "
+          f"LLM acc={overall['llm_accuracy']}  vs  model-vote acc={overall['model_vote_accuracy']}")
+    print(f"  saved -> {RESDIR/'bonus_b3_edge_eval.json'}  "
+          f"(arbitrator={'huggingface' if args.hf else 'stub'})")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

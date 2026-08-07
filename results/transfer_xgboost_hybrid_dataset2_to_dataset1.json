@@ -1,0 +1,16 @@
+{
+  "command": "transfer",
+  "model": "xgboost_hybrid",
+  "source": "dataset2",
+  "target": "dataset1",
+  "metrics": {
+    "precision": 0.639344262295082,
+    "recall": 0.20911528150134048,
+    "f1": 0.3151515151515151,
+    "fpr": 0.03904170363797693,
+    "roc_auc": 0.6231091107616843,
+    "pr_auc": 0.44327042867495414,
+    "tpr_at_1pct_fpr": 0.09919571045576407,
+    "tpr_at_0.1pct_fpr": 0.064343163538874
+  }
+}

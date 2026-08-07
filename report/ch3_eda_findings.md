@@ -1,37 +1,20 @@
-# Chapter 3 — EDA & Domain Justification (Dataset 1, Ben)
+# Chapter 3 — Exploratory Data Analysis Findings (Dataset 1)
 
-Train split: **12199** commands (3050 malicious / 9149 benign, 1:3).
+The command-length histogram (`ch3_length_hist_dataset1.png`, density-normalized and clipped at the 99th percentile) confirms that attack one-liners are, on average, longer than benign ones: benign commands center at a mean of 37.8 characters (median 29), while attack commands run to a mean of 52.4 (median 41). The right tail is decisively heavier for attacks — the 99th percentile stretches to 227 characters versus 147 for benign — which is what a payload-carrying reverse shell, download cradle, or base64 blob looks like next to a bare `ls` or `git commit`. The honest caveat is that this is a difference of *distributions*, not of *classes*: both labels pile up in the same 20–50 character body, and the benign curve fully envelops the attack curve there. A probe trained on length alone scores only **AUC 0.611**, barely above the 0.5 no-skill line. Length is a real signal that is nearly useless as a standalone rule, because the overlap in the common range swamps the separation in the tail.
 
-## 3.3 Empirical feature justification (hard evidence)
+The per-feature variance-by-label plot (`ch3_variance_by_label_dataset1.png`) makes the same point structurally and explains *why* length looks strong in aggregate yet fails as a discriminator. The features with the largest benign-vs-attack variance gap are dominated by raw-magnitude "shape" features: `char_count` alone accounts for a gap of ~1233 (attack variance 2055 is 2.5× the benign 822), followed by `token_len_max` and `token_len_mean`. Crucially, the gap is driven by attack commands being far more *dispersed*, not uniformly shifted — attackers produce both terse `id`-style probes and enormous encoded payloads, inflating variance without cleanly moving the mean. Below the size features, the gap ranking turns behavioral: `b64_max_run` (the longest base64 run) has 7× the attack-side variance, and `paren_count`, `redirect_count`, `semicolon_count`, and `shell_bins` all spike. Taken together this describes the attack profile precisely — longer commands, longer individual tokens (encoded blobs, long URLs and paths), more base64, and more shell plumbing (redirects into `/dev/tcp`, subshells and command substitution, `;`-chained stages, an explicit `bash`/`sh` invocation).
 
-Every engineered feature was tested with a two-sided **Mann-Whitney U** test (features are counts/ratios, not normal) and a **rank-biserial effect size** r in [-1,1] (sign = direction; +r means larger for malicious). Full table: `report/ch3_feature_justification.csv`.
+| Feature | Benign var | Attack var | Variance gap |
+|---|---:|---:|---:|
+| `char_count` | 821.80 | 2055.09 | 1233.28 |
+| `token_len_max` | 64.78 | 439.00 | 374.22 |
+| `token_len_mean` | 12.15 | 157.18 | 145.02 |
+| `b64_max_run` | 8.96 | 64.20 | 55.25 |
+| `token_count` | 19.58 | 28.49 | 8.91 |
+| `paren_count` | 0.58 | 4.83 | 4.24 |
+| `quote_count` | 2.56 | 4.89 | 2.33 |
+| `semicolon_count` | 0.23 | 0.86 | 0.63 |
+| `redirect_count` | 0.07 | 0.52 | 0.45 |
+| `shell_bins` | 0.006 | 0.135 | 0.129 |
 
-- **36 / 37** features differ between classes at p < 0.05.
-- **6** features reach |r| >= 0.2 (a meaningful separation).
-
-### Strongest features (top 10 by |effect size|)
-
-| feature | mean malicious | mean benign | rank-biserial r | MWU p |
-|---|---:|---:|---:|---:|
-| `special_ratio` | 0.1863 | 0.1436 | +0.318 | 1.58e-152 |
-| `max_token_len` | 16.0911 | 11.5774 | +0.303 | 8.16e-140 |
-| `char_entropy` | 4.0607 | 3.8523 | +0.288 | 1.89e-125 |
-| `n_redirects` | 0.521 | 0.0823 | +0.252 | 1.65e-290 |
-| `len_chars` | 52.4285 | 37.7934 | +0.247 | 5.21e-93 |
-| `digit_ratio` | 0.06 | 0.0206 | +0.238 | 1.25e-121 |
-| `n_sensitive_paths` | 0.2564 | 0.0226 | +0.182 | 5.17e-272 |
-| `n_pipes` | 0.3111 | 0.5567 | -0.166 | 7.79e-69 |
-| `mean_token_len` | 7.2652 | 6.2483 | +0.161 | 1.87e-40 |
-| `len_tokens` | 6.7144 | 5.3119 | +0.135 | 1.09e-29 |
-
-### 3.2 Noise & redundancy reduction
-
-- **Low-signal features** (|r| < 0.05, candidates to prune for compute): `has_shell_bin`, `n_backticks_subshell`, `n_enum_bins`, `has_enum_bin`, `has_dev_tcp`, `n_ports`, `has_interp_bin`, `has_url`, `n_and_or`, `has_shell_flag_i`, `has_exec_flag`, `has_privesc_bin`, `has_evasion_tok`, `n_braces`, `has_hex_escape`, `nonprintable_ratio`, `has_eval`.
-- **Redundant / multicollinear pairs** (|corr| > 0.85) — keep one of each pair; the tree ranking in Ch4 confirms which:
-  - `len_chars` ~ `len_tokens` (corr 0.897)
-  - `has_ipv4` ~ `n_ipv4` (corr 0.976)
-  - `has_enum_bin` ~ `n_enum_bins` (corr 0.984)
-
-Figures: `report/figures/ch3_*.png` (class balance, variance, correlation heatmap, top-feature box plots, length histogram).
-
-> Note on length: Dataset 1's malicious commands are **not** simply longer — see `ch3_length_hist.png` and the low stand-alone power of `len_chars` in the table. This matches the baseline audit (length-only F1 ~ 0.39), so the signal is behavioural, not a length artifact.
+Three takeaways shape the downstream model design. First, the top of the gap ranking is an artifact of *scale*, not necessarily of *information*: `char_count`, `token_len_max`, and `token_len_mean` win the variance contest largely because they are measured in raw character units. Any distance-, linear-, or neural-based learner will be dominated by `char_count`'s magnitude unless these features are standardized or log-transformed, whereas the bounded entropy and ratio features (`char_entropy`, `special_ratio`, `digit_ratio`) already live on a comparable [0,1]-ish scale and encode obfuscation without the scale baggage — an argument for pairing normalized magnitudes with entropy features rather than feeding raw counts. Second, expect heavy dual-use overlap: pipes, redirects, subshells, and even `sudo` are the daily vocabulary of legitimate administration, so no single feature cleanly partitions the classes (this is exactly why the length probe collapses to 0.611, and why the correlation heatmap `ch3_corr_heatmap_dataset1.png` shows `char_count`, `token_count`, and the token-length features are collinear — they largely re-measure "how big is this command"). The model must earn its lift from *conjunctions* — a long token **and** a base64 run **and** a `/dev/tcp` redirect — not from any feature in isolation. Third, character count is real-but-insufficient by design: keep it as a cheap weak learner and a useful split variable for tree ensembles, but do not mistake its large variance gap for separating power. The distributional overlap in the 20–50 character body is the ceiling on what size alone can deliver, and closing that gap is the job of the behavioral, network, and obfuscation features rather than the shape features.

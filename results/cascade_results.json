@@ -1,0 +1,56 @@
+{
+  "dataset1": {
+    "n_train": 6000,
+    "n_test": 3049,
+    "stage1_threshold": 0.005889,
+    "routing": {
+      "stage1": 142,
+      "stage2": 2025,
+      "stage3": 882,
+      "total": 3049
+    },
+    "routing_fractions": {
+      "stage1": 0.0466,
+      "stage2": 0.6642,
+      "stage3": 0.2893
+    },
+    "cascade_f1": 0.5125,
+    "single_model_f1": {
+      "random_forest": 0.7399,
+      "isolation_forest": 0.2541,
+      "cnn": 0.8358
+    },
+    "best_single": {
+      "name": "cnn",
+      "f1": 0.8358
+    },
+    "delta_vs_best_single": -0.3234
+  },
+  "dataset2": {
+    "n_train": 6000,
+    "n_test": 1915,
+    "stage1_threshold": 0.003293,
+    "routing": {
+      "stage1": 42,
+      "stage2": 1183,
+      "stage3": 690,
+      "total": 1915
+    },
+    "routing_fractions": {
+      "stage1": 0.0219,
+      "stage2": 0.6178,
+      "stage3": 0.3603
+    },
+    "cascade_f1": 0.4802,
+    "single_model_f1": {
+      "random_forest": 0.6876,
+      "isolation_forest": 0.0733,
+      "cnn": 0.829
+    },
+    "best_single": {
+      "name": "cnn",
+      "f1": 0.829
+    },
+    "delta_vs_best_single": -0.3488
+  }
+}

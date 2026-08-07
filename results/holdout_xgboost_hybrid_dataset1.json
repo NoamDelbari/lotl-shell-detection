@@ -1,0 +1,15 @@
+{
+  "command": "holdout",
+  "model": "xgboost_hybrid",
+  "dataset": "dataset1",
+  "metrics": {
+    "precision": 0.7909319899244333,
+    "recall": 0.8418230563002681,
+    "f1": 0.8155844155844156,
+    "fpr": 0.07364685004436557,
+    "roc_auc": 0.954666235301674,
+    "pr_auc": 0.9074899750827843,
+    "tpr_at_1pct_fpr": 0.6219839142091153,
+    "tpr_at_0.1pct_fpr": 0.4879356568364611
+  }
+}

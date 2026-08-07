@@ -1,0 +1,37 @@
+{
+  "model": "xgboost_hybrid",
+  "dataset": "dataset2",
+  "seconds": 6.9,
+  "metrics": {
+    "accuracy": 0.9221932114882506,
+    "precision": 0.8540772532188842,
+    "recall": 0.8308977035490606,
+    "f1": 0.8423280423280424,
+    "fpr": 0.04735376044568245,
+    "tn": 1368,
+    "fp": 68,
+    "fn": 81,
+    "tp": 398,
+    "roc_auc": 0.9685982577444886,
+    "pr_auc": 0.9300141262987428,
+    "tpr_at_fpr_1e-2": 0.6847599164926931,
+    "tpr_at_fpr_1e-3": 0.5031315240083507
+  },
+  "per_source": {
+    "bash_history": {
+      "class": "benign",
+      "n": 1026,
+      "fpr": 0.05360623781676413
+    },
+    "commandlinefu": {
+      "class": "benign",
+      "n": 410,
+      "fpr": 0.03170731707317073
+    },
+    "honeypot": {
+      "class": "malicious",
+      "n": 479,
+      "recall": 0.8308977035490606
+    }
+  }
+}

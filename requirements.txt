@@ -3,3 +3,15 @@ pandas>=2.1
 scikit-learn>=1.4
 requests>=2.31
 pyarrow>=15.0
+# --- model + analysis pipeline (Ch3-Ch8, bonus) ---
+xgboost>=2.1
+imbalanced-learn>=0.12
+torch>=2.2
+scipy>=1.11
+matplotlib>=3.8
+seaborn>=0.13
+# --- bonus LLM triage layer (optional; needs HF_TOKEN at runtime) ---
+huggingface-hub>=0.24
+# macOS without Homebrew: xgboost needs an OpenMP runtime (libomp). The torch
+# wheel bundles one and src/__init__.py auto-loads it; on Linux/brew this is a
+# no-op. If xgboost still fails to import, run: brew install libomp

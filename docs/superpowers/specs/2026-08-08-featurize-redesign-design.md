@@ -36,8 +36,9 @@ encoder (untouched); report assembly.
 
 - `featurize(commands) -> pd.DataFrame`, `columns == FEATURE_NAMES`, numeric, finite,
   deterministic, row-independent. `FEATURE_NAMES` stays the single authoritative order.
-- `src/preprocessing.py` (`EngineeredFeatures`), models, and `tests/test_pipeline.py`
-  stay untouched and must pass unchanged. The *column list* may change freely.
+- `src/preprocessing.py` (`EngineeredFeatures`) and the models stay untouched. Existing
+  assertions in `tests/test_pipeline.py` are not modified and must keep passing; new
+  edge-case tests may be added. The *column list* may change freely.
 - Error handling: empty/whitespace command → all-zero row; inputs coerced via `str()`;
   existing no-NaN/inf guard retained.
 
@@ -47,8 +48,10 @@ New script `analysis/ch3_feature_audit.py` (seeded, SEED=42), reads **train spli
 (`pd.read_csv(..., na_filter=False)`), computes per feature × per dataset:
 
 1. **Signal:** class-conditional mean/median, Mann-Whitney U p-value, effect size —
-   Cliff's delta (continuous) or odds ratio (binary). A feature must show significant
-   separation on ≥1 dataset to survive.
+   Cliff's delta (continuous) or odds ratio (binary). Survival gate (default, adjustable
+   jointly at audit time): p < 0.01 **and** |Cliff's δ| ≥ 0.1 (continuous) or odds ratio
+   ≥ 1.5 / ≤ 0.67 (binary) on ≥1 dataset. At our train sizes (7k–12k rows) p-values are
+   nearly always significant — effect size is the operative gate.
 2. **Redundancy (Ch3.2):** Spearman matrix; clusters at |ρ| > 0.9 keep one representative,
    rest killed with the cluster named as reason.
 3. **Leakage probes (Ch4 seed):** per feature, label-vs-source separation strength; the
@@ -76,6 +79,7 @@ New script `analysis/ch3_feature_audit.py` (seeded, SEED=42), reads **train spli
   `>` is everyday scripting.
 - IPv4: keep `has_ipv4`/`n_ipv4` but audit-flag against P8; add `has_private_ip` /
   `has_public_ip` split (honeypot C2s are public; tutorial examples usually private).
+  Private = RFC1918 (`10.*`, `172.16–31.*`, `192.168.*`) + loopback (`127.*`).
   Verdict decided on evidence; whatever survives becomes Ch4 discrepancy exhibit A.
 
 **New candidate families (all four approved by Noam — "do them all"):**
@@ -122,7 +126,8 @@ failure our modification fixes); reject PCA (kills Ch4 interpretability) and unb
 
 ## Acceptance criteria
 
-- `python tests/test_pipeline.py` passes unchanged.
+- `python tests/test_pipeline.py` passes (existing assertions unmodified, new edge-case
+  tests included).
 - `python main.py holdout --model random_forest --dataset dataset1` runs end-to-end.
 - Every final `FEATURE_NAMES` entry has verdict + evidence in the audit JSON; no
   |ρ| > 0.9 pair survives undocumented.

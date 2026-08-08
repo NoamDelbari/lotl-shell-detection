@@ -12,7 +12,10 @@ Per feature x per dataset (TRAIN SPLITS ONLY, via src.ingestion):
   shortcut   solo-rule F1 (predict attack iff value > 0) vs the do-nothing
              floor 2p/(1+p) -- the KNOWN_ISSUES P8 probe generalized to every
              feature; source concentration (share of feature-positive attack
-             rows owned by a single source: a fingerprint, not a behaviour);
+             rows owned by a single source) AND max per-source positive rate
+             (a source whose rows ~always fire a feature is fingerprinted by
+             it -- the direction that catches QuasarNix/IPv4 in the current
+             build, where the source is small but fully saturated);
              Spearman rho vs dataset 2's RETIRED P1 selection markers
              (echoing a retired marker is flagged, not disqualifying).
   redundancy Spearman clusters at |rho| > RHO_MAX (edges pooled across
@@ -53,7 +56,9 @@ OR_HI = 1.5           # odds-ratio gate, binary features
 OR_LO = 1.0 / 1.5
 RHO_MAX = 0.90        # Spearman redundancy threshold
 CONC_FLAG = 0.90      # source-concentration flag level
-SOLO_F1_FLAG = 0.85   # solo-rule F1 flag level (P8 IPv4 scores ~0.94 on D1)
+SOLO_F1_FLAG = 0.85   # solo-rule F1 flag level (old-build P8 IPv4 ~ 0.94)
+SRC_SAT_FLAG = 0.95   # per-source positive-rate saturation flag level
+BEN_RARE_FLAG = 0.05  # ...only suspicious if the feature is rare in benign
 MARKER_RHO_FLAG = 0.50
 
 RESULTS = ROOT / "results"
@@ -168,8 +173,12 @@ def main():
         low = train["command"].str.lower()
         marker = low.apply(
             lambda s: int(any(m in s for m in _RETIRED_MARKERS))).to_numpy()
-        per_ds[ds] = dict(X=X, y=y, src=train["source"].to_numpy(),
-                          marker=marker, prevalence=float(y.mean()))
+        src = train["source"].to_numpy()
+        attack_src_masks = [(s, (y == 1) & (src == s))
+                            for s in sorted(set(src[y == 1]))]
+        per_ds[ds] = dict(X=X, y=y, src=src, marker=marker,
+                          attack_src_masks=attack_src_masks,
+                          prevalence=float(y.mean()))
         print(f"[audit] {ds}: {len(X)} train rows, "
               f"prevalence {y.mean():.3f}, "
               f"retired-marker rate {marker.mean():.3f}")
@@ -202,6 +211,16 @@ def main():
                              .value_counts(normalize=True).iloc[0])
             else:
                 conc = 0.0
+            # reverse-direction P8 probe: is any single attack source
+            # ~always firing this feature (i.e. the feature fingerprints
+            # the source rather than the behaviour)?
+            sat_rate, sat_src = 0.0, ""
+            for s_name, mask in blob["attack_src_masks"]:
+                rate = float((x[mask] > 0).mean()) if mask.any() else 0.0
+                if rate > sat_rate:
+                    sat_rate, sat_src = rate, s_name
+            pos_rate_ben = float((ben > 0).mean()) if len(ben) else 0.0
+            pos_rate_mal = float((mal > 0).mean()) if len(mal) else 0.0
             if dead or marker.var() == 0:
                 rho = 0.0
             else:
@@ -218,6 +237,10 @@ def main():
                 "auc": float(auc),
                 "solo_rule_f1": solo_f1,
                 "source_concentration": conc,
+                "max_source_pos_rate": sat_rate,
+                "max_source": sat_src,
+                "pos_rate_mal": pos_rate_mal,
+                "pos_rate_ben": pos_rate_ben,
                 "retired_marker_rho": rho,
                 "passes_gate": bool(passes and not dead),
                 "dead": dead,
@@ -266,9 +289,13 @@ def main():
         for ds, d in dss.items():
             if d["dead"]:
                 flags.append(f"dead-on-{ds}")
-            if (d["source_concentration"] > CONC_FLAG
-                    and d["solo_rule_f1"] > SOLO_F1_FLAG):
-                flags.append(f"P8-source-fingerprint-{ds}")
+            if ((d["source_concentration"] > CONC_FLAG
+                    and d["solo_rule_f1"] > SOLO_F1_FLAG)
+                    or (d["max_source_pos_rate"] >= SRC_SAT_FLAG
+                        and d["pos_rate_ben"] <= BEN_RARE_FLAG
+                        and not d["dead"])):
+                flags.append(
+                    f"P8-source-fingerprint-{ds}({d['max_source']})")
             if abs(d["retired_marker_rho"]) > MARKER_RHO_FLAG:
                 flags.append(f"retired-marker-echo-{ds}")
         info["flags"] = flags
@@ -290,6 +317,8 @@ def main():
         "gate": {"alpha": ALPHA, "delta_min": DELTA_MIN, "or_hi": OR_HI,
                  "or_lo": OR_LO, "rho_max": RHO_MAX,
                  "conc_flag": CONC_FLAG, "solo_f1_flag": SOLO_F1_FLAG,
+                 "src_sat_flag": SRC_SAT_FLAG,
+                 "ben_rare_flag": BEN_RARE_FLAG,
                  "marker_rho_flag": MARKER_RHO_FLAG},
         "datasets": {ds: {"n_train": int(len(per_ds[ds]["X"])),
                           "prevalence": per_ds[ds]["prevalence"],
@@ -312,7 +341,10 @@ def main():
           f"({len(FEATURE_NAMES)} features x {len(datasets)} datasets)")
     print(f"[audit] P8 check -- has_ipv4 solo-rule F1: "
           + ", ".join(f"{ds}={v:.3f}" for ds, v in ipv4_f1.items())
-          + "  (KNOWN_ISSUES P8 full-data value: 0.938 on dataset1)")
+          + "  (0.938 was measured on the earlier 78k-row build; in the "
+          "current curated build the saturated source is downsampled, so "
+          "the shortcut survives as a source fingerprint -- see "
+          "max_source_pos_rate)")
 
     _write_markdown(out, datasets)
     n_keep = sum(v["proposed_verdict"].startswith("KEEP")
@@ -365,9 +397,32 @@ def _write_markdown(out, datasets):
         "Solo rule \"predict attack iff literal IPv4 present\" scores: "
         + ", ".join(f"**{v:.3f}** on `{ds}`"
                     for ds, v in out["p8_ipv4_solo_f1"].items())
-        + ". KNOWN_ISSUES P8 measured 0.938 on full dataset1 -- any feature "
-        "with solo-rule F1 in that range is a shortcut suspect, not a "
-        "detector (Ch4 exhibit A).",
+        + ". KNOWN_ISSUES P8 measured **0.938** on the earlier 78k-row "
+        "dataset1 build, where the IPv4-saturated source dominated the "
+        "attack side; the current curated build downsamples that source, so "
+        "the dataset-wide rule collapsed but the *source fingerprint* "
+        "remains (a source can still be identified by the feature firing on "
+        "~100% of its rows). The `max_source_pos_rate` column below is that "
+        "probe; saturated+benign-rare features are flagged "
+        "`P8-source-fingerprint` (Ch4 exhibit A).",
+        "",
+        "### Source-fingerprint features (source saturation >= "
+        f"{out['gate']['src_sat_flag']}, benign rate <= "
+        f"{out['gate']['ben_rare_flag']})",
+        "",
+    ]
+    fp_rows = []
+    for f, info in pf.items():
+        for ds, d in info["per_dataset"].items():
+            if (d["max_source_pos_rate"] >= out["gate"]["src_sat_flag"]
+                    and d["pos_rate_ben"] <= out["gate"]["ben_rare_flag"]
+                    and not d["dead"]):
+                fp_rows.append(
+                    f"- `{f}` on `{ds}`: fires on "
+                    f"{d['max_source_pos_rate']:.0%} of `{d['max_source']}` "
+                    f"rows vs {d['pos_rate_ben']:.1%} of benign")
+    lines += fp_rows or ["- none"]
+    lines += [
         "",
         "## Redundancy clusters (|rho| > 0.9)",
         "",

@@ -201,14 +201,20 @@ def featurize(commands) -> pd.DataFrame:
 
     Parameters
     ----------
-    commands : iterable of str
+    commands : iterable; each element is coerced via str(). Empty or
+        whitespace-only commands produce an all-zero row.
 
     Returns
     -------
     pandas.DataFrame with columns == FEATURE_NAMES (numeric, one row per input).
     """
-    commands = list(commands)
-    rows = [_features_for_one(c) for c in commands]
+    rows = []
+    for cmd in commands:
+        s = str(cmd)
+        if not s.strip():
+            rows.append([0] * len(FEATURE_NAMES))
+        else:
+            rows.append(_features_for_one(s))
     frame = pd.DataFrame(rows, columns=FEATURE_NAMES)
     # sanity: contract is purely numeric, no NaN/inf leaking downstream
     if not np.isfinite(frame.to_numpy(dtype=float)).all():

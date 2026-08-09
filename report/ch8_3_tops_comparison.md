@@ -1,6 +1,6 @@
 # Chapter 8.3 — Comparison vs. the Trizna ("TOPS") Paper
 
-> **Sourcing note.** As detailed in [`report/ch2_literature_review.md`](ch2_literature_review.md), the assigned *Trizna (2022) ACM TOPS "sequence-to-sequence models for detecting anomalous Linux commands"* could not be located on DBLP. This comparison is therefore anchored on Trizna's verifiable work — **SLP (2021, arXiv:2107.02438)** and **QuasarNix (2024, arXiv:2402.18329)** — and, where the assigned title implies a sequence-to-sequence *anomaly* detector, on the well-established behavior of that model class. Claims attributed to "Trizna's approach" below are grounded in those real papers; our own numbers are from [`results/summary.json`](../results/summary.json) and the forensics in [`report/ch8_findings.md`](ch8_findings.md).
+> The assigned TOPS paper is Trizna, D., Demetrio, L., Biggio, B., & Roli, F. (2026), *Robust Large-Scale Detection of Living-Off-the-Land Reverse Shells via Data Synthesis*, ACM TOPS, DOI: 10.1145/3807450 (arXiv:2402.18329). This is the QuasarNix paper — its `quasarnix` corpus is one of our own attack sources. The comparison below also references Trizna's earlier **SLP paper** (arXiv:2107.02438, CAMLIS 2021) where relevant. Our own numbers are from [`results/summary.json`](../results/summary.json) and the forensics in [`report/ch8_findings.md`](ch8_findings.md).
 
 ## Error-profile comparison
 

@@ -73,34 +73,27 @@ _RETIRED_MARKERS = ("wget", "curl", "chmod +x", "| sh", "/dev/tcp", "nc -e",
 # Family grouping for the report; must exactly cover FEATURE_NAMES.
 FAMILIES = {
     "shape/size": (
-        "len_chars", "len_tokens", "token_entropy", "char_entropy",
-        "mean_token_len", "max_token_len"),
+        "len_chars", "len_tokens", "mean_token_len", "max_token_len"),
     "structure/chaining": (
-        "n_pipes", "n_redirect_out", "n_redirect_in", "has_stderr_merge",
-        "n_semicolons", "n_and_or", "n_backticks_subshell", "n_quotes",
-        "n_parens", "n_braces"),
+        "n_pipes", "n_redirect_out", "has_stderr_merge", "n_quotes"),
     "network/delivery": (
-        "has_ipv4", "n_ipv4", "has_private_ip", "has_public_ip", "has_url",
-        "has_dev_tcp", "n_ports"),
+        "has_ipv4", "has_private_ip", "has_url", "has_dev_tcp"),
     "binary families": (
         "has_fetch_bin", "has_shell_bin", "has_interp_bin", "has_lotl_bin",
-        "has_enum_bin", "n_enum_bins", "has_privesc_bin", "has_evasion_tok"),
+        "has_enum_bin", "has_evasion_tok"),
     "A: head/args": (
-        "head_is_fetch", "head_is_shell", "head_is_interp", "head_is_lotl",
-        "head_is_enum", "head_is_privesc", "n_flags", "has_long_flag",
-        "n_assign_prefix"),
+        "head_is_shell", "head_is_interp", "head_is_lotl", "head_is_privesc",
+        "n_flags", "has_long_flag"),
     "B: exec micro-structure": (
         "has_pipe_to_shell", "has_fetch_exec_chain", "has_decode_exec",
         "has_ifs_expansion", "has_heredoc", "has_dev_null",
         "has_shell_flag_i", "has_exec_flag"),
     "C: paths/filesystem": (
         "n_abs_paths", "has_hidden_path", "has_staging_dir", "has_home_ref",
-        "n_cred_paths", "n_proc_paths", "n_log_paths", "n_sensitive_paths"),
+        "n_sensitive_paths"),
     "D: obfuscation": (
-        "has_base64_blob", "b64_run_len", "has_hex_escape", "has_eval",
-        "nonprintable_ratio", "digit_ratio", "special_ratio",
-        "n_var_assignments", "n_var_expansions", "has_quote_splice",
-        "n_backslash", "subshell_depth"),
+        "has_base64_blob", "b64_run_len", "has_hex_escape", "digit_ratio",
+        "special_ratio", "has_quote_splice"),
 }
 _FAMILY_OF = {f: fam for fam, fs in FAMILIES.items() for f in fs}
 assert set(_FAMILY_OF) == set(FEATURE_NAMES), (

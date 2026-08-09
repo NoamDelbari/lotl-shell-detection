@@ -125,17 +125,16 @@ def test_featurize_behaviors():
     assert f(4, "has_pipe_to_shell") == 1 and f(4, "has_fetch_exec_chain") == 1
     assert f(5, "has_stderr_merge") == 1 and f(5, "has_dev_null") == 1
     assert f(6, "has_decode_exec") == 1
-    assert f(10, "has_heredoc") == 1 and f(10, "n_redirect_in") == 0
-    # IPv4 private/public split (P8 follow-up)
-    assert f(4, "has_public_ip") == 1 and f(4, "has_private_ip") == 0
-    assert f(5, "has_private_ip") == 1 and f(5, "has_public_ip") == 0
+    assert f(10, "has_heredoc") == 1
+    # IPv4 private-ip split (P8 follow-up; public-ip clone was pruned)
+    assert f(4, "has_ipv4") == 1 and f(4, "has_private_ip") == 0
+    assert f(5, "has_ipv4") == 1 and f(5, "has_private_ip") == 1
     # family A head resolution through assignments/wrappers
-    assert f(7, "n_assign_prefix") == 2 and f(7, "head_is_interp") == 1
+    assert f(7, "head_is_interp") == 1
     assert f(7, "has_staging_dir") == 1
     # families C/D
-    assert f(8, "has_quote_splice") == 1 and f(8, "n_cred_paths") >= 1
+    assert f(8, "has_quote_splice") == 1
     assert f(8, "has_home_ref") == 1 and f(8, "has_hidden_path") == 1
-    assert f(9, "subshell_depth") == 2
     print("ok  featurize behaviors (fixed + A-D families)")
 
 

@@ -1,6 +1,6 @@
 # Chapter 6 — Model Selection Justification (XGBoost & 1D-CNN)
 
-This project pairs two deliberately different learners on the same T1059.004 task: a gradient-boosted tree ensemble over **engineered behavioral features**, and a **character-level 1D-CNN** over the raw command string. They are chosen to be complementary — one interpretable and feature-driven, one representation-learning and syntax-driven — so that agreement between them is meaningful and their disagreements define the edge cases routed to LLM arbitration (Ch. 8.4). In-domain results back the pairing: XGBoost-hybrid reaches **F1 0.816 / ROC-AUC 0.955** on Dataset 1 and **0.810 / 0.936** on Dataset 2, while the CNN reaches **0.750 / 0.930** and **0.736 / 0.902** (`results/summary.json`).
+This project pairs two deliberately different learners on the same T1059.004 task: a gradient-boosted tree ensemble over **engineered behavioral features**, and a **character-level 1D-CNN** over the raw command string. They are chosen to be complementary — one interpretable and feature-driven, one representation-learning and syntax-driven — so that agreement between them is meaningful and their disagreements define the edge cases routed to LLM arbitration (Ch. 8.4). In-domain results back the pairing: XGBoost-hybrid reaches **F1 0.871 / ROC-AUC 0.978** on Dataset 1 and **0.846 / 0.965** on Dataset 2, while the CNN reaches **0.853 / 0.976** and **0.841 / 0.960** (`results/summary.json`).
 
 ## 6.1 XGBoost on engineered features
 
@@ -29,7 +29,7 @@ The CNN operates on the raw command as a sequence of character indices, and char
 | Hyperparameter | Value | Why |
 |---|---|---|
 | `scale_pos_weight` | **3.0** | The data is 1:3 attack:benign, so there are 3× more negatives; setting the positive-class gradient weight to `neg/pos = 3` rebalances the loss so the minority attack class is learned instead of being swamped. Ch. 7 shows this is the dominant **FPR** dial (FPR 0.049 → 0.145 from 1.0 → 5.0) with F1 flat — i.e. it sets the operating point, and 3.0 is the recall-favoring default a detector wants. |
-| `max_depth` | **6** | Enough interaction depth for feature conjunctions (a long token **and** a `/dev/tcp` redirect) without overfitting. Ch. 7 confirms depth ≥ 6 buys almost nothing (F1 0.733 at 6 vs 0.735 at 12), so 6 is the parsimonious choice. |
+| `max_depth` | **12** | The best-F1 point in the Ch. 7 sweep (0.7354 at 12 vs 0.7329 at 6), adopted after full-data re-validation: the deeper trees lift the full XGBoost-hybrid from F1 0.853 (depth 6) → **0.871** on Dataset 1. The trade-off is transfer robustness (§8.2) — the extra capacity fits corpus style harder, so depth-12 also transfers worst. |
 | `n_estimators` | **200** | Peak F1 in the sweep; 400 mildly overfits (0.733 → 0.725). |
 | `learning_rate` | **0.1** | Peak F1 (0.733); 0.01 underfits (0.685), 0.3 rolls over (0.718). |
 | `tree_method` | **`hist`** | Histogram binning for fast, memory-light training. |

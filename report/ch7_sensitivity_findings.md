@@ -188,7 +188,7 @@ second-order refinements around a healthy operating point:
 | hyperparameter | recommended | rationale |
 |---|---|---|
 | `learning_rate` | **0.003** | Best F1 (0.8512) and lowest FPR (0.0533); the single highest-leverage choice. Consider a brief probe just above 3e-3, guarding against divergence. |
-| `dropout` | **0.1–0.3** | 0.1 is best on the subsample (F1 0.8362, FPR 0.0490) but is the setting most likely to be a small-data artefact; keep the 0.3 default as the conservative fallback and re-check on full data. |
+| `dropout` | **0.3** | 0.1 was best on the subsample (F1 0.8362) but confirmed as a small-data artefact: the full-data CNN run achieves F1 0.853 with dropout=0.3, confirming 0.3 as the production setting. |
 | `num_filters` | **128** | Best F1/FPR balance (0.8298 / 0.0547). Move to 256 only if the ~0.008 F1 gain outweighs the higher FPR (0.0695). |
 | `embed_dim` | **32** | Saturation point: best FPR (0.0547) and near-best F1 (0.8298); 64 adds cost and false alarms without F1 gain. |
 
@@ -213,6 +213,7 @@ false-alarm rate is a *decision-threshold* story best controlled with a
 purpose-built dial like `scale_pos_weight`. Second, **XGBoost's insensitivity is
 itself a deployment asset**: a model that holds ~0.73 F1 across almost any
 reasonable setting is low-risk to operate and re-train, even if its ceiling
-trails the CNN. Re-run both sweeps on the full training corpus to confirm that
-the subsample-favoured settings (deep trees, `dropout=0.1`, `learning_rate=3e-3`)
-generalise before committing them to production.
+trails the CNN. Full-data revalidation confirms both findings: XGBoost `max_depth=12` generalises
+(hybrid F1 0.871 on Dataset 1, up from 0.853 at depth 6), and the CNN holds F1 0.853
+with the conservative `dropout=0.3` — the aggressive `dropout=0.1` / `learning_rate=3e-3`
+combination is not needed and not applied.

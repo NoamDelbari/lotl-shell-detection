@@ -9,3 +9,7 @@ __pycache__/
 scripts/raw/*.cm
 scripts/raw/*.json
 scripts/raw/*.parquet
+
+# Third-party papers read for Ch2/Ch8.3. Redistribution is not ours to grant
+# (arXiv licence), so the PDFs stay local and are cited, never vendored.
+docs/refs/

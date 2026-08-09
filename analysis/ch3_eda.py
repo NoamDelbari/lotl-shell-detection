@@ -15,7 +15,10 @@ Outputs (Dataset 1, train split):
   report/figures/ch3_top_feature_boxplots.png
   report/figures/ch3_length_hist.png
   report/ch3_feature_justification.csv   (per-feature stats table)
-  report/ch3_eda_findings.md             (written summary + redundancy analysis)
+  report/ch3_eda_autosummary.md          (auto-generated summary + redundancy analysis)
+
+NOTE: this script does NOT write report/ch3_eda_findings.md -- that file is the
+hand-written Chapter 3 prose and must never be machine-overwritten.
 
 Run: python analysis/ch3_eda.py
 """
@@ -102,6 +105,7 @@ def main():
     ax.set_xscale("symlog")
     ax.set_title("Dataset 1 feature variance (symlog)")
     ax.set_xlabel("variance")
+    ax.set_ylabel("feature")   # else seaborn renders the literal string "None"
     fig.tight_layout(); fig.savefig(FIG / "ch3_feature_variance.png", dpi=140)
     plt.close(fig)
 
@@ -206,8 +210,11 @@ def main():
         "`len_chars` in the table. This matches the baseline audit (length-only "
         "F1 ~ 0.39), so the signal is behavioural, not a length artifact.",
     ]
-    (REP / "ch3_eda_findings.md").write_text("\n".join(lines))
-    print("[ch3] wrote report/ch3_eda_findings.md and 6 figures")
+    # NB: report/ch3_eda_findings.md is the hand-written Chapter 3 prose -- do not
+    # machine-overwrite it; this script's auto-generated summary goes to
+    # report/ch3_eda_autosummary.md instead.
+    (REP / "ch3_eda_autosummary.md").write_text("\n".join(lines), encoding="utf-8")
+    print("[ch3] wrote report/ch3_eda_autosummary.md and 5 figures")
 
 
 if __name__ == "__main__":

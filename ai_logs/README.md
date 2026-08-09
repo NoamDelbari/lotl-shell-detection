@@ -2,7 +2,7 @@
 
 **Tool used:** Claude Code (Anthropic's official CLI for Claude)
 **Model:** Claude Opus 4.8
-**Session dates:** August 7–8, 2026
+**Session dates:** August 7–9, 2026
 
 ## Contents
 

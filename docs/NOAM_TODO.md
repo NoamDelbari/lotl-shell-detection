@@ -1,8 +1,35 @@
 # Noam's Remaining Work — LotL Shell Detection
 **Due: Aug 14 (report freeze) / Aug 15 (ZIP submission)**
 
-Ben's side is complete. The items below are Noam's responsibility per `WORK_DIVISION.md`.
-All of Ben's report files are in `report/` and results in `results/summary.json` — reference them freely.
+Ben's side is complete and audited against the full assignment PDF. The items below are Noam's responsibility per `WORK_DIVISION.md`, plus **specific gaps flagged by the rubric audit** that need attention when assembling the final docx.
+
+---
+
+## ⚠️ Rubric Audit Gaps — Fix When Assembling the Docx
+
+### 1. Ch1 — Table column format
+The assignment requires a **5-column** Telemetry & Feature Mapping table:
+1. Adversarial Behavioral Characteristic
+2. Required Telemetry Source
+3. Specific Log Attributes / Raw Fields
+4. Derived / Engineered Feature
+5. Detailed Explanation
+
+Ben's `report/ch1_threat_mapping.md` has 4 columns (adapted for shell commands). When you assemble the docx, **reformat Ben's 3 rows and your 4 rows into the exact 5-column schema above**. The content is all there — it just needs to be reorganized. For shell commands: telemetry source = "shell command log (CSV `command` field)"; derived features = the named features from `src/features.py` (e.g., `dev_tcp_present`, `redirect_count`, `shell_bins`).
+
+### 2. Ch8.1 — Missing RF and IF confusion matrix figures
+The figures folder has confusion matrix images for XGBoost, XGBoost-hybrid, and CNN on both datasets (`report/figures/ch8_confusion_*.png`) — but **NOT for Random Forest or Isolation Forest**. The rubric requires confusion matrices for **all four models** across both datasets. Generate these when you do your Ch8.1 error analysis (see Ch8 section below).
+
+### 3. Ch7.1 — Pipeline diagram
+The assignment requires a "visual software architecture diagram." There is an ASCII block diagram in `PIPELINE.md` (lines 10–35). When assembling the docx, **embed this diagram as a labeled figure (Figure X: Pipeline Architecture)** in Ch7.1. An ASCII diagram in a monospace block is acceptable for a technical report. Optionally draw a proper diagram with draw.io or similar.
+
+### 4. Ch3 — Coverage of "every feature"
+The rubric says "for every feature proposed, provide hard empirical evidence." Ben's ch3 covers the top 10 features explicitly in the variance table and references the variance-by-label figure (which shows all 38). When you write D2's Ch3, do the same — the variance figure is the hard evidence; the text interprets the key features. You don't need to write a separate paragraph per feature.
+
+### 5. ai_logs — File format (FIXED)
+The assignment requires `.txt` or `.json` format named `ai_logs/claude_code_log.txt`. **This has been fixed** — `ai_logs/claude_code_log.txt` now exists with the full transcript. Include this file in the ZIP submission.
+
+---
 
 ---
 

@@ -1,7 +1,9 @@
 # Noam's Remaining Work — LotL Shell Detection
 **Due: Aug 14 (report freeze) / Aug 15 (ZIP submission)**
 
-Ben's side is complete and audited against the full assignment PDF. The items below are Noam's responsibility per `WORK_DIVISION.md`, plus **specific gaps flagged by the rubric audit** that need attention when assembling the final docx.
+Ben's side was complete and audited against the full assignment PDF **as of the pre-redesign (38-feature) run**. The Ch3 feature redesign (43 features, `78d319f`/`cec996f`) invalidated part of it — see **"Handoff to Ben"** under Cross-Review below for exactly what. The items below are Noam's responsibility per `WORK_DIVISION.md`, plus **specific gaps flagged by the rubric audit** that need attention when assembling the final docx.
+
+> **Feature-set reality check (read once, applies everywhere below):** the final engineered set is **43 features**, listed in `src/features.py` `FEATURE_NAMES`, with the per-feature KEEP/KILL evidence in `report/ch3_feature_decisions.md`. Any document still saying "38 features", or naming `shell_bins` / `redirect_count` / `path_proc` / `char_count` / `token_count` / `char_entropy` / `b64_max_run` / `paren_count` / `quote_count` / `semicolon_count` / `token_len_*`, is stale.
 
 ---
 
@@ -15,16 +17,25 @@ The assignment requires a **5-column** Telemetry & Feature Mapping table:
 4. Derived / Engineered Feature
 5. Detailed Explanation
 
-Ben's `report/ch1_threat_mapping.md` has 4 columns (adapted for shell commands). When you assemble the docx, **reformat Ben's 3 rows and your 4 rows into the exact 5-column schema above**. The content is all there — it just needs to be reorganized. For shell commands: telemetry source = "shell command log (CSV `command` field)"; derived features = the named features from `src/features.py` (e.g., `dev_tcp_present`, `redirect_count`, `shell_bins`).
+Ben's `report/ch1_threat_mapping.md` has 4 columns (adapted for shell commands). When you assemble the docx, **reformat Ben's 3 rows and your 4 rows into the exact 5-column schema above**. The content is all there — it just needs to be reorganized. For shell commands: telemetry source = "shell command log (CSV `command` field)"; derived features = the named features from `src/features.py` `FEATURE_NAMES` (e.g., `has_dev_tcp`, `n_redirect_out`, `has_shell_bin`). **Check every feature name you copy against `FEATURE_NAMES` before it goes in the docx** — the old draft names (`dev_tcp_present`, `redirect_count`, `shell_bins`) no longer exist.
 
 ### 2. Ch8.1 — Missing RF and IF confusion matrix figures
-The figures folder has confusion matrix images for XGBoost, XGBoost-hybrid, and CNN on both datasets (`report/figures/ch8_confusion_*.png`) — but **NOT for Random Forest or Isolation Forest**. The rubric requires confusion matrices for **all four models** across both datasets. Generate these when you do your Ch8.1 error analysis (see Ch8 section below).
+The figures folder has confusion matrix images for XGBoost, XGBoost-hybrid, and CNN on both datasets (`report/figures/ch8_confusion_*.png`) — but **NOT for Random Forest or Isolation Forest**. The rubric requires confusion matrices for **all four models** across both datasets. Generate these when you do your Ch8.1 error analysis (see Ch8 section below), **after** the `python main.py all` regeneration lands. Still open; also recorded as Handoff item (d).
 
 ### 3. Ch7.1 — Pipeline diagram
 The assignment requires a "visual software architecture diagram." There is an ASCII block diagram in `PIPELINE.md` (lines 10–35). When assembling the docx, **embed this diagram as a labeled figure (Figure X: Pipeline Architecture)** in Ch7.1. An ASCII diagram in a monospace block is acceptable for a technical report. Optionally draw a proper diagram with draw.io or similar.
 
-### 4. Ch3 — Coverage of "every feature"
-The rubric says "for every feature proposed, provide hard empirical evidence." Ben's ch3 covers the top 10 features explicitly in the variance table and references the variance-by-label figure (which shows all 38). When you write D2's Ch3, do the same — the variance figure is the hard evidence; the text interprets the key features. You don't need to write a separate paragraph per feature.
+### 4. Ch3 — Coverage of "every feature" (premise changed — evidence is now the CSVs, not the figure)
+The rubric says "for every feature proposed, provide hard empirical evidence."
+
+**The old plan no longer works.** It assumed the variance-by-label figure was the all-feature exhibit. The regenerated figures (`analysis/ch3_eda_figures.py`, `173e679`) plot only the **top-15 variance gap** per dataset, so *no figure shows all 43 features*. The figure is now an interpretive exhibit, not the coverage evidence.
+
+**Cite these instead — they are the hard per-feature evidence, all 43 rows each:**
+- **Dataset 2** — `report/ch3_d2_feature_stats.csv` (Mann-Whitney U p-value + rank-biserial effect + per-class means, all 43 features; committed `173e679`). Already cited in `report/ch3_d2_eda_findings.md`.
+- **Dataset 1** — `report/ch3_feature_justification.csv` (regenerated by `analysis/ch3_eda.py`: `mean_malicious`, `mean_benign`, `var_all`, `rank_biserial`, `mwu_p` per feature) **plus** `report/ch3_d1_feature_stats.csv`. *Both are being regenerated on the 43-feature set right now by other agents* — treat them as the intended D1 evidence artifacts and verify they exist and are 43 rows before the docx freeze.
+- **Both datasets, verdict-level** — `report/ch3_feature_decisions.md` carries per-feature effect / p / AUC / solo-F1 on both datasets for all 43 survivors *and* the 25 killed candidates. This is the strongest rubric answer available: it shows evidence for every feature proposed **and** for every feature rejected.
+
+**How to use it in the docx:** keep the text interpreting the top features (as now), reference the top-15 variance figure as illustration, and ship the per-feature CSV as an appendix table with one line in Ch3 saying where it is. You still don't need a paragraph per feature — but the all-feature claim must point at a CSV, not at a figure.
 
 ### 5. ai_logs — File format (FIXED)
 The assignment requires `.txt` or `.json` format named `ai_logs/claude_code_log.txt`. **This has been fixed** — `ai_logs/claude_code_log.txt` now exists with the full transcript. Include this file in the ZIP submission.
@@ -49,9 +60,12 @@ Create the title page in the final .docx:
 Max 1 page. Cover:
 - Threat: T1059.004 Living-off-the-Land Unix shell attacks, provenance-based labeling
 - Two datasets: D1 (curated: HackTricks, GTFOBins, Atomic Red Team, etc.) and D2 (operational: Cowrie honeypot + bash history)
-- Four models: XGBoost-hybrid (F1 0.871 / 0.846), 1D-CNN (0.853 / 0.841), Random Forest (0.761 / 0.696), Isolation Forest (0.264 / 0.082)
-- Cascade: 3-stage (Isolation Forest → XGBoost-hybrid → LLM); cascade F1 0.873 D1 / 0.838 D2 with tighter FPR (0.029 / 0.032)
-- Key finding: in-domain F1 ~0.87 but transfer collapses (D1→D2 0.534, D2→D1 0.184) due to corpus-style shortcuts
+- Feature set: **43 engineered behavioral features** (`src/features.py`), selected from 68 candidates by the audit in `report/ch3_feature_decisions.md`
+- Four models: XGBoost-hybrid, 1D-CNN, Random Forest, Isolation Forest
+- Cascade: 3-stage (Isolation Forest → XGBoost-hybrid → LLM), tighter FPR than any single stage
+- Key finding: strong in-domain F1 but transfer collapses across corpora due to corpus-style shortcuts
+
+> ⚠️ **Do not paste the old F1 numbers into this summary.** Every figure previously listed here (XGBoost-hybrid 0.871/0.846, CNN 0.853/0.841, RF 0.761/0.696, IF 0.264/0.082, cascade 0.873/0.838, transfer 0.534/0.184) came from the **pre-redesign 38-feature run**. Take the final numbers from the regenerated `results/summary.json` after `python main.py all` completes. Directional claims above are safe; the digits are not.
 
 ---
 
@@ -65,9 +79,11 @@ T1059.004 (reverse shells), T1105 (download cradles), T1033 (whoami/id discovery
    - Adversarial Behavioral Characteristic
    - Required Telemetry Source (shell command log / Cowrie JSONL)
    - Specific Log Attributes / Raw Fields (the `command` field)
-   - Derived / Engineered Feature (e.g., `base64_present`, `sudo_present` from `src/features.py`)
+   - Derived / Engineered Feature — use real names from `src/features.py` `FEATURE_NAMES`, e.g. `has_base64_blob` / `has_hex_escape` (T1027), `head_is_privesc` (T1548.003), `has_enum_bin` (T1083)
    - Detailed Explanation of the relationship
-3. **Section 1.3 — Theoretical Feature Rationale**: For each feature in `src/features.py`, explain the semantic security relationship. (Ben's ch1 covers detectability; you cover the feature→behavior mapping.)
+
+   ⚠️ Two traps here: the old draft names `base64_present` / `sudo_present` don't exist, and the sudo-family feature that *survived* the audit is the **positional** `head_is_privesc` — `has_privesc_bin` was killed as class-neutral (see `report/ch3_feature_decisions.md`). Also, **T1070.003 (shell history deletion) has no dedicated feature in the 43-set** — either pick a sub-technique that does map to a real feature, or say plainly in the Explanation column that this behavior is only covered indirectly. Don't invent a feature name to fill the cell.
+3. **Section 1.3 — Theoretical Feature Rationale**: For each of the 43 features in `src/features.py` `FEATURE_NAMES`, explain the semantic security relationship. (Ben's ch1 covers detectability; you cover the feature→behavior mapping.) The family groupings in `report/ch3_feature_decisions.md` (shape/size, structure/chaining, network/delivery, binary families, head/args, exec micro-structure, paths/filesystem, obfuscation) give you the section skeleton for free.
 
 ---
 
@@ -82,13 +98,20 @@ Ben has written the **Trizna/SLP + QuasarNix** half (`report/ch2_literature_revi
 ---
 
 ### Chapter 3 — EDA (15 pts, partial)
-Ben has written Dataset 1 EDA (`report/ch3_eda_findings.md`) and generated figures for both datasets.
+Ben has written Dataset 1 EDA (`report/ch3_eda_findings.md` — **stale, see Handoff to Ben**).
 
-**You need to write Dataset 2 EDA analysis** (figures already exist in `report/figures/`):
-- `ch3_length_dist_dataset2.png` — what does the length distribution say about D2 vs D1?
-- `ch3_variance_by_label_dataset2.png` — which features discriminate best in D2?
-- `ch3_corr_heatmap_dataset2.png` — any strong correlations to watch for leakage?
-- Write 3–4 paragraphs, matching the style and depth of Ben's D1 analysis.
+#### ✅ DONE — Dataset 2 EDA write-up (`cee7285`, corrections `088446e`)
+Written on the final 43-feature set, 4 paragraphs + a per-feature effect table, matching the depth of Ben's D1 analysis. Artifacts:
+- `report/ch3_d2_eda_findings.md` — the prose (length distribution, per-feature discrimination, correlation/leakage, three modeling takeaways)
+- `report/ch3_d2_feature_stats.csv` — all 43 features, Mann-Whitney U + rank-biserial + per-class means
+- `analysis/ch3_eda_figures.py` — the regeneration script
+
+#### ✅ DONE — Ch3 figures regenerated on the 43-feature set (`173e679`)
+6 per-dataset figures rebuilt (the old ones were 38-era): `ch3_length_hist_dataset{1,2}.png`, `ch3_variance_by_label_dataset{1,2}.png`, `ch3_corr_heatmap_dataset{1,2}.png`. Note the real filename is `ch3_length_hist_*`, **not** `ch3_length_dist_*` as this TODO previously said. Reminder from Rubric Gap 4: the variance-by-label figures show only the **top-15** variance gap, not all 43.
+
+**Still open on Ch3:**
+- Joint review of the D2 draft with Noam before it goes in the docx (it was committed as "draft for joint review").
+- Fold the D1 half back in once Ben's `ch3_eda_findings.md` rewrite lands (Handoff item (a)) — the two halves must use the same feature vocabulary and the same 43-feature framing.
 
 ---
 
@@ -97,10 +120,14 @@ Ben has written Dataset 1 EDA (`report/ch3_eda_findings.md`) and generated figur
 This chapter is entirely yours. Write:
 
 **5.1 Unified Feature Schema Definition**
-The unified feature is the raw shell command string (`command` column), present in both datasets. From it, `src/features.py` extracts 38 identical behavioral features regardless of dataset. Map this back to your Step 1–4 findings. Reference the features that appear in both datasets' top-20 importance charts.
+The unified feature is the raw shell command string (`command` column), present in both datasets. From it, `src/features.py` extracts **43 identical behavioral features** (`FEATURE_NAMES`) regardless of dataset. Map this back to your Step 1–4 findings. Reference the features that appear in both datasets' top-20 importance charts, and cite the selection protocol in `report/ch3_feature_decisions.md` (68 candidates → 43 survivors under one gate applied identically to both datasets — that *is* the harmonization argument).
 
 **5.2 Cross-Dataset Distribution Shift Analysis**
-Pick 5–8 key features (e.g., `shell_bins`, `lotl_bins`, `pipe_count`, `url_present`, `command_length`). For each, show how its mean/variance/distribution differs between D1 and D2 using the figures in `report/figures/`. Explain WHY: D1 is curated/stylized text; D2 is live attacker input. Note the `shell_bins` D1→D2 inversion that Ch4 found (D1: `shell_bins` gain 0.194; D2: `lotl_bins` gain 0.177, `shell_bins` 0.052).
+Pick 5–8 key features (e.g., `has_shell_bin`, `has_lotl_bin`, `n_pipes`, `has_url`, `len_chars`, `digit_ratio`). For each, show how its mean/variance/distribution differs between D1 and D2 using the figures in `report/figures/` and the per-feature CSVs from Rubric Gap 4. Explain WHY: D1 is curated/stylized text; D2 is live attacker input.
+
+The strongest ready-made material for this section is now in `report/ch3_d2_eda_findings.md` — it already documents the **sign inversions** (`len_chars` r +0.247 D1 → −0.171 D2; `n_quotes` +0.081 → −0.112; `n_flags` +0.051 → −0.125) and the LotL anti-signal (`head_is_lotl` benign-leaning on both corpora). Reuse those pairs; they are the feature-level mechanism behind the transfer collapse.
+
+⚠️ The old `shell_bins` D1→D2 gain-inversion note (D1 gain 0.194; D2 `lotl_bins` 0.177 / `shell_bins` 0.052) used **dead feature names and pre-redesign Ch4 numbers** — do not reuse those digits. The equivalent live evidence: `has_shell_bin` OR 32.75 on D1 vs 5.99 on D2 (`report/ch3_feature_decisions.md`), and re-read the gains from the regenerated `report/ch4_feature_ranking.csv` once Ch4 has been re-run.
 
 **5.3 Data Scaling & Scaling Remedies**
 The pipeline uses `StandardScaler` fitted only on the training fold (inside the sklearn Pipeline) to prevent leakage. Explain why Z-score normalization is appropriate here (the features are counts/ratios with different scales). Reference `src/preprocessing.py` — specifically `EngineeredFeatures` and `build_hybrid_pipeline()` which wrap the scaler inside `Pipeline([...])` so CV splits can't leak.
@@ -112,19 +139,30 @@ Ben has written justification for XGBoost + CNN (`report/ch6_model_justification
 
 **You need to add:**
 - **Random Forest justification**: why RF on engineered features for LotL? (Gini importance, robust to outliers, interpretable, no scaling needed.) Cite one paper applying RF to shell/command detection.
-- **Isolation Forest justification**: why unsupervised anomaly detection? (No attack labels needed at stage 1, computationally cheap as a filter.) Cite one paper. Note its known weakness: F1 0.264 / 0.082 standalone, which is why it's stage-1 only in the cascade.
-- **Explicit hyperparameters** for both: RF `n_estimators`, `max_depth`, `class_weight`; IF `n_estimators`, `contamination`. (Check `src/models.py` for actual values.)
+- **Isolation Forest justification**: why unsupervised anomaly detection? (No attack labels needed at stage 1, computationally cheap as a filter.) Cite one paper. Note its known weakness — standalone F1 is poor, which is why it's stage-1 only in the cascade. **Do not quote the old 0.264 / 0.082 pair** (pre-redesign); on the 43-feature set the sweep's wrapper rows give F1 0.249 (D1) / 0.143 (D2) at the shipped fixed-0.5 threshold, and the final standalone figures come from the regenerated `results/summary.json`.
+- **Explicit hyperparameters** for both — actual production values from `src/models.py`, already confirmed by the Ch7 sweep:
+  - RF: `n_estimators=400`, `max_depth=24`, `class_weight="balanced_subsample"`, `min_samples_leaf=1`, `max_features="sqrt"`
+  - IF: `n_estimators=300`, `max_samples=0.8`, `contamination=0.25`, `max_features=1.0`
+  - Cross-reference `report/ch7_rf_if_sensitivity_findings.md` for the "chosen setting + rationale" tables — Ch6 states the choice, Ch7 proves it.
 
 ---
 
 ### Chapter 7 — Pipeline (10 pts, partial)
-Ben has written sensitivity analysis for XGBoost and CNN (`report/ch7_sensitivity_findings.md`).
+Ben has written sensitivity analysis for XGBoost and CNN (`report/ch7_sensitivity_findings.md` — **numbers stale, see Handoff to Ben**).
 
-**You need to add:**
-- **RF sensitivity analysis**: vary `n_estimators` (50/100/200/500) and `max_depth` (None/10/20). Report F1 and FPR. Show which setting was chosen and why.
-- **IF sensitivity analysis**: vary `contamination` (0.05/0.10/0.20/0.30). Report F1 and FPR. (Note: IF F1 is low regardless — show that the operating point was set to maximize recall as a filter, not F1.)
+#### ✅ DONE — RF sensitivity analysis (`d81ff5c`, corrections `088446e`)
+Full 12-config `n_estimators` (50/100/200/500) × `max_depth` (None/10/20) grid on **full training data** (not a 5k subsample), both datasets, F1 + FPR per cell. Result: `max_depth=20` dominates on both F1 and FPR on both datasets; `n_estimators` plateaus by ~200; the whole grid spans only 0.780–0.801 F1 (D1) / 0.731–0.758 (D2) — the 43-feature representation is the ceiling, not tree capacity. Production `(400, 24)` is validated by the plateau cells.
 
-To run these, you can add sweep scripts similar to `analysis/ch7_train.py`.
+#### ✅ DONE — IF sensitivity analysis (`d81ff5c`, corrections `088446e`)
+`contamination` swept 0.05/0.10/0.20/0.30 on both datasets, each at its own calibrated threshold plus the shipped fixed-0.5 wrapper row. Result: `contamination` is a pure false-alarm-budget dial (FPR ≈ c; ROC-AUC identical to 4 dp across all settings — asserted in the script), F1 peaks at only 0.641 (D1) / 0.462 (D2), and even c=0.30 retains just 73%/56% of attacks — which is exactly why the cascade ignores `contamination` and calibrates on `stage1_retain_recall=0.99` (`src/ensemble.py`). The "operating point set for recall, not F1" argument is written up in full.
+
+**Artifacts for both:**
+- `analysis/ch7_rf_if_sweeps.py` (reproduce with `python analysis/ch7_rf_if_sweeps.py`)
+- `results/ch7_rf_if_sensitivity.json`
+- `report/ch7_rf_if_sensitivity_findings.md` (headline answers, both grids, interpretation, chosen-setting tables, cross-model synthesis)
+- 4 figures: `report/figures/ch7_sensitivity_random_forest_dataset{1,2}.png`, `report/figures/ch7_sensitivity_isolation_forest_dataset{1,2}.png`
+
+**Still open on Ch7:** the pipeline architecture figure (Rubric Gap 3), and merging this file with Ben's XGBoost/CNN half once his numbers are refreshed (Handoff item (c)).
 
 ---
 
@@ -141,7 +179,9 @@ Ben has written:
 - How many FN/FP does RF make on D1 and D2?
 - What types of commands does IF flag (which benign sources have highest FPR)?
 - Compare: when RF fails, does XGBoost succeed? (This motivates the cascade.)
-- Run `python main.py holdout random_forest` and `python main.py holdout isolation_forest` and read `results/holdout_random_forest_*.json` and `results/holdout_isolation_forest_*.json`.
+- Run `python main.py holdout random_forest` and `python main.py holdout isolation_forest` and read `results/holdout_random_forest_*.json` and `results/holdout_isolation_forest_*.json`. **Wait for the in-flight `python main.py all` regeneration to finish first** — anything read before then is pre-redesign.
+- While you're in there, emit the **RF and IF confusion matrices** the rubric wants (Rubric Gap 2) — `report/figures/ch8_confusion_random_forest_dataset{1,2}.png` and `ch8_confusion_isolation_forest_dataset{1,2}.png`, matching the naming of the existing XGBoost/CNN ones.
+- Useful context already written: `report/ch7_rf_if_sensitivity_findings.md` explains *why* IF's shipped operating point sits in an extreme-precision corner (recall ~0.15 / FPR ~0.008 on D1). Your IF error forensics should build on that rather than re-deriving it.
 
 **8.3 vs ShellCore** — Benchmark your RF and IF results against ShellCore. How do your results compare? Why are they different (different dataset, different features)?
 
@@ -201,11 +241,7 @@ This routes edge cases (model disagreements / uncertainty band) to Llama 3.1-8B 
    - Python 3.11, scikit-learn 1.5, XGBoost 2.0, PyTorch 2.3 (MPS on Apple Silicon)
    - macOS (Apple M-series GPU used for CNN training via `torch.device("mps")`)
 
-4. **AI logs naming**: the assignment requires `ai_logs/<tool_name>_log.txt`. Rename/copy:
-   ```
-   ai_logs/claude_session.md  →  ai_logs/claude_code_log.txt
-   ```
-   (Keep the .md too; just add the .txt copy for the ZIP.)
+4. **AI logs naming** — ✅ already in place (see Rubric Gap 5): `ai_logs/claude_code_log.txt` exists alongside the `.md`. Just make sure the `.txt` is refreshed with the latest sessions before zipping, and that the `.md` is kept too.
 
 5. **ZIP it**:
    ```
@@ -231,11 +267,33 @@ Ben's files to review:
 - `report/ch8_findings.md`
 - `report/ch8_3_tops_comparison.md`
 
+When reviewing, assume **numbers are stale unless proven otherwise** — the four items below are the ones already found.
+
+### 🔴 Handoff to Ben — cross-cutting breakage found by the verification pass (2026-08-09)
+
+Recorded here so none of it is lost between sessions. Items **(a)–(c)** are fallout from the 38 → 43 feature redesign (`78d319f` / `cec996f`) and land on Ben's chapters, not Noam's; **(d)** is a pre-existing figure gap that is Noam's to close, listed here so Ben doesn't assume the figure set is complete.
+
+**(a) `report/ch3_eda_findings.md` is written on the dead feature set.**
+Ben's hand-written Dataset-1 Ch3 chapter names **eleven** features that no longer exist in `src/features.py`: `char_count`, `token_count`, `token_len_mean`, `token_len_max`, `char_entropy`, `semicolon_count`, `paren_count`, `quote_count`, `redirect_count`, `shell_bins`, `b64_max_run`. Some are renames (`char_count` → `len_chars`, `token_count` → `len_tokens`, `token_len_mean` → `mean_token_len`, `token_len_max` → `max_token_len`, `quote_count` → `n_quotes`, `redirect_count` → `n_redirect_out`, `shell_bins` → `has_shell_bin`, `b64_max_run` → `b64_run_len`); three were **killed outright** (`char_entropy`, `semicolon_count`, `paren_count` — see the killed-candidates table in `report/ch3_feature_decisions.md`). Killed features must be *removed* from the prose, not renamed. The parent session is repairing the numbers and names in place. **Ben must review that rewrite** — it is his prose and his interpretation, and the file is explicitly marked as never machine-overwritten (`analysis/ch3_eda.py` docstring).
+
+**(b) Every downstream chapter number is pre-redesign and is being regenerated.**
+`results/summary.json` and all model metrics were computed on the 38-feature set; `python main.py all` is regenerating them on the 43-feature set. **Ben's chapter prose that quotes the old figures must be refreshed against the new `results/summary.json`**, specifically (non-exhaustive): the **Isolation Forest 0.264 / 0.082** standalone headline and the **XGBoost-hybrid 0.871 / 0.846** results table, plus the transfer table (0.534 / 0.184), the cascade figures, and anything in `ch2` / `ch6` / `ch8` / `ch8_3` / `ch8_4` / `bonus_b3` that cites them. Do not hand-patch digits — re-read them from the regenerated file.
+
+**(c) Two Ch7 figures are still on the old feature set and the old protocol.**
+`report/figures/ch7_sensitivity_xgboost.png` and `report/figures/ch7_sensitivity_cnn.png` were produced on the 38-feature set from a **5,000-row subsample**. They need Ben's re-run before the docx — his `ch7_sensitivity_findings.md` prose depends on them. (For contrast, the RF/IF sweeps above ran the full grid on full training data, so the two halves of Ch7 currently disagree on protocol; say so explicitly in the merged chapter, or re-run his half at full data.) The **unsuffixed 38-era ch3 figures** (`ch3_feature_variance.png`, `ch3_correlation_heatmap.png`, `ch3_top_feature_boxplots.png`, `ch3_length_hist.png`, `ch3_class_balance.png`) **have now been regenerated** by `analysis/ch3_eda.py` on the 43-feature set — no action needed there, but re-check any figure caption that quotes a count.
+
+**(d) Chapter 8 still has no confusion-matrix figures for `random_forest` or `isolation_forest`.**
+`report/figures/` has them for XGBoost, XGBoost-hybrid and CNN on both datasets only. The rubric wants all four models on both datasets. Owner: Noam, as part of Ch8.1 (see Rubric Gap 2) — flagged here so Ben doesn't assume the figure set is complete.
+
 ---
 
 ## Quick Results Reference
 
-All numbers from `results/summary.json` (full data, no limit):
+> 🔴 **STALE — DO NOT COPY INTO THE REPORT.** Every number below is from the **pre-redesign 38-feature** run of `results/summary.json`. `python main.py all` is regenerating `results/summary.json` on the 43-feature set right now. Kept only so you can diff old vs new and spot which chapters moved. **Replace this whole block with the regenerated numbers before the Aug 14 freeze**, then re-check the Executive Summary, Ch6, Ch8 and Ch8.2 against it.
+>
+> The only RF/IF numbers that *are* current-feature-set are in `report/ch7_rf_if_sensitivity_findings.md` and `results/ch7_rf_if_sensitivity.json` (43 features, full data) — but those are sweep cells at swept hyperparameters, not the shipped holdout metrics, so don't substitute them for `summary.json` either.
+
+Old (38-feature) numbers, for diffing only:
 
 | Model | D1 F1 | D2 F1 | D1 ROC-AUC | D2 ROC-AUC |
 |---|---|---|---|---|
@@ -245,7 +303,7 @@ All numbers from `results/summary.json` (full data, no limit):
 | Isolation Forest | 0.264 | 0.082 | 0.722 | 0.602 |
 | Baseline TF-IDF | 0.881 | 0.863 | 0.980 | 0.964 |
 
-Transfer (cross-dataset):
+Transfer (cross-dataset) — same staleness caveat:
 
 | Model | D1→D2 F1 | D2→D1 F1 |
 |---|---|---|

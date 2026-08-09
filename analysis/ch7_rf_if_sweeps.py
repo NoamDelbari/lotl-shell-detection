@@ -49,6 +49,7 @@ from src.models import build_model                           # noqa: E402
 RESULTS = ROOT / "results"
 FIG = ROOT / "report" / "figures"
 RESULTS.mkdir(exist_ok=True)
+FIG.mkdir(parents=True, exist_ok=True)
 sns.set_theme(style="whitegrid", font_scale=0.85)
 
 # Okabe-Ito hues (colorblind-safe; validated with the dataviz six-checks
@@ -159,6 +160,7 @@ def plot_if(dataset, rows):
         ax.plot(xs, [r[metric] for r in rows], marker=marker, linestyle=style,
                 color=color, linewidth=2, markersize=6, label=label)
     ax.set_xlabel("contamination")
+    ax.set_ylabel("metric value")
     ax.set_xticks(xs)
     ax.set_ylim(0, 1)
     ax.legend(fontsize=7)

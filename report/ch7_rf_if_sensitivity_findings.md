@@ -106,12 +106,13 @@ ensemble capacity: the model is robust — hard to break, hard to improve.
 | hyperparameter | chosen | rationale |
 |---|---|---|
 | `max_depth` | **24** (production) | The sweep shows depth ≈ 20 dominates both shallower (10) and unbounded (None) on **both** F1 and FPR, on **both** datasets; production 24 sits on this optimum. |
-| `n_estimators` | **400** (production) | On the ≥200 plateau (grid best at 500 leads 200 by <0.002 F1); 400 keeps train time ~3 s. |
+| `n_estimators` | **400** (production) | On the ≥200 plateau (grid best at 500 leads 200 by only 0.0017 F1 on D1 / 0.0025 on D2); 400 keeps train time ~3 s. |
 | `class_weight` | `balanced_subsample` (pinned) | The cost-sensitive imbalance remedy at 1:3 prevalence; not swept here — its role is analogous to XGBoost's `scale_pos_weight`, which Ben's sweep showed to be an FPR dial. |
 
 The production configuration (`n_estimators=400, max_depth=24`) was chosen
-before this sweep; the grid **validates** it — it sits inside the dominant
-plateau, within 0.002 F1 of the best swept cell (D1: 0.8006 / FPR 0.0310 at
+before this sweep; the grid **validates** it — (400, 24) is not itself a grid
+cell, but it is bracketed by the swept plateau cells (200/20 and 500/20),
+which sit within 0.003 F1 of each grid's best (D1: 0.8006 / FPR 0.0310 at
 500/20) — rather than contradicting it.
 
 ---
@@ -163,8 +164,8 @@ recall is still only 0.56.
 
 **The operating point is set for recall retention, not F1 — and the sweep
 shows why F1-optimising contamination would be the wrong choice.** Even the
-most permissive swept setting (c=0.30, tripling the F1-optimal false-alarm
-rate) retains only 73% (D1) / 56% (D2) of attacks — a stage-1 filter that
+most permissive swept setting (c=0.30, with 3.3× the F1-optimal false-alarm
+rate on D1 and 1.5× on D2) retains only 73% (D1) / 56% (D2) of attacks — a stage-1 filter that
 silently discards 27–44% of attacks caps the whole cascade's recall at that
 value, no matter how good stage 2 is. That is why the production cascade
 ignores `contamination` entirely and calibrates its clearing threshold on the
@@ -198,9 +199,9 @@ threshold, is the intended consumer of this model.
 
 | question | answer | evidence |
 |---|---|---|
-| Which hyperparameter most affects **F1**? | RF `max_depth` — but weakly | Largest RF swing on both datasets (D2: 0.7311 → 0.7584 across depth at n=500, Δ0.027); everything else is ≤0.01. |
-| Which hyperparameter most affects **FPR**? | IF `contamination` — by design | FPR 0.047 → 0.287 (D1), a 6× swing that tracks c one-for-one; RF's depth is second (0.031 vs 0.053, ~1.7×). |
-| Which model is more sensitive overall? | **Isolation Forest** | Its usable output depends entirely on threshold placement (F1 0.25 → 0.64 on D1 between the wrapper point and c=0.10); RF holds a ~0.02-wide F1 band across its whole grid. |
+| Which hyperparameter most affects **F1**? | RF `max_depth` — but weakly | Largest RF swing on both datasets (D2: 0.7311 → 0.7584 across depth at n=500, Δ0.027); everything else is ≤0.012. |
+| Which hyperparameter most affects **FPR**? | IF `contamination` — by design | FPR 0.047 → 0.287 (D1), a 6× swing that tracks c one-for-one; RF's depth is second (0.031 vs 0.052 at n=500, ~1.7×). |
+| Which model is more sensitive overall? | **Isolation Forest** | Its usable output depends entirely on threshold placement (F1 0.25 → 0.64 on D1 between the wrapper point and c=0.10); RF holds a narrow F1 band across its whole grid (0.021 D1 / 0.027 D2). |
 
 The same division of labour Ben found for XGBoost/CNN reappears here:
 **accuracy is set by the representation, false alarms by a purpose-built

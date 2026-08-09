@@ -17,8 +17,9 @@ the mechanism: honeypot traffic is dominated by short scripted fingerprinting
 probes (`uname -a`, `cat /proc/cpuinfo`-style one-liners produce the sharp spike
 at ~10 characters) punctuated by rare, enormous dropper payloads (the clipped
 mass at the right edge of the figure). A length-alone probe now scores **AUC
-0.415** — not merely weak, as its 0.611 on Dataset 1 was, but *below chance in
-the direction that worked on Dataset 1*. The "attacks are longer" rule learned
+0.415** on the train split (0.43 on the held-out test) — not merely weak, as
+its 0.611 on Dataset 1's holdout was, but *below chance in the direction that
+worked on Dataset 1*. The "attacks are longer" rule learned
 from curated PoC one-liners is answered by live traffic with the opposite sign,
 and this single reversal is the cleanest preview of the cross-dataset transfer
 collapse quantified in Chapter 8.2.
@@ -36,10 +37,10 @@ AUC of 0.617 — IP addresses, ports, hex identifiers, and numbered payload
 filenames saturate honeypot traffic), followed by `has_fetch_bin` (21.9% of
 attacks invoke `wget`/`curl`/`tftp`-class binaries vs 3.4% of benign),
 `has_url` (13.6% vs 2.4%), `has_hidden_path` (14.7% vs 4.1% — dot-directories
-for staging), `n_abs_paths`, `n_sensitive_paths` (attack mean 0.113 vs 0.032 —
-`/etc/passwd`, `/proc` reconnaissance), `has_shell_bin`, `head_is_privesc`, and
-`has_ipv4`. Base64 features, prominent on Dataset 1, are nearly informationless
-here by rank (|r| ≤ 0.03) despite a huge attack-side variance in `b64_run_len`
+for staging), `n_abs_paths`, `has_shell_bin`, `head_is_privesc`,
+`n_sensitive_paths` (attack mean 0.113 vs 0.032 — `/etc/passwd`, `/proc`
+reconnaissance), and `has_ipv4`. Base64 features, prominent on Dataset 1, are nearly informationless
+here by rank (|r| ≤ 0.033) despite a huge attack-side variance in `b64_run_len`
 (1,059 vs 68): encoded payloads exist in the honeypot stream but are too rare
 to move the distribution's body.
 
@@ -54,22 +55,29 @@ to move the distribution's body.
 | `head_is_lotl` | 0.013 | 0.131 | −0.118 | benign |
 | `has_url` | 0.136 | 0.024 | +0.113 | attack |
 | `n_quotes` | 0.31 | 0.78 | −0.112 | benign |
-| `n_pipes` | 0.09 | 0.32 | −0.107 | benign |
+| `n_pipes` | 0.09 | 0.32 | −0.106 | benign |
 
 The benign-leaning column of that table is the finding with the deepest
-modeling consequences, because it inverts Dataset 1's flagship attack markers.
-On Dataset 2, `head_is_lotl` (a command *led* by a living-off-the-land binary)
-is ten times more common in benign traffic (13.1% vs 1.3%), and `has_lotl_bin`,
-`n_pipes`, `n_quotes`, `n_flags`, and `has_long_flag` all point the same way.
-The explanation is the benign pool, not the attacks: real administrators piping
-`find` into `xargs`, quoting commit messages, and stacking long flags produce
-exactly the shell plumbing and LotL vocabulary that a curated benign corpus
-underrepresents, while Cowrie's scripted attackers issue terse, flagless
-probes. A model trained on Dataset 1 — where LotL vocabulary and plumbing
-density lean attack — meets the opposite conditional distribution here, which
-is the feature-level mechanism behind both the shell-vocabulary inversion Ch4
-documents and the D1→D2 F1 collapse; the cross-dataset distribution-shift
-analysis in Chapter 5.2 builds directly on these pairs.
+modeling consequences, and it splits into two mechanisms. Part is genuine
+**sign inversion** relative to Dataset 1: `len_chars` (r +0.247 there →
+−0.171 here), `n_quotes` (+0.081 → −0.112), and `n_flags` (+0.051 → −0.125)
+all leaned attack on the curated corpus and flip decisively benign on
+operational data. The rest is **reinforcement rather than reversal**:
+`head_is_lotl` (a command *led* by a living-off-the-land binary) was already a
+faint benign hint on Dataset 1 (r −0.046) and is ten times more common in
+benign traffic here (13.1% vs 1.3%, r −0.118), with `has_lotl_bin`, `n_pipes`,
+and the newly significant `has_long_flag` pointing benign on both corpora.
+The explanation is the benign pool, not the attacks: real administrators
+piping `find` into `xargs`, quoting commit messages, and stacking long flags
+produce exactly the shell plumbing and LotL vocabulary that a curated benign
+corpus underrepresents, while Cowrie's scripted attackers issue terse,
+flagless probes. Two consequences follow. Mere *presence* of LotL vocabulary
+is an anti-signal on both datasets — detection cannot ride on which binary
+appears, only on how it is used. And a model trained on Dataset 1 — where
+length, quoting, and flag density lean attack — meets the opposite conditional
+distribution here, which is the feature-level mechanism behind the D1→D2 F1
+collapse; the cross-dataset distribution-shift analysis in Chapter 5.2 builds
+directly on these pairs.
 
 The correlation heatmap (`ch3_corr_heatmap_dataset2.png`) shows a redundancy
 structure that is real but bounded, with no leakage-grade pairing. The
@@ -100,7 +108,7 @@ D2 holdout trailing its D1 counterpart (RF 0.758 vs 0.801 in the Ch7 grids;
 Isolation Forest ranking AUC 0.677 vs 0.812). Second, the direction reversals
 between the two datasets are not noise but a structural property of operational
 telemetry: any feature whose sign flips between corpora (`len_chars`,
-`n_pipes`, `head_is_lotl`) is a feature a cross-domain model must not lean on,
+`n_quotes`, `n_flags`) is a feature a cross-domain model must not lean on,
 and their combined weight in-domain explains why in-domain excellence coexists
 with transfer collapse. Third, the class-imbalance remedy is unchanged — the
 1:3 prevalence is identical by construction — but the *benign* side is where

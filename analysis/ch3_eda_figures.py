@@ -11,7 +11,7 @@ markdown (ch3_eda.py owns report/ch3_eda_findings.md).
 
 One deliberate change from the originals: the variance-by-label chart uses a
 symlog y-axis (same convention as ch3_eda.py's variance figure). On a linear
-axis char_count's variance (~10^4) flattens every other bar to invisible.
+axis len_chars's variance (~10^4) flattens every other bar to invisible.
 
 Outputs, per dataset:
   report/figures/ch3_length_hist_<dataset>.png

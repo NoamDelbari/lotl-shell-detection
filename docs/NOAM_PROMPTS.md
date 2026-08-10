@@ -21,7 +21,10 @@ The hybrid now uses 43 features and achieves F1 **0.8761** on full data.
 Do the following:
 1. Read `report/ch7_sensitivity_findings.md` — find the max_depth table and
    the "Recommended settings" row for max_depth.
-2. Read `results/summary.json` — confirm the hybrid F1 is 0.8761 on D1.
+2. Read `results/summary.json` — note the current hybrid D1 F1 is **0.871** (38-feature,
+   pre-merge). The updated number after Noam's feature merge is **0.8761** (confirmed by
+   Noam's Aug 10 message). Use **0.8761** for the text updates below, not the value in
+   summary.json.
 3. The sweep table numbers (0.7082 / 0.7329 / 0.7332 / 0.7354) came from the
    38-feature subsample and don't need to change — they document the sweep, not
    the final model. What needs updating is:

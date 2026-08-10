@@ -1,7 +1,7 @@
 {
   "model": "random_forest",
   "dataset": "dataset1",
-  "seconds": 3.4,
+  "seconds": 2.5,
   "metrics": {
     "accuracy": 0.9068547064611348,
     "precision": 0.8781645569620253,

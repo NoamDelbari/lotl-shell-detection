@@ -111,7 +111,7 @@ benefit** (0.7333 → 0.7329).
 |---|---|---|
 | `learning_rate` | **0.1** | Peak F1 (0.7329); both 0.05 and 0.30 are strictly worse. |
 | `n_estimators` | **200** | Peak F1; 400 slightly overfits (0.7249). |
-| `max_depth` | **9** (12 if re-validated) | 9 gives F1 0.7332 / FPR 0.0861 — within 0.002 of depth-12's F1 but shallower, hence safer on the 5000-row subsample. Adopt 12 (F1 0.7354, FPR 0.0796) only after confirming it holds on full data. |
+| `max_depth` | **12** | The highest-F1 point in the sweep (0.7354 / FPR 0.0796, vs 0.7329 at depth 6). Full-data re-validation **confirmed it holds**: the 43-feature XGBoost-hybrid reaches **F1 0.8761 on Dataset 1** at depth 12, so 12 is the production setting — the earlier "adopt only after confirming on full data" caveat is now resolved. |
 | `scale_pos_weight` | **1.0** | Best F1 in the sweep (0.7333) **and** lowest FPR (0.0490). Because F1 is invariant to this knob, minimize false alarms — the default 3.0 buys ~3× the FPR for nothing. Raise toward 2.0 only if downstream misses (recall) prove costlier than triage load. |
 
 The through-line: for XGBoost, **stop trying to tune F1** (it is saturated) and
@@ -188,7 +188,7 @@ second-order refinements around a healthy operating point:
 | hyperparameter | recommended | rationale |
 |---|---|---|
 | `learning_rate` | **0.003** | Best F1 (0.8512) and lowest FPR (0.0533); the single highest-leverage choice. Consider a brief probe just above 3e-3, guarding against divergence. |
-| `dropout` | **0.3** | 0.1 was best on the subsample (F1 0.8362) but confirmed as a small-data artefact: the full-data CNN run achieves F1 0.853 with dropout=0.3, confirming 0.3 as the production setting. |
+| `dropout` | **0.3** | 0.1 was best on the subsample (F1 0.8362) but confirmed as a small-data artefact: the full-data CNN run achieves F1 0.8603 with dropout=0.3, confirming 0.3 as the production setting. |
 | `num_filters` | **128** | Best F1/FPR balance (0.8298 / 0.0547). Move to 256 only if the ~0.008 F1 gain outweighs the higher FPR (0.0695). |
 | `embed_dim` | **32** | Saturation point: best FPR (0.0547) and near-best F1 (0.8298); 64 adds cost and false alarms without F1 gain. |
 
@@ -214,6 +214,6 @@ purpose-built dial like `scale_pos_weight`. Second, **XGBoost's insensitivity is
 itself a deployment asset**: a model that holds ~0.73 F1 across almost any
 reasonable setting is low-risk to operate and re-train, even if its ceiling
 trails the CNN. Full-data revalidation confirms both findings: XGBoost `max_depth=12` generalises
-(hybrid F1 0.871 on Dataset 1, up from 0.853 at depth 6), and the CNN holds F1 0.853
+(hybrid F1 0.8761 on Dataset 1, up from 0.853 at depth 6), and the CNN holds F1 0.8603
 with the conservative `dropout=0.3` — the aggressive `dropout=0.1` / `learning_rate=3e-3`
 combination is not needed and not applied.

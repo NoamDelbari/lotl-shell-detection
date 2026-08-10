@@ -5,8 +5,10 @@
 > models Noam owns. Every hyperparameter quoted here is the production value in
 > `src/models.py`; every sensitivity claim is proved in
 > `report/ch7_rf_if_sensitivity_findings.md` — **Chapter 6 states the choice,
-> Chapter 7 proves it.** Holdout metrics are read from `results/summary.json`
-> (43-feature set).
+> Chapter 7 proves it.** The one exception is the Isolation Forest sub-sample
+> result in §6.6, which was run for this chapter and is reproducible via
+> `analysis/ch6_if_subsample_probe.py` (→ `results/ch6_if_subsample_probe.json`).
+> Holdout metrics are read from `results/summary.json` (43-feature set).
 
 The four-model portfolio is chosen to span **three learning paradigms** rather
 than three tunings of the same idea: boosting (XGBoost), representation
@@ -24,6 +26,23 @@ Random Forest is the **bagging** counterpart to Ben's boosted trees: many deep,
 decorrelated trees fitted on bootstrap samples with a random feature subset at
 each split, averaged. Its case on this task rests on four properties, three of
 which we could check rather than assert.
+
+*Cite:* Breiman, L. (2001), *Random Forests*, Machine Learning 45(1):5–32,
+doi:10.1023/A:1010933404324 — the bootstrap-plus-random-subspace construction and
+the `max_features` decorrelation argument used below. Alasmary, H., Anwar, A.,
+Abusnaina, A., Alabduljabbar, A., Abuhamad, M., Wang, A., Nyang, D., Awad, A. &
+Mohaisen, D. (2022), *ShellCore: Automating Malicious IoT Software Detection Using
+Shell Commands Representation*, IEEE Internet of Things Journal 9(4):2485–2496,
+doi:10.1109/JIOT.2021.3086398 (preprint arXiv:2103.14221) — direct precedent for
+Random Forest on *shell commands* specifically, and the paper Chapter 2 takes as
+our closest comparator. Their Table 4 reports RF at 99.78% accuracy / 99.78 F-1 /
+0.19 FPR for character-level command detection, i.e. essentially at ceiling. We
+read that as corroborating Chapter 3 and Chapter 8 rather than as a target to
+chase: their own ablation shows the same RF falling to 84.96 F-1 (term-level) when
+the vector space is rebuilt from malware commands alone, which is the same lesson
+our cross-dataset transfer collapse teaches — on curated command corpora the score
+is a property of the representation and the corpus at least as much as of the
+classifier.
 
 **It is robust to the heavy tails Chapter 3 documented, because trees never
 extrapolate.** The engineered features are severely right-skewed: on Dataset 1
@@ -100,6 +119,12 @@ labels** — it is fitted on the benign training rows alone
 random axis-aligned partitions are needed to isolate it. Anomalies need fewer,
 because they sit in sparse regions.
 
+*Cite:* Liu, F. T., Ting, K. M. & Zhou, Z.-H. (2008), *Isolation Forest*, ICDM
+2008, pp. 413–422, doi:10.1109/ICDM.2008.17, extended as *Isolation-Based Anomaly
+Detection*, ACM TKDD 6(1), art. 3, pp. 1–39 (2012), doi:10.1145/2133360.2133363 —
+the isolation principle itself, the linear-time/low-memory argument quoted in
+reason 3 below, and the sub-sampling analysis we test against production in §6.6.
+
 **Why carry an unsupervised model at all.** Three reasons, in order of
 importance to this project:
 
@@ -115,10 +140,17 @@ importance to this project:
    Isolation Forest never reads that corpus. Its errors are therefore
    structurally, not just statistically, decorrelated from the others, which is
    what makes the cascade's first stage informative instead of redundant.
-3. **It is cheap enough to sit in front of everything.** Training and scoring
-   are linear in sample count with a small constant (`max_samples=0.8`
-   subsampling per tree), require no labels, and no gradient steps — the profile
-   a first-pass filter over high-volume command telemetry needs.
+3. **It is cheap enough to sit in front of everything.** Scoring a command is
+   essentially constant-time — 300 root-to-leaf traversals of depth ~log ψ — and
+   needs no labels and no gradient steps, which is exactly the profile a
+   first-pass filter over high-volume command telemetry needs. One caveat we
+   should state rather than inherit: Liu et al.'s linear-time, low-memory
+   guarantee assumes a *fixed small* sub-sample, and our `max_samples=0.8` gives
+   that asymptotic property up (see §6.6). At this corpus size it does not
+   matter — the fit takes ≈2 s — but it would matter at telemetry scale, and the
+   §6.6 sweep shows the escape hatch is cheap if it ever does: reverting to the
+   paper's full default (ψ=256, t=100) costs 0.0137 ROC-AUC on Dataset 1 and
+   0.0137 on Dataset 2.
 
 **Its weakness is real and we report it at face value.** Standalone, the shipped
 detector reaches only **F1 0.2492 / ROC-AUC 0.8120** on Dataset 1 and **F1
@@ -165,13 +197,14 @@ as a full 12-cell `n_estimators` × `max_depth` grid on full training data.
 | `n_jobs` / `random_state` | **-1 / 42** | Parallel fit; fixed seed for reproducibility. |
 
 **Isolation Forest** (`src/models.py`, `IsolationForestDetector`) — swept in
-Chapter 7 over `contamination` on both datasets.
+Chapter 7 over `contamination` on both datasets, and over `max_samples` /
+`n_estimators` here (`analysis/ch6_if_subsample_probe.py`).
 
 | Hyperparameter | Value | Why |
 |---|---|---|
 | `contamination` | **0.25** | Deliberately inert in production, and Chapter 7 proves it: in sklearn `contamination` does not affect the fitted trees at all (`score_samples` is contamination-independent; it only sets `offset_`), ROC-AUC is identical to four decimals across 0.05–0.30, and both consumers of this model bypass it — the wrapper thresholds at a fixed 0.5, the cascade calibrates on recall retention. It is kept as an honest declaration of the expected anomaly share. If the detector were ever deployed standalone as a tripwire, set it to the SOC's false-alarm budget directly: the sweep shows FPR ≈ contamination (D1 delivered 0.047/0.088/0.189/0.287 against requested 0.05/0.10/0.20/0.30). |
-| `n_estimators` | **300** | Score stability. Capacity is not the bottleneck — the ranking quality (AUC) is set by the 43-feature representation, so extra trees buy reproducible scores rather than better ones. |
-| `max_samples` | **0.8** | Subsampling is what makes isolation work: small samples make sparse-region points easier to isolate and mitigate the swamping/masking effects that degrade anomaly scores when every tree sees the full dataset. |
+| `n_estimators` | **300** | Score stability, not capacity. Liu et al. take t=100 as their default; raising it to 300 moves ROC-AUC by +0.0027 (D1) and −0.0032 (D2) at fixed ψ — i.e. in opposite directions and within noise. Extra trees buy reproducible scores rather than better ones, because ranking quality is set by the 43-feature representation. |
+| `max_samples` | **0.8** | Kept, but the textbook justification does **not** survive contact with our data. Liu et al. recommend a small fixed sub-sample (ψ=256) on the argument that it reduces *swamping* and *masking*; production instead uses 0.8 of the benign training rows (ψ≈7,319 on D1, ≈4,596 on D2), ~30× larger. We swept it: ψ=256 is the **worst** cell on both datasets (ROC-AUC 0.7983 D1 / 0.6631 D2) and production is within 0.003 of the best (best: ψ=1024 → 0.8149 on D1; ψ=all → 0.6782 on D2, vs production 0.8120 / 0.6768). The entire axis spans 0.017 AUC, so sub-sample size is a weak dial here and the published default is not transferable to this feature space. The likely reason is that swamping and masking are contamination effects — they presuppose anomalies *in the training sample* — and this detector is fitted on benign rows only, so there are none to protect against. What a 256-row sub-sample does instead is under-cover a strongly multi-modal benign distribution, leaving rare-but-legitimate commands as easy to isolate as attacks. Production is retained as a near-optimal, already-validated setting; §6.5's honest conclusion stands that the ceiling is the representation, not this parameter. |
 | `max_features` | **1.0** | All 43 features available per tree. Unlike the supervised forest we are not trying to decorrelate an ensemble of predictors, and the anomaly signal is a conjunction across obfuscation, path and network features that per-tree feature subsetting would dilute. |
 | fitted on | **benign rows only** | The design commitment: `fit()` drops all rows with `label == 1` before fitting, so the model's notion of "normal" is defined by benign traffic alone and no attack label leaks in. This is what earns the model its place in the portfolio (§6.5). |
 | `random_state` | **42** | Reproducibility. |

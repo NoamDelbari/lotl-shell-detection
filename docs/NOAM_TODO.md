@@ -134,16 +134,33 @@ The pipeline uses `StandardScaler` fitted only on the training fold (inside the 
 
 ---
 
-### Chapter 6 — Model Selection (5 pts, partial)
+### Chapter 6 — Model Selection (5 pts) — ✅ **DONE**
 Ben has written justification for XGBoost + CNN (`report/ch6_model_justification.md`).
+Noam's half is `report/ch6_rf_if_justification.md` (§6.4–6.6), matching Ben's
+inline `*Cite:*` convention. All four citations verified against authoritative
+records (dblp BibTeX for Breiman / Liu et al.; the ShellCore RF claim checked
+first-hand against Table 4 of the paper PDF, not just our Ch2 matrix).
 
-**You need to add:**
-- **Random Forest justification**: why RF on engineered features for LotL? (Gini importance, robust to outliers, interpretable, no scaling needed.) Cite one paper applying RF to shell/command detection.
-- **Isolation Forest justification**: why unsupervised anomaly detection? (No attack labels needed at stage 1, computationally cheap as a filter.) Cite one paper. Note its known weakness — standalone F1 is poor, which is why it's stage-1 only in the cascade. **Do not quote the old 0.264 / 0.082 pair** (pre-redesign); on the 43-feature set the sweep's wrapper rows give F1 0.249 (D1) / 0.143 (D2) at the shipped fixed-0.5 threshold, and the final standalone figures come from the regenerated `results/summary.json`.
-- **Explicit hyperparameters** for both — actual production values from `src/models.py`, already confirmed by the Ch7 sweep:
+**Delivered:**
+- **Random Forest justification** ✅ — no-extrapolation robustness to the heavy tails, Gini importance independently reproducing the Ch3 rank-biserial top-2, importance mass spread across all 43 features (anti-shortcut evidence), and "no scaling needed" *measured* rather than asserted. Cites Breiman (2001) + ShellCore (IEEE IoT J. 9(4), 2022) for RF on shell commands specifically.
+- **Isolation Forest justification** ✅ — cites Liu, Ting & Zhou (ICDM 2008 / TKDD 2012). Weakness reported at face value and decomposed into threshold placement vs genuine ranking limits. Quotes the current 0.249 (D1) / 0.143 (D2), **not** the old 0.264 / 0.082 pair.
+- **Explicit hyperparameters** ✅ — production values from `src/models.py`, confirmed by the Ch7 sweep:
   - RF: `n_estimators=400`, `max_depth=24`, `class_weight="balanced_subsample"`, `min_samples_leaf=1`, `max_features="sqrt"`
   - IF: `n_estimators=300`, `max_samples=0.8`, `contamination=0.25`, `max_features=1.0`
   - Cross-reference `report/ch7_rf_if_sensitivity_findings.md` for the "chosen setting + rationale" tables — Ch6 states the choice, Ch7 proves it.
+
+**New result produced while citing Liu et al. (worth a sentence in Ch7 if there's room):**
+the paper recommends a small fixed sub-sample (ψ=256, t=100) to suppress swamping
+and masking. We swept `max_samples` to check whether production's 0.8 (ψ≈7,319 D1 /
+≈4,596 D2) was a mistake. It is not — **ψ=256 is the worst cell on both datasets**
+(ROC-AUC 0.7983 D1 / 0.6631 D2 vs production 0.8120 / 0.6768), and the whole axis
+spans only 0.017 AUC. Best cells: ψ=1024 → 0.8149 (D1), ψ=all → 0.6782 (D2). The
+published default does not transfer here, most likely because swamping/masking are
+*contamination* effects and this detector is fitted on benign rows only, so a small
+ψ just under-covers a multi-modal benign distribution. The probe reproduces
+`summary.json`'s production AUCs exactly, which is a useful independent check on
+both. §6.6 states this honestly rather than citing the paper's rationale for a
+setting that contradicts it.
 
 ---
 

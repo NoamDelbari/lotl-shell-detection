@@ -1,138 +1,125 @@
-# Ben's Prompts — Action Items from Noam's Aug 10 Update
-**Run these in Claude Code on `ben/pipeline-models-ch3-8`. Freeze: Aug 14.**
+# Ben's Remaining Prompts — Aug 10
+**Freeze: Aug 14 | Submission: Aug 15**
+
+## Status
+- ✅ Prompt 1 — Ch1 5-column reformat + feature name fix (DONE, incl. follow-up fixes)
+- ▶️ Prompt 2 — Confirm max_depth=12 (RUN THIS NEXT)
+- ▶️ Prompt 3 — Pipeline architecture diagram (RUN AFTER PROMPT 2)
+- ⏳ Prompt 4 — Apply Noam's Ch3 D1 repair (WAIT for noam/ch7-rf-if-sweeps)
+- ⏳ Prompt 5 — Cross-review Noam's chapters (WAIT for noam/ch7-rf-if-sweeps)
 
 ---
 
-## Prompt 1 — Fix Ch1 Feature Names and 5-Column Reformat
+## Prompt 2 — Confirm max_depth=12 Justification Still Holds
 
-In `report/ch1_threat_mapping.md`, the T1059.004 row (reverse shells) references
-three feature names that were killed or renamed in the featurize() redesign:
-- `dev_tcp_present` → `has_dev_tcp`
-- `redirect_count` → `n_redirect_out`
-- `shell_bins` → `has_shell_bin`
+In `report/ch7_sensitivity_findings.md`, the recommended XGBoost setting is
+`max_depth=12`, justified as the best-F1 point in the subsample sweep (F1 0.7354
+vs 0.7329 at depth 6, on a 5000-row / 38-feature run).
 
-Fix those three names in the table's "Can a classifier detect it reliably?" column.
-
-Also, the assignment requires a **5-column** table. The current table has 4 columns.
-Add a fifth column "Derived / Engineered Feature" between columns 3 and 4, listing
-the specific feature names from `src/features.py` FEATURE_NAMES that are relevant
-to each row. Use the 43-feature FEATURE_NAMES list (visible in Noam's redesigned
-`src/features.py`). The 5-column schema is:
-1. Sub-technique ID and name
-2. How it appears in shell telemetry
-3. Dataset source & how it is captured
-4. Derived / Engineered Feature (new column — feature names from FEATURE_NAMES)
-5. Can a provenance-labeled classifier detect it reliably?
-
-Apply this reformat to all three of Ben's rows. Commit and push.
-
----
-
-## Prompt 2 — Apply Noam's Ch3 D1 Repair to Ben's Branch
-
-Noam repaired `report/ch3_eda_findings.md` on `noam/ch7-rf-if-sweeps` to fix
-11 stale feature names and drop 3 killed features (char_entropy, semicolon_count,
-paren_count). The file is marked never-machine-overwritten and needs Ben's sign-off.
+The hybrid now uses 43 features and achieves F1 **0.8761** on full data.
 
 Do the following:
-1. Read Noam's repaired version:
-   `git show origin/noam/ch7-rf-if-sweeps:report/ch3_eda_findings.md`
-   (if that branch isn't available yet, use: `git show origin/noam/features-ch3:...`
-   and note that the repair may be on the newer branch only)
-2. Compare it to the current `report/ch3_eda_findings.md` in Ben's branch.
-3. Apply the feature-name corrections to Ben's branch version, preserving Ben's
-   interpretation and prose. The mapping is:
+1. Read `report/ch7_sensitivity_findings.md` — find the max_depth table and
+   the "Recommended settings" row for max_depth.
+2. Read `results/summary.json` — confirm the hybrid F1 is 0.8761 on D1.
+3. The sweep table numbers (0.7082 / 0.7329 / 0.7332 / 0.7354) came from the
+   38-feature subsample and don't need to change — they document the sweep, not
+   the final model. What needs updating is:
+   - The recommended setting note: change "Adopt 12 (F1 0.7354, FPR 0.0796)
+     only after confirming it holds on full data" → confirm it held, cite 0.8761
+   - The closing "Full-data revalidation confirms..." paragraph: update the hybrid
+     F1 from 0.871 to 0.8761 and CNN from 0.853 to 0.8603
+4. Commit and push. Message: "ch7: update full-data revalidation numbers to 43-feature results"
+
+---
+
+## Prompt 3 — Build Ch7.1 Pipeline Architecture Diagram
+
+The assignment rubric requires a visual software architecture diagram. Currently
+`PIPELINE.md` has an ASCII block diagram which is acceptable but not ideal.
+
+Do the following:
+1. Read `PIPELINE.md` to understand the 3-stage cascade architecture.
+2. Write a Mermaid flowchart representing the pipeline. The flow is:
+   - Input: raw shell command string
+   - Stage 1: Isolation Forest → if anomaly score < threshold: BENIGN (cleared)
+     → else: pass to Stage 2
+   - Stage 2: XGBoost-hybrid → if P(attack) > 0.7: ATTACK (high confidence)
+     → if P(attack) < 0.3: BENIGN (high confidence)
+     → else: edge case → pass to Stage 3
+   - Stage 3: LLM arbitration (Llama 3.1-8B) → final verdict ATTACK / BENIGN
+3. Save as a new file `report/ch7_pipeline_diagram.md` containing only the
+   Mermaid block and a one-line caption.
+4. In `report/ch7_sensitivity_findings.md`, add a new section at the very top
+   (before "## Headline answers"):
+
+   ```
+   ## 7.1 Pipeline Architecture
+
+   The detection pipeline is a 3-stage cascade (full design: `PIPELINE.md`).
+
+   [paste the mermaid diagram here]
+
+   **Figure 7.1 — Detection pipeline architecture.** Stage 1 (Isolation Forest)
+   bulk-filters obvious benign traffic; Stage 2 (XGBoost-hybrid) handles the
+   confident majority; Stage 3 (LLM arbitration) resolves edge cases where both
+   supervised models are uncertain.
+   ```
+
+5. Commit and push. Message: "ch7: add pipeline architecture diagram (Mermaid) as Fig 7.1"
+
+---
+
+## Prompt 4 — Apply Noam's Ch3 D1 Repair ⏳ WAIT FOR noam/ch7-rf-if-sweeps
+
+Once Noam pushes his branch, run this.
+
+Noam repaired `report/ch3_eda_findings.md` on `noam/ch7-rf-if-sweeps` to fix
+11 stale feature names and remove 3 killed features (char_entropy, semicolon_count,
+paren_count). The file is marked never-machine-overwritten and needs Ben's sign-off.
+
+1. Fetch and read Noam's repaired version:
+   ```
+   git fetch origin
+   git show origin/noam/ch7-rf-if-sweeps:report/ch3_eda_findings.md
+   ```
+2. Compare to current `report/ch3_eda_findings.md` in Ben's branch.
+3. Apply Noam's corrections to Ben's branch file, preserving Ben's prose and
+   interpretation. The rename mapping is:
    - `char_count` → `len_chars`
    - `token_count` → `len_tokens`
    - `token_len_max` → `max_token_len`
    - `token_len_mean` → `mean_token_len`
    - `b64_max_run` → `b64_run_len`
    - `quote_count` → `n_quotes`
-   - `paren_count` → KILLED: remove claims that depend on it
-   - `semicolon_count` → KILLED: remove claims that depend on it
-   - `redirect_count` → KILLED: replace with `n_redirect_out` where the claim still holds
+   - `redirect_count` → `n_redirect_out`
    - `shell_bins` → `has_shell_bin`
-   - `char_entropy` → KILLED: remove claims that depend on it
-4. Update the variance table to use new feature names and new numbers if available
-   from `results/ch3_feature_audit.json` (on Noam's branch).
-5. Commit and push with message "ch3 D1: apply featurize() rename/kill corrections".
+   - `paren_count` → KILLED: remove or rephrase any claim that depends on it
+   - `semicolon_count` → KILLED: remove or rephrase any claim that depends on it
+   - `char_entropy` → KILLED: remove or rephrase any claim that depends on it
+4. Also update the variance table with the new feature names.
+5. Commit and push. Message: "ch3 D1: apply featurize() rename/kill corrections (sign-off)"
 
 ---
 
-## Prompt 3 — Cross-Review Noam's Chapters
+## Prompt 5 — Cross-Review Noam's Chapters ⏳ WAIT FOR noam/ch7-rf-if-sweeps
 
-Noam says the following are ready on `noam/ch7-rf-if-sweeps`:
-- `report/ch3_eda_findings_d2.md` (Ch3 D2 EDA)
-- `report/ch6_model_justification.md` §6.4–6.6 (RF + IF justification)
-- `report/ch7_sensitivity_findings.md` RF/IF sensitivity section
-- Executive Summary
-- Chapter 5 (Harmonization)
+Once Noam pushes his branch, run this.
 
-Fetch the branch and read each file:
-```
+Fetch and read each of Noam's new chapters. For each, check: numbers match new
+`results/summary.json` (hybrid 0.8761/0.8482, CNN 0.8603/0.8384, RF 0.7963/0.7531,
+IF 0.2492/0.1431), feature names are from the 43-feature FEATURE_NAMES, and content
+matches the assignment rubric requirements from NOAM_TODO.md.
+
+```bash
 git fetch origin
 git show origin/noam/ch7-rf-if-sweeps:report/ch3_eda_findings_d2.md
 git show origin/noam/ch7-rf-if-sweeps:report/ch6_model_justification.md
 git show origin/noam/ch7-rf-if-sweeps:report/ch7_sensitivity_findings.md
-git show origin/noam/ch7-rf-if-sweeps:report/exec_summary.md  (or wherever he put it)
+git show origin/noam/ch7-rf-if-sweeps:report/exec_summary.md
 git show origin/noam/ch7-rf-if-sweeps:report/ch5_harmonization.md
 ```
 
-For each file, check:
-- Numbers match new `results/summary.json` values (hybrid 0.8761/0.8482, CNN 0.8603/0.8384,
-  RF 0.7963/0.7531, IF 0.2492/0.1431)
-- Feature names match FEATURE_NAMES (43-feature list)
-- Ch6 RF/IF sections cite at least one paper each and include explicit hyperparameters
-- Ch7 RF/IF sensitivity tables are present with varied parameters and chosen settings
-- Ch5 covers: unified feature schema, cross-dataset distribution shift, scaling remedies
-- Executive Summary covers all 4 models, both datasets, cascade, and transfer collapse
-
-Report any specific issues (wrong numbers, stale feature names, missing content)
-so they can be sent back to Noam before Aug 12.
-
----
-
-## Prompt 4 — Confirm max_depth=12 Justification Still Holds
-
-In `report/ch7_sensitivity_findings.md`, the recommended XGBoost setting is
-`max_depth=12`, justified as the best-F1 point in the subsample sweep (0.7354 vs
-0.7329 at depth 6). That margin came from a 38-feature, 5000-row subsample run.
-
-The hybrid now achieves F1 0.8761 on full data with max_depth=12. Check:
-1. Does Noam's full-data RF/IF sensitivity run on `noam/ch7-rf-if-sweeps` include
-   a re-run of the XGBoost depth sweep? If so, read those numbers.
-2. If the new sweep still shows depth-12 as best or tied-best, the justification
-   stands — update the closing paragraph to cite the new full-data F1 (0.8761)
-   instead of the old subsample number.
-3. If the new sweep shows a different optimum, update the recommended setting and
-   rationale accordingly.
-
-The change should be minimal — just confirm the recommendation and update the
-one "Full-data revalidation confirms..." sentence at the end of the chapter with
-new numbers. Commit if any change is needed.
-
----
-
-## Prompt 5 — Build Ch7.1 Pipeline Architecture Diagram
-
-The assignment rubric requires a "visual software architecture diagram" for the
-detection pipeline. Currently only the ASCII block diagram in `PIPELINE.md`
-(lines 10–35) exists. The rubric says ASCII in a monospace block is acceptable
-but not more — a proper diagram would score better.
-
-Do the following:
-1. Read `PIPELINE.md` to understand the 3-stage cascade architecture.
-2. Produce a Mermaid flowchart diagram representing the pipeline (Mermaid renders
-   in GitHub markdown and in most docx converters). Structure:
-   - Input: raw shell command
-   - Stage 1: Isolation Forest filter (pass/flag)
-   - Stage 2: XGBoost-hybrid classifier (confident-benign / confident-attack / uncertain)
-   - Stage 3: LLM arbitration (edge cases only)
-   - Output: BENIGN / ATTACK + confidence
-3. Save the diagram as a fenced ```mermaid block in a new file
-   `report/ch7_pipeline_diagram.md` with a brief caption.
-4. Also embed the diagram (or the ASCII fallback if Mermaid isn't available in
-   the final docx tool) directly in `report/ch7_sensitivity_findings.md` at the
-   top under a new "## 7.1 Pipeline Architecture" heading, before the current
-   "## Headline answers" section.
-5. Commit and push.
+For each file report: (a) any wrong numbers, (b) any killed/stale feature names,
+(c) any rubric requirement from NOAM_TODO.md that is missing or incomplete.
+Do NOT edit Noam's files — just report issues so they can be sent back to him.

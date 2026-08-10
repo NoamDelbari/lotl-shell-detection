@@ -29,15 +29,23 @@ from pathlib import Path
 AI = Path(__file__).resolve().parent
 LOG = AI / "claude_code_log.txt"
 
+SESSION1_HEADER = (
+    "# Session 1 -- Ben: dataset card, pipeline, features, models, evaluation, "
+    "ensemble, LLM triage & report sections (Aug 7-8, 2026, Claude Opus 4.8)"
+)
 SESSION2_HEADER = (
     "# Session 2 -- Noam: Ch3 featurize() redesign & joint feature verdicts "
     "(Aug 8-9, 2026, Claude Fable 5)"
 )
 SESSION3_HEADER = (
-    "# Session 3 -- Noam: Ch7 RF/IF sensitivity sweeps, Ch3 Dataset-2 EDA & "
-    "verification pass (Aug 9, 2026, Claude Fable 5)"
+    "# Session 3 -- Noam: Ch7 RF/IF sensitivity sweeps, Ch3 EDA rebuild & Ch6 "
+    "RF/IF justification (Aug 9-10, 2026, Claude Fable 5)"
 )
-SESSION3_NOTE = (
+SESSION4_HEADER = (
+    "# Session 4 -- Noam: Ch1/Ch2/Ch5 rubric splits, Ch8.1/8.3/8.4 forensics, "
+    "executive summary & Ben merge (Aug 10, 2026, Claude Opus 5)"
+)
+SESSION4_NOTE = (
     "*SESSION STILL IN PROGRESS at export time -- this block is a snapshot; "
     "re-run ai_logs/export_claude_log.py and this rebuild immediately before "
     "submission (see ai_logs/README.md).*"
@@ -46,7 +54,8 @@ SESSION3_NOTE = (
 # (header, optional italic metadata line, transcript produced by the exporter)
 BLOCKS = [
     (SESSION2_HEADER, None, AI / "claude_session_noam.md"),
-    (SESSION3_HEADER, SESSION3_NOTE, AI / "claude_session_noam2.md"),
+    (SESSION3_HEADER, None, AI / "claude_session_noam2.md"),
+    (SESSION4_HEADER, SESSION4_NOTE, AI / "claude_session_noam3.md"),
 ]
 
 
@@ -55,6 +64,14 @@ def main() -> None:
     cut = old.index("---\n\n" + SESSION2_HEADER)
     ben = old[:cut]  # verbatim; ends with the blank line before the separator
     assert ben.endswith("\n\n"), repr(ben[-10:])
+
+    # Ben's opening block predates the `# Session N` convention and carries no
+    # header, which makes the combined log inconsistent with what README.md
+    # promises. Prepend one; the guard keeps this idempotent across reruns
+    # (the header is read back as part of `ben` next time). Ben's transcript
+    # text itself is still copied byte for byte.
+    if not ben.startswith(SESSION1_HEADER):
+        ben = SESSION1_HEADER + "\n\n" + ben
 
     parts = [ben]
     for header, note, md in BLOCKS:

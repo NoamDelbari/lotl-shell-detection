@@ -140,3 +140,413 @@ The takeaways paragraph is rewritten. Two claims in it came from memory rather t
 
 All numbers verified against the recomputed D1 statistics — including the correlation I was unsure about (`has_interp_bin`~`head_is_interp` = 0.685, the 6th-strongest pair). Now committing the full set of uncommitted work.
 
+Working tree is clean and `docs/refs/` no longer even appears in status — the ignore rule is holding. Running the test suite before moving on to Chapter 6.
+
+Tests pass. Now moving to Chapter 6 — reading what exists and what the rubric asks for.
+
+Chapter 6 needs my RF and Isolation Forest half, including one real citation each. Let me gather the production hyperparameters and check which papers the repo has already verified, so I cite from vetted sources rather than memory.
+
+Now I have what I need to plan Chapter 6. Two citations are required and the repo has a strict norm about verifying them (see the Trizna sourcing note), so I'm verifying both rather than citing from memory — delegating the web check while I read the local sources.
+
+Production hyperparameters confirmed from source. One claim I want to make in the chapter — that the `StandardScaler` in both pipelines is a genuine no-op for tree splits — is testable, so I'm testing it rather than asserting it.
+
+The invariance test gave a genuinely interesting split result — the Isolation Forest is *exactly* invariant to scaling (score difference 0.0), while the Random Forest is not bit-identical. Quantifying what that actually costs before I write it up.
+
+Found a real discrepancy worth flagging: `analysis/ch8_4_cascade.py` passes `stage1_clear_below=0.15`, but `stage1_retain_recall=0.99` defaults on and silently overwrites it in `fit()`. Let me confirm what threshold actually runs.
+
+I have all the empirical material. Drafting the chapter now while the citation check finishes.
+
+While the citation check runs, recording the cascade-threshold discrepancy in the handoff list so it isn't lost.
+
+The individual `results/holdout_*.json` and `transfer_*.json` files are all still pre-redesign and now contradict the regenerated `summary.json` — including the exact stale `0.264` Isolation Forest figure the TODO warns against. Checking whether I can regenerate them.
+
+No baseline model exists in the current codebase, yet the report quotes a "Baseline TF-IDF" number that beats every model. Checking git history for it, and launching the regeneration of the stale per-model result files in the background.
+
+`cmd_all` only writes `summary.json` — the per-model files with their per-source breakdowns are never refreshed by it. Regenerating all 20 in the background since Chapter 8 depends on them.
+
+Confirmed the baseline is TF-IDF over raw text and never touches `src/features.py` — so unlike every other row, its numbers were never invalidated by the feature redesign. Updating the results reference accordingly.
+
+You've hit your session limit · resets 12:50am (Asia/Jerusalem)
+
+You've hit your session limit · resets 12:50am (Asia/Jerusalem)
+
+## USER
+
+Resume
+
+## ASSISTANT
+
+The regeneration finished; the citation agent died on a session limit before reporting, so I'll verify those myself.
+
+All 20 regenerated cleanly, and the holdout numbers match `summary.json` exactly — two independent code paths agreeing is a good cross-check. Updating the transfer table with the fresh values, then verifying the citations myself.
+
+The TODO file is locked by another process — retrying.
+
+Transient filesystem hiccup — everything is intact. Retrying.
+
+The E: drive has become inaccessible mid-session — reads are now denied and git can't find the repo. Diagnosing before doing anything else.
+
+E: is flagged dirty with "Full Repair Needed" — this is genuine NTFS corruption, not a permissions setting. I'm stopping work on that drive and first salvaging the unwritten work into the scratchpad on C:, since I still hold it in context.
+
+## USER
+
+[Request interrupted by user]
+
+Should work now
+
+Should work now
+
+## ASSISTANT
+
+Still failing — same "Access denied" on content reads, volume still dirty. A dirty NTFS volume usually needs a dismount or reboot before the repair actually runs, so the fix likely hasn't taken effect yet.
+
+Meanwhile, let me preserve the at-risk work to C: while I still hold it in context.
+
+## USER
+
+[Request interrupted by user]
+
+Should work now, fixed
+
+## ASSISTANT
+
+Reads are working again. The volume is still flagged dirty (that persists until a repair actually runs), so my priority is getting this work off the drive — backup, then commit, then push.
+
+Repo is intact — `git fsck` reports only a harmless dangling tree, and all my work is present. Applying the pending edit, then committing and getting this off the drive.
+
+Committing immediately to protect the work, given the drive state.
+
+The heredoc needs piping in PowerShell; writing the message to a file instead.
+
+Committed as `bf1e142`, working tree clean. Since the volume is still flagged for repair, let me get a complete copy of the history onto C: as insurance.
+
+Verified complete-history backup on C: (5.1 MB) — the red text is just PowerShell wrapping stderr; the bundle reports "is okay".
+
+Now the remaining piece of Chapter 6: the two citations. Verifying them properly rather than citing from memory.
+
+Isolation Forest and ShellCore both confirmed. Now verifying the two specifics I need — ShellCore's use of Random Forest, and the TKDD extended version details.
+
+The abstract doesn't name classifiers, but the team has the PDF locally — reading the authoritative source directly.
+
+Table 4 on page 8 settles it — ShellCore's classifier rows are **LR, RF, DNN**, with RF reported for both command-level and file-level detection. That's first-hand confirmation, not just our own matrix.
+
+Both confirmed from dblp's authoritative records. Verifying the last two references and checking the house citation style.
+
+All four references verified against authoritative records. One more check — I want to cite the Isolation Forest paper for a claim §6.6 currently asserts without support (subsampling / swamping & masking), so I need the paper's actual recommendation.
+
+ψ=256 and t=100 are the paper's recommended defaults — our production config uses ψ≈7,300 and t=300. That deviation is worth measuring rather than just noting.
+
+Production reproduces `summary.json` exactly (0.8120 / 0.6768), and the paper's recommended ψ=256 is the *worst* cell on both datasets — so the citation has to qualify §6.6's current claim rather than support it. Checking Ben's chapter for citation style first.
+
+Ben's convention is an inline `*Cite:*` line per model. Matching it exactly.
+
+The mechanism I wrote there is wrong — the model fits on benign rows only, so there are no training anomalies for sub-sampling to protect against. Correcting it:
+
+The ≤0.014 figure needs to be exact — the paper's full default costs 0.0137 AUC on both datasets, which is a cleaner statement anyway.
+
+Now a stale number I noticed in Ch2 — it quotes pre-redesign IF results.
+
+The ψ sweep isn't in Chapter 7, but the chapter header promises every sensitivity claim is reproducible. Committing the probe as a proper analysis script so the number is auditable.
+
+Reproduces exactly, including the −0.0137 symmetry. Wiring the provenance into the chapter.
+
+All 6 tests pass; `docs/refs/` remains untracked. Committing.
+
+**Chapter 6 is done** — committed as `812d675`.
+
+## Citations, all verified first-hand
+
+I didn't rely on our own notes for any of them:
+
+| Reference | How verified |
+|---|---|
+| Breiman (2001), *Random Forests*, Mach. Learn. 45(1):5–32 | dblp BibTeX |
+| Liu, Ting & Zhou (2008), *Isolation Forest*, ICDM 413–422 + TKDD 6(1) art. 3 (2012) | dblp BibTeX (ACM 403s, so dblp is the source of record) |
+| ShellCore, IEEE IoT J. 9(4):2485–2496 | dblp for the bibliography; **RF claim confirmed from Table 4 of the PDF itself** |
+
+The ShellCore RF check mattered. The arXiv abstract page explicitly can't confirm the classifier list, and our `ch2_shellcore_matrix_noam.md` was our own extraction — citing it would have been circular. Table 4 of the full paper settles it: the ML rows are LR / RF / DNN. It also gave the citation something to do — their RF hits 99.78 F-1 on character-level command detection, but their own ablation drops the *same* RF to 84.96 when the vector space is rebuilt from malware commands alone. That's our Ch3/Ch8 corpus-inflation lesson showing up inside the comparator paper.
+
+## Citing Liu et al. exposed a claim we'd inherited rather than measured
+
+§6.6 justified `max_samples=0.8` with the paper's swamping/masking argument — but that argument is *for* small sub-samples (they recommend ψ=256), and we use ψ≈7,319. So I swept it (`analysis/ch6_if_subsample_probe.py`, committed):
+
+- **ψ=256 is the worst cell on both datasets** — ROC-AUC 0.7983 (D1) / 0.6631 (D2) vs production 0.8120 / 0.6768, exactly −0.0137 each
+- Production sits within 0.003 AUC of the best cell; the whole axis spans 0.017
+
+The published default doesn't transfer here, and the likely reason is clean: swamping and masking presuppose anomalies *in the training sample*, and this detector fits on benign rows only — so a small ψ just under-covers a multi-modal benign distribution. §6.6 now says that instead of citing a rationale that contradicts our own setting. I also corrected §6.5's cheapness argument: Liu et al.'s linear-time guarantee assumes fixed small ψ, which `max_samples=0.8` gives up (irrelevant at ≈2 s, would matter at telemetry scale).
+
+The probe's production rows reproduce `summary.json`'s IF ROC-AUC to 4 dp through a separate code path, so it double-checks both.
+
+Two side fixes: Ch2's literature review still quoted the pre-redesign IF pair (0.264 / 0.082 → 0.249 / 0.143), and `NOAM_TODO.md` has Ch6 marked done. Tests: 6 passed. `docs/refs/` still untracked.
+
+## Two things still open from before
+
+1. **The branch has never been pushed** — `noam/ch7-rf-if-sweeps` is now 4 commits deep with all of Ch3 EDA, Ch7 and Ch6 on it, living only on a drive that failed mid-session. I'd push it now rather than wait for the PR decision; pushing costs nothing and the PR can come later.
+2. **E: is still flagged dirty** (`fsutil dirty query E:` said so, and the disk reports "Full Repair Needed"). Worth running `chkdsk E: /f` from an elevated prompt when you can spare the reboot — my `git bundle` backup on C: covers the repo either way.
+
+Next up per the TODO is Ch1 (deep-dive + the 4 mapping rows + §1.3), then your ShellCore half of Ch2 — that one's now easier since I've read the paper's evaluation section directly.
+
+## USER
+
+Is there anything left for Ben to do?
+
+## ASSISTANT
+
+Let me check what's actually assigned to Ben rather than answer from memory.
+
+Let me verify which stale numbers actually still remain in Ben's prose, rather than repeating what the TODO claimed yesterday.
+
+Yes — a fair amount, and it's all downstream of our 38→43 feature redesign. I just re-verified each item against the current tree rather than trusting yesterday's notes.
+
+## 1. Refresh his stale numbers — the big one
+
+Six of his files still quote pre-redesign figures. These are live right now:
+
+| File | What's stale |
+|---|---|
+| `ch8_findings.md` | results table + transfer table (L68–73), error budget "197 / 243" (L7) |
+| `ch8_3_tops_comparison.md` | results table (L26–31) and the "0.871 → 0.534 / 0.184" narrative (L14, 31–33) |
+| `ch8_2_cross_dataset_table.md` | the whole transfer table |
+| `ch7_sensitivity_findings.md` | hybrid 0.871 / CNN 0.853 claims (L191, 217) |
+| `ch6_model_justification.md` | XGB `max_depth=12` justified from the old sweep (0.7354 vs 0.7329, L32) |
+| `ch2_literature_review.md` | hybrid 0.871 / 0.846 (L19) — I fixed only the IF pair there |
+
+One trap worth telling him about: **the TF-IDF baseline numbers in that same Ch2 sentence (0.881 / 0.980) are correct and must not be "fixed."** The baseline reads raw text and never touches `src/features.py`, so the redesign couldn't move it. It's the surrounding hybrid numbers that are wrong.
+
+## 2. Re-run his own artefacts first
+
+All four are still on disk and still pre-redesign: `cascade_results.json`, `ch8_4_cascade.json`, `ch8_confusion.json`, `ch8_cross_dataset.json`. His Ch8 prose reads from these, so this should come **before** item 1 — otherwise he's hand-patching digits, which is how the numbers drifted in the first place.
+
+## 3. Two Ch7 figures on the old protocol
+
+`ch7_sensitivity_xgboost.png` and `ch7_sensitivity_cnn.png` were made on 38 features from a 5,000-row subsample. My RF/IF half ran the full grid on full training data — so **the two halves of Ch7 currently disagree on protocol, not just on numbers**. Either he re-runs at full data, or the merged chapter has to say so explicitly. I'd push for the re-run; a graded chapter that quietly mixes protocols is a soft target.
+
+## 4. The cascade mechanism is described wrong
+
+His `ch8_4_cascade_findings.md` says stage 1 clears "anomaly score < 0.15", and `analysis/ch8_4_cascade.py` does pass `stage1_clear_below=0.15` — but `fit()` overwrites it from `stage1_retain_recall=0.99`. Effective threshold is **0.0033 (D1) / 0.0032 (D2)**, ~45× lower. The behaviour is right (recall-calibrated clearing is the better design, and my §6.5 argues for it); the prose and the dead argument are what need fixing.
+
+## 5. Sign-off on his Ch3 chapter
+
+We rewrote eleven extinct feature names out of his Dataset-1 EDA prose — three of them killed outright, not renamed. It's his interpretation and the file is explicitly marked never-machine-overwritten, so it needs his review, not just ours.
+
+## 6. Housekeeping
+
+Four orphan files under the dead model key `cnn` (live key is `cnn1d`): `holdout_cnn_dataset{1,2}.json`, `transfer_cnn_dataset*_to_dataset*.json`. No current command regenerates them and they sit next to fresh `cnn1d` files saying different things. Delete them before anyone assembles the docx.
+
+---
+
+**Recommended order: 2 → 1 → 3 → 4, with 5 and 6 anytime.** Items 1, 3 and 4 all consume the outputs of item 2.
+
+To be fair to Ben: his side was complete and audited against the assignment PDF *before* the redesign. None of this is work he skipped — it's blast radius from our feature change. The one genuinely uncomfortable thing he'll have to write up either way is that the TF-IDF baseline (D1 F1 0.8808) still beats every engineered-feature model we have.
+
+Want me to draft this as a handoff message you can send him, or open the PR so he can see the diff that caused it?
+
+## USER
+
+Is there anything to actually write/develop for ben? Not rerun after I've modified stuff, it will be my responsibility I think
+
+## ASSISTANT
+
+Good distinction — let me check ownership of the *unwritten* deliverables specifically.
+
+Checked his whole column in `WORK_DIVISION.md` against what's on disk — **no, there's nothing left for Ben to write or build.** Every drafting deliverable assigned to him exists:
+
+| Ben's unit | File |
+|---|---|
+| Ch1 — 3 mapping rows | `ch1_threat_mapping.md`, `ch1_telemetry_rows_ben.md` |
+| Ch2 — Trizna matrix + comparative essay | `ch2_literature_review.md` |
+| Ch3 — all D1 EDA | `ch3_eda_findings.md` |
+| Ch4 — tree ranking code + chart | `ch4_ranking_findings.md`, `analysis/ch4_ranking.py` |
+| Ch6 — XGB/CNN justification + paper | `ch6_model_justification.md` |
+| Ch7 — pipeline skeleton + his 2 models | `ch7_sensitivity_findings.md`, `src/` skeleton |
+| Ch8 — 8.1 his models, 8.2 table, 8.3 vs TOPS | `ch8_1_error_forensics_ben.md`, `ch8_2_cross_dataset_table.md`, `ch8_3_benchmarking_ben.md` |
+| Bonus B.3 — LLM verdict eval | `bonus_b3_findings.md`, `analysis/bonus_b3_llm_eval.py` |
+
+What's genuinely still his is all **review**, which the ground rules require and you can't do for him:
+
+- **Cross-review of your chapters** before the Aug 14 freeze — every chapter read by the non-owner. That's Ch1 §1.3 + your 4 rows, Ch2 ShellCore, Ch3 D2, Ch6 RF/IF, Ch7 RF/IF, Ch8.1/8.3/8.4, bonus.
+- **Ch5 and the executive summary** — the division has you writing, him reviewing.
+- **Sign-off on his Ch3 D1 prose** that we rewrote (11 extinct feature names, 3 killed outright). His interpretation, his call.
+- **Final full-report review pass** — his named packaging duty, blocked until you assemble.
+
+## One thing I'd actively hand him
+
+If you're absorbing all the re-runs on top of Ch1, Ch2, Ch5, Ch8.1/8.3/8.4, the bonus and packaging, you're carrying almost the entire remaining load into a freeze that's 4 days out. Two items are self-contained, don't depend on any decision of yours, and are arguably his anyway:
+
+1. **The pipeline architecture diagram** (Rubric Gap 3). The rubric wants a "visual software architecture diagram"; right now the plan is to embed the ASCII block from `PIPELINE.md`. It documents *his* skeleton — he's the right person to draw it properly, and it's the difference between "acceptable" and "clearly meets the requirement."
+2. **The Ch1 5-column reformat** (Rubric Gap 1). His table is 4 columns; the assignment specifies 5. Mechanical, and three of the seven rows are his.
+
+The overflow rule names you as the default absorber, but that was written on the assumption you'd finish early — the redesign inverted that. Worth saying so to him plainly.
+
+## USER
+
+Yes — a fair amount, and it's all downstream of our 38→43 feature redesign. I just re-verified each item against the current tree rather than trusting yesterday's notes.
+
+1. Refresh his stale numbers — the big one
+
+Six of his files still quote pre-redesign figures. These are live right now:
+
+┌──────────────────────────────┬───────────────────────────────────────────────────────────────────────────────┐
+│             File             │                                 What's stale                                  │
+├──────────────────────────────┼───────────────────────────────────────────────────────────────────────────────┤
+│ ch8_findings.md              │ results table + transfer table (L68–73), error budget "197 / 243" (L7)        │
+├──────────────────────────────┼───────────────────────────────────────────────────────────────────────────────┤
+│ ch8_3_tops_comparison.md     │ results table (L26–31) and the "0.871 → 0.534 / 0.184" narrative (L14, 31–33) │
+├──────────────────────────────┼───────────────────────────────────────────────────────────────────────────────┤
+│ ch8_2_cross_dataset_table.md │ the whole transfer table                                                      │
+├──────────────────────────────┼───────────────────────────────────────────────────────────────────────────────┤
+│ ch7_sensitivity_findings.md  │ hybrid 0.871 / CNN 0.853 claims (L191, 217)                                   │
+├──────────────────────────────┼───────────────────────────────────────────────────────────────────────────────┤
+│ ch6_model_justification.md   │ XGB max_depth=12 justified from the old sweep (0.7354 vs 0.7329, L32)         │
+├──────────────────────────────┼───────────────────────────────────────────────────────────────────────────────┤
+│ ch2_literature_review.md     │ hybrid 0.871 / 0.846 (L19) — I fixed only the IF pair there                   │
+└──────────────────────────────┴───────────────────────────────────────────────────────────────────────────────┘
+
+One trap worth telling him about: the TF-IDF baseline numbers in that same Ch2 sentence (0.881 / 0.980) are correct and must not be "fixed." The baseline reads raw text and never touches src/features.py, so the redesign couldn't move it. It's the surrounding hybrid numbers that are wrong.
+
+2. Re-run his own artefacts first
+
+All four are still on disk and still pre-redesign: cascade_results.json, ch8_4_cascade.json, ch8_confusion.json, ch8_cross_dataset.json. His Ch8 prose reads from these, so this should come before item 1 — otherwise he's hand-patching digits, which is how the numbers drifted in the first place.
+
+3. Two Ch7 figures on the old protocol
+
+ch7_sensitivity_xgboost.png and ch7_sensitivity_cnn.png were made on 38 features from a 5,000-row subsample. My RF/IF half ran the full grid on full training data — so the two halves of Ch7 currently disagree ons. Either he re-runs at full data, or the merged chapter has to say so explicitly. I'd push for the re-run; a graded chapter that quietly mixes protocols is a soft target.
+
+4. The cascade mechanism is described wrong
+
+His ch8_4_cascade_findings.md says stage 1 clears "anomaly score < 0.15", and analysis/ch8_4_cascade.py does pass stage1_clear_below=0.15 — but fit()
+overwrites it from stage1_retain_recall=0.99. Effective threshD2), ~45× lower. The behaviour is right (recall-calibratedclearing is the better design, and my §6.5 argues for it); the prose and the dead argument are what need fixing.
+
+5. Sign-off on his Ch3 chapter
+
+We rewrote eleven extinct feature names out of his Dataset-1 EDA prose — three of them killed outright, not renamed. It's his interpretation and the file
+is explicitly marked never-machine-overwritten, so it needs hi
+
+6. Housekeeping
+
+Four orphan files under the dead model key cnn (live key is cn}.json, transfer_cnn_dataset*_to_dataset*.json. No currentcommand regenerates them and they sit next to fresh cnn1d files saying different things. Delete them before anyone assembles the docx.
+
+---
+Recommended order: 2 → 1 → 3 → 4, with 5 and 6 anytime. Items tputs of item 2.
+
+To be fair to Ben: his side was complete and audited against tredesign. None of this is work he skipped — it's blast radiusfrom our feature change. The one genuinely uncomfortable thing he'll have to write up either way is that the TF-IDF baseline (D1 F1 0.8808) still beats every engineered-feature model we have.
+
+Want me to draft this as a handoff message you can send him, ohe diff that caused it? - Write an hand-off message to him
+
+## ASSISTANT
+
+Let me confirm one ownership detail before writing it — the TODO calls the cascade Ben's, but `WORK_DIVISION.md` assigns 8.4 to you.
+
+Confirmed: Ben *drafted* `ch8_4_cascade_findings.md`, but `WORK_DIVISION.md` assigns 8.4 to you — so the TODO's "Owner: Ben" on that item is wrong, and it lands in your pile with the rest. Here's the message:
+
+Saved to `scratchpad/handoff_to_ben.md`. Here it is:
+
+---
+
+Hey Ben,
+
+Status update + a few asks before the Aug 14 freeze. Short version: **your chapters are all drafted, nothing new to write — but the feature redesign invalidated a chunk of your numbers, and I'm taking that cleanup myself.**
+
+**What happened.** The Ch3 redesign went 38 → 43 features. Every model got retrained and every number downstream moved. That's blast radius from my change, not anything you skipped — your side was complete and audited against the assignment PDF before it landed. New headline (`results/summary.json`): hybrid 0.8761 / 0.8482, CNN 0.8603 / 0.8384, RF 0.7963 / 0.7531, XGB 0.7856 / 0.7557, IF 0.2492 / 0.1431. Everything improved (your hybrid 0.871 → 0.876, CNN 0.853 → 0.860); transfer moved too (hybrid D2→D1 0.184 → 0.2756).
+
+**What I'm taking — don't duplicate.** Re-running your four stale artefacts (`cascade_results.json`, `ch8_4_cascade.json`, `ch8_confusion.json`, `ch8_cross_dataset.json`); refreshing stale figures in `ch8_findings.md`, `ch8_3_tops_comparison.md`, `ch8_2_cross_dataset_table.md`, `ch7_sensitivity_findings.md`, `ch6_model_justification.md`, `ch2_literature_review.md`; re-running the two Ch7 figures at full data (they're 38-feature on a 5,000-row subsample while my RF/IF sweeps ran the full grid on full data — the halves disagree on protocol and I'd rather fix that than document it); the Ch8.4 cascade fix; deleting the orphan `results/*_cnn_*.json` files.
+
+Heads-up on the cascade: the chapter says stage 1 clears "score < 0.15" and the script does pass `stage1_clear_below=0.15`, but `fit()` overwrites it from `stage1_retain_recall=0.99`. Effective threshold is 0.0033 / 0.0032, ~45× lower. The behaviour is right; the prose describes the wrong mechanism. You drafted the file but 8.4 is mine per WORK_DIVISION, so I'll rewrite it.
+
+**What I need from you.**
+1. **Sign off on your Ch3 D1 chapter** — the one thing I can't do for you. Eleven features in your prose no longer exist; eight were renames, but **three were killed outright** (`char_entropy`, `semicolon_count`, `paren_count`), so those claims came out of the argument rather than getting renamed. I've repaired it and verified every number, but it's your interpretation and the file is marked never-machine-overwritten. **By Aug 12 if you can.**
+2. **Confirm your conclusions survive the new numbers** — clearest case is `max_depth=12`, justified as the old sweep's best-F1 point (0.7354 vs 0.7329). Thin margin on 38 features; I don't want to silently re-justify your hyperparameter in your own chapter.
+3. **Cross-review my chapters.** Ready now: Ch3 D2, Ch6 §6.4–6.6, Ch7 RF/IF.
+4. **Exec summary + Ch5 review** per the division.
+
+**Two things I'd like you to build.** I'm carrying more than the plan assumed — the overflow rule made me default absorber on the theory my chapters finish early, and the redesign inverted that. Both of these are self-contained and arguably yours: **(a)** the Ch7.1 pipeline architecture diagram (rubric wants a visual one; current plan is embedding ASCII from `PIPELINE.md`, which is acceptable but not more — it's your skeleton); **(b)** the Ch1 5-column table reformat (yours is 4 columns; three of seven rows are yours — and check every feature name against `FEATURE_NAMES`, since `dev_tcp_present`/`redirect_count`/`shell_bins` are gone).
+
+**Two warnings.** Don't "fix" the baseline numbers — TF-IDF+LR at 0.881 / 0.980 is still correct, since it runs over the raw command string and never imports `src/features.py`. It's the hybrid numbers in the same sentence that are wrong (I already corrected the IF pair to 0.249 / 0.143). And the uncomfortable headline stands: the baseline (D1 F1 0.8808) still beats every engineered-feature model including the hybrid. That needs an honest paragraph in Ch8 — I think it's one of our stronger findings given the transfer results, but we should agree on framing before the freeze.
+
+My work is on `noam/ch7-rf-if-sweeps` (pushing today). Shout if any of the split looks wrong.
+
+— Noam
+
+---
+
+Two things to adjust before sending: it says you're **pushing today**, which is still pending your go, and the Aug 12 date on the Ch3 sign-off is my suggestion, not something you've agreed with him. Want me to push the branch so that line is true?
+
+## USER
+
+Ok prepare context for: "Next up per the TODO is Ch1 (deep-dive + the 4 mapping rows + §1.3), then your ShellCore half of Ch2 — that one's now easier since I've read the paper's evaluation section directly." and all other todo list for my part.
+
+## ASSISTANT
+
+Gathering the source material for each of your remaining chapters.
+
+One trap to verify before writing Ch5 — the TODO points at `src/preprocessing.py`, but I recall `EngineeredFeatures` living elsewhere.
+
+Two things to check — `build_hybrid_pipeline` didn't match, and there appear to be *suffixed* Ch7 figures for Ben's models that may already be re-runs.
+
+All source material gathered. Writing it up as a working brief so it survives the session.
+
+Brief is at `docs/NOAM_WRITING_BRIEF.md` (untracked). Here's what's in it and what I found while assembling it.
+
+## Six corrections to the checklist, verified against the tree
+
+1. **`build_hybrid_pipeline()` doesn't exist.** Ch5 §5.3 in the TODO tells you to cite it. Real names: `build_hybrid_features()` (`src/preprocessing.py:75`) and `build_xgboost_hybrid()` (`src/models.py:86`).
+2. **Appendix B claims macOS + Apple-M-series MPS.** That's Ben's machine — all your work ran on Windows 11 / CPU. The appendix has to state both or it misdescribes how the numbers were produced.
+3. **Handoff item (e) says the cascade is Ben's — wrong.** `WORK_DIVISION.md` gives 8.4 to you; Ben only drafted the file.
+4. **Ben's Ch1 rows aren't just a column reshuffle.** They cite six dead feature names (`dev_tcp_present`, `redirect_count`, `shell_bins`, `fetch_bins`, `url_present`, `pipe_count`). Rename map is in the brief.
+5. **`ch2_shellcore_matrix_noam.md:24` is stale** — its "Adopt" row cites "entropies" and subshell counts, both killed in the audit.
+6. **Both Ch7 figures for Ben's models are pre-redesign**, confirmed by git dates — the suffixed `_dataset1/2` pair (Aug 7) is *older* than the unsuffixed one (Aug 8), so neither is a re-run. Your handoff claim stands.
+
+## Ch1 — the four mapping rows
+
+Every candidate below maps to features that actually exist in the 43-set, with evidence already sitting in `ch3_feature_decisions.md`:
+
+| Sub-technique | Live features | Evidence |
+|---|---|---|
+| T1027 Obfuscated Files | `has_base64_blob`, `b64_run_len`, `has_hex_escape`, `has_decode_exec` | whole obfuscation family |
+| T1548.003 Sudo Caching | `head_is_privesc` only | `has_privesc_bin` was killed as class-neutral — good honesty beat |
+| T1552.001 Credentials In Files | `n_sensitive_paths`, `n_abs_paths` | `n_abs_paths` is #1 Gini on D1 (0.134) and #1 by effect (+0.452) |
+| T1202 Indirect Command Execution | `has_lotl_bin`, `head_is_lotl`, `has_interp_bin` | both LotL features lean *benign*, OR 0.62 D1 / 0.50 D2 |
+
+Lead with the last one. The technique family the project is named after is a **negative** predictor under provenance labels — that sharpens Ben's T1033 "no content signature" row into "a signature pointing the wrong way." Confirm T1202 vs T1218 against the live ATT&CK page when writing; the feature evidence holds either way.
+
+Trap: **T1070.003 has no feature in the 43-set.** Don't invent one.
+
+§1.3 is mostly assembly — 8 families, one paragraph each, counts verified (4+4+4+6+6+8+5+6 = 43).
+
+## Ch2 ShellCore — closer to done than the TODO implies
+
+The matrix file already has the 6-element extraction matrix, adopt/modify/reject with reasoning, the Ch8.3 numbers, and five non-comparability arguments. **What's missing is prose, not research.** And reading the PDF directly upgraded the citations from second-hand to first-hand: Table 4 confirms LR/RF/DNN, RF at 99.78 F-1 char-level, and the malware-only ablation collapsing term-level RF to 84.96 — which is our own corpus-inflation lesson showing up in the comparator paper.
+
+## Ch5 — strongest ready-made material
+
+The sign inversions from `ch3_d2_eda_findings.md` (`len_chars` +0.247 → −0.171, `n_quotes` +0.081 → −0.112, `n_flags` +0.051 → −0.125) plus `has_shell_bin` OR 32.75 → 5.99. And §5.3 has a measured result rather than an assertion: removing the scaler moves RF F1 by 0.0017/0.0003 and leaves IF bit-identical, so the honest framing is "contract for pipeline uniformity, no-op for my two models."
+
+## Suggested order
+
+Ben's artefact re-runs first — they're mechanical and they unblock both his prose and your 8.1/8.3/8.4. Then Ch1 (15 pts) → Ch5 (10) → Ch2 (10) → Ch8 → exec summary/docx → bonus if time survives.
+
+Want me to fold the six corrections into `NOAM_TODO.md` and commit both files, or start straight on Ch1?
+
+## USER
+
+fold the six corrections into NOAM_TODO.md
+
+## ASSISTANT
+
+Applying the six corrections.
+
+Done — all six folded into `docs/NOAM_TODO.md`, each marked with a ⚠️ callout so the correction is visible rather than silently overwritten:
+
+| # | Location | What changed |
+|---|---|---|
+| 1 | Ch5 §5.3 | `build_hybrid_pipeline()` removed; real names + line numbers substituted, plus the measured scaler result (RF ±0.0017/0.0003, IF bit-identical) so §5.3 argues from evidence instead of assertion |
+| 2 | Packaging → Appendix B | Split into Environment A (Ben, macOS/MPS) and Environment B (you, Windows 11/CPU), with a note that fixed-seed tree models keep the RF/IF numbers reproducible across both |
+| 3 | Handoff (e) | Ownership corrected to Noam per `WORK_DIVISION.md`; also added a scope-decision banner at the head of the handoff section recording that you absorbed every re-run, and what's left that's genuinely Ben's |
+| 4 | Rubric Gap 1 | Downgraded "just needs reorganizing" — added the six-name rename table, and confirmed none of Ben's Ch1 rows cite *killed* features, so nothing has to come out of his argument (unlike his Ch3) |
+| 5 | Ch2 | Section rewritten to say the research is done and only prose is missing; added the first-hand Table 4 numbers and flagged the stale "entropies"/subshell line at `ch2_shellcore_matrix_noam.md:24` |
+| 6 | Handoff (c) | Added the git-date finding — suffixed variants are *older* (eeeaf25, Aug 7) than unsuffixed (9b58ddb, Aug 8), so all four figures are pre-redesign and there's no refreshed copy to reuse |
+
+Also added a one-line pointer at the top linking to `docs/NOAM_WRITING_BRIEF.md`, so the checklist and the gathered source material stay connected.
+
+Two files are untracked/modified: the new brief and the TODO. Want me to commit them together, or leave them uncommitted while you start on Ch1?
+

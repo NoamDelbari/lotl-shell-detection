@@ -96,6 +96,19 @@ def plot(df: pd.DataFrame, dataset: str):
     plt.close(fig)
 
 
+def _ch3_top_features(n: int = 6) -> str:
+    """Top-n Dataset-1 features by |rank-biserial|, read live from the Ch3 CSV.
+
+    Read rather than hard-coded: the 38 -> 43 feature redesign invalidated the
+    old literal list (it named `char_entropy` and `n_redirects`, both gone), and
+    a hard-coded list silently rots again the next time the feature set moves.
+    """
+    stats = pd.read_csv(REP / "ch3_d1_feature_stats.csv")
+    top = stats.reindex(stats["abs_effect"].sort_values(ascending=False).index)
+    return ", ".join(f"`{r.feature}` ({r.rank_biserial:+.3f})"
+                     for r in top.head(n).itertuples())
+
+
 def main():
     frames = []
     for ds in ingestion.available_datasets():
@@ -132,14 +145,15 @@ def main():
     lines += [
         "",
         "**For the intuition-vs-ranking reconciliation (cross-ref Ch3):** the "
-        "Ch3 top features by effect size were `special_ratio`, `max_token_len`, "
-        "`char_entropy`, `n_redirects`, `len_chars`, `digit_ratio`. Compare "
+        f"Ch3 Dataset-1 top features by |rank-biserial| effect size were "
+        f"{_ch3_top_features()}. Compare "
         "against the tree ranking above and flag: (a) features the trees rank "
         "high that Ch3 rated weak (possible latent pattern or leakage), "
         "(b) domain features Ch3 rated strong that the trees ignore (possible "
         "multicollinearity — a correlated feature absorbed the signal).",
     ]
-    (REP / "ch4_ranking_notes.md").write_text("\n".join(lines))
+    (REP / "ch4_ranking_notes.md").write_text("\n".join(lines),
+                                              encoding="utf-8")
     print("[ch4] wrote report/ch4_feature_ranking.csv + ch4_ranking_notes.md")
 
 

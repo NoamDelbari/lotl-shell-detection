@@ -30,8 +30,19 @@ Verdicts emitted here are PROPOSED ONLY. Final KEEP/REDEFINE/KILL calls are
 made jointly (course AI policy) and recorded in
 report/ch3_feature_decisions.md.
 
+!! DO NOT RE-RUN THIS SCRIPT TO "REFRESH" report/ch3_feature_decisions.md. !!
+That file was finalised by hand after the 2026-08-08/09 joint verdict session:
+the `final verdict` column carries Noam's per-feature rulings and the file
+gained a "Killed candidates" section preserving the 25 dropped candidates from
+the original 68-candidate run (git 4c6ad99). A regeneration resets every final
+verdict to PENDING and deletes that section -- ~92 lines of decisions the
+script cannot reconstruct. Re-run for results/ch3_feature_audit.json only, and
+`git checkout -- report/ch3_feature_decisions.md` afterwards; edit the markdown
+by hand.
+
 Run: python analysis/ch3_feature_audit.py
-Outputs: results/ch3_feature_audit.json, report/ch3_feature_decisions.md
+Outputs: results/ch3_feature_audit.json
+         report/ch3_feature_decisions.md  (SCAFFOLD ONLY -- see warning above)
 """
 from __future__ import annotations
 
@@ -395,8 +406,10 @@ def _write_markdown(out, datasets):
         "attack side; the current curated build downsamples that source, so "
         "the dataset-wide rule collapsed but the *source fingerprint* "
         "remains (a source can still be identified by the feature firing on "
-        "~100% of its rows). The `max_source_pos_rate` column below is that "
-        "probe; saturated+benign-rare features are flagged "
+        "~100% of its rows). That probe is `max_source_pos_rate`, the "
+        "saturation percentage quoted in the bullet list immediately below "
+        "(full per-feature values in `results/ch3_feature_audit.json`); "
+        "saturated+benign-rare features are flagged "
         "`P8-source-fingerprint` (Ch4 exhibit A).",
         "",
         "### Source-fingerprint features (source saturation >= "

@@ -70,7 +70,8 @@ the univariate evidence is one an analyst can be asked to trust.
 
 **The importance mass is spread, which is evidence against a structural
 shortcut.** All 43 features are used (non-zero importance) and the top eight
-account for only 65% of total importance on both datasets. This matters because
+account for only 65% (Dataset 1) and 64% (Dataset 2) of total importance. This
+matters because
 the project's documented risk (`KNOWN_ISSUES` P3/P8) is that a model latches
 onto a corpus artefact — length, or the presence of a particular binary — and
 reports a spuriously high score. A forest that distributes its splits across the
@@ -105,7 +106,7 @@ supervised model in the project** (FPR 0.0337, against 0.0415 for the hybrid,
 0.0555 for the CNN and 0.0717 for plain XGBoost) at the **highest precision**
 (0.8782), buying that with the lowest recall (0.7283). On Dataset 2 the picture
 is more even — FPR 0.0515 against the hybrid's 0.0494, precision 0.8186 against
-0.8754 — so the low-false-alarm advantage should be claimed for Dataset 1 and
+0.8508 — so the low-false-alarm advantage should be claimed for Dataset 1 and
 not generalised. A conservative, high-precision, fully auditable model is the
 right complement to a high-recall boosted ensemble, and Chapter 7 shows it is
 also the hardest model in the project to misconfigure: its entire 12-cell

@@ -11,7 +11,7 @@
 
 ## P8 headline (testbed-shortcut probe)
 
-Solo rule "predict attack iff literal IPv4 present" scores: **0.141** on `dataset1`, **0.105** on `dataset2`. KNOWN_ISSUES P8 measured **0.938** on the earlier 78k-row dataset1 build, where the IPv4-saturated source dominated the attack side; the current curated build downsamples that source, so the dataset-wide rule collapsed but the *source fingerprint* remains (a source can still be identified by the feature firing on ~100% of its rows). The `max_source_pos_rate` column below is that probe; saturated+benign-rare features are flagged `P8-source-fingerprint` (Ch4 exhibit A).
+Solo rule "predict attack iff literal IPv4 present" scores: **0.141** on `dataset1`, **0.105** on `dataset2`. KNOWN_ISSUES P8 measured **0.938** on the earlier 78k-row dataset1 build, where the IPv4-saturated source dominated the attack side; the current curated build downsamples that source, so the dataset-wide rule collapsed but the *source fingerprint* remains (a source can still be identified by the feature firing on ~100% of its rows). That probe is `max_source_pos_rate`, the saturation percentage quoted in the bullet list immediately below (full per-feature values in `results/ch3_feature_audit.json`); saturated+benign-rare features are flagged `P8-source-fingerprint` (Ch4 exhibit A).
 
 ### Source-fingerprint features (source saturation >= 0.95, benign rate <= 0.05)
 

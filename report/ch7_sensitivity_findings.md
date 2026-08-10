@@ -19,6 +19,36 @@ plot these curves.
 
 ---
 
+## Pipeline architecture (Figure 7.1)
+
+The hyperparameters tuned in this chapter feed the 3-stage **cascade detector** (Ch. 8.4): raw commands enter a cheap Isolation-Forest bulk filter, survivors go to the tuned XGBoost-hybrid, and only genuine edge cases reach the LLM.
+
+```mermaid
+flowchart TD
+    IN(["Raw shell command string"]) --> S1["Stage 1 · Isolation Forest<br/>(unsupervised anomaly score)"]
+    S1 --> D1{"score below<br/>calibrated threshold?"}
+    D1 -->|"yes"| B1(["BENIGN — cleared<br/>(bulk benign filter)"])
+    D1 -->|"no (anomalous)"| S2["Stage 2 · XGBoost-hybrid<br/>P(attack)"]
+    S2 --> D2{"P(attack)?"}
+    D2 -->|"0.70 – 1.00"| A1(["ATTACK<br/>(high confidence)"])
+    D2 -->|"0.00 – 0.30"| B2(["BENIGN<br/>(high confidence)"])
+    D2 -->|"0.30 – 0.70<br/>(edge case)"| S3["Stage 3 · LLM arbitration<br/>(Llama 3.1-8B)"]
+    S3 --> D3{"final verdict"}
+    D3 -->|"malicious"| A2(["ATTACK"])
+    D3 -->|"benign"| B3(["BENIGN"])
+
+    classDef attack fill:#f8d7da,stroke:#c0392b,color:#000
+    classDef benign fill:#d4edda,stroke:#27ae60,color:#000
+    classDef stage fill:#e7f0fb,stroke:#2a6fb0,color:#000
+    class A1,A2 attack
+    class B1,B2,B3 benign
+    class S1,S2,S3 stage
+```
+
+**Figure 7.1** — Three-stage cascade detector. Stage 1 (Isolation Forest) clears bulk benign traffic below an anomaly threshold auto-calibrated to retain 99% of attacks; stage 2 (XGBoost-hybrid) settles the high-confidence bands — P(attack) > 0.7 → attack, < 0.3 → benign; only the 0.3–0.7 edge band reaches stage 3 (LLM arbitration, Llama 3.1-8B). Standalone source: [`ch7_pipeline_diagram.md`](ch7_pipeline_diagram.md).
+
+---
+
 ## Headline answers
 
 - **Biggest impact on F1: `learning_rate`.** It is the single most influential

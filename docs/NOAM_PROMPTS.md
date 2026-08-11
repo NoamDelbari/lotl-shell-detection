@@ -105,24 +105,36 @@ paren_count). The file is marked never-machine-overwritten and needs Ben's sign-
 
 ---
 
-## Prompt 5 — Cross-Review Noam's Chapters ⏳ WAIT FOR noam/ch7-rf-if-sweeps
+## Prompt 5 — Cross-Review Noam's Chapters
 
-Once Noam pushes his branch, run this.
-
-Fetch and read each of Noam's new chapters. For each, check: numbers match new
-`results/summary.json` (hybrid 0.8761/0.8482, CNN 0.8603/0.8384, RF 0.7963/0.7531,
-IF 0.2492/0.1431), feature names are from the 43-feature FEATURE_NAMES, and content
-matches the assignment rubric requirements from NOAM_TODO.md.
+Fetch Noam's branch and read every new chapter file. For each file check:
+(a) numbers match new `results/summary.json` values (hybrid 0.8761/0.8482,
+CNN 0.8603/0.8384, RF 0.7963/0.7531, IF 0.2492/0.1431, baseline 0.8808/0.8631),
+(b) feature names are from the 43-feature FEATURE_NAMES in `src/features.py`,
+(c) content meets the rubric requirements in `docs/NOAM_TODO.md`.
 
 ```bash
 git fetch origin
-git show origin/noam/ch7-rf-if-sweeps:report/ch3_eda_findings_d2.md
-git show origin/noam/ch7-rf-if-sweeps:report/ch6_model_justification.md
-git show origin/noam/ch7-rf-if-sweeps:report/ch7_sensitivity_findings.md
-git show origin/noam/ch7-rf-if-sweeps:report/exec_summary.md
-git show origin/noam/ch7-rf-if-sweeps:report/ch5_harmonization.md
 ```
 
-For each file report: (a) any wrong numbers, (b) any killed/stale feature names,
-(c) any rubric requirement from NOAM_TODO.md that is missing or incomplete.
-Do NOT edit Noam's files — just report issues so they can be sent back to him.
+Read these files in order:
+
+```bash
+git show origin/noam/ch7-rf-if-sweeps:report/exec_summary.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch1_1_threat_analysis.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch1_2_mapping_rows_noam.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch1_3_feature_rationale.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch3_d2_eda_findings.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch5_1_unified_schema.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch5_2_distribution_shift.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch5_3_scaling_normalisation.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch6_rf_if_justification.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch7_rf_if_sensitivity_findings.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch8_1_rf_if_forensics.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch8_3_shellcore_comparison.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch8_4_cascade_analysis.md
+```
+
+For each file produce a short verdict: PASS or list specific issues (wrong number,
+stale feature name, missing rubric item). Do NOT edit any files — compile all
+issues into a single report at the end so they can be sent back to Noam.

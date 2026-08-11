@@ -30,9 +30,9 @@ flowchart TD
     D1 -->|"yes"| B1(["BENIGN — cleared<br/>(bulk benign filter)"])
     D1 -->|"no (anomalous)"| S2["Stage 2 · XGBoost-hybrid<br/>P(attack)"]
     S2 --> D2{"P(attack)?"}
-    D2 -->|"0.70 – 1.00"| A1(["ATTACK<br/>(high confidence)"])
-    D2 -->|"0.00 – 0.30"| B2(["BENIGN<br/>(high confidence)"])
-    D2 -->|"0.30 – 0.70<br/>(edge case)"| S3["Stage 3 · LLM arbitration<br/>(Llama 3.1-8B)"]
+    D2 -->|"0.65 – 1.00"| A1(["ATTACK<br/>(high confidence)"])
+    D2 -->|"0.00 – 0.35"| B2(["BENIGN<br/>(high confidence)"])
+    D2 -->|"0.35 – 0.65<br/>(edge case)"| S3["Stage 3 · LLM arbitration<br/>(Llama 3.1-8B)"]
     S3 --> D3{"final verdict"}
     D3 -->|"malicious"| A2(["ATTACK"])
     D3 -->|"benign"| B3(["BENIGN"])
@@ -45,7 +45,7 @@ flowchart TD
     class S1,S2,S3 stage
 ```
 
-**Figure 7.1** — Three-stage cascade detector. Stage 1 (Isolation Forest) clears bulk benign traffic below an anomaly threshold auto-calibrated to retain 99% of attacks; stage 2 (XGBoost-hybrid) settles the high-confidence bands — P(attack) > 0.7 → attack, < 0.3 → benign; only the 0.3–0.7 edge band reaches stage 3 (LLM arbitration, Llama 3.1-8B). Standalone source: [`ch7_pipeline_diagram.md`](ch7_pipeline_diagram.md).
+**Figure 7.1** — Three-stage cascade detector. Stage 1 (Isolation Forest) clears bulk benign traffic below an anomaly threshold auto-calibrated to retain 99% of attacks; stage 2 (XGBoost-hybrid) settles the high-confidence bands — P(attack) > 0.65 → attack, < 0.35 → benign; only the 0.35–0.65 edge band reaches stage 3 (LLM arbitration, Llama 3.1-8B). Standalone source: [`ch7_pipeline_diagram.md`](ch7_pipeline_diagram.md).
 
 ---
 

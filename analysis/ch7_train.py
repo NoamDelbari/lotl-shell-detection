@@ -188,8 +188,13 @@ def main():
                               for r in rows)
             lines.append(f"- **{param}**: {cells}")
         lines.append("")
-    lines.append("Figures: `report/figures/ch7_sensitivity_*.png`.")
-    (REP / "ch7_sensitivity.md").write_text("\n".join(lines))
+    # Name the figures this run actually wrote. A `ch7_sensitivity_*.png` glob
+    # also matches two pre-redesign orphans and Noam's four RF/IF figures, none
+    # of which this chapter discusses.
+    lines.append("Figures: " + ", ".join(
+        f"`report/figures/ch7_sensitivity_{key.replace('/', '_')}.png`"
+        for key in sens_out) + ".")
+    (REP / "ch7_sensitivity.md").write_text("\n".join(lines), encoding="utf-8")
     print("[ch7] wrote results/ch7_*.json + report/ch7_sensitivity.md")
 
 

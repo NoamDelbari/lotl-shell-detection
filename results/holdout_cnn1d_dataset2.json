@@ -1,0 +1,37 @@
+{
+  "model": "cnn1d",
+  "dataset": "dataset2",
+  "seconds": 34.0,
+  "metrics": {
+    "accuracy": 0.9164490861618799,
+    "precision": 0.812133072407045,
+    "recall": 0.8663883089770354,
+    "f1": 0.8383838383838383,
+    "fpr": 0.06685236768802229,
+    "tn": 1340,
+    "fp": 96,
+    "fn": 64,
+    "tp": 415,
+    "roc_auc": 0.9639802048138822,
+    "pr_auc": 0.9260364040478855,
+    "tpr_at_fpr_1e-2": 0.6805845511482255,
+    "tpr_at_fpr_1e-3": 0.4321503131524008
+  },
+  "per_source": {
+    "bash_history": {
+      "class": "benign",
+      "n": 1026,
+      "fpr": 0.07017543859649122
+    },
+    "commandlinefu": {
+      "class": "benign",
+      "n": 410,
+      "fpr": 0.05853658536585366
+    },
+    "honeypot": {
+      "class": "malicious",
+      "n": 479,
+      "recall": 0.8663883089770354
+    }
+  }
+}

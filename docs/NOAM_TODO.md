@@ -3,6 +3,8 @@
 
 Ben's side was complete and audited against the full assignment PDF **as of the pre-redesign (38-feature) run**. The Ch3 feature redesign (43 features, `78d319f`/`cec996f`) invalidated part of it — see **"Handoff to Ben"** under Cross-Review below for exactly what. The items below are Noam's responsibility per `WORK_DIVISION.md`, plus **specific gaps flagged by the rubric audit** that need attention when assembling the final docx.
 
+> **⚠️ Start here instead (2026-08-11):** `docs/DOCX_ASSEMBLY_BRIEF.md` is now the live plan. Nearly all chapter prose is written; what remains is the .docx build, and that brief carries the authoritative spec read straight from the assignment PDF (formatting rules, exact section list with point values, the corrected ZIP name `Group_X1_X2_Final_Project.zip`), the page budget, the four remaining gaps, and the day-by-day order. **This file is now partly stale** — the corrections are listed in its §7.
+
 > **Companion document:** `docs/NOAM_WRITING_BRIEF.md` (2026-08-10) holds the *pre-gathered source material* for each remaining chapter — the four verified Ch1 mapping rows with live feature names, the §1.3 family skeleton with counts, the Ch2 ShellCore state, the Ch5 evidence, and the suggested writing order. This file stays the checklist; that one is the research already done.
 
 > **Feature-set reality check (read once, applies everywhere below):** the final engineered set is **43 features**, listed in `src/features.py` `FEATURE_NAMES`, with the per-feature KEEP/KILL evidence in `report/ch3_feature_decisions.md`. Any document still saying "38 features", or naming `shell_bins` / `redirect_count` / `path_proc` / `char_count` / `token_count` / `char_entropy` / `b64_max_run` / `paren_count` / `quote_count` / `semicolon_count` / `token_len_*`, is stale.
@@ -339,7 +341,7 @@ This routes edge cases (model disagreements / uncertainty band) to Llama 3.1-8B 
 
 5. **ZIP it**:
    ```
-   Group_[XX]_Final_Project.zip
+   Group_X1_X2_Final_Project.zip        # X1, X2 = the two student IDs (assignment PDF p.12)
    ├── code/              (this repo)
    ├── report.docx
    └── ai_logs/
@@ -380,7 +382,7 @@ Ben's files to review:
 Also: his per-source FP percentages for the hybrid (`linlm` 17%, `bash6k` 13%, `nl2bash` 10%) are pre-redesign and need re-reading off the regenerated `ch8_confusion.json`. Falls under the "Noam absorbs every number-refresh" scope decision below — but the *softening* of the CNN-transfer claim is a wording change on his prose, so flag it to him rather than silently editing.
 
 ### 🔴 Reviewed earlier — `report/ch2_literature_review.md` (Ben's)
-Line 9 lists "entropies" among our features (both were killed); CNN F1 "0.853 / 0.841" is the retired `cnn`, not `cnn1d` (0.8603 / 0.8384); XGB-hybrid "0.871 / 0.978" and "0.846 / 0.965" → live 0.8761 / 0.9794 and 0.8482 / 0.9680; TPR@FPR=0.1% "0.575 / 0.507" → live 0.5669 / 0.5261. His TF-IDF+LR baseline figures (0.881 / 0.980, 0.863 / 0.964) are correct.
+Line 9 lists "entropies" among our features (both were killed); CNN F1 "0.853 / 0.841" is the retired `cnn`, not `cnn1d` (0.8603 / 0.8384); XGB-hybrid "0.871 / 0.978" and "0.846 / 0.965" → live 0.8761 / 0.9794 and 0.8482 / 0.9680; TPR@FPR=0.1% "0.575 / 0.507" → live 0.5669 / 0.5261. ⚠️ **Corrected 2026-08-11:** his TF-IDF+LR baseline figures (0.881 / 0.980, 0.863 / 0.964) are **not** correct — that line predates the orphan-baseline discovery. The reproducible figures from `docs/baseline_metrics.json` are **0.8975 / 0.9833** (D1) and **0.8824** (D2). Line 19 of that file, the "Baseline configuration note" paragraph, is therefore obsolete outright: it argues about a residual ~0.02 gap to references that turn out to be the live numbers. Delete the paragraph rather than patching it.
 - `report/ch8_3_tops_comparison.md`
 
 When reviewing, assume **numbers are stale unless proven otherwise** — the four items below are the ones already found.

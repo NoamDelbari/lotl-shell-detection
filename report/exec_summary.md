@@ -24,7 +24,7 @@ trained five detectors plus a character n-gram baseline.
 
 | model | D1 F1 | D2 F1 | D1 FPR | D2→D1 transfer F1 |
 |---|---:|---:|---:|---:|
-| char n-gram baseline (TF-IDF + LR) | **0.8975** | **0.8824** | 0.0385 | 0.2740 |
+| char n-gram baseline (TF-IDF + LR) | **0.8808** | **0.8631** | 0.0385 | 0.2740 |
 | XGBoost-hybrid | 0.8761 | 0.8482 | 0.0415 | 0.2756 |
 | 1D-CNN | 0.8603 | 0.8384 | 0.0555 | 0.3587 |
 | Random Forest | 0.7963 | 0.7531 | 0.0337 | 0.1432 |

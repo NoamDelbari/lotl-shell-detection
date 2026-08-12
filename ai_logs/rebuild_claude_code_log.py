@@ -6,9 +6,8 @@ session from both team members in chronological order, separated by
 `# Session N` headers. This script rebuilds it mechanically so it can never
 drift from the per-session transcripts:
 
-  * everything before the `# Session 2` header (Ben's Session 1 and Session 1
-    continued) is copied out of the existing file **byte for byte** -- Ben's
-    blocks are never regenerated or edited here;
+  * Ben's Session 1 block is regenerated from `claude_session.md` (the exporter
+    output), so the combined log always reflects the latest full re-export;
   * Noam's blocks are re-emitted verbatim from the `.md` files produced by
     export_claude_log.py, using the separator convention already in the file:
 
@@ -21,13 +20,14 @@ drift from the per-session transcripts:
         [*italic metadata line*, then two blank lines]
         <verbatim session .md, trailing blank line collapsed>
 
-Usage (run after re-exporting both Noam sessions; see README.md):
+Usage (run after re-exporting the session .md files; see README.md):
     python ai_logs/rebuild_claude_code_log.py
 """
 from pathlib import Path
 
 AI = Path(__file__).resolve().parent
 LOG = AI / "claude_code_log.txt"
+CLAUDE_SESSION = AI / "claude_session.md"  # Ben's re-exported transcript
 
 SESSION1_HEADER = (
     "# Session 1 -- Ben: dataset card, pipeline, features, models, evaluation, "
@@ -60,18 +60,14 @@ BLOCKS = [
 
 
 def main() -> None:
-    old = LOG.read_text(encoding="utf-8")
-    cut = old.index("---\n\n" + SESSION2_HEADER)
-    ben = old[:cut]  # verbatim; ends with the blank line before the separator
+    # Ben's Session 1 block is regenerated from the re-exported transcript so
+    # the combined log never drifts from claude_session.md. (It used to be
+    # copied byte-for-byte out of the existing claude_code_log.txt, which meant
+    # a fresh Ben re-export never actually reached this file.) The exporter
+    # writes each turn ending in a blank line, so the block already ends "\n\n".
+    ben_md = CLAUDE_SESSION.read_text(encoding="utf-8")
+    ben = SESSION1_HEADER + "\n\n" + ben_md.rstrip("\n") + "\n\n"
     assert ben.endswith("\n\n"), repr(ben[-10:])
-
-    # Ben's opening block predates the `# Session N` convention and carries no
-    # header, which makes the combined log inconsistent with what README.md
-    # promises. Prepend one; the guard keeps this idempotent across reruns
-    # (the header is read back as part of `ben` next time). Ben's transcript
-    # text itself is still copied byte for byte.
-    if not ben.startswith(SESSION1_HEADER):
-        ben = SESSION1_HEADER + "\n\n" + ben
 
     parts = [ben]
     for header, note, md in BLOCKS:
@@ -82,7 +78,10 @@ def main() -> None:
         parts.append("\n")  # blank line before the next `---` separator
     out = "".join(parts).rstrip("\n") + "\n"
 
-    LOG.write_text(out, encoding="utf-8", newline="\n")
+    # open(..., newline="\n") rather than Path.write_text(newline=...), which
+    # only accepts the newline kwarg on Python 3.10+ (this repo runs on 3.9).
+    with open(LOG, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(out)
     print(f"wrote {LOG}: {out.count(chr(10))} lines, "
           f"{len(out.encode('utf-8'))} bytes")
 

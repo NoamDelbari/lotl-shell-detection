@@ -21,9 +21,7 @@ OUT    = ROOT / "Group_10_Report.docx"
 BODY_FILES = [
     ("exec_summary.md",              None,    None),
     ("ch1_threat_mapping.md",        "PAGE",  None),
-    ("ch1_2_mapping_rows_noam.md",   None,    "### Row N3"),
     ("ch2_literature_review.md",     "PAGE",  "## Comparative essay"),
-    ("ch4_ranking_findings.md",      "PAGE",  None),
     ("ch6_model_justification.md",   "PAGE",  "## 6.3 Explicit"),
     ("ch7_sensitivity_findings.md",  "PAGE",  "## Headline answers"),
     ("ch8_3_tops_comparison.md",     "PAGE",  "## What Trizna"),
@@ -32,9 +30,7 @@ BODY_FILES = [
 
 APPENDIX_FILES = [
     ("ch2_literature_review.md",         "PAGE",  None),
-    ("ch5_1_unified_schema.md",          None,    "## The selection protocol"),
     ("ch8_4_cascade_analysis.md",        None,    "## Attributing every error"),
-    ("ch1_2_mapping_rows_noam.md",       None,    None),
 ]
 
 def set_spacing(para, space_before=0, space_after=6, line_spacing=1.5):

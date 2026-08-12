@@ -1,0 +1,519 @@
+{
+  "n_test": 3049,
+  "n_attack": 762,
+  "n_benign": 2287,
+  "fn": {
+    "hybrid": 94,
+    "cnn": 91,
+    "both": 59,
+    "either": 126,
+    "jaccard": 0.4683,
+    "share_of_hybrid_shared": 0.6277,
+    "share_of_cnn_shared": 0.6484
+  },
+  "fp": {
+    "hybrid": 95,
+    "cnn": 127,
+    "both": 61,
+    "either": 161,
+    "jaccard": 0.3789,
+    "share_of_hybrid_shared": 0.6421,
+    "share_of_cnn_shared": 0.4803
+  },
+  "both_fn_by_source": {
+    "gtfobins": 14,
+    "hacktricks": 35,
+    "atomic_red_team": 9,
+    "slp": 1
+  },
+  "both_fp_by_source": {
+    "nl2bash": 19,
+    "linlm": 18,
+    "bash6k": 9,
+    "tldr": 15
+  },
+  "both_fn": [
+    {
+      "command": "bconsole",
+      "source": "gtfobins"
+    },
+    {
+      "command": "apparmor_parser",
+      "source": "hacktricks"
+    },
+    {
+      "command": "aptitude changelog aptitude",
+      "source": "gtfobins"
+    },
+    {
+      "command": "Label=unconfined",
+      "source": "hacktricks"
+    },
+    {
+      "command": "useradd -u 1000 standarduser",
+      "source": "hacktricks"
+    },
+    {
+      "command": "pip install --break-system-packages .",
+      "source": "gtfobins"
+    },
+    {
+      "command": "findmnt -t nfs",
+      "source": "atomic_red_team"
+    },
+    {
+      "command": "kldstat",
+      "source": "atomic_red_team"
+    },
+    {
+      "command": "./suid_bin: symbol lookup error: ./suid_bin: undefined symbol: a_function_name",
+      "source": "hacktricks"
+    },
+    {
+      "command": "locate *",
+      "source": "atomic_red_team"
+    },
+    {
+      "command": "smbserver.py -smb2support share .",
+      "source": "gtfobins"
+    },
+    {
+      "command": "docker scan hello-world",
+      "source": "hacktricks"
+    },
+    {
+      "command": "sudo nft list chains",
+      "source": "hacktricks"
+    },
+    {
+      "command": "apt-get changelog apt",
+      "source": "gtfobins"
+    },
+    {
+      "command": "journalctl -b -1 -p err -o short-iso",
+      "source": "hacktricks"
+    },
+    {
+      "command": "mount | head",
+      "source": "hacktricks"
+    },
+    {
+      "command": "source f*",
+      "source": "hacktricks"
+    },
+    {
+      "command": "declare builtins",
+      "source": "hacktricks"
+    },
+    {
+      "command": "pry",
+      "source": "gtfobins"
+    },
+    {
+      "command": "gcc pwn.c -o a.out",
+      "source": "hacktricks"
+    },
+    {
+      "command": "wine exe2bat.exe nc.exe nc.txt",
+      "source": "hacktricks"
+    },
+    {
+      "command": "sudo chattr -i file.txt",
+      "source": "hacktricks"
+    },
+    {
+      "command": "cont",
+      "source": "gtfobins"
+    },
+    {
+      "command": "sudo nft list tables",
+      "source": "hacktricks"
+    },
+    {
+      "command": "ip tcp_metrics show |grep --invert-match \"^127\\.\"",
+      "source": "atomic_red_team"
+    },
+    {
+      "command": "ip netns delete bar",
+      "source": "gtfobins"
+    },
+    {
+      "command": "docker build --secret id=my_key,src=path/to/my_secret_file .",
+      "source": "hacktricks"
+    },
+    {
+      "command": "wireshark",
+      "source": "gtfobins"
+    },
+    {
+      "command": "tail",
+      "source": "hacktricks"
+    },
+    {
+      "command": "xclip -o > history.txt",
+      "source": "atomic_red_team"
+    },
+    {
+      "command": "ip rule",
+      "source": "hacktricks"
+    },
+    {
+      "command": "p i n g",
+      "source": "hacktricks"
+    },
+    {
+      "command": "setfacl -b file.txt",
+      "source": "hacktricks"
+    },
+    {
+      "command": "touch x.yara",
+      "source": "gtfobins"
+    },
+    {
+      "command": "sudo rmmod example",
+      "source": "hacktricks"
+    },
+    {
+      "command": "jtag --interactive",
+      "source": "gtfobins"
+    },
+    {
+      "command": "chmod +s payload",
+      "source": "hacktricks"
+    },
+    {
+      "command": "strace -e bpf,perf_event_open,keyctl true 2>&1 | tail",
+      "source": "hacktricks"
+    },
+    {
+      "command": "find . -name \"*.php\" -print0 | xargs -0 grep -i -n \"var $password\"",
+      "source": "slp"
+    },
+    {
+      "command": "which nsenter",
+      "source": "hacktricks"
+    },
+    {
+      "command": "systemctl restart auditd",
+      "source": "atomic_red_team"
+    },
+    {
+      "command": "chmod +x server-command",
+      "source": "hacktricks"
+    },
+    {
+      "command": "bundle console",
+      "source": "gtfobins"
+    },
+    {
+      "command": "dotnet fsi",
+      "source": "gtfobins"
+    },
+    {
+      "command": "sudo semodule -B",
+      "source": "hacktricks"
+    },
+    {
+      "command": "declare historywords",
+      "source": "hacktricks"
+    },
+    {
+      "command": "sudo systemctl stop cron",
+      "source": "atomic_red_team"
+    },
+    {
+      "command": "last | tail",
+      "source": "hacktricks"
+    },
+    {
+      "command": "update-ca-trust",
+      "source": "atomic_red_team"
+    },
+    {
+      "command": "touch @root.txt",
+      "source": "hacktricks"
+    },
+    {
+      "command": "tmux attach -t myname",
+      "source": "hacktricks"
+    },
+    {
+      "command": "systemctl stop ufw",
+      "source": "atomic_red_team"
+    },
+    {
+      "command": "zathura",
+      "source": "gtfobins"
+    },
+    {
+      "command": "mkdir rootfs",
+      "source": "hacktricks"
+    },
+    {
+      "command": "sudo nft -a list chain inet filter input",
+      "source": "hacktricks"
+    },
+    {
+      "command": "ip -o -4 addr show | awk '{print $2, $4}'",
+      "source": "hacktricks"
+    },
+    {
+      "command": "ldconfig -p | grep libcustom",
+      "source": "hacktricks"
+    },
+    {
+      "command": "chmod -R 644 *.php",
+      "source": "hacktricks"
+    },
+    {
+      "command": "pkaction --verbose",
+      "source": "hacktricks"
+    }
+  ],
+  "both_fp": [
+    {
+      "command": "unset -f ls /bin/ls",
+      "source": "nl2bash"
+    },
+    {
+      "command": "fluent-bit -c /etc/fluent-bit/fluent-bit.conf",
+      "source": "linlm"
+    },
+    {
+      "command": "sqlite3 /var/www/file_hashes.db \"CREATE TABLE IF NOT EXISTS file_hashes(path TEXT PRIMARY KEY, md5 TEXT);\"",
+      "source": "bash6k"
+    },
+    {
+      "command": "yes '' | ruby -e \"$(curl -fsSL https://h658b4b87.example.net/Homebrew/homebrew/go/install)\"",
+      "source": "nl2bash"
+    },
+    {
+      "command": "cat /proc/interrupts",
+      "source": "linlm"
+    },
+    {
+      "command": "cat /sys/class/net/eth0/statistics/rx_bytes && cat /sys/class/net/eth0/statistics/tx_bytes",
+      "source": "bash6k"
+    },
+    {
+      "command": "pvesm [f|free] local:iso/archlinux-2025.08.01-x86_64.iso",
+      "source": "tldr"
+    },
+    {
+      "command": "mkdir -p /tmp/project/{src,bin,doc}",
+      "source": "bash6k"
+    },
+    {
+      "command": "cat ~/.ssh/known_hosts",
+      "source": "linlm"
+    },
+    {
+      "command": "jstack /usr/bin/java file.core",
+      "source": "tldr"
+    },
+    {
+      "command": "if selinuxenabled; then echo \"SELinux is running\"; fi",
+      "source": "tldr"
+    },
+    {
+      "command": "echo $-",
+      "source": "bash6k"
+    },
+    {
+      "command": "local -A variable=([key_a]=item_a [key_b]=item_b [key_c]=item_c)",
+      "source": "tldr"
+    },
+    {
+      "command": "head -n 10 /etc/passwd",
+      "source": "bash6k"
+    },
+    {
+      "command": "cat /sys/class/power_supply/BAT0/status",
+      "source": "linlm"
+    },
+    {
+      "command": "eget https://h56aef353.example.net/dl/go1.17.5.linux-amd64.tar.gz",
+      "source": "tldr"
+    },
+    {
+      "command": "sudo ln -s /usr/bin/perl /usr/local/bin/perl`echo -e '\\r'`",
+      "source": "nl2bash"
+    },
+    {
+      "command": "git_latest_hash(){ local repo=\"$1\"; local branch=\"$2\"; local dir=$(mktemp -d); git clone --depth 1 --branch \"$branch\" \"$repo\" \"$dir\" >/dev/null 2>&1 && (cd \"$dir\" && git rev-parse HEAD); rm -rf \"$dir\"; }",
+      "source": "bash6k"
+    },
+    {
+      "command": "sudo cat /proc/meminfo",
+      "source": "linlm"
+    },
+    {
+      "command": "echo $!",
+      "source": "bash6k"
+    },
+    {
+      "command": "cat /proc/sys/vm/vfs_cache_pressure",
+      "source": "linlm"
+    },
+    {
+      "command": "cat /proc/interrupts | grep -i lapic",
+      "source": "linlm"
+    },
+    {
+      "command": "su - joe -c \"/path/to/my_daemon > /some/output/file\" &",
+      "source": "nl2bash"
+    },
+    {
+      "command": "find . -type f -name \"your_pattern\" -exec du -ch {} + 2>/dev/null | grep total$.",
+      "source": "nl2bash"
+    },
+    {
+      "command": "R -e \"install.packages('ggplot2')\"",
+      "source": "linlm"
+    },
+    {
+      "command": "systemctl bind unit /path/to/host_directory",
+      "source": "tldr"
+    },
+    {
+      "command": "cat /sys/block/sda/queue/scheduler",
+      "source": "linlm"
+    },
+    {
+      "command": "find ./ -type f | tee /tmp/grep1 /tmp/grep2 >/dev/null",
+      "source": "nl2bash"
+    },
+    {
+      "command": "bash vst-install.sh",
+      "source": "linlm"
+    },
+    {
+      "command": "sudo chmod 755 .git/hooks/pre-commit",
+      "source": "nl2bash"
+    },
+    {
+      "command": "cat /proc/cpuinfo | grep bugs",
+      "source": "linlm"
+    },
+    {
+      "command": "find / -type f -name dummy 2>/dev/null -exec cat {} \\; >tesst.txt",
+      "source": "nl2bash"
+    },
+    {
+      "command": "set MAVEN_DEBUG_OPTS=-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000",
+      "source": "nl2bash"
+    },
+    {
+      "command": "fping 192.168.1.{1..254}",
+      "source": "tldr"
+    },
+    {
+      "command": "cp /dev/null emptyfile.c",
+      "source": "nl2bash"
+    },
+    {
+      "command": "smbclient //server/share",
+      "source": "tldr"
+    },
+    {
+      "command": "ls -l /lib*/ld-linux*.so.2",
+      "source": "nl2bash"
+    },
+    {
+      "command": "bcomps -?",
+      "source": "tldr"
+    },
+    {
+      "command": "TTY=$(tty) WHOLINE=$(who | grep \"${TTY#/dev/}\")",
+      "source": "nl2bash"
+    },
+    {
+      "command": "cat <(fgrep -i -v \"$command\" <(crontab -u test -l)) <(echo \"$job\") | crontab -u test -",
+      "source": "nl2bash"
+    },
+    {
+      "command": "</>something<Enter>",
+      "source": "tldr"
+    },
+    {
+      "command": "e4",
+      "source": "tldr"
+    },
+    {
+      "command": "./rmlint.sh",
+      "source": "tldr"
+    },
+    {
+      "command": "rsync -rave \"ssh -i /home/test/pkey_new.pem\" /var/www/test/ ubuntu@176.193.10.184:/var/www/test",
+      "source": "nl2bash"
+    },
+    {
+      "command": "docker run -it unikernel bash",
+      "source": "linlm"
+    },
+    {
+      "command": "echo 'API_KEY=secret' > .env",
+      "source": "linlm"
+    },
+    {
+      "command": "sudo iptables -A INPUT -s 38.201.6.82 -j DROP",
+      "source": "linlm"
+    },
+    {
+      "command": "ps auxww",
+      "source": "tldr"
+    },
+    {
+      "command": "touch -a UEDP0{1..5}_20120821.csv",
+      "source": "nl2bash"
+    },
+    {
+      "command": "pw-v4l2 -h",
+      "source": "tldr"
+    },
+    {
+      "command": "sshfs user@host:/path /mnt",
+      "source": "linlm"
+    },
+    {
+      "command": "nm /usr/bin/ls",
+      "source": "linlm"
+    },
+    {
+      "command": "!shell_command",
+      "source": "tldr"
+    },
+    {
+      "command": "find /etc -type f -print0 2>/dev/null | xargs -0 grep --color=AUTO -Hn 'nameserver' 2>/dev/null",
+      "source": "nl2bash"
+    },
+    {
+      "command": "ls -l /etc/localtime",
+      "source": "linlm"
+    },
+    {
+      "command": "ssh -L 1234:remote2:22 -p 45678 user1@remote1",
+      "source": "nl2bash"
+    },
+    {
+      "command": "chsh -s /bin/bash john",
+      "source": "bash6k"
+    },
+    {
+      "command": "mount | grep -q ~/mnt/sdc1",
+      "source": "nl2bash"
+    },
+    {
+      "command": "cat /proc/net/ip_tables_names",
+      "source": "linlm"
+    },
+    {
+      "command": "ssh user@server /bin/bash <<'EOT'",
+      "source": "nl2bash"
+    },
+    {
+      "command": "curl -s https://h1bc412bb.example.net/data | jq -r '.items[]' > /tmp/items.txt",
+      "source": "bash6k"
+    }
+  ]
+}

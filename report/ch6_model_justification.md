@@ -4,12 +4,12 @@ This project pairs two deliberately different learners on the same T1059.004 tas
 
 ## 6.1 XGBoost on engineered features
 
-Gradient-boosted decision trees are the natural fit for the 43-dimensional engineered feature vector (counts, ratios, entropies, binary-family flags):
+Gradient-boosted decision trees are the natural fit for the 43-dimensional engineered feature vector (counts, ratios, binary-family flags, head-token indicators):
 
-- **Interpretability.** Tree ensembles expose per-feature gain, so the decision surface is auditable — a first-class requirement for a security detector that a human analyst must trust. Ch. 4's gain ranking (`shell_bins` 0.194, `redirect_count` 0.130, `pipe_count` 0.076) is only possible because the model is inspectable, and it is what let us *see* the structural-shortcut risk rather than merely suspect it.
-- **Handles mixed feature types.** The engineered features mix bounded ratios (`special_ratio` ∈ [0,1]), unbounded counts (`char_count`), and binary flags (`shell_bins`). Trees split on thresholds and never assume a common scale or distribution, so heterogeneous features coexist without one-hot expansion or feature-specific preprocessing.
-- **Scale-invariant.** Splits depend only on rank order, so the raw-magnitude features that dominate the variance ranking (`char_count`, `token_len_max`) need no standardization or log-transform — the exact normalization burden that would sink a linear or neural model on these inputs (Ch. 3).
-- **Fast and robust.** With `tree_method='hist'` training is histogram-binned and near-instant on tens of thousands of rows, and Ch. 7 shows F1 is *saturated* across almost the entire hyperparameter grid (~0.71–0.735) — a model that is cheap to retrain and hard to misconfigure, which is an operational asset.
+- **Interpretability.** Tree ensembles expose per-feature gain, so the decision surface is auditable — a first-class requirement for a security detector that a human analyst must trust. Ch. 4's gain ranking (`n_abs_paths` 0.181, `has_dev_null` 0.111, `has_shell_bin` 0.097 on Dataset 1) is only possible because the model is inspectable, and it is what let us *see* the structural-shortcut risk rather than merely suspect it.
+- **Handles mixed feature types.** The engineered features mix bounded ratios (`special_ratio` ∈ [0,1]), unbounded counts (`len_chars`, `n_abs_paths`), and binary flags (`has_shell_bin`). Trees split on thresholds and never assume a common scale or distribution, so heterogeneous features coexist without one-hot expansion or feature-specific preprocessing.
+- **Scale-invariant.** Splits depend only on rank order, so the raw-magnitude features the ensembles lean on (`max_token_len` and `len_chars`, MDI ranks 3 and 5 on Dataset 1) need no standardization or log-transform — the exact normalization burden that would sink a linear or neural model on these inputs (Ch. 3).
+- **Fast and robust.** With `tree_method='hist'` training is histogram-binned and near-instant on tens of thousands of rows, and Ch. 7 shows F1 is *saturated* across the entire hyperparameter grid (0.765–0.789 on Dataset 1, 0.746–0.763 on Dataset 2, a span of 0.025 and 0.018 F1 across 13 configurations each) — a model that is cheap to retrain and hard to misconfigure, which is an operational asset.
 
 *Cite:* Chen, T. & Guestrin, C. (2016), *XGBoost: A Scalable Tree Boosting System*, KDD '16 — the regularized, histogram-based boosting formulation used here.
 

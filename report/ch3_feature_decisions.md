@@ -157,4 +157,4 @@ n-gram block (ShellCore's char-level insight).
 
 - **Verdicts finalized jointly (Noam + Claude), 2026-08-09. Final feature count: 43** (target band 35-45). All 25 kills per the script's proposal; the two DISCUSS features (`has_ipv4`, `has_shell_bin`) ruled KEEP + Ch4 flag by Noam (reasons in their FINAL cells).
 - After the final set lands: Ben re-runs Ch4 ranking, holdouts, sensitivity and figures (results/* regenerate).
-- `report/ch4_ranking_findings.md` references feature names from an older iteration (`shell_bins`, `redirect_count`, `path_proc`) -- stale, regenerate after merge.
+- ~~`report/ch4_ranking_findings.md` references feature names from an older iteration (`shell_bins`, `redirect_count`, `path_proc`) -- stale, regenerate after merge.~~ **Resolved 2026-08-12:** Ch4 rewritten against the live 43-feature ranking (`report/ch4_feature_ranking.csv`); the same dead names were also cleared from Ch6.

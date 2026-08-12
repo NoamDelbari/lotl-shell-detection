@@ -54,6 +54,44 @@ per-fold metrics stay commensurable. The seed is fixed project-wide
 (`src/SEED`), and the tree models are deterministic under it, so every number in
 this report is reproducible from a clean checkout.
 
+**How much the grouping actually costs — measured.** The two controls differ in
+one respect that matters: the hold-out is grouped by command shape, while the
+cross-validation folds are stratified but *ungrouped*, and run inside the
+training split. Comparing them therefore prices the grouping directly. Note that
+these are two different questions, not a discrepancy: CV estimates
+generalisation to a *new sample of the same corpus*, the grouped hold-out to a
+*new command structure*. The gap between them is the leakage the grouping
+removes.
+
+**Table 7.2.1 — 5-fold stratified CV against the grouped hold-out (F1).**
+Positive Δ means the ungrouped protocol scored higher.
+
+| Model | Corpus | CV F1 (mean ± sd) | Grouped hold-out F1 | Δ (CV − hold-out) |
+|---|---|---:|---:|---:|
+| XGBoost-hybrid | Dataset 1 | 0.8715 ± 0.0049 | 0.8761 | −0.0046 |
+| XGBoost-hybrid | Dataset 2 | 0.8752 ± 0.0092 | 0.8482 | **+0.0271** |
+| XGBoost | Dataset 1 | 0.7978 ± 0.0078 | 0.7856 | +0.0122 |
+| XGBoost | Dataset 2 | 0.7970 ± 0.0126 | 0.7557 | **+0.0412** |
+| 1D-CNN | Dataset 1 | 0.8365 ± 0.0125 | 0.8495 | −0.0131 |
+| 1D-CNN | Dataset 2 | 0.8262 ± 0.0104 | 0.8249 | +0.0012 |
+
+Sources: `results/cv_xgboost_hybrid_dataset{1,2}.json`,
+`results/holdout_xgboost_hybrid_dataset{1,2}.json`, `results/ch7_{cv,holdout}.json`.
+The CNN rows use the Chapter 7 sweep-base configuration (`max_len=192`, 6
+epochs), so their level is not comparable with the shipped CNN's 0.8603 — only
+the CV-versus-hold-out difference within each row is.
+
+The result splits by corpus. On **Dataset 1** the two protocols agree to within
+±0.013 F1 — the curated corpus is already structurally diverse, so grouping
+removes little. On **Dataset 2** the ungrouped estimate is **2.7 to 4.1 points
+optimistic** for both tree models. That is the honeypot register showing its
+hand: automated attack sessions replay near-identical command structures, so an
+ungrouped fold routinely trains on one instance of a structure and tests on
+another. Reporting the CV number as the headline would have overstated Dataset 2
+performance by roughly the margin that separates our XGBoost from our
+XGBoost-hybrid. **Every headline figure in this report is the grouped hold-out
+number**, which is the conservative one on the corpus where the choice matters.
+
 **Metric set.** Chosen for the prevalence rather than convention: Precision,
 Recall, F1, ROC-AUC and FPR as mandated, plus **PR-AUC** and **TPR at fixed
 FPR = 1% and 0.1%**. The last is the one that matters operationally and the one

@@ -8,9 +8,9 @@
 
 **XGBoost (gradient-boosted decision trees) — traditional supervised.** Our
 engineered features (`src/features.py`) are a low-dimensional, heterogeneous
-tabular vector: integer counts (`n_pipes`, `n_redirects`), boolean flags
-(`has_dev_tcp`, `has_fetch_bin`) and real-valued ratios/entropies
-(`special_ratio`, `char_entropy`), with strong *threshold* and *conjunction*
+tabular vector: integer counts (`n_pipes`, `n_redirect_out`), boolean flags
+(`has_dev_tcp`, `has_fetch_bin`) and real-valued ratios
+(`special_ratio`, `digit_ratio`), with strong *threshold* and *conjunction*
 effects — e.g. "a fetch tool **and** a pipe **and** a shell" (Row B1). Gradient-
 boosted trees are structurally ideal: axis-aligned splits learn exactly those
 conjunctive threshold rules, they need no feature scaling and are invariant to

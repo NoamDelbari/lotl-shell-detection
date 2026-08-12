@@ -2521,6 +2521,34 @@ yes
 
 Running it. First re-export + rebuild the combined log, and verify the new content is captured:
 
+Logs are current — 32 turns, all the Ollama + docx-trim work captured, Noam's sessions byte-identical. Now rebuilding the ZIP so it carries the fresh logs, and verifying they're actually inside:
+
+ZIP good — fresh logs verified inside, both docx untouched. Committing and pushing:
+
+Done — ai_logs are now current in git. **`3546c45`** pushed, in sync with origin.
+
+- `claude_session.md`: **24 → 32 turns** — now includes the Ollama bonus-B3 run and every docx 15+5 trimming iteration (markers confirmed present: `ollama` ×26, `llama3.1:8b` ×11, etc.).
+- `claude_code_log.txt`: rebuilt via the fixed script — Ben's block refreshed, Noam's Sessions 2/3/4 byte-identical.
+- `Group_10_Final_Project.zip`: rebuilt (3.09 MB) with the fresh logs embedded (verified inside), docx untouched.
+
+**One caveat to close the loop:** this export captured through your "yes" a moment ago, but it can't include *this* reply or anything after — the exporter only sees what's already written to the session file. So when you're literally about to submit, re-run the same three steps one last time to sweep in the tail:
+
+```bash
+cd /Users/bvolovelsky/Downloads/lotl-shell-detection-main
+python3 ai_logs/export_claude_log.py ~/.claude/projects/-Users-bvolovelsky-Downloads-lotl-shell-detection-new/54d95d87-de6d-4b85-a4e8-3e2373c8e028.jsonl ai_logs/claude_session.md
+python3 ai_logs/rebuild_claude_code_log.py
+```
+
+(then rebuild the ZIP + commit, exactly as just done). Or just say the word next time and I'll run it. Otherwise you're fully submission-ready.
+
+## USER
+
+yeah run it once more before i submit
+
+## ASSISTANT
+
+On it — final refresh:
+
 ---
 
 # Session 2 -- Noam: Ch3 featurize() redesign & joint feature verdicts (Aug 8-9, 2026, Claude Fable 5)

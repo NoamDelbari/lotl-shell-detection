@@ -45,7 +45,7 @@ chronological order with `# Session N` separators:
   Chapter 3 Dataset-1 chapter plus a full retrain of every model on the
   43-feature set, and the Chapter 6 RF/IF model justification with
   first-hand-verified citations
-- **Session 4** (Aug 10, Claude Opus 5 — Noam, **still running**): Chapter 1
+- **Session 4** (Aug 10–12, Claude Opus 5 — Noam, **still running**): Chapter 1
   (deep-dive threat analysis, the four ATT&CK mapping rows, and §1.3 rationale
   for all 43 features), Chapter 5 in full (unified schema, cross-dataset
   distribution shift, scaling/normalisation), Noam's Chapter 2 half — the
@@ -54,20 +54,29 @@ chronological order with `# Session N` separators:
   8.1 (RF/IF error forensics), 8.3 (the ShellCore benchmark and the
   representation-vs-corpus gap decomposition), 8.4 (the cascade ablation and
   its negative result), the executive summary, and the merge of Ben's
-  `ben/pipeline-models-ch3-8` branch
+  `ben/pipeline-models-ch3-8` branch — then (Aug 12) an audit of the merged
+  report against the live artefacts, which found several chapters still
+  written against the superseded 38-feature set and against experiment files
+  the repo no longer produces: Chapter 7.3 rewritten from
+  `results/ch7_sensitivity.json`, Chapter 4 rewritten from
+  `report/ch4_feature_ranking.csv` (including a new gain-versus-permutation
+  discrepancy analysis), Chapter 8.1 rewritten with a newly measured
+  hybrid-versus-CNN error overlap, Chapter 7.2 extended with a measured
+  comparison of grouped hold-out against ungrouped CV, and nine stale or
+  unregenerable artefacts removed from the tree
 
 ## Per-session markdown transcripts (same content)
 
 ### [`claude_session.md`](claude_session.md) — Ben's sessions
 
-- User turns: **17** · Assistant turns: **71**
+- User turns: **33** · Assistant turns: **33**
 - Source session log: `~/.claude/projects/-Users-bvolovelsky-Downloads-lotl-shell-detection-new/54d95d87-de6d-4b85-a4e8-3e2373c8e028.jsonl`
-- ⚠️ **Last exported Aug 9.** Ben's Aug-10 work — the TOPS paper
-  identification, Figure 7.1, the Ch7 43-feature revalidation and the Ch1
-  feature-name pass (commits `b73a994`..`9524f66`) — was AI-assisted and is
-  **not yet in this transcript**. The rebuild script copies Ben's block
-  byte-for-byte and cannot pick it up, so Ben must re-export on his machine
-  before submission; see step 0 below.
+- Re-exported by Ben on Aug 11 (commit `ebb5f38`), so it now covers his Aug-10
+  and Aug-11 work: the TOPS paper identification, Figure 7.1, the Ch7
+  43-feature revalidation, the Ch1 feature-name pass, the Ollama/Llama-3.1-8B
+  Bonus B.3 run and the docx builder. Since `203929b` the rebuild script
+  regenerates Ben's block from this file rather than copying it byte-for-byte,
+  so the combined `.txt` now tracks it automatically.
 
 ### [`claude_session_noam.md`](claude_session_noam.md) — Noam's session 1 (log Session 2)
 
@@ -82,7 +91,7 @@ chronological order with `# Session N` separators:
 
 ### [`claude_session_noam3.md`](claude_session_noam3.md) — Noam's session 3 (log Session 4)
 
-- User turns: **11** · Assistant turns: **11** — **snapshot of a session that
+- User turns: **15** · Assistant turns: **15** — **snapshot of a session that
   is still open**; these counts will grow, so re-export before submission
 - Source session log: `~/.claude/projects/E--lotl-shell-detection/c6d78cd0-b917-4879-9d90-753790734957.jsonl`
 
@@ -94,15 +103,14 @@ repo root, in this order:
 
 ```bash
 # 0. BEN, on his machine: re-export his own session, then commit the result.
-#    Everything before the `# Session 2` header is copied byte-for-byte by the
-#    rebuild, so Ben's block only ever changes when he regenerates it himself.
-#    Ben's Aug-10 commits are not yet covered.
+#    Only Ben can run this — the source .jsonl lives on his machine. Do it if
+#    he has added AI-assisted work since his last export (commit `ebb5f38`,
+#    Aug 11).
 python ai_logs/export_claude_log.py \
   ~/.claude/projects/-Users-bvolovelsky-Downloads-lotl-shell-detection-new/54d95d87-de6d-4b85-a4e8-3e2373c8e028.jsonl \
   ai_logs/claude_session.md
-#    Ben's block inside claude_code_log.txt then needs the same replacement by
-#    hand (or extend BLOCKS in rebuild_claude_code_log.py to cover it), because
-#    the rebuild deliberately never regenerates it.
+#    Nothing else to do by hand: since `203929b` the rebuild in step 4 rebuilds
+#    Ben's block from claude_session.md, so the combined .txt follows it.
 
 # 1. Noam session 1 -> log "Session 2"
 python ai_logs/export_claude_log.py \
@@ -124,15 +132,13 @@ python ai_logs/export_claude_log.py \
 python ai_logs/rebuild_claude_code_log.py
 ```
 
-The rebuild script copies everything before the `# Session 2` header out of
-the existing `claude_code_log.txt` unchanged (Ben's Session 1 / Session 1
-continued) and re-emits the Noam blocks from the `.md` exports, so the
-combined log can never drift from the per-session transcripts. The one thing
-it adds to Ben's block is the missing `# Session 1` header line, which the
-original file predates; the prepend is guarded so repeated rebuilds are
-idempotent, and Ben's transcript text is untouched. After re-running, update
-the turn counts above with the numbers the export script prints for each
-session.
+The rebuild script regenerates **every** block from the per-session `.md`
+exports — Ben's Session 1 from `claude_session.md`, Noam's Sessions 2–4 from
+the three `claude_session_noam*.md` files — and re-emits them under their
+`# Session N` headers, so the combined log can never drift from the
+per-session transcripts and repeated rebuilds are idempotent. No block is
+hand-assembled and no transcript text is altered. After re-running, update the
+turn counts above with the numbers the export script prints for each session.
 
 These logs are provided in full to satisfy the project rubric's requirement
 for complete, unedited AI tool logs.

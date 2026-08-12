@@ -453,8 +453,12 @@ which also refreshes the `per_source` breakdown Ch8.1 needs. The regenerated
 holdout numbers match `summary.json` to 4 dp — two independent code paths
 agreeing, which is a decent correctness check on both.
 
-🔴 **Still stale — Ben's Ch8 artefacts:** `ch8_cross_dataset.json`,
-`ch8_confusion.json`, `ch8_4_cascade.json`, `cascade_results.json`.
+~~🔴 **Still stale — Ben's Ch8 artefacts:** `ch8_cross_dataset.json`,
+`ch8_confusion.json`, `ch8_4_cascade.json`, `cascade_results.json`.~~
+**Resolved 2026-08-12:** the first three were regenerated on the 43-feature set;
+`cascade_results.json` was deleted — a pre-redesign run (`n_train` 6000, dead
+`cnn` key, cascade F1 0.5125) that nothing cites and no command can regenerate,
+fully superseded by `results/ch8_4_cascade.json`.
 
 🔴 **Orphan files under a dead model name.** `results/holdout_cnn_dataset{1,2}.json`
 and `results/transfer_cnn_dataset*_to_dataset*.json` use the old model key `cnn`;

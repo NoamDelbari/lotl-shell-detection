@@ -90,7 +90,8 @@ synthesis for data scarcity, robustness evaluation at industrial FPR operating p
 Our extractor sits between: ShellCore's structural insight, encoded as QuasarNix-style
 behavior-aware engineered features, evaluated with grouped splits and prevalence floors.
 
-*Citation note:* the assigned "Trizna (2022) ACM TOPS" paper could not be located —
-see the sourcing note in [`ch2_literature_review.md`](ch2_literature_review.md). This
-matrix therefore names QuasarNix, the verifiable LotL paper, as the comparator.
-`ch8_3_tops_comparison.md` keeps its legacy filename but is anchored the same way.
+*Citation note (resolved 2026-08-10):* the assigned TOPS paper is Trizna, D.,
+Demetrio, L., Biggio, B., & Roli, F. (2026), *Robust Large-Scale Detection of
+Living-Off-the-Land Reverse Shells via Data Synthesis*, ACM TOPS, DOI 10.1145/3807450
+(arXiv:2402.18329) — i.e. **QuasarNix is the assigned paper**, not a stand-in for it.
+The earlier "could not be located" hedge is withdrawn.

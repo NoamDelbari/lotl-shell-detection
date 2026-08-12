@@ -84,14 +84,14 @@ python tests/test_pipeline.py         # guardrail tests: no-leakage + dataset-ag
 
 | name (`--model`) | paradigm | owner | headline in-dist F1 (D1 / D2) |
 |---|---|---|---|
-| `xgboost_hybrid` | traditional supervised (engineered ∪ char n-grams) | Ben | **0.873 / 0.842** |
+| `xgboost_hybrid` | traditional supervised (engineered ∪ char n-grams) | Ben | **0.876 / 0.848** |
 | `cnn1d` | deep learning (char sequences) | Ben | 0.860 / 0.838 |
-| `xgboost` | traditional supervised (engineered only, interpretable) | Ben | 0.760 / 0.736 |
-| `random_forest` | traditional supervised | Noam | 0.748 / 0.737 |
-| `isolation_forest` | unsupervised anomaly | Noam | 0.183 / 0.051 |
+| `xgboost` | traditional supervised (engineered only, interpretable) | Ben | 0.786 / 0.756 |
+| `random_forest` | traditional supervised | Noam | 0.796 / 0.753 |
+| `isolation_forest` | unsupervised anomaly | Noam | 0.249 / 0.143 |
 
 `xgboost_hybrid` is the headline traditional model: char n-gram TF-IDF (Ch2 /
-ShellCore) unioned with the engineered block lifts F1 from ~0.76 to ~0.87 while
+ShellCore) unioned with the engineered block lifts F1 from ~0.79 to ~0.88 while
 keeping the engineered features available for the Ch4 importance story. The
 Ch8.4 cascade chains Isolation Forest (stage 1) → `xgboost_hybrid` (stage 2) →
 LLM arbitration (stage 3), with the stage-1 threshold auto-calibrated to retain

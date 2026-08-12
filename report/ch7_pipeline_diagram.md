@@ -1,5 +1,14 @@
 **Figure 7.1 — Three-stage cascade detector.** Raw command → Isolation Forest bulk-benign filter (stage 1) → XGBoost-hybrid classifier (stage 2: P(attack) > 0.65 → attack, < 0.35 → benign) → LLM arbitration (Llama 3.1-8B) on the 0.35–0.65 edge band.
 
+![Figure 7.1 — Three-stage cascade detector](figures/ch7_pipeline.png)
+
+> **For the .docx, use `report/figures/ch7_pipeline.png`.** Word cannot render
+> Mermaid. The PNG is produced by `analysis/ch7_1_pipeline_figure.py`, which
+> reads the band out of `CascadeDetector`'s signature rather than hard-coding
+> it, so the figure cannot drift from the implementation. The Mermaid source
+> below is retained because it renders on GitHub and is the more readable
+> diff — the two are the same topology.
+
 ```mermaid
 flowchart TD
     IN(["Raw shell command string"]) --> S1["Stage 1 · Isolation Forest<br/>(unsupervised anomaly score)"]

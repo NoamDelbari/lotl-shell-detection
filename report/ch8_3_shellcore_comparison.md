@@ -1,5 +1,12 @@
 # Chapter 8.3 — Benchmarking Random Forest and Isolation Forest against ShellCore
 
+> **Assembly note (§8.3).** The rubric asks that this section benchmark against
+> the literature *"reviewed in Chapter 6"*. Both papers it compares against are
+> cited in Chapter 6 (ShellCore arXiv:2103.14221 in §6.4–6.5; QuasarNix/TOPS
+> arXiv:2402.18329 in Ben's §6.2), so the substance is aligned — only the
+> cross-reference wording needs to say "Chapter 6" rather than "Chapter 2"
+> in the .docx.
+
 > Noam's half of 8.3 — the **ShellCore** comparator, for the two models he owns.
 > Ben's `ch8_3_tops_comparison.md` covers the Trizna/QuasarNix comparator for
 > XGBoost-hybrid and the CNN; the two are complementary, not overlapping.

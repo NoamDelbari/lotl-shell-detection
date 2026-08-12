@@ -52,6 +52,12 @@ Both scripts are seeded (`SEED = 42`); a rebuild reproduces the shipped files ex
 - The `.cm` files under `scripts/raw/` are attack-command corpora (inert text). Antivirus may quarantine one during a rebuild; re-running the extractor regenerates it.
 - Before quoting any score, read the top of [`docs/BASELINE.md`](docs/BASELINE.md) and [`docs/KNOWN_ISSUES.md`](docs/KNOWN_ISSUES.md) — every number comes with a prevalence floor and known-shortcut context.
 
+**Compute environments.** Ben's results (XGBoost-hybrid, 1D-CNN, Baseline,
+cross-dataset transfer, cascade, Ch7 sensitivity, Ch8 forensics) were produced
+on macOS with an Apple M3 Pro. Noam's results (Random Forest, Isolation Forest,
+Ch3 EDA figures, Ch4 ranking figures, Ch6 sub-sample probe, Ch7 RF/IF sweeps,
+Ch8 RF/IF forensics) were produced on Windows 11, CPU only.
+
 ## Where the project is, and where it's going
 
 **Done:** datasets built and audited (leakage, label-circularity and shortcut probes), preliminary baseline with confound analysis, approved proposal.

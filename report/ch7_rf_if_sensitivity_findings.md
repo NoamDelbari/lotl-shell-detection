@@ -1,4 +1,4 @@
-# Chapter 7 — Hyperparameter Sensitivity: Random Forest & Isolation Forest
+# 7.3 (cont.) — Hyperparameter Sensitivity: Random Forest & Isolation Forest
 
 Companion to `ch7_sensitivity_findings.md` (XGBoost/CNN). This section reports
 sensitivity sweeps for the two remaining models — the Random Forest classifier

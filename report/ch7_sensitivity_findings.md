@@ -1,249 +1,288 @@
-# Chapter 7 — Hyperparameter Sensitivity Findings
+# 7.3 — Hyperparameter Sensitivity: XGBoost & 1D-CNN
 
 This chapter reports one-at-a-time (OAT) sensitivity sweeps for the two
 production candidate models — the gradient-boosted tree ensemble (XGBoost) and
-the character/token CNN — on the binary attack/benign command-line task
+the character-level 1D-CNN — on the binary attack/benign command-line task
 (MITRE ATT&CK T1059.004, 1:3 attack:benign). Each sweep fixes every
-hyperparameter at its default and varies a single one across a small grid,
+hyperparameter at its base value and varies a single one across a small grid,
 recording the resulting **F1** and **false-positive rate (FPR)** on the held-out
-test split (`n_test = 3049`). Every tuple below is `(value, F1, FPR)`. The
-paired figures `ch7_sensitivity_xgboost.png` and `ch7_sensitivity_cnn.png`
-plot these curves.
+test split of each corpus (`n_test = 3,049` for Dataset 1, `1,915` for
+Dataset 2). Eight axes are swept — four per model — giving 13 measured points
+per model per corpus, 52 in all. Figures
+`ch7_sensitivity_xgboost_dataset{1,2}.png` and
+`ch7_sensitivity_cnn1d_dataset{1,2}.png` plot every curve below.
 
-> **Scope caveat.** Both sweeps were run on a **5000-row training subsample**
-> (`n_train = 5000`) to keep the OAT grid affordable. The *rankings* and
-> *qualitative shapes* reported here are the intended takeaway; absolute F1/FPR
-> magnitudes — and especially the settings that flirt with overfitting (deep
-> trees, low dropout, aggressive learning rates) — should be re-confirmed on the
-> full training corpus before being locked in.
+> **Scope.** Every sweep below trains on the **full training split**
+> (`n_train = 12,199` for Dataset 1, `7,661` for Dataset 2) and scores on that
+> corpus's test split; the numbers are read straight from
+> `results/ch7_sensitivity.json`. Two caveats apply. First, the CNN sweeps run
+> at **4 epochs** for tractability against the shipped model's 8
+> (`SWEEP_OVERRIDE` in `analysis/ch7_train.py`), so CNN sweep F1 sits roughly
+> three points below the headline 0.860 and should be read for *shape*, not
+> level. Second, because the sweeps score on the test hold-out, they are a
+> **sensitivity analysis and not a selection procedure** — adopting an
+> arg-max from these tables as the production setting would be tuning on the
+> test set. The shipped configuration is the pre-registered one in
+> `src/models.py`; §6.3 sets the two side by side.
 
 ---
 
-## Pipeline architecture (Figure 7.1)
+## Where these hyperparameters land
 
-The hyperparameters tuned in this chapter feed the 3-stage **cascade detector** (Ch. 8.4): raw commands enter a cheap Isolation-Forest bulk filter, survivors go to the tuned XGBoost-hybrid, and only genuine edge cases reach the LLM.
-
-```mermaid
-flowchart TD
-    IN(["Raw shell command string"]) --> S1["Stage 1 · Isolation Forest<br/>(unsupervised anomaly score)"]
-    S1 --> D1{"score below<br/>calibrated threshold?"}
-    D1 -->|"yes"| B1(["BENIGN — cleared<br/>(bulk benign filter)"])
-    D1 -->|"no (anomalous)"| S2["Stage 2 · XGBoost-hybrid<br/>P(attack)"]
-    S2 --> D2{"P(attack)?"}
-    D2 -->|"0.65 – 1.00"| A1(["ATTACK<br/>(high confidence)"])
-    D2 -->|"0.00 – 0.35"| B2(["BENIGN<br/>(high confidence)"])
-    D2 -->|"0.35 – 0.65<br/>(edge case)"| S3["Stage 3 · LLM arbitration<br/>(Llama 3.1-8B)"]
-    S3 --> D3{"final verdict"}
-    D3 -->|"malicious"| A2(["ATTACK"])
-    D3 -->|"benign"| B3(["BENIGN"])
-
-    classDef attack fill:#f8d7da,stroke:#c0392b,color:#000
-    classDef benign fill:#d4edda,stroke:#27ae60,color:#000
-    classDef stage fill:#e7f0fb,stroke:#2a6fb0,color:#000
-    class A1,A2 attack
-    class B1,B2,B3 benign
-    class S1,S2,S3 stage
-```
-
-**Figure 7.1** — Three-stage cascade detector. Stage 1 (Isolation Forest) clears bulk benign traffic below an anomaly threshold auto-calibrated to retain 99% of attacks; stage 2 (XGBoost-hybrid) settles the high-confidence bands — P(attack) > 0.65 → attack, < 0.35 → benign; only the 0.35–0.65 edge band reaches stage 3 (LLM arbitration, Llama 3.1-8B). Standalone source: [`ch7_pipeline_diagram.md`](ch7_pipeline_diagram.md).
+The two models tuned here are stages of the three-stage **cascade detector**
+of §7.1 (Figure 7.1): raw commands enter a cheap Isolation-Forest bulk filter,
+survivors reach the tuned XGBoost-hybrid, and only the 0.35–0.65 edge band
+reaches the LLM. The class-weight and convergence findings below are therefore
+findings about stage 2's operating point, which §8.4 then evaluates end to end.
 
 ---
 
 ## Headline answers
 
-- **Biggest impact on F1: `learning_rate`.** It is the single most influential
-  knob in the study. On the CNN it moves F1 from **0.7127 → 0.8512** (a swing of
-  **0.1385**) across the swept range; on XGBoost it also produces the largest F1
-  swing of any tree hyperparameter (**0.6848 → 0.7329**, i.e. **0.0481**).
-- **Biggest impact on FPR: `scale_pos_weight` (XGBoost).** It drives FPR from
-  **0.049 at 1.0 → 0.1447 at 5.0** — a **~3×** change — while barely touching F1.
-  It is, by design, a recall/false-alarm dial rather than an accuracy dial.
+Only **two** of the eight swept axes move anything, and they are the same two on
+both models and both datasets.
 
-The rest of the chapter substantiates and interprets these two claims.
+- **Biggest impact on FPR: the class-weight dial** — `scale_pos_weight` on
+  XGBoost, `pos_weight` on the CNN. Going from 1.0 to 6.0 multiplies the false
+  alarm rate by **2.8×** (XGBoost D1, 0.039 → 0.108), **2.3×** (XGBoost D2),
+  **3.6×** (CNN D1, 0.033 → 0.119) and **4.3×** (CNN D2, 0.042 → 0.181) while
+  F1 moves by at most 0.077. It is a recall/false-alarm dial, not an accuracy
+  dial: on XGBoost D1 it buys **+9.2 points of recall** (0.727 → 0.819) for
+  those false alarms, and on CNN D2 **+12.7 points** (0.770 → 0.898).
+- **Biggest impact on F1 among the accuracy knobs: `lr` on the CNN**
+  (0.812 → 0.843 on D1, 0.791 → 0.833 on D2). The class weight moves F1 further
+  still on Dataset 2 (Δ0.077), but only by pushing the CNN past the point where
+  extra recall pays for itself. On XGBoost no axis moves F1 by more than
+  **0.025**, and the capacity axes move it by **0.003–0.010** — the tree model
+  is, for practical purposes, tuning-proof on this task.
+
+**The capacity knobs are inert.** `max_depth`, `n_estimators` and `n_filters`
+together account for F1 swings of 0.003–0.029 across all four model/dataset
+combinations. Whatever governs performance here, it is not ensemble or
+convolutional capacity — it is the representation (Ch. 2) and the label
+boundary (Ch. 8.1).
+
+The rest of the chapter substantiates and interprets these claims.
 
 ---
 
 ## XGBoost — F1 is saturated; false alarms are governed by `scale_pos_weight`
 
-**Defaults:** `max_depth=6`, `n_estimators=200`, `learning_rate=0.1`,
-`scale_pos_weight=3.0`.
+**Base config** (`analysis/ch7_train.py`): `n_estimators=400`, `max_depth=6`,
+`learning_rate=0.1`, `subsample=0.9`, `colsample_bytree=0.9`,
+`min_child_weight=1.0`, `reg_lambda=1.0`, `scale_pos_weight=3.0`; 5-fold
+stratified CV. Bold marks the base value in each grid.
 
-### `max_depth`
-| value | F1 | FPR |
-|------:|:----:|:----:|
-| 3  | 0.7082 | 0.1334 |
-| 6  | 0.7329 | 0.0993 |
-| 9  | 0.7332 | 0.0861 |
-| 12 | 0.7354 | 0.0796 |
+**Table 7.1 — XGBoost one-at-a-time sweeps, both datasets (F1 / FPR, test hold-out).**
 
-### `n_estimators`
-| value | F1 | FPR |
-|------:|:----:|:----:|
-| 50  | 0.7083 | 0.1325 |
-| 100 | 0.7265 | 0.1137 |
-| 200 | 0.7329 | 0.0993 |
-| 400 | 0.7249 | 0.0944 |
+| axis | value | D1 F1 | D1 FPR | D2 F1 | D2 FPR |
+|---|---:|---:|---:|---:|---:|
+| `max_depth` | 3 | 0.7837 | 0.0787 | 0.7457 | 0.1010 |
+| | **6** | **0.7856** | **0.0717** | **0.7557** | **0.0815** |
+| | 9 | 0.7873 | 0.0669 | 0.7558 | 0.0780 |
+| | 12 | 0.7831 | 0.0691 | 0.7519 | 0.0745 |
+| `n_estimators` | 100 | 0.7823 | 0.0752 | 0.7597 | 0.0905 |
+| | **400** | **0.7856** | **0.0717** | **0.7557** | **0.0815** |
+| | 800 | 0.7823 | 0.0752 | 0.7503 | 0.0794 |
+| `learning_rate` | 0.03 | 0.7823 | 0.0752 | 0.7633 | 0.0884 |
+| | **0.1** | **0.7856** | **0.0717** | **0.7557** | **0.0815** |
+| | 0.3 | 0.7747 | 0.0770 | 0.7492 | 0.0815 |
+| `scale_pos_weight` | 1.0 | 0.7892 | 0.0385 | 0.7593 | 0.0487 |
+| | **3.0** | **0.7856** | **0.0717** | **0.7557** | **0.0815** |
+| | 6.0 | 0.7647 | 0.1076 | 0.7522 | 0.1135 |
 
-### `learning_rate`
-| value | F1 | FPR |
-|------:|:----:|:----:|
-| 0.01 | 0.6848 | 0.1412 |
-| 0.05 | 0.7190 | 0.1163 |
-| 0.10 | 0.7329 | 0.0993 |
-| 0.30 | 0.7184 | 0.0927 |
+**Table 7.2 — F1 swing per axis (max − min).** The ordering is the finding.
 
-### `scale_pos_weight`
-| value | F1 | FPR |
-|------:|:----:|:----:|
-| 1.0 | 0.7333 | 0.0490 |
-| 2.0 | 0.7313 | 0.0787 |
-| 3.0 | 0.7329 | 0.0993 |
-| 5.0 | 0.7149 | 0.1447 |
+| axis | D1 swing | D2 swing |
+|---|---:|---:|
+| `scale_pos_weight` | **0.0245** | 0.0071 |
+| `learning_rate` | 0.0109 | **0.0141** |
+| `max_depth` | 0.0042 | 0.0101 |
+| `n_estimators` | 0.0033 | 0.0094 |
 
 ### Interpretation
 
-**F1 is effectively saturated.** Setting aside the deliberately crippled
-`learning_rate=0.01` point (0.6848), every other XGBoost configuration lands in a
-narrow **~0.71–0.735** band. The best-observed setting, `max_depth=12`
-(F1 **0.7354**, FPR **0.0796**), beats the default by only **~0.003** F1. This is
-the signature of a model whose *ranking quality* is already dominated by the
-feature representation rather than by ensemble capacity — more trees
-(`n_estimators`), deeper trees (`max_depth`), or a hotter step size buys almost
-nothing once you clear the obvious underfitting cliff. In practical terms,
-XGBoost is **robust / insensitive** on F1: you cannot easily break it, and you
-cannot easily improve it either.
+**F1 is saturated.** Every one of the twenty-six XGBoost measurements above
+lands between **0.765 and 0.789** on D1 and **0.746 and 0.763** on D2. The
+widest swing on either dataset is 0.0245 — smaller than the gap between the
+plain XGBoost and the hybrid (0.786 → 0.876), and smaller than the gap between
+either and the untuned char-n-gram baseline (0.898). This is the signature of a
+model whose ranking quality is set by the **feature representation**, not by
+ensemble capacity: deeper trees, more trees and a hotter step size all buy
+essentially nothing. XGBoost is robust to the point of being tuning-proof —
+you cannot easily break it, and you cannot easily improve it either.
 
-Two curves do show a coherent underfitting→plateau shape and explain why
-`learning_rate` is the largest F1 mover here: `learning_rate` (0.6848 → 0.7329,
-swing **0.0481**) and, to a lesser degree, `n_estimators` (0.7083 → 0.7329,
-swing **0.0246**). Both bottom out when the ensemble is starved of gradient
-steps and flatten — even regress slightly (`n_estimators=400` → 0.7249;
-`learning_rate=0.30` → 0.7184) — once capacity is adequate, the classic
-mild-overfitting rollover.
+The capacity axes make the point most sharply. `max_depth` spans 0.0042 F1 on
+D1, and its arg-max (9) beats the shipped depth 6 by 0.0017 — an order of
+magnitude inside run-to-run variance. `n_estimators` is flatter still (0.0033),
+and is *symmetric*: 100 and 800 trees score identically (0.7823), so the 800-tree
+model pays double the fit time for nothing. Neither axis shows the
+underfitting cliff a capacity-limited model would.
 
-**`scale_pos_weight` is the false-alarm knob, not an F1 knob.** Its F1 column is
-the flattest in the entire XGBoost study — a total swing of just **0.0184**
-(0.7149 → 0.7333) — yet it owns the *largest FPR swing of any parameter*:
-**0.049 → 0.1447**, a **~3×** inflation in false alarms. This is exactly the
-parameter's design purpose. In a 1:3 attack:benign setting the positive (attack)
-class is the minority; `scale_pos_weight` up-weights positives to trade
-precision for recall. Cranking it up manufactures more attack predictions —
-more true positives *and* proportionally many more false positives — which is
-why FPR climbs monotonically while F1, a precision/recall blend, stays pinned.
-The corollary matters operationally: the model's operating point on the
-false-alarm axis is chosen almost entirely by `scale_pos_weight`, and the
-default of **3.0 triples the FPR (0.0490 → 0.0993) relative to 1.0 for no F1
-benefit** (0.7333 → 0.7329).
+**The class-weight dial is the false-alarm knob, not an F1 knob.** On D1
+`scale_pos_weight` owns both the largest F1 swing (0.0245) *and*, far more
+importantly, the largest FPR swing of any parameter in the study: **0.0385 →
+0.1076**, a 2.8× inflation. But the F1 column understates what is happening,
+because F1 blends the two error types the dial is trading. Read recall instead:
+1.0 → 6.0 moves recall **0.727 → 0.819** on D1 and **0.702 → 0.808** on D2. The
+parameter is doing exactly its job — up-weighting the minority attack class to
+buy recall with false alarms — and F1 stays pinned only because it charges for
+both sides of that trade.
 
-### Recommended settings — XGBoost
+This is the operationally load-bearing result of the chapter: **the model's
+position on the false-alarm axis is chosen almost entirely by one number**, and
+that number should be set by how much triage load the SOC can absorb, not by
+maximising F1. At `scale_pos_weight=1.0` the detector runs at 3.9% FPR and
+misses 27% of attacks; at 6.0 it runs at 10.8% and misses 18%. The shipped 3.0
+sits deliberately between them.
 
-| hyperparameter | recommended | rationale |
+### Chosen setting — XGBoost
+
+The shipped configuration is unchanged from the base config, and the sweep is
+the justification for *not* moving it:
+
+| hyperparameter | shipped | why the sweep does not move it |
 |---|---|---|
-| `learning_rate` | **0.1** | Peak F1 (0.7329); both 0.05 and 0.30 are strictly worse. |
-| `n_estimators` | **200** | Peak F1; 400 slightly overfits (0.7249). |
-| `max_depth` | **12** | The highest-F1 point in the sweep (0.7354 / FPR 0.0796, vs 0.7329 at depth 6). Full-data re-validation **confirmed it holds**: the 43-feature XGBoost-hybrid reaches **F1 0.8761 on Dataset 1** at depth 12, so 12 is the production setting — the earlier "adopt only after confirming on full data" caveat is now resolved. |
-| `scale_pos_weight` | **1.0** | Best F1 in the sweep (0.7333) **and** lowest FPR (0.0490). Because F1 is invariant to this knob, minimize false alarms — the default 3.0 buys ~3× the FPR for nothing. Raise toward 2.0 only if downstream misses (recall) prove costlier than triage load. |
+| `max_depth` | **6** | 9 leads by 0.0017 F1 on D1 and 0.0001 on D2 — inside noise, and chasing it would be test-set selection. |
+| `n_estimators` | **400** | Sweep arg-max on D1 and the symmetric centre of the curve; 800 costs 2× for 0.0033 less. |
+| `learning_rate` | **0.1** | Arg-max on D1. D2 mildly prefers 0.03 (+0.0076), not enough to justify a per-dataset split of the config. |
+| `scale_pos_weight` | **3.0** | The recall/FPR trade, chosen on operating-point grounds rather than F1: it buys ~6 points of recall over 1.0 for ~3 points of FPR. Lower it to 1.0 if triage capacity is the binding constraint — that is the one genuinely defensible alternative in this table. |
 
-The through-line: for XGBoost, **stop trying to tune F1** (it is saturated) and
-**tune `scale_pos_weight` to hit the FPR your SOC can absorb.**
+The through-line: for XGBoost, **stop trying to tune F1** — it is saturated —
+and **set `scale_pos_weight` to the FPR your SOC can absorb.**
 
 ---
 
 ## CNN — `learning_rate` dominates everything else
 
-**Defaults:** `embed_dim=32`, `num_filters=128`, `dropout=0.3`, `lr=0.001`,
-`epochs=8`.
+**Base config** (`analysis/ch7_train.py`): `max_len=192`, `embed_dim=32`,
+`n_filters=128`, `kernel_sizes=(3,5,7)`, `dropout=0.3`, `lr=1e-3`,
+`pos_weight=3.0`, `batch_size=256`, **`epochs=4`** (`SWEEP_OVERRIDE`, against the
+shipped 8); 3-fold stratified CV. All CNN F1 values below therefore sit roughly
+three points under the shipped 0.860 / 0.838 and should be read for *shape*.
 
-### `learning_rate`
-| value | F1 | FPR |
-|------:|:----:|:----:|
-| 0.0001 | 0.7127 | 0.1194 |
-| 0.0005 | 0.7942 | 0.0665 |
-| 0.0010 | 0.8298 | 0.0547 |
-| 0.0030 | 0.8512 | 0.0533 |
+**Table 7.3 — 1D-CNN one-at-a-time sweeps, both datasets (F1 / FPR, test hold-out).**
 
-### `dropout`
-| value | F1 | FPR |
-|------:|:----:|:----:|
-| 0.1 | 0.8362 | 0.0490 |
-| 0.3 | 0.8298 | 0.0547 |
-| 0.5 | 0.8115 | 0.0638 |
+| axis | value | D1 F1 | D1 FPR | D2 F1 | D2 FPR |
+|---|---:|---:|---:|---:|---:|
+| `n_filters` | 64 | 0.8197 | 0.0818 | 0.7976 | 0.0905 |
+| | **128** | **0.8293** | **0.0761** | **0.8086** | **0.0912** |
+| | 256 | 0.8339 | 0.0813 | 0.8265 | 0.0738 |
+| `dropout` | 0.1 | 0.8429 | 0.0678 | 0.8156 | 0.0891 |
+| | **0.3** | **0.8293** | **0.0761** | **0.8086** | **0.0912** |
+| | 0.5 | 0.8217 | 0.0756 | 0.7873 | 0.1052 |
+| `lr` | 5e-4 | 0.8124 | 0.0778 | 0.7914 | 0.0780 |
+| | **1e-3** | **0.8293** | **0.0761** | **0.8086** | **0.0912** |
+| | 2e-3 | 0.8432 | 0.0765 | 0.8333 | 0.0662 |
+| `pos_weight` | 1.0 | 0.8302 | 0.0328 | 0.8128 | 0.0418 |
+| | **3.0** | **0.8293** | **0.0761** | **0.8086** | **0.0912** |
+| | 6.0 | 0.8060 | 0.1189 | 0.7357 | 0.1811 |
 
-### `num_filters`
-| value | F1 | FPR |
-|------:|:----:|:----:|
-| 64  | 0.8165 | 0.0630 |
-| 128 | 0.8298 | 0.0547 |
-| 256 | 0.8379 | 0.0695 |
+**Table 7.4 — F1 swing per axis (max − min).**
 
-### `embed_dim`
-| value | F1 | FPR |
-|------:|:----:|:----:|
-| 16 | 0.8046 | 0.0787 |
-| 32 | 0.8298 | 0.0547 |
-| 64 | 0.8281 | 0.0796 |
+| axis | D1 swing | D2 swing |
+|---|---:|---:|
+| `lr` | **0.0308** | 0.0419 |
+| `pos_weight` | 0.0242 | **0.0771** |
+| `dropout` | 0.0212 | 0.0283 |
+| `n_filters` | 0.0143 | 0.0288 |
 
 ### Interpretation
 
-**`learning_rate` is the dominant driver of CNN quality — by a wide margin.**
-It moves F1 from **0.7127** at `1e-4` to **0.8512** at `3e-3`, a swing of
-**0.1385**. Every other CNN hyperparameter produces an F1 swing of roughly
-**0.02–0.025** (dropout 0.0247, num_filters 0.0214, embed_dim 0.0252) — an order
-of magnitude smaller. The mechanism is optimisation, not capacity: at `1e-4` the
-network is simply **undertrained** within the fixed 8-epoch budget, so it sits in
-a high-loss regime that also produces its worst FPR (**0.1194**). Increasing the
-step size lets the same architecture actually converge, and F1 and FPR improve
-*together* (FPR **0.1194 → 0.0533**, roughly halved) — the hallmark of a model
-that was underfit rather than mis-regularised. Because the best point sits at the
-**top of the swept range**, there may be marginal headroom just above `3e-3`, but
-that edge should be probed cautiously against training divergence rather than
-assumed.
+**`lr` is the CNN's dominant F1 axis, and the reason is the epoch budget.** It
+spans 0.0308 F1 on D1 and 0.0419 on D2 — wider than any other CNN axis on D1
+and the widest *pure-accuracy* axis on both. The curve is monotone increasing
+(5e-4 → 1e-3 → 2e-3) with FPR essentially flat on D1 (0.078 → 0.076 → 0.077)
+and, on D2, ending *below* where it started (0.078 → 0.091 → 0.066 — the top of
+the range is the lowest false-alarm point on the axis). That is the signature of
+**under-convergence, not under-regularisation**: inside a 4-epoch budget a
+larger step simply gets further down the same loss surface, so accuracy rises
+without the precision/recall trade a genuine capacity change would force. It is
+also the reason the sweep's arg-max is not adopted — at the shipped 8 epochs the
+default 1e-3 has the schedule to converge on its own, and the shipped model's
+0.860 (versus 0.843 for the best 4-epoch point here) confirms it.
 
-The three architectural/regularisation knobs behave like classic
-second-order refinements around a healthy operating point:
+The same reading explains `dropout`, whose sweep arg-max (0.1, +0.0136 on D1)
+is the one place a sweep clearly prefers a non-shipped value. Less
+regularisation looking better in a truncated schedule is what early-training
+over-fit looks like, and §8.2 shows this model's real failure mode is
+corpus-style memorisation — precisely what weakening dropout would amplify. It
+is recorded as an open question rather than tuned away.
 
-- **`dropout`** trades capacity for regularisation monotonically: lighter
-  dropout (0.1) gives the best F1 (0.8362) *and* the lowest CNN FPR in the study
-  (0.0490); heavier dropout (0.5) underfits (0.8115). On a 5000-row subsample the
-  0.1 optimum is partly a small-data artefact — less regularisation looks better
-  when there is less to overfit against.
-- **`num_filters`** shows mild capacity gains (0.8165 → 0.8379) but its FPR is
-  non-monotone: 256 filters win F1 yet raise FPR to 0.0695 versus 0.0547 at 128,
-  so the extra capacity partly buys itself back in false alarms.
-- **`embed_dim`** peaks at **32**: 16 underfits (0.8046) and 64 gives no F1 gain
-  (0.8281) while worsening FPR (0.0547 → 0.0796) — a clean saturation point.
+`n_filters` is the flattest axis on D1 (0.0143) and shows a mild, real capacity
+gain on D2 (0.0288, monotone to 256, and at 256 the D2 FPR *falls* to 0.0738 —
+more capacity buying accuracy without buying false alarms). It
+is the only axis where the sweep hints that the shipped model may be
+under-parameterised, but 256 filters double the convolutional parameter count
+for under half a point of D1 F1.
 
-### Recommended settings — CNN
+**`pos_weight` is again the false-alarm dial, and on the CNN it is more violent
+than on the trees.** D1 FPR runs **0.0328 → 0.1189** (3.6×) and D2 **0.0418 →
+0.1811** (4.3×) — the largest FPR excursion anywhere in this chapter. On D2 it
+is also the largest *F1* mover (0.0771), because at `pos_weight=6.0` the model
+tips past the point where extra recall pays for itself: recall reaches 0.898
+but F1 falls to 0.7357 as nearly one benign command in five is flagged. Reading recall
+across the dial: D1 **0.780 → 0.870 → 0.916**, D2 **0.770 → 0.864 → 0.898**.
+The shipped 3.0 sits at the knee of both curves.
 
-| hyperparameter | recommended | rationale |
+### Chosen setting — CNN
+
+| hyperparameter | shipped | why the sweep does not move it |
 |---|---|---|
-| `learning_rate` | **0.003** | Best F1 (0.8512) and lowest FPR (0.0533); the single highest-leverage choice. Consider a brief probe just above 3e-3, guarding against divergence. |
-| `dropout` | **0.3** | 0.1 was best on the subsample (F1 0.8362) but confirmed as a small-data artefact: the full-data CNN run achieves F1 0.8603 with dropout=0.3, confirming 0.3 as the production setting. |
-| `num_filters` | **128** | Best F1/FPR balance (0.8298 / 0.0547). Move to 256 only if the ~0.008 F1 gain outweighs the higher FPR (0.0695). |
-| `embed_dim` | **32** | Saturation point: best FPR (0.0547) and near-best F1 (0.8298); 64 adds cost and false alarms without F1 gain. |
+| `lr` | **1e-3** | 2e-3 leads at 4 epochs, but the gap is a convergence artefact of the shortened sweep schedule; the shipped 8-epoch run reaches 0.860 at 1e-3. |
+| `dropout` | **0.3** | 0.1 leads by 0.0136 (D1) / 0.0070 (D2). Not adopted: weaker regularisation is the wrong direction for a model whose documented weakness is corpus-style memorisation (§8.2). Flagged, not tuned. |
+| `n_filters` | **128** | 256 gains 0.0046 (D1) / 0.0179 (D2) for 2× the parameters. The D2 gain is the one result in this table worth revisiting with more compute. |
+| `pos_weight` | **3.0** | The knee of the recall/FPR curve: +9 points of recall over 1.0 on D1 for +4.3 points of FPR, where 6.0 costs a further 4.3 points of FPR for +4.6 recall and *loses* F1 on both corpora. |
+| `epochs` | **8** (sweep: 4) | Not swept; the 4-epoch override exists only to make a 13-point grid on two corpora tractable on CPU. |
 
-Best observed CNN configuration in the sweep: `learning_rate=0.003`
-(**F1 0.8512, FPR 0.0533**), comfortably ahead of the best XGBoost point
-(F1 0.7354).
+Best observed CNN point in the sweep, `lr=2e-3` (D1 F1 0.8432, D2 0.8333),
+still trails the shipped 8-epoch model (0.8603 / 0.8384) — the sweep's ceiling
+is set by its epoch budget, not by its hyperparameters.
 
 ---
 
 ## Cross-model synthesis
 
+**Table 7.5 — The three questions the sensitivity analysis was run to answer.**
+
 | question | answer | evidence |
 |---|---|---|
-| Which hyperparameter most affects **F1**? | **`learning_rate`** | CNN 0.7127→0.8512 (Δ0.1385); largest F1 swing on XGBoost too (Δ0.0481). |
-| Which hyperparameter most affects **FPR**? | **`scale_pos_weight`** (XGBoost) | 0.049→0.1447, ~3×, while F1 barely moves (Δ0.0184). |
-| Which model is more sensitive overall? | **CNN** | Its outcome hinges on getting `learning_rate` right; XGBoost F1 is saturated (~0.71–0.735) and largely tuning-proof. |
+| Which hyperparameter most affects **F1**? | **The class-weight dial**, then the CNN's `lr` | Largest single swing in the study is CNN `pos_weight` on D2 (Δ0.0771); `scale_pos_weight` leads on XGBoost D1 (Δ0.0245); CNN `lr` leads on D1 (Δ0.0308). No *capacity* axis exceeds Δ0.0288 anywhere. |
+| Which hyperparameter most affects **FPR**? | **The class-weight dial**, unambiguously | 1.0 → 6.0 multiplies FPR 2.8× (XGB D1), 2.3× (XGB D2), 3.6× (CNN D1), 4.3× (CNN D2) — every other axis moves FPR by under 3 points absolute. |
+| Which model is more sensitive overall? | **The CNN** | Its four axes span 0.0143–0.0771 F1 against XGBoost's 0.0033–0.0245; XGBoost never leaves a 0.746–0.789 band across all 26 measurements. |
 
-Two design lessons follow. First, **the levers are decoupled by role**: F1 is an
-*optimisation/convergence* story (get `learning_rate`, and for XGBoost the
-`n_estimators`/`max_depth` capacity, out of the underfitting regime), whereas the
-false-alarm rate is a *decision-threshold* story best controlled with a
-purpose-built dial like `scale_pos_weight`. Second, **XGBoost's insensitivity is
-itself a deployment asset**: a model that holds ~0.73 F1 across almost any
-reasonable setting is low-risk to operate and re-train, even if its ceiling
-trails the CNN. Full-data revalidation confirms both findings: XGBoost `max_depth=12` generalises
-(hybrid F1 0.8761 on Dataset 1, up from 0.853 at depth 6), and the CNN holds F1 0.8603
-with the conservative `dropout=0.3` — the aggressive `dropout=0.1` / `learning_rate=3e-3`
-combination is not needed and not applied.
+Three lessons follow.
+
+**The levers are decoupled by role.** Six of the eight swept axes are capacity
+or regularisation knobs, and none of them moves F1 by more than 0.029. The two
+that matter are a *convergence* knob (the CNN's `lr`, and only because the sweep
+schedule is truncated to 4 epochs) and an *operating-point* knob (the class
+weight, on both models). Nothing in this chapter suggests either detector is
+capacity-limited on this task — which is consistent with §8.1's finding that the
+residual errors are label-contamination cases with no content signal to learn,
+and with §8.2's finding that the untuned char-n-gram baseline outscores every
+tuned model here.
+
+**The class weight is the only decision a deployment actually has to make.** It
+is simultaneously the biggest FPR lever (up to 4.3×) and, on three of the four
+model/dataset pairs, close to the biggest F1 lever — and it is the one axis
+whose "best" value is not a modelling question at all. At weight 1.0 the
+detectors run at 3–5% FPR and miss 22–30% of attacks; at 6.0 they run at 11–18%
+FPR and miss 8–19%. Which of those a SOC wants depends on analyst capacity, not
+on a validation curve. The shipped 3.0 — the corpus's own `neg/pos` ratio — is
+the neutral cost-sensitive correction, and it sits at the knee of every recall
+curve measured.
+
+**XGBoost's insensitivity is a deployment asset in its own right.** A detector
+that holds F1 within 0.04 across every reasonable setting of four
+hyperparameters is cheap to retrain and nearly impossible to misconfigure, even
+though its ceiling trails the CNN by seven points in-domain. The CNN buys its
+higher ceiling — and its better cross-corpus transfer (§8.2) — at the cost of
+needing its schedule and its class weight to be right.
+
+Finally, the honest caveat: because these sweeps score on the test hold-out,
+none of the arg-maxima above is adopted. The shipped configuration is the
+pre-registered one in `src/models.py`, and the value of this chapter is the
+demonstration that **almost nothing in it would have changed if we had tuned** —
+the twenty-six XGBoost configurations span 0.04 F1, and the best CNN sweep point
+still loses to the shipped model.

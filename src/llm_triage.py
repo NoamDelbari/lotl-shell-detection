@@ -121,3 +121,30 @@ def huggingface_arbitrator(model_id: str = "meta-llama/Llama-3.1-8B-Instruct"):
         return {"label": label, "reasoning": text, "latency_s": time.time() - t0}
 
     return _arb
+
+
+def ollama_arbitrator(model: str = "llama3.1:8b",
+                      base_url: str = "http://localhost:11434"):
+    import urllib.request, json as _json
+    def _arb(command: str, context: dict) -> dict:
+        import time
+        t0 = time.time()
+        prompt = TRIAGE_PROMPT.format(command=command,
+                                      signals=format_signals(context))
+        payload = _json.dumps({
+            "model": model,
+            "messages": [{"role": "user", "content": prompt}],
+            "stream": False,
+            "options": {"temperature": 0}
+        }).encode()
+        req = urllib.request.Request(
+            f"{base_url}/api/chat",
+            data=payload,
+            headers={"Content-Type": "application/json"}
+        )
+        resp = urllib.request.urlopen(req, timeout=120)
+        text = _json.loads(resp.read())["message"]["content"]
+        verdict = text.strip().upper().rsplit("VERDICT:", 1)[-1]
+        label = 1 if "MALICIOUS" in verdict else 0
+        return {"label": label, "reasoning": text, "latency_s": time.time() - t0}
+    return _arb

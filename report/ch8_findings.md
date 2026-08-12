@@ -61,16 +61,20 @@ mkdir -p /tmp/project/{src,bin,doc}               bash6k   p=0.94       # brace-
 
 ## 8.2 Cross-dataset transfer
 
-Trained on one corpus and tested on the other, every model's F1 falls off a cliff. The table gives in-domain F1 (train and test on the same corpus) against the two cross-domain directions; all four models are from the same full-data run (`main.py all`), so the in-domain columns match the §8.1 hold-out F1. See `ch8_transfer_heatmap.png`.
+Trained on one corpus and tested on the other, every model's F1 falls off a cliff. The table gives in-domain F1 (train and test on the same corpus) against the two cross-domain directions; the five registry models are from the same full-data run (`main.py all`), so the in-domain columns match the §8.1 hold-out F1. See `ch8_transfer_heatmap.png`.
 
 | Model | In-domain D1→D1 | In-domain D2→D2 | Cross D1→D2 | Cross D2→D1 |
 |---|---:|---:|---:|---:|
-| `xgboost_hybrid` | 0.871 | 0.846 | 0.534 | 0.184 |
-| `cnn` | 0.853 | 0.841 | 0.529 | 0.331 |
-| `baseline` (TF-IDF+LR) | 0.881 | 0.863 | 0.572 | 0.336 |
-| `random_forest` | 0.761 | 0.696 | 0.509 | 0.175 |
+| `xgboost_hybrid` | 0.876 | 0.848 | 0.532 | 0.276 |
+| `cnn1d` | 0.860 | 0.838 | **0.541** | **0.359** |
+| `random_forest` | 0.796 | 0.753 | 0.515 | 0.143 |
+| `xgboost` | 0.786 | 0.756 | 0.495 | 0.235 |
+| `isolation_forest` | 0.249 | 0.143 | 0.148 | 0.241 |
+| *`baseline` (TF-IDF+LR)* | *0.898* | *0.882* | *0.584* | *0.274* |
 
-Every model at least halves its F1 under transfer. **The single largest degradation is `xgboost_hybrid` going D2→D1: in-domain 0.871 collapses to 0.184 — a fall of ~0.69 F1**; tellingly, its deeper `max_depth=12` trees (which lifted it to the best in-domain hybrid) make it the *worst* transferrer, because more capacity fits the curated register's style harder. Note the consistent **asymmetry**: for every model D2→D1 (operational → curated) is worse than D1→D2 (curated → operational), because a model raised on the messy operational register has never seen the tight, canonical GTFOBins/HackTricks surface it is now asked to score, whereas a model raised on the clean curated register at least recognizes some structure in the operational data. The strongest in-domain models (baseline, hybrid) degrade the *most* in absolute terms — a warning that in-domain leaderboard position is anti-correlated with robustness here.
+⚠️ **Basis note.** The five registry rows are scored on the **target corpus's test split** (n = 1,915 for D2, 3,049 for D1). The baseline row is italicised because `docs/baseline_metrics.json` scores transfer on **all rows of the target** (n = 9,576 / 15,248) — a different population, so its two cross cells are indicative rather than directly commensurable.
+
+Every supervised model at least halves its F1 under transfer. **The single largest degradation is `random_forest` going D2→D1: in-domain 0.753 collapses to 0.143 — a fall of 0.61 F1**, with the hybrid close behind (0.848 → 0.276). Note the **asymmetry**: for every *supervised* model D2→D1 (operational → curated) is worse than D1→D2 (curated → operational), because a model raised on the messy operational register has never seen the tight, canonical GTFOBins/HackTricks surface it is now asked to score, whereas a model raised on the clean curated register at least recognizes some structure in the operational data. The Isolation Forest is the lone inversion (0.241 vs 0.148), and only because both figures sit far below the 0.400 do-nothing floor — it is not detecting in either direction. The strongest in-domain models degrade the *most* in absolute terms — a warning that in-domain leaderboard position is anti-correlated with robustness here. The exception proves the rule: `cnn1d`, which trails the hybrid in-domain, is the best transferrer in **both** directions (0.541 and 0.359), the representation effect Chapter 2 predicted.
 
 Why does this happen? The **source-separability probe** answers it directly. A plain char-n-gram classifier asked only to name which of the eleven corpora a line came from hits **0.821 accuracy against a 0.298 majority-class baseline** — 2.8× chance. Each corpus carries a strong stylistic fingerprint, and because the maliciousness label *is* the corpus tag (§8.1), the label is confounded with register. In-domain, a model can score well by learning "which corpus wrote this" — a curated escape corpus and an operational shell history simply *read* differently (canonical flag ordering, quoting and path conventions, `example.net`/`{{placeholder}}`/`T####` tells on the D1 side; hard-coded IPs, random dropper names like `./qJWIJu99`, and captured `[user@host]$` prompt noise on the D2 side) — instead of "is this malicious." Those surface tells are corpus-specific, so under distribution shift they evaporate and the classifier is left guessing; the collapse manifests as a spike in false positives on the unseen benign register (D2's messy real-user commands look "attack-shaped" to a D1-trained model, and vice versa).
 

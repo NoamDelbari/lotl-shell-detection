@@ -24,12 +24,16 @@ trained five detectors plus a character n-gram baseline.
 
 | model | D1 F1 | D2 F1 | D1 FPR | D2→D1 transfer F1 |
 |---|---:|---:|---:|---:|
-| char n-gram baseline (TF-IDF + LR) | **0.8975** | **0.8824** | 0.0385 | 0.2740 |
+| char n-gram baseline (TF-IDF + LR) | **0.8975** | **0.8824** | 0.0385 | 0.2740* |
 | XGBoost-hybrid | 0.8761 | 0.8482 | 0.0415 | 0.2756 |
 | 1D-CNN | 0.8603 | 0.8384 | 0.0555 | 0.3587 |
 | Random Forest | 0.7963 | 0.7531 | 0.0337 | 0.1432 |
 | XGBoost | 0.7856 | 0.7557 | 0.0717 | 0.2349 |
 | Isolation Forest | 0.2492 | 0.1431 | 0.0079 | 0.2407 |
+
+\* The baseline's transfer cell is measured on all rows of the target corpus
+rather than its test split, so it is indicative rather than directly comparable
+with the five model rows above (§8.2).
 
 **Findings.** In-domain detection works: the best engineered model reaches F1
 0.876 at a 4.2% false-alarm rate. Three results matter more than that headline,

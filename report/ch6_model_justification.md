@@ -1,6 +1,6 @@
 # Chapter 6 — Model Selection Justification (XGBoost & 1D-CNN)
 
-This project pairs two deliberately different learners on the same T1059.004 task: a gradient-boosted tree ensemble over **engineered behavioral features**, and a **character-level 1D-CNN** over the raw command string. They are chosen to be complementary — one interpretable and feature-driven, one representation-learning and syntax-driven — so that agreement between them is meaningful and their disagreements define the edge cases routed to LLM arbitration (Ch. 8.4). In-domain results back the pairing: XGBoost-hybrid reaches **F1 0.871 / ROC-AUC 0.978** on Dataset 1 and **0.846 / 0.965** on Dataset 2, while the CNN reaches **0.853 / 0.976** and **0.841 / 0.960** (`results/summary.json`).
+This project pairs two deliberately different learners on the same T1059.004 task: a gradient-boosted tree ensemble over **engineered behavioral features**, and a **character-level 1D-CNN** over the raw command string. They are chosen to be complementary — one interpretable and feature-driven, one representation-learning and syntax-driven — so that agreement between them is meaningful and their disagreements define the edge cases routed to LLM arbitration (Ch. 8.4). In-domain results back the pairing: XGBoost-hybrid reaches **F1 0.876 / ROC-AUC 0.979** on Dataset 1 and **0.848 / 0.968** on Dataset 2, while the CNN reaches **0.860 / 0.975** and **0.838 / 0.964** (`results/summary.json`).
 
 ## 6.1 XGBoost on engineered features
 
@@ -24,29 +24,50 @@ The CNN operates on the raw command as a sequence of character indices, and char
 
 ## 6.3 Explicit hyperparameter choices and rationale
 
-**XGBoost** (`src/models.py`, `build_xgboost*`):
+**A note on how these values were chosen.** The Chapter 7 sweeps vary one axis
+at a time and score on the **test hold-out** (`analysis/ch7_train.py`), so the
+sweep is a *sensitivity* readout, not a selection procedure — adopting its
+arg-max would be choosing hyperparameters on the test set. The values below are
+therefore the pre-registered defaults the shipped results were produced with,
+and the sweep column reports what the sensitivity analysis found, including the
+two places where it disagrees with the shipped value.
 
-| Hyperparameter | Value | Why |
-|---|---|---|
-| `scale_pos_weight` | **3.0** | The data is 1:3 attack:benign, so there are 3× more negatives; setting the positive-class gradient weight to `neg/pos = 3` rebalances the loss so the minority attack class is learned instead of being swamped. Ch. 7 shows this is the dominant **FPR** dial (FPR 0.049 → 0.145 from 1.0 → 5.0) with F1 flat — i.e. it sets the operating point, and 3.0 is the recall-favoring default a detector wants. |
-| `max_depth` | **12** | The best-F1 point in the Ch. 7 sweep (0.7354 at 12 vs 0.7329 at 6), adopted after full-data re-validation: the deeper trees lift the full XGBoost-hybrid from F1 0.853 (depth 6) → **0.871** on Dataset 1. The trade-off is transfer robustness (§8.2) — the extra capacity fits corpus style harder, so depth-12 also transfers worst. |
-| `n_estimators` | **200** | Peak F1 in the sweep; 400 mildly overfits (0.733 → 0.725). |
-| `learning_rate` | **0.1** | Peak F1 (0.733); 0.01 underfits (0.685), 0.3 rolls over (0.718). |
-| `tree_method` | **`hist`** | Histogram binning for fast, memory-light training. |
-| `objective` / `eval_metric` | `binary:logistic` / `logloss` | Calibrated probabilistic output needed for the TPR@fixed-FPR metrics and for cascade thresholding. |
-| `random_state` | **42** | Reproducibility. |
+**XGBoost** (`src/models.py`, `build_xgboost` / `build_xgboost_hybrid`):
 
-**1D-CNN** (`src/models.py`, `CNNClassifier`):
+| Hyperparameter | Shipped | What the Ch. 7 sweep shows (`xgboost`, D1) | Why this value |
+|---|---|---|---|
+| `scale_pos_weight` | **3.0** | 1.0 → F1 0.789, recall 0.727, FPR 0.039; 3.0 → 0.786 / 0.786 / 0.072; 6.0 → 0.765 / 0.819 / 0.108 | The 1:3 attack:benign ratio makes `neg/pos = 3` the natural cost-sensitive correction. The sweep confirms this is the dominant **operating-point** dial: it buys +6 points of recall over 1.0 for +3.3 points of FPR, at essentially unchanged F1. A detector wants that trade, which is why F1 is not the criterion here. |
+| `max_depth` | **6** (`xgboost`) / **7** (hybrid) | 3 → 0.784; 6 → 0.786; 9 → **0.787**; 12 → 0.783 | Flat to within 0.4 F1 points across the whole range — depth is not a meaningful lever on this task. 9 edges 6 by 0.0017, far inside run-to-run noise, so the default stands. The hybrid uses 7 to give the added char-n-gram block one extra split level. |
+| `n_estimators` | **400** (`xgboost`) / **500** (hybrid) | 100 → 0.782; 400 → **0.786**; 800 → 0.782 | Peak of the sweep, and the curve is symmetric around it: 800 trees buy nothing and cost 2× the fit time. |
+| `learning_rate` | **0.1** | 0.03 → 0.782; 0.1 → **0.786**; 0.3 → 0.775 | Peak of the sweep. 0.3 rolls over, 0.03 underfits at this tree count. |
+| `subsample` / `colsample_bytree` | **0.9 / 0.9** (`xgboost`), **0.9 / 0.7** (hybrid) | not swept | Standard stochastic-boosting regularisation. The hybrid samples columns harder because its feature block is 43 dense features ∪ 3,000 sparse n-gram columns, where the sparse side would otherwise dominate every split. |
+| `tree_method` | **`hist`** | not swept | Histogram binning for fast, memory-light training. |
+| `objective` / `eval_metric` | `binary:logistic` / `logloss` | — | Calibrated probabilistic output, needed for the TPR@fixed-FPR metrics and for cascade thresholding. |
+| `random_state` | **42** (`SEED`) | — | Reproducibility. |
 
-| Hyperparameter | Value | Why |
-|---|---|---|
-| `embed_dim` | **32** | Character vocabulary is small (~50–60 symbols); Ch. 7 shows 32 is the saturation point (16 underfits at F1 0.805, 64 adds cost and FPR without F1 gain). |
-| `num_filters` | **128** (per kernel) | Best F1/FPR balance (0.830 / 0.055); 256 nudges F1 up but raises FPR (0.070). |
-| `kernel_sizes` | **(3, 5, 7)** | Multi-scale character-n-gram detectors, per §6.2. |
-| `dropout` | **0.3** | Regularizes the 384-dim concatenation before the linear head; kept as the conservative default (0.1 edged higher on the subsample but reads as a small-data artifact per Ch. 7). |
-| loss | **class-weighted cross-entropy** | The tree-model `scale_pos_weight` analog: inverse-frequency class weights up-weight the minority attack class under the 1:3 prior. |
-| optimizer | **Adam, lr = 1e-3, weight_decay = 1e-4** | `learning_rate` is by far the CNN's most sensitive knob (Ch. 7: F1 0.713 → 0.851 across the range); 1e-3 is a safe converging default, with 3e-3 the sweep optimum to adopt only after full-data confirmation. `weight_decay=1e-4` adds mild L2 regularization. |
-| `epochs` / `batch_size` | **8 / 256** | 8 epochs is sufficient given the small character vocabulary and short sequences (Ch. 7's curves are already converged by then); batch 256 keeps training fast on CPU. |
-| `max_len` | **256** | Covers the p99 command length (Dataset 1 p99 ≈ 227 chars) while truncating pathological outliers. |
+**1D-CNN** (`src/models.py`, `CNN1DClassifier`). The CNN sweeps run at **4
+epochs for tractability** while the shipped model trains for 8
+(`analysis/ch7_train.py`), so sweep F1 values sit about 3 points below the
+headline 0.860 and are read for *shape*, not level.
 
-The through-line: XGBoost's hyperparameters are tuned for a **stable, low-FPR operating point** on interpretable features, while the CNN's are tuned for **convergence** of a multi-scale character representation — and Ch. 7's sensitivity analysis is what justifies each specific value rather than a default guess.
+| Hyperparameter | Shipped | What the Ch. 7 sweep shows (D1, 4 epochs) | Why this value |
+|---|---|---|---|
+| `pos_weight` | **3.0** | 1.0 → F1 0.830, recall 0.780, FPR 0.033; 3.0 → 0.829 / 0.870 / 0.076; 6.0 → 0.806 / 0.916 / 0.119 | Exactly the `scale_pos_weight` trade in the tree model, and the reason both models share the value: +9 points of recall over 1.0 at unchanged F1. |
+| `lr` | **1e-3** | 5e-4 → 0.812; 1e-3 → 0.829; 2e-3 → **0.843** | The CNN's most sensitive knob — a 3-point F1 span, wider than any other axis. 2e-3 leads at 4 epochs, but the gap is an artefact of the shortened schedule: a higher rate simply converges sooner. At the shipped 8 epochs the default has converged, so it is kept. |
+| `dropout` | **0.3** | 0.1 → **0.843**; 0.3 → 0.829; 0.5 → 0.822 | The one axis where the sweep clearly prefers a different value. It is not adopted: less regularisation raising test F1 at 4 epochs is what over-fitting looks like early in training, and Ch. 8.2 shows this model's real weakness is corpus-style memorisation, which weaker regularisation would worsen. Flagged as an open question rather than tuned away. |
+| `n_filters` | **128** (per kernel) | 64 → 0.820 / FPR 0.082; 128 → 0.829 / 0.076; 256 → 0.834 / 0.081 | Best F1-per-FPR point. 256 buys +0.5 F1 for +0.5 FPR and 2× the parameters. |
+| `kernel_sizes` | **(3, 5, 7)** | not swept | Multi-scale character-n-gram detectors, per §6.2. |
+| `embed_dim` | **32** | not swept | The character vocabulary is ~50–60 symbols, so a 32-dim embedding is already over-complete; no sweep was run because there is no capacity argument for widening it. |
+| loss | **class-weighted cross-entropy** | see `pos_weight` | The tree-model `scale_pos_weight` analogue: up-weights the minority attack class under the 1:3 prior. |
+| optimizer | **Adam, `weight_decay` = 1e-5** | not swept | Mild L2; the dropout term carries the regularisation. |
+| `epochs` / `batch_size` | **8 / 256** | — | Loss is flat by epoch 8 on this vocabulary and sequence length; batch 256 keeps CPU training tractable. |
+| `max_len` | **256** | not swept | Covers the p99 command length (Dataset 1 p99 ≈ 227 chars) while truncating pathological outliers. |
+
+The through-line: XGBoost's hyperparameters sit on a **flat** response surface —
+no axis moves F1 by more than half a point, so the model's operating point,
+not its capacity, is the only real decision — whereas the CNN's are governed by
+**convergence**, with the learning rate alone spanning three F1 points. The
+sensitivity analysis earns its place in the report precisely because it shows
+how little most of these knobs matter: the two levers that do move the needle,
+`scale_pos_weight`/`pos_weight` and `lr`, are the ones Chapter 7 examines in
+depth.

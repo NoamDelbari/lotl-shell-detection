@@ -2,11 +2,12 @@
 **Freeze: Aug 14 | Submission: Aug 15**
 
 ## Status
-- ✅ Prompt 1 — Ch1 5-column reformat + feature name fix (DONE, incl. follow-up fixes)
-- ▶️ Prompt 2 — Confirm max_depth=12 (RUN THIS NEXT)
-- ▶️ Prompt 3 — Pipeline architecture diagram (RUN AFTER PROMPT 2)
-- ⏳ Prompt 4 — Apply Noam's Ch3 D1 repair (WAIT for noam/ch7-rf-if-sweeps)
-- ⏳ Prompt 5 — Cross-review Noam's chapters (WAIT for noam/ch7-rf-if-sweeps)
+- ✅ Prompt 1 — Ch1 5-column reformat + feature name fix (DONE)
+- ✅ Prompt 2 — Confirm max_depth=12 (DONE)
+- ✅ Prompt 3 — Pipeline architecture diagram (DONE)
+- ✅ Prompt 4 — Apply Noam's Ch3 D1 repair (DONE)
+- ✅ Prompt 5 — Cross-review Noam's chapters (DONE)
+- ▶️ Prompt 6 — Merge Noam's branch (RUN THIS NEXT)
 
 ---
 
@@ -105,24 +106,115 @@ paren_count). The file is marked never-machine-overwritten and needs Ben's sign-
 
 ---
 
-## Prompt 5 — Cross-Review Noam's Chapters ⏳ WAIT FOR noam/ch7-rf-if-sweeps
+## Prompt 5 — Cross-Review Noam's Chapters
 
-Once Noam pushes his branch, run this.
-
-Fetch and read each of Noam's new chapters. For each, check: numbers match new
-`results/summary.json` (hybrid 0.8761/0.8482, CNN 0.8603/0.8384, RF 0.7963/0.7531,
-IF 0.2492/0.1431), feature names are from the 43-feature FEATURE_NAMES, and content
-matches the assignment rubric requirements from NOAM_TODO.md.
+Fetch Noam's branch and read every new chapter file. For each file check:
+(a) numbers match new `results/summary.json` values (hybrid 0.8761/0.8482,
+CNN 0.8603/0.8384, RF 0.7963/0.7531, IF 0.2492/0.1431, baseline 0.8808/0.8631),
+(b) feature names are from the 43-feature FEATURE_NAMES in `src/features.py`,
+(c) content meets the rubric requirements in `docs/NOAM_TODO.md`.
 
 ```bash
 git fetch origin
-git show origin/noam/ch7-rf-if-sweeps:report/ch3_eda_findings_d2.md
-git show origin/noam/ch7-rf-if-sweeps:report/ch6_model_justification.md
-git show origin/noam/ch7-rf-if-sweeps:report/ch7_sensitivity_findings.md
-git show origin/noam/ch7-rf-if-sweeps:report/exec_summary.md
-git show origin/noam/ch7-rf-if-sweeps:report/ch5_harmonization.md
 ```
 
-For each file report: (a) any wrong numbers, (b) any killed/stale feature names,
-(c) any rubric requirement from NOAM_TODO.md that is missing or incomplete.
-Do NOT edit Noam's files — just report issues so they can be sent back to him.
+**One issue found:** Noam's `exec_summary.md` shows baseline F1 **0.8975 / 0.8824**
+but his own `results/holdout_baseline_dataset1/2.json` say **0.8808 / 0.8631**.
+Flag this to Noam before or after the merge — the exec summary needs correcting.
+
+Read these files in order:
+
+```bash
+git show origin/noam/ch7-rf-if-sweeps:report/exec_summary.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch1_1_threat_analysis.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch1_2_mapping_rows_noam.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch1_3_feature_rationale.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch3_d2_eda_findings.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch5_1_unified_schema.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch5_2_distribution_shift.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch5_3_scaling_normalisation.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch6_rf_if_justification.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch7_rf_if_sensitivity_findings.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch8_1_rf_if_forensics.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch8_3_shellcore_comparison.md
+git show origin/noam/ch7-rf-if-sweeps:report/ch8_4_cascade_analysis.md
+```
+
+For each file produce a short verdict: PASS or list specific issues (wrong number,
+stale feature name, missing rubric item). Do NOT edit any files — compile all
+issues into a single report at the end so they can be sent back to Noam.
+
+---
+
+## Prompt 6 — Merge Noam's Branch into Ben's Branch
+
+Merge `origin/noam/ch7-rf-if-sweeps` into `ben/pipeline-models-ch3-8`.
+Several files will conflict — resolve each one as instructed below.
+
+```bash
+git fetch origin
+git merge origin/noam/ch7-rf-if-sweeps --no-commit --no-ff
+```
+
+Then resolve conflicts file by file:
+
+**`report/ch1_threat_mapping.md`** — if conflicted, use Noam's version (his has
+updated IPv4 probe numbers 0.535/0.523 which are more accurate than Ben's 0.546):
+```bash
+git checkout origin/noam/ch7-rf-if-sweeps -- report/ch1_threat_mapping.md
+```
+
+**`report/ch2_literature_review.md`** — both versions removed the sourcing note
+and should be near-identical. If conflicted, use Noam's version:
+```bash
+git checkout origin/noam/ch7-rf-if-sweeps -- report/ch2_literature_review.md
+```
+
+**`report/ch7_sensitivity_findings.md`** — Ben added the pipeline diagram and
+updated numbers; Noam may have added the RF/IF section header. Manually merge:
+keep Ben's pipeline diagram section at the top AND keep whatever Noam added.
+If the conflict is just about whose edits to the closing paragraph survive, keep
+Ben's numbers (0.8761 / 0.8603).
+
+**`report/ch7_pipeline_diagram.md`** — if conflicted, use Ben's version (he
+created it first):
+```bash
+git checkout HEAD -- report/ch7_pipeline_diagram.md
+```
+
+**`ai_logs/README.md`** — use Noam's version (covers all 3 sessions):
+```bash
+git checkout origin/noam/ch7-rf-if-sweeps -- ai_logs/README.md
+```
+
+**`ai_logs/claude_code_log.txt`** — use Noam's version (combined log):
+```bash
+git checkout origin/noam/ch7-rf-if-sweeps -- ai_logs/claude_code_log.txt
+```
+
+**`results/summary.json`** — use Noam's version (43-feature results):
+```bash
+git checkout origin/noam/ch7-rf-if-sweeps -- results/summary.json
+```
+
+**`src/features.py`** — use Noam's version (43-feature redesign):
+```bash
+git checkout origin/noam/ch7-rf-if-sweeps -- src/features.py
+```
+
+**`docs/NOAM_TODO.md`** — if conflicted, use Noam's version:
+```bash
+git checkout origin/noam/ch7-rf-if-sweeps -- docs/NOAM_TODO.md
+```
+
+After resolving all conflicts, verify no conflict markers remain:
+```bash
+grep -r "<<<<<<" report/ src/ results/ ai_logs/ docs/ 2>/dev/null
+```
+
+Then stage and commit:
+```bash
+git add -A
+git commit -m "Merge noam/ch7-rf-if-sweeps: 43-feature models, Ch3-Ch8 report sections, cascade analysis"
+git push origin ben/pipeline-models-ch3-8
+```

@@ -9,6 +9,7 @@ and the dataset build: the tree and anomaly results are bit-reproducible on
 either machine, and only the 1D-CNN's last decimal moves, through GPU
 floating-point non-determinism.
 
+<!-- cols: 1.00 2.75 2.75 -->
 | | **Environment A** (Ben Volovelsky) | **Environment B** (Noam Delbari) |
 |---|---|---|
 | OS · Python | macOS, Apple M3 Pro · 3.11 | Windows 11 Home (26200) · 3.11.9 |
@@ -19,6 +20,7 @@ floating-point non-determinism.
 `results/` was last regenerated).** `requirements.txt` uses `>=` rather than
 exact pins so one file installs on both machines.
 
+<!-- cols: 1.50 5.00 -->
 | Role | Versions |
 |---|---|
 | Runtime and data | Python 3.11.9 · numpy 2.3.5 · pandas 2.3.3 · pyarrow 23.0.0 · requests 2.32.4 |
@@ -34,6 +36,7 @@ any of the five model keys and `--dataset` either of `dataset1`, `dataset2`;
 `python main.py all` refreshes `results/summary.json`, the file every score in
 this report is read from.
 
+<!-- cols: 2.20 4.30 -->
 | Step | Command |
 |---|---|
 | Install | `python -m venv .venv` then `pip install -r requirements.txt` |
@@ -52,6 +55,7 @@ this report is read from.
 
 **Table A.4 — Three commands that need care before they are run.**
 
+<!-- cols: 1.40 5.10 -->
 | Command | What to know |
 |---|---|
 | `bonus_b3_llm_eval.py` | 704 local LLM calls at ~11 s each, ≈2.2 h. Needs `ollama pull llama3.1:8b` and a running `ollama serve`; `--max-calls N` caps it, `--ollama` omitted runs the offline stub. The hosted alternative `--hf` reads `HF_TOKEN` from the environment — **the token is never committed**, and no result here requires it. Edge-case selection is deterministic under `SEED`; the LLM's reasoning is not, even at temperature 0. |

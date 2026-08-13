@@ -31,6 +31,7 @@ legitimately use. This is a ceiling, not a deficiency.
 corpus for the two strongest models.** "shared" counts commands both get wrong;
 attack rows are false negatives, benign rows false positives.
 
+<!-- cols: 0.95 1.35 0.95 1.05 0.95 0.85 -->
 | Class | Source corpus | rows in test | hybrid err. | CNN err. | shared |
 |---|---|---:|---:|---:|---:|
 | attack (FN) | `hacktricks` | 344 | 59 | 51 | 35 |
@@ -67,6 +68,7 @@ held-out split (n = 1,915 / 3,049); the *italicised* baseline row is scored over
 **all** target rows (n = 9,576 / 15,248), so it is indicative rather than
 directly commensurable.
 
+<!-- cols: 1.90 1.25 1.25 1.05 1.05 -->
 | Model | in-domain D1 | in-domain D2 | D1→D2 | D2→D1 |
 |---|---:|---:|---:|---:|
 | `xgboost_hybrid` | 0.876 | 0.848 | 0.532 | 0.276 |
@@ -91,6 +93,7 @@ moves the split only to 51/49.
 **Table 8.3 — Decomposing the 20-point gap to ShellCore, one change at a time.**
 The two deltas are equal to within a tenth of a point.
 
+<!-- cols: 1.40 3.70 0.70 0.70 -->
 | Step | What changes | F1 | Δ |
 |---|---|---:|---:|
 | Our Random Forest, D1 | — | 0.7963 | — |
@@ -142,6 +145,7 @@ despite failing at its current operating point.
 components.** The full cascade ranks last among the built configurations on F1
 for both datasets; the oracle row is the ceiling arbitration would have to reach.
 
+<!-- cols: 1.90 0.70 0.85 0.75 0.70 0.85 0.75 -->
 | Configuration | D1 F1 | D1 recall | D1 FPR | D2 F1 | D2 recall | D2 FPR |
 |---|---:|---:|---:|---:|---:|---:|
 | XGBoost-hybrid alone | **0.8761** | 0.8766 | 0.0415 | **0.8482** | 0.8455 | 0.0494 |

@@ -281,12 +281,14 @@ ranks, so lower is better. {zero_gain_count(rows, "dataset1")} features receive
 exactly zero XGBoost gain here. The full {n_feat}-row ranking is the shipped
 `report/ch4_feature_ranking.csv`.
 
+<!-- cols: 0.40 1.60 0.90 0.90 1.05 0.95 -->
 {ranking_table(rows, "dataset1", TOP_N)}
 
 **Table B.2 — Dataset 2: top {TOP_N} features by consensus rank.** {zero_gain_count(rows, "dataset2")} features
 receive zero gain — twice Dataset 1's count, and the reason §4.2 treats the
 ranking as corpus-specific.
 
+<!-- cols: 0.40 1.60 0.90 0.90 1.05 0.95 -->
 {ranking_table(rows, "dataset2", TOP_N)}
 
 ## B.2 Feature selection — the 68 → {n_feat} funnel
@@ -302,6 +304,7 @@ their lump `n_sensitive_paths` survived, refuting split-covers-lump; and
 `has_privesc_bin` is class-neutral while positional `head_is_privesc` passes —
 *where* a binary sits matters, *that* it appears does not.
 
+<!-- cols: 1.90 4.60 -->
 {t3}
 
 ## B.3 Hyperparameter sensitivity
@@ -310,10 +313,12 @@ their lump `n_sensitive_paths` survived, refuting split-covers-lump; and
 one-at-a-time from the shipped configuration, training on the full training split
 and scoring on the held-out test split; the same holds for Tables B.5 and B.6.
 
+<!-- cols: 1.50 0.70 1.05 1.10 1.05 1.10 -->
 {sweep_table(sens, "xgboost")}
 
 **Table B.5 — 1D-CNN: all swept configurations.**
 
+<!-- cols: 1.50 0.70 1.05 1.10 1.05 1.10 -->
 {sweep_table(sens, "cnn1d")}
 
 **Table B.6 — Random Forest and Isolation Forest sweeps.** Omitted for space, and
@@ -324,6 +329,7 @@ Contamination moves only Isolation Forest's own cut-off — the shipped pipeline
 scores it through the same fixed 0.5 wrapper as every other model, the last row
 of each block.
 
+<!-- cols: 1.40 1.90 0.80 0.80 0.80 0.80 -->
 {rf_if_table(rf_if)}
 
 ## B.4 Confusion matrices behind every headline score
@@ -333,6 +339,7 @@ split is 3,049 rows (762 attack), Dataset 2's is 1,915 (479). At that 1:3 ratio 
 do-nothing classifier flagging everything scores F1 0.400 — the floor every model
 here must beat.
 
+<!-- cols: 0.85 1.10 0.42 0.42 0.42 0.42 0.75 0.65 0.55 0.55 -->
 {confusion_table(summary)}
 """
     OUT.write_text(doc, encoding="utf-8")

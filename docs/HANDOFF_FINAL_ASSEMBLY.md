@@ -89,10 +89,11 @@ Ben is on macOS M3 Pro with MPS. `SEED = 42` at `src/__init__.py:17`.
 
 Branch **`noam/ch7-rf-if-sweeps`**, remote
 `https://github.com/NoamDelbari/lotl-shell-detection.git`. `gh` CLI is **not**
-installed. **The branch is currently 1 commit ahead of origin — push early**;
-the whole Ben-duplication mess below was caused by unpushed work.
+installed. **Push after every commit** — the whole Ben-duplication mess below was
+caused by unpushed work.
 
 ```
+9875854 docs: rewrite final-assembly handoff for the remaining sections
 5bdcc6b docs: Ch3 body section (EDA, 15 pts) condensed from both EDA halves
 1bb3873 docs: session handoff for final report assembly
 946600d fix: actually commit the build_report changes described in 5a5bb61
@@ -130,19 +131,23 @@ rebuild Appendix C.
 
 ## 4. Where the page budget actually stands
 
-Measured with the Word harness (§10), never estimated.
+Measured with the Word harness (§10), never estimated. **Re-measured after the
+column-width pass, so these supersede every earlier figure.**
 
-| Section | rubric pts | measured pp | state |
-|---|---:|---:|---|
-| `exec_summary.md` | 5 | 1.26 | done |
-| `body_ch1.md` | 15 | 6.06 | done, **the single biggest cut target** |
-| `body_ch3.md` | 15 | 3.62 | done (`5bdcc6b`) |
-| `body_ch8.md` | 20 | 3.52 (3.36 with widths pinned) | done |
-| **four sections** | **55 / 110** | **14.46 / 15** | |
-| Ch2, Ch4, Ch5, Ch6, Ch7, Bonus | **55** | **0.54 left** | unwritten |
+| Section | rubric pts | measured pp | words | w/p | state |
+|---|---:|---:|---:|---:|---|
+| `exec_summary.md` | 5 | 1.26 | 527 | 418 | done |
+| `body_ch1.md` | 15 | 5.74 | 3060 | 533 | done, **still the biggest cut target** |
+| `body_ch3.md` | 15 | 3.62 | 1442 | 398 | done (`5bdcc6b`) |
+| `body_ch8.md` | 20 | 3.36 | 1276 | 380 | done, widths pinned |
+| **four sections** | **55 / 110** | **13.98 / 15** | | | |
+| Ch2, Ch4, Ch5, Ch6, Ch7, Bonus | **55** | **1.02 left** | | | unwritten |
 
-Appendices A + B measure **4.97 pp**, or **4.49** with column widths pinned,
-against the 5-page allowance.
+Appendices A + B measure **4.49 pp** with widths pinned (was 4.97), against the
+5-page allowance — **0.51 pp of headroom**.
+
+Two earlier numbers were wrong and are corrected above: `body_ch1.md` measures
+**5.74**, not 6.06, and the four-section total is **13.98**, not 14.46.
 
 ### Noam's governing decision — follow this
 
@@ -173,21 +178,33 @@ deleting roughly half the report's substance.
 
 Use the levers in this order. The first three cost no content at all.
 
-**1. Pin every table's column widths — free, and large.**
+**1. Pin every table's column widths — free, and large. DONE for everything
+written so far.**
 The `<!-- cols: -->` directive (§10) was worth **−43%** on Ch1's five-column
-mapping table (5.19 → 2.98 pp), and −0.48 pp across the two appendices. Without
-it Word autofits, giving every column similar width, so each row's height is set
-by its longest cell while the short cells sit half empty.
-**Not yet applied to `appendix_a_execution.md`, `appendix_b_tables.md` or
-`body_ch8.md`** — validated on scratch copies, never written to the repo. Do this
-first; it is measured, reversible and costs nothing.
+mapping table (5.19 → 2.98 pp). Without it Word autofits, giving every column
+similar width, so each row's height is set by its longest cell while the short
+cells sit half empty.
+Now applied everywhere: Ch1, Ch3, **`body_ch8.md` (−0.16 pp)** and **both
+appendices (−0.48 pp)**. Appendix B is generated, so its seven directives live in
+`analysis/appendix_b_tables.py`, not the markdown.
+**Every new table written from here on must carry a `<!-- cols: -->` line** —
+this is now upkeep, not a pass to run at the end.
 
 **2. Watch words-per-page as the diagnostic.**
 Measured densities: prose ≈ **477 w/p**; a well-packed 2-column 8.5 pt table ≈
 **545–693 w/p**; an autofit 5-column table with one long text column ≈ **289
-w/p**. Any section running *below* 477 is losing page to formatting, not to
-content. **Ch3 currently runs at 398 w/p** — it has recoverable page in it
-without cutting a single finding. Ch1 and Ch8 should be measured the same way.
+w/p**. Any section running *below* 477 is a candidate for losing page to
+formatting rather than to content.
+
+All four written sections are now measured (§4): **Ch1 533, exec 418, Ch3 398,
+Ch8 380 w/p.** Ch1 is *above* the prose baseline — it is densely packed, so its
+6-ish pages are genuinely 3,060 words of content and lever 6 is the only thing
+that will move it.
+
+**One caveat, learned here:** Word's word count includes table cells, so a table
+of short numeric cells scores low w/p by construction. Ch8 at 380 is four numeric
+tables, not sloppy layout, and its widths are already pinned — do not expect
+lever 2 to pay there. Ch3 at 398 remains the real candidate.
 
 **3. Convert prose to dense tables.**
 Because a packed table beats prose on density, moving argument into tables
@@ -255,13 +272,14 @@ Ch4's rubric weight was not captured by the original grep of the assignment PDF;
    `ch8_transfer_heatmap.png`, `ch4_ranking_dataset{1,2}.png`,
    `ch3_class_balance.png`. Leave the eight `ch8_confusion_*.png` in the ZIP and
    reference them — Table B.7 already carries every matrix.
-3. **Apply the `<!-- cols: -->` directives** (§5 lever 1).
-   `appendix_b_tables.md` is **generated** — edit `analysis/appendix_b_tables.py`,
-   not the markdown.
+3. ~~Apply the `<!-- cols: -->` directives.~~ **Done** — Ch8 and both appendices
+   pinned, Appendix B regenerated from the edited
+   `analysis/appendix_b_tables.py`, output verified byte-identical to the
+   previously validated scratch version. Only *new* tables still need one.
 4. **Rebuild the docx and ZIP**, then confirm page counts with the Word harness
    before declaring the budget met.
 
-Steps 2–4 depend on frozen text. Step 3 does not — do it early.
+Steps 2 and 4 depend on frozen text.
 
 ---
 
@@ -294,9 +312,18 @@ dropped whole). No hand-editing is possible or performed.
 per-session `.md` files, so the combined `.txt` cannot drift and repeated
 rebuilds are idempotent.
 
-**Run this last, immediately before zipping.** Session 4 is *this* session — its
-transcript is incomplete by construction until the work stops. From the repo
-root:
+**Run this last, immediately before zipping.** The newest session is always
+incomplete by construction until the work stops.
+
+⚠️ **There is now a fifth session** (`ee2b076e…`, opened Aug 14) — the final
+assembly session. It has **no `.md` export and no README entry yet**, and
+`rebuild_claude_code_log.py` only sees files that exist, so **skipping its export
+silently ships an incomplete log** against a rubric item that treats missing logs
+as undisclosed AI use. Export it as `claude_session_noam4.md` → log **Session
+5**, and check `~/.claude/projects/E--lotl-shell-detection/` for any newer
+`.jsonl` before the final run.
+
+From the repo root:
 
 ```bash
 # 0. BEN, on his machine only (the source .jsonl is on his laptop).
@@ -316,9 +343,28 @@ python ai_logs/export_claude_log.py \
   ~/.claude/projects/E--lotl-shell-detection/c6d78cd0-b917-4879-9d90-753790734957.jsonl \
   ai_logs/claude_session_noam3.md
 
-# 4. Rebuild the combined .txt from all four per-session .md files.
+# 4. NEW — the final-assembly session -> log Session 5.
+python ai_logs/export_claude_log.py \
+  ~/.claude/projects/E--lotl-shell-detection/ee2b076e-3a93-4533-ba3b-27270b88db69.jsonl \
+  ai_logs/claude_session_noam4.md
+
+# 5. Rebuild the combined .txt from all five per-session .md files.
 python ai_logs/rebuild_claude_code_log.py
 ```
+
+**Two confirmed defects in `rebuild_claude_code_log.py` — fix both before the
+final run.** Read, not assumed:
+
+1. **`BLOCKS` (line 57) is a hardcoded three-entry list.** It does not glob. A
+   `claude_session_noam4.md` sitting in `ai_logs/` would be **silently dropped**
+   from `claude_code_log.txt` — no error, no warning, just a missing session in
+   the file the rubric grades. A `SESSION5_HEADER` + `BLOCKS` entry is required.
+2. **`SESSION4_NOTE` (line 50) still stamps "SESSION STILL IN PROGRESS"** into
+   the combined log. Session 4 closed on Aug 14; that banner is now false and
+   belongs on Session 5 until its own final export is taken.
+
+Both are one-line edits, but neither announces itself — the script exits 0 either
+way.
 
 **Then update `ai_logs/README.md`** — this part is manual and is currently out of
 date:
@@ -333,6 +379,10 @@ date:
   existing text says "the merge of Ben's branch", which describes the earlier
   Aug-10 merge and is now misleading on its own), `body_ch3.md`, or the final
   assembly.
+- **Add a Session 5 entry** for the final-assembly session — the column-width
+  pass, the remaining six chapters, the cutting pass, figure embedding, and the
+  docx/ZIP build. Without it the README describes four sessions while the log
+  contains five.
 - The README already carries the honest note that the models were **Claude Opus
   4.8 / Sonnet 4.6** (Ben) and **Claude Fable 5 / Opus 5** (Noam), not the
   "Claude Sonnet" the rubric prompt assumed. Keep it.
@@ -345,7 +395,10 @@ for.
 
 ## 9. Compliance and close-out
 
-- [ ] **Push the branch** (currently ahead 1).
+- [x] ~~Push the branch.~~ In sync with origin as of Aug 14.
+- [ ] **Fix the two `rebuild_claude_code_log.py` defects** (§8) — do this *now*,
+      not at the end; the fix is independent of when the export runs, and the
+      failure mode is silent.
 - [ ] **Cross-review Ben's chapters.** `WORK_DIVISION.md` requires Noam to read
       them and flag issues before Aug 14 — i.e. today. Not done.
 - [ ] **Confirm Ben was told what was integrated** (§3). Noam took this on.
@@ -498,8 +551,8 @@ exactly one pair reaches it.
 
 ## 13. Suggested order
 
-1. **Push.** Then apply the `<!-- cols: -->` directives (§5 lever 1) — free page,
-   no dependency on text being final.
+1. ~~Push, then apply the `<!-- cols: -->` directives.~~ **Done** — branch in
+   sync, all widths pinned, −0.64 pp banked (§4, §5).
 2. Write **Ch7 → Ch4 → Ch5 → Ch2 → Ch6 → Bonus**, one at a time, each reviewed by
    Noam before the next. Ch7 first because it is rubric-mandated and its sources
    are the most finished; Ch6 late because it needs the most aggressive

@@ -13,6 +13,7 @@ ranks, so lower is better. 4 features receive
 exactly zero XGBoost gain here. The full 43-row ranking is the shipped
 `report/ch4_feature_ranking.csv`.
 
+<!-- cols: 0.40 1.60 0.90 0.90 1.05 0.95 -->
 | # | feature | RF MDI | XGB gain | permutation | consensus |
 |---:|---|---:|---:|---:|---:|
 | 1 | `n_abs_paths` | 0.1243 | 0.1806 | 0.0342 | 1.67 |
@@ -28,6 +29,7 @@ exactly zero XGBoost gain here. The full 43-row ranking is the shipped
 receive zero gain — twice Dataset 1's count, and the reason §4.2 treats the
 ranking as corpus-specific.
 
+<!-- cols: 0.40 1.60 0.90 0.90 1.05 0.95 -->
 | # | feature | RF MDI | XGB gain | permutation | consensus |
 |---:|---|---:|---:|---:|---:|
 | 1 | `has_fetch_bin` | 0.0583 | 0.0927 | 0.0302 | 3.00 |
@@ -52,6 +54,7 @@ their lump `n_sensitive_paths` survived, refuting split-covers-lump; and
 `has_privesc_bin` is class-neutral while positional `head_is_privesc` passes —
 *where* a binary sits matters, *that* it appears does not.
 
+<!-- cols: 1.90 4.60 -->
 | stage | features |
 |---|---:|
 | Candidates implemented and audited | 68 |
@@ -65,6 +68,7 @@ their lump `n_sensitive_paths` survived, refuting split-covers-lump; and
 one-at-a-time from the shipped configuration, training on the full training split
 and scoring on the held-out test split; the same holds for Tables B.5 and B.6.
 
+<!-- cols: 1.50 0.70 1.05 1.10 1.05 1.10 -->
 | hyperparameter | value | Dataset 1 F1 | Dataset 1 FPR | Dataset 2 F1 | Dataset 2 FPR |
 |---|---:|---:|---:|---:|---:|
 | `max_depth` | 3 | 0.7837 | 0.0787 | 0.7457 | 0.1010 |
@@ -83,6 +87,7 @@ and scoring on the held-out test split; the same holds for Tables B.5 and B.6.
 
 **Table B.5 — 1D-CNN: all swept configurations.**
 
+<!-- cols: 1.50 0.70 1.05 1.10 1.05 1.10 -->
 | hyperparameter | value | Dataset 1 F1 | Dataset 1 FPR | Dataset 2 F1 | Dataset 2 FPR |
 |---|---:|---:|---:|---:|---:|
 | `n_filters` | 64 | 0.8197 | 0.0818 | 0.7976 | 0.0905 |
@@ -106,6 +111,7 @@ Contamination moves only Isolation Forest's own cut-off — the shipped pipeline
 scores it through the same fixed 0.5 wrapper as every other model, the last row
 of each block.
 
+<!-- cols: 1.40 1.90 0.80 0.80 0.80 0.80 -->
 | model | configuration | F1 | recall | FPR | ROC-AUC |
 |---|---|---:|---:|---:|---:|
 | Random Forest, D1 | n_estimators=100, max_depth=None | 0.7843 | 0.7231 | 0.0402 | 0.9306 |
@@ -136,6 +142,7 @@ split is 3,049 rows (762 attack), Dataset 2's is 1,915 (479). At that 1:3 ratio 
 do-nothing classifier flagging everything scores F1 0.400 — the floor every model
 here must beat.
 
+<!-- cols: 0.85 1.10 0.42 0.42 0.42 0.42 0.75 0.65 0.55 0.55 -->
 | dataset | model | TN | FP | FN | TP | precision | recall | F1 | FPR |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|
 | Dataset 1 | XGBoost-hybrid | 2192 | 95 | 94 | 668 | 0.8755 | 0.8766 | 0.8761 | 0.0415 |

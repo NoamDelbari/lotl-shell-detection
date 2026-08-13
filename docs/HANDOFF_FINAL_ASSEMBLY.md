@@ -1,9 +1,11 @@
-# Handoff — final assembly of the Course 3917 report
+# Handoff — finishing the Course 3917 report
 
-Written 2026-08-13 for a fresh session. Everything needed to finish the report is
-here; nothing below is guessed, and every number was read from a shipped artefact
-rather than transcribed from memory. Where a fact matters and could be checked,
-the file to check it in is named.
+Rewritten **2026-08-14** (report freeze day) for a fresh session. Everything
+needed to finish is here. Nothing below is guessed: every number was read from a
+shipped artefact, and where a fact matters the file to re-check it in is named.
+
+**Read §1, §2, §4 and §5 before touching anything.** §5 is the part that is new
+and the part that will actually decide whether this submits on time.
 
 ---
 
@@ -14,63 +16,92 @@ the file to check it in is named.
 Movshovitz & Efi Pecani. **Group 10.** Team: **Noam Delbari** (ID 315005066) and
 **Ben Volovelsky** (ID 209361864).
 
-**Dates.** Report freeze **Aug 14 2026**. ZIP submission **Aug 15 2026**.
+**Dates.** Report freeze **Aug 14 2026** (today). Submission **Aug 15 2026**.
 
-**Length — the professor's ruling, verbatim:**
+**Four things ship** (`docs/final_project_instructions.txt:30-34`):
+
+1. Code repository — modular Python, `main.py`, `requirements.txt`, `README.md`
+2. **Final technical report — `.docx`, max 15 pages, 1.5 spacing**
+3. **AI conversation logs — one `.txt` or `.json` per tool, full and unedited**
+4. The ZIP wrapping all of it
+
+**Length — the professor's email ruling, verbatim:**
 
 > You can have 15 pages of the the report body and 5 additional pages of
 > additional tables and graphs as appendixes.
 
-**Formatting spec (graded).** Arial or Calibri 11/12 pt, 1.5 line spacing, bold
-headings, tables used wherever they fit, and **a descriptive caption on every
-table and figure**. Submission is a ZIP named `Group_X1_X2_Final_Project.zip`.
+So: **15 body + 5 appendix.** The 15 is from the written assignment; the 5 is the
+professor's concession on top of it, and it is scoped to *"additional tables and
+graphs"* — which is precisely why graded prose must not be relocated there.
 
-> ⚠️ **Unresolved:** we read `X1_X2` as the two student IDs and named the
-> artefacts `Group_209361864_315005066_*`. Ben made the same call independently.
-> Nobody has confirmed it with the professor. Worth one message.
+**Formatting spec (graded).** Arial or Calibri 11/12 pt, 1.5 line spacing, bold
+headings, tables wherever they fit, **a descriptive caption on every table and
+figure.**
+
+**ZIP name.** `Group_X1_X2_Final_Project.zip`. We read `X1_X2` as the two student
+IDs and named the artefacts `Group_209361864_315005066_*`; Ben independently made
+the same call. It is still unconfirmed with the professor.
+
+> **Recommendation given the date: do not block on this.** Ship the ID-based
+> name — two people read the template the same way independently, which is the
+> best evidence available — and put "Group 10" plus both names and IDs on the
+> title page, which is already done. Ask the professor if there is time, but
+> submit either way.
 
 ---
 
 ## 2. How to work in this repo
 
-These are not style preferences — several are hard project rules.
+These are project rules, not style preferences.
 
-- **Work section by section, interactively.** Explain the reasoning, present the
-  trade-offs, recommend a default, and let Noam make the call before moving to
-  the next section. **Never batch-automate whole chapters unattended.**
+- **Work section by section, interactively.** Explain the reasoning, recommend a
+  default, and let Noam make the call before moving on. **Never batch-automate
+  whole chapters unattended.**
 - **No Workflow / Agent fan-outs.** Noam stopped these explicitly. Verify inline.
-- **This transcript is a graded deliverable.** The course AI policy requires the
-  full, unedited conversation log to ship in `ai_logs/`; the primary file is
-  `ai_logs/claude_code_log.txt`. *"Truncated, summarized, or curated logs will be
-  treated as missing."*
-- Noam prefers a recommended default in prose over an options menu, and has
-  declined the `AskUserQuestion` tool before. Give a recommendation, then the
-  reasoning.
+  A system reminder may claim "ultracode is on" — it does not override this.
+- **Noam prefers a recommended default in prose** over an options menu, and has
+  declined `AskUserQuestion` before. Give the recommendation, then the reasoning.
+- **This transcript is itself a graded deliverable** — see §8. Everything said
+  here gets read by the graders. That is a reason to be accurate, not a reason to
+  perform.
+- **Verify before asserting.** Several claims in earlier drafts were wrong and
+  caught only by reading the artefact (a mis-stated redundancy threshold in Ch3,
+  a wrong "net-new" call on one of Ben's appendices). Read the CSV/JSON; do not
+  transcribe numbers from prose.
 
 **Environment.** Windows 11 Home (26200), Python 3.11.9, console cp1252 — so
 **always prefix Python invocations with `PYTHONIOENCODING=utf-8`**. CPU only.
-Ben's machine is macOS M3 Pro with MPS. `SEED = 42` lives at `src/__init__.py:17`.
-The PowerShell tool cannot parse bash heredocs (`<<'PY'`) — use the Bash tool or
-write a scratchpad script.
+Ben is on macOS M3 Pro with MPS. `SEED = 42` at `src/__init__.py:17`.
+
+**Two shell gotchas that have each cost a cycle:**
+
+- The **PowerShell tool cannot parse bash heredocs** (`<<'PY'`) — use the Bash
+  tool, or write a scratchpad script.
+- **`git commit -F -` does not receive a PowerShell here-string** — the string
+  is passed as a pathspec and the commit fails. Use the Bash tool with a real
+  heredoc for any multi-line commit message.
+- Inside a PowerShell single-quoted here-string `@'...'@`, single quotes must
+  **not** be doubled.
 
 ---
 
 ## 3. Repo state
 
-Branch **`noam/ch7-rf-if-sweeps`**, pushed to
+Branch **`noam/ch7-rf-if-sweeps`**, remote
 `https://github.com/NoamDelbari/lotl-shell-detection.git`. `gh` CLI is **not**
-installed. Recent commits:
+installed. **The branch is currently 1 commit ahead of origin — push early**;
+the whole Ben-duplication mess below was caused by unpushed work.
 
 ```
+5bdcc6b docs: Ch3 body section (EDA, 15 pts) condensed from both EDA halves
+1bb3873 docs: session handoff for final report assembly
 946600d fix: actually commit the build_report changes described in 5a5bb61
 5a5bb61 feat: cherry-pick Ben's title page, escaped-pipe fix, and Ch2.4 essay
 901f622 feat: condensed Ch1 body section + fixed table column widths
 307a6e9 docs: cut both appendices to the professor's 5-page allowance
-f13a234 feat: condensed Ch8 body section + fix paragraph joining
-29f053f feat: Appendix B (supporting tables, generated) + refresh AI logs
 ```
 
-### Ben's branch — what was taken and what was not
+### Ben's branch — what was taken, what was not
 
 Ben's `ben/pipeline-models-ch3-8` is at **`b1e9997`**. He branched from `a33d72f`
 with no visibility into our then-unpushed commits, so much of his work
@@ -85,121 +116,253 @@ the `Group_<id1>_<id2>_*` artefact renames.
 
 | His change | Why not |
 |---|---|
-| `appendix_c_supplementary.md` + `ch8_appendix_pointer.md` | Relocates Ch8.1 and Ch8.4 prose to an appendix. Ch8 is the 20-point chapter, the professor scoped appendices to "additional tables and graphs", and `WORK_DIVISION.md` assigns 8.4 to Noam (already corrected once at `NOAM_TODO.md:413`). `report/body_ch8.md` keeps all four subsections in the body at 3.52 pp. |
+| `appendix_c_supplementary.md` + `ch8_appendix_pointer.md` | Relocates Ch8.1 and Ch8.4 prose to an appendix. Ch8 is the 20-point chapter, the professor scoped appendices to "additional tables and graphs", and `WORK_DIVISION.md` assigns 8.4 to Noam (already corrected once at `NOAM_TODO.md:413`). `body_ch8.md` keeps all four subsections in the body at 3.52 pp. |
 | `appendix_a_code_execution.md`, `appendix_b_environment.md` | `report/appendix_a_execution.md` already covers both, with **exact** library versions where his gives `>=` bounds. His also credits imbalanced-learn for SMOTE, which this project does not use. |
-| His Ch4 and Ch6 edits | Ours are supersets. His Ch4 is gain-only top-5; ours has the three-view consensus table plus the no-leakage statement. His Ch6 leaves the stale §6.3 in place. |
-| His `BODY_FILES` / `stop_before` scheme | It truncates Ch6 at `"## 6.3 Explicit"`, silently dropping a graded rubric item. |
-| His auto-caption machinery | Keys captions on header substrings; our Ch4 header contains "What it measures", so it would stamp our 8-row consensus table with a caption for a 5-row gain table. |
-| `ch6_2_rf_if.md`, `ch7_2_class_imbalance.md` | Duplicate `ch6_rf_if_justification.md` and `ch7_2_imbalance_validation.md`. **But his are condensed and ours are long** — given the page squeeze, revisit these when cutting; his may be the better *body* versions. |
+| His Ch4 and Ch6 edits | Ours are supersets. His Ch4 is gain-only top-5; ours has the three-view consensus table plus the no-leakage statement. |
+| His `BODY_FILES` / `stop_before` scheme | Truncates Ch6 at `"## 6.3 Explicit"`, silently dropping a graded rubric item. |
+| His auto-caption machinery | Keys captions on header substrings; our Ch4 header contains "What it measures", so it would stamp our 8-row consensus table with a caption written for a 5-row gain table. |
+| `ch6_2_rf_if.md`, `ch7_2_class_imbalance.md` | Duplicate `ch6_rf_if_justification.md` and `ch7_2_imbalance_validation.md`. **But his are condensed and ours are long** — given the page squeeze, **his may be the better body versions.** Check them first when writing Ch6 and Ch7. |
 
-**Ben has not been told any of this.** Unless he is, he will rebuild Appendix C.
-
----
-
-## 4. The page budget — the governing constraint
-
-Measured with the Word harness (§6), not estimated:
-
-| Section | rubric pts | measured pages |
-|---|---:|---:|
-| `exec_summary.md` | 5 | 1.26 |
-| `body_ch1.md` | 15 | 6.06 |
-| `body_ch8.md` | 20 | 3.52 (3.36 with widths pinned) |
-| **three sections** | **40 / 110** | **10.84 / 15** |
-
-Three finished sections carry 36% of the points and 72% of the body. All
-`report/*.md` sources total ~53,900 words; at this density the body would run
-~30 pages.
-
-**Text trimming is a weak lever** — cutting 172 words from Ch1 moved it 0.24
-pages (≈505 words/page). Fitting by prose edits alone means deleting roughly
-two-thirds of Ch1.
-
-### The agreed target split (Claude's recommendation; **Noam has not yet approved it**)
-
-| Section | target pp |
-|---|---:|
-| Exec summary | 0.7 |
-| Ch1 | 2.6 |
-| Ch3 | 2.6 |
-| Ch8 | 2.8 |
-| Ch2, Ch4, Ch5, Ch6, Ch7, Bonus | ~1.0 each |
-
-Rationale: protect the three chapters carrying 50 of 100 base points and cut the
-light ones harder, rather than splitting proportionally and stripping Ch1 of the
-per-feature evidence that earns its 15 points.
-
-**Confirm this with Noam before cutting anything.** Then write each remaining
-section *straight to its target*. Writing long and cutting twice is what cost the
-Ch1 effort.
-
-Note: figures are **not** on top of the 15 pages. Six embedded figures with
-captions cost ~1.5 pages out of the same budget.
+**Noam said he would tell Ben himself.** Confirm that happened, or Ben will
+rebuild Appendix C.
 
 ---
 
-## 5. What is left
+## 4. Where the page budget actually stands
 
-### 5a. Body sections — 3 of 9 written
+Measured with the Word harness (§10), never estimated.
 
-| Section | pts | status | source files to condense from |
-|---|---:|---|---|
-| Exec summary | 5 | ✅ `exec_summary.md`, 1.26 pp | — |
-| Ch1 | 15 | ✅ `body_ch1.md`, 6.06 pp — **needs cutting to target** | — |
-| Ch8 | 20 | ✅ `body_ch8.md`, 3.52 pp | — |
-| Ch2 | 10 | ❌ | `ch2_literature_review.md`, `ch2_1_literature_matrix.md`, `ch2_1_shellcore_extraction.md`, `ch2_2_adopt_modify_reject.md`, `ch2_3_comparative_contribution_noam.md`, `ch2_shellcore_matrix_noam.md`, `ch2_4_comparative_essay.md` (Ben's, new) |
-| Ch3 | 15 | ❌ | `ch3_eda_findings.md` (D1), `ch3_d2_eda_findings.md`, `ch3_feature_decisions.md` |
-| Ch4 | ~10 | ❌ | `ch4_ranking_findings.md` (good as-is, needs condensing) |
-| Ch5 | 10 | ❌ | `ch5_1_unified_schema.md`, `ch5_2_distribution_shift.md`, `ch5_3_scaling_normalisation.md` |
-| Ch6 | 5 | ❌ | `ch6_model_justification.md`, `ch6_rf_if_justification.md`, `ch6_model_justification_ben.md` — ~4,800 words for a 5-point section; collapse to rubric 6.1/6.2 |
-| Ch7 | 10 | ❌ | `ch7_sensitivity_findings.md`, `ch7_rf_if_sensitivity_findings.md`, `ch7_2_imbalance_validation.md`, `ch7_pipeline_diagram.md` |
-| Bonus | +10 | ❌ | `bonus_b3_findings.md` — content is done, needs a body slot |
+| Section | rubric pts | measured pp | state |
+|---|---:|---:|---|
+| `exec_summary.md` | 5 | 1.26 | done |
+| `body_ch1.md` | 15 | 6.06 | done, **the single biggest cut target** |
+| `body_ch3.md` | 15 | 3.62 | done (`5bdcc6b`) |
+| `body_ch8.md` | 20 | 3.52 (3.36 with widths pinned) | done |
+| **four sections** | **55 / 110** | **14.46 / 15** | |
+| Ch2, Ch4, Ch5, Ch6, Ch7, Bonus | **55** | **0.54 left** | unwritten |
 
-Ch4's rubric weight was not captured by the original grep; 10 is assumed, giving
-100 base + 10 bonus.
+Appendices A + B measure **4.97 pp**, or **4.49** with column widths pinned,
+against the 5-page allowance.
+
+### Noam's governing decision — follow this
+
+> *"I don't know yet what targets I want per section. Lets start from something
+> sensible and if it exceeds (like Ch1 which probably would need to) we will cut
+> after finishing the writing."*
+
+**So: write each remaining chapter to a sensible length, then do one deliberate
+cutting pass at the end.** Per-chapter targets are an aim, not a gate. Do not
+stall a chapter trying to hit a number, and do not re-open this decision — it was
+made after a full discussion of the trade-off.
+
+Rough aim for the remaining six: **~1.5–2.0 pp each** (Ch2, Ch4, Ch5, Ch7 carry
+10 points each; Ch6 carries 5 and should be the shortest; Bonus is +10 and worth
+a real page). That lands the body around **24–26 pp**, needing a **~40–45% cut**.
+§5 is how that cut gets paid for.
+
+Figures are **not** extra — embedded figures come out of the same 15 pages.
+
+---
+
+## 5. The cutting playbook — read this before writing more
+
+The endgame is a large cut, and the instinct to solve it by deleting findings is
+wrong: **text trimming is the weakest lever available.** Cutting 172 words from
+Ch1 moved it 0.24 pages (≈505 words/page). Deleting your way to 15 pages means
+deleting roughly half the report's substance.
+
+Use the levers in this order. The first three cost no content at all.
+
+**1. Pin every table's column widths — free, and large.**
+The `<!-- cols: -->` directive (§10) was worth **−43%** on Ch1's five-column
+mapping table (5.19 → 2.98 pp), and −0.48 pp across the two appendices. Without
+it Word autofits, giving every column similar width, so each row's height is set
+by its longest cell while the short cells sit half empty.
+**Not yet applied to `appendix_a_execution.md`, `appendix_b_tables.md` or
+`body_ch8.md`** — validated on scratch copies, never written to the repo. Do this
+first; it is measured, reversible and costs nothing.
+
+**2. Watch words-per-page as the diagnostic.**
+Measured densities: prose ≈ **477 w/p**; a well-packed 2-column 8.5 pt table ≈
+**545–693 w/p**; an autofit 5-column table with one long text column ≈ **289
+w/p**. Any section running *below* 477 is losing page to formatting, not to
+content. **Ch3 currently runs at 398 w/p** — it has recoverable page in it
+without cutting a single finding. Ch1 and Ch8 should be measured the same way.
+
+**3. Convert prose to dense tables.**
+Because a packed table beats prose on density, moving argument into tables
+*saves* page while often reading better. This is also what the formatting spec
+asks for ("tables used wherever they fit").
+
+**4. Delete cross-chapter duplication.**
+Real overlap exists and is cheap to remove because the content survives
+elsewhere. Known instances: Ch1 §1.3, Ch3 and Ch4 all discuss features — Ch1 owns
+the 68→43 funnel and the eight families, Ch3 owns univariate class separation,
+Ch4 owns model-derived importance. Appendix B Table B.3 already carries the
+funnel; Table B.7 already carries every confusion matrix. **`body_ch3.md` was
+written to respect these boundaries — hold the same line in Ch4.**
+
+**5. Move tables (not prose) to Appendix B.**
+Legitimate, but headroom is thin: the appendices are at 4.49/5.00 with widths
+pinned. And **never move graded prose** — that is the Appendix C mistake (§3).
+
+**6. Delete content — last resort.**
+When it comes to this, cut from `body_ch1.md` first. It is 6.06 pp — **42% of the
+body for 15 of 110 points** — and it is the one section everyone agrees is over.
+
+---
+
+## 6. The remaining six sections
 
 Naming convention: condensed body sections are `report/body_chN.md`.
 
-### 5b. Assembly
+**What made Ch3 work, and should be repeated:** the source files were two
+separate EDA write-ups, and the chapter did *not* summarise them in sequence. It
+found the tension between them — D1 says attacks are longer, D2 says the opposite
+— and built the whole chapter on that axis. **Look for the tension in the source
+material and make it the spine.** A chapter that merely compresses its sources
+reads like notes; a chapter with an argument earns its points.
 
-1. **Rewire `build_report.py`.** `BODY_FILES` still lists the stale eight files
-   from before this effort. It must read `title_page.md`, `exec_summary.md`,
-   `body_ch1.md` … `body_ch8.md`, `bonus_b3_findings.md`, then
-   `appendix_a_execution.md` and `appendix_b_tables.md`. **Remove the
-   `"## 6.3 Explicit"` truncation stop** — it drops a graded rubric item. Decide
-   whether Appendix B page-breaks after A or runs on; **running on is what makes
-   the two fit in 5 pages.**
-2. **Embed figures — 33 PNGs in `report/figures/`, currently 0 embedded and 0
-   captioned.** The spec requires a descriptive caption on each. Budget ~1.5 pages
-   for ~6. Strongest candidates: `ch7_pipeline.png` (Rubric Gap 3, architecture
-   diagram), `ch8_transfer_heatmap.png`, `ch4_ranking_dataset{1,2}.png`,
-   `ch3_class_balance.png`. The eight `ch8_confusion_*.png` are better left in the
-   ZIP and referenced, since Table B.7 already carries every confusion matrix.
-3. **Apply `<!-- cols: -->` width directives** to `report/appendix_a_execution.md`,
-   `report/appendix_b_tables.md` and `report/body_ch8.md`. Validated on scratch
-   copies (appendices 4.97 → 4.49 pp; Ch8 3.52 → 3.36) but **not yet written to
-   the repo**. `appendix_b_tables.md` is generated — edit
-   `analysis/appendix_b_tables.py`, not the markdown.
-4. **Rebuild the docx and the ZIP**, then confirm real page counts with the Word
-   harness before declaring the budget met.
+| Section | pts | sources | the angle |
+|---|---:|---|---|
+| **Ch7** | 10 | `ch7_sensitivity_findings.md`, `ch7_rf_if_sensitivity_findings.md`, `ch7_2_imbalance_validation.md`, `ch7_pipeline_diagram.md`; **check Ben's condensed `ch7_2_class_imbalance.md`** | **Directly rubric-mandated**: *"Explicit hyperparameter configuration with sensitivity analysis (no library defaults)"*. Show the swept grids, the chosen configs and that the choices are stable rather than lucky. `ch7_pipeline.png` (architecture) belongs here. Ch7.2's measured grouped-hold-out vs ungrouped-CV comparison is the strongest content. |
+| **Ch2** | 10 | `ch2_literature_review.md`, `ch2_1_literature_matrix.md`, `ch2_1_shellcore_extraction.md`, `ch2_2_adopt_modify_reject.md`, `ch2_3_comparative_contribution_noam.md`, `ch2_shellcore_matrix_noam.md`, `ch2_4_comparative_essay.md` | Two papers (ShellCore, Trizna/TOPS), a comparison matrix, adopt/modify/reject verdicts, and the comparative essay. Ben's `ch2_4_comparative_essay.md` closes the essay rubric item — keep it. The matrix is table-shaped, so this chapter compresses well. |
+| **Ch4** | ~10 | `ch4_ranking_findings.md`, `ch4_ranking_notes.md`, `report/ch4_feature_ranking.csv` | Three-view consensus (gain / permutation / consensus rank) plus the gain-versus-permutation discrepancy analysis and the no-leakage statement. **Must not restate Ch3's effect sizes** — Ch3 is univariate class separation, Ch4 is what the fitted model actually leans on. That distinction *is* the chapter. Figures: `ch4_ranking_dataset{1,2}.png`. |
+| **Ch5** | 10 | `ch5_1_unified_schema.md`, `ch5_2_distribution_shift.md`, `ch5_3_scaling_normalisation.md` | Hits two hard rubric requirements: the **strict dataset-dependency rule** (only ingestion is dataset-aware) and **no data leakage** (scaling fit on training folds only). Ch3 §3.5 already sets up §5.3 — pick the thread up rather than re-arguing it. |
+| **Ch6** | 5 | `ch6_model_justification.md`, `ch6_rf_if_justification.md`, `ch6_model_justification_ben.md`; **check Ben's condensed `ch6_2_rf_if.md`** | **~4,800 words for 5 points — the worst ratio in the project.** Collapse hard to rubric 6.1/6.2. This is the one chapter where aggressive cutting is obviously correct; target ≤1.0 pp. |
+| **Bonus** | +10 | `bonus_b3_findings.md` | Content is finished and needs a body slot. Critical framing from `NOAM_TODO.md:274-276`: the cascade's *headline* is a **negative result** (three single thresholds match or beat it), but the **router works** — an oracle arbitrator on the uncertainty band gives F1 0.9132/0.8849, **+3.7 points** over the best single model on ~5% of traffic. **Score the LLM layer against +3.7, not against zero.** That honesty is worth more than a fake win. |
 
-### 5c. Compliance and close-out
-
-5. **Cross-review.** `WORK_DIVISION.md` requires Noam to read Ben's chapters and
-   flag issues before Aug 14. Not done.
-6. **Tell Ben what was integrated** (§3), or he will redo Appendix C.
-7. **Re-export the AI logs immediately before zipping** — per `ai_logs/README.md`,
-   this must be the last step. Ben must re-export his own block if he has added
-   AI-assisted work since `ebb5f38`.
-8. **Confirm the ZIP filename reading** with the professor.
+Ch4's rubric weight was not captured by the original grep of the assignment PDF;
+10 is assumed, giving 100 base + 10 bonus. The PDF is at
+`docs/Final_Project_AI_Driven_Intrusion_Detection.pdf` if it is worth confirming.
 
 ---
 
-## 6. Tooling
+## 7. Assembly
+
+1. **Rewire `build_report.py`.** `BODY_FILES` (line 21) still lists the stale
+   pre-condensation eight and knows nothing about `body_ch1.md`, `body_ch3.md`,
+   `body_ch8.md`, `title_page.md`, `appendix_a_execution.md` or
+   `appendix_b_tables.md`. It must read `title_page.md`, `exec_summary.md`,
+   `body_ch1.md` … `body_ch8.md`, `bonus_b3_findings.md`, then the two
+   appendices. **Remove the `"## 6.3 Explicit"` truncation stop** — it drops a
+   graded rubric item. Decide whether Appendix B page-breaks after A or runs on;
+   **running on is what makes the two fit in 5 pages.**
+   `OUT` is already `Group_209361864_315005066_Report.docx` (line 16).
+2. **Embed and caption figures — 33 PNGs in `report/figures/`, currently 0
+   embedded and 0 captioned.** The spec requires a descriptive caption on every
+   one. Budget ~1.5 pp for ~6. Best candidates: `ch7_pipeline.png` (architecture),
+   `ch8_transfer_heatmap.png`, `ch4_ranking_dataset{1,2}.png`,
+   `ch3_class_balance.png`. Leave the eight `ch8_confusion_*.png` in the ZIP and
+   reference them — Table B.7 already carries every matrix.
+3. **Apply the `<!-- cols: -->` directives** (§5 lever 1).
+   `appendix_b_tables.md` is **generated** — edit `analysis/appendix_b_tables.py`,
+   not the markdown.
+4. **Rebuild the docx and ZIP**, then confirm page counts with the Word harness
+   before declaring the budget met.
+
+Steps 2–4 depend on frozen text. Step 3 does not — do it early.
+
+---
+
+## 8. AI logs — the policy, and exactly how to satisfy it
+
+**This is a graded deliverable and a disclosure requirement, not paperwork.**
+
+The assignment (`docs/final_project_instructions.txt:34,42`):
+
+> AI Conversation Logs (one .txt or .json file per AI tool used, **full unedited
+> conversations**)
+>
+> you must submit the FULL conversation logs alongside your project… We want to
+> estimate how you actually used agentic / LLM-driven development — not just
+> whether the final code works. **Submissions with no logs but obvious AI
+> fingerprints in the code or report will be treated as undisclosed AI use.**
+
+Project rule, from `ai_logs/README.md`: *truncated, summarized, or curated logs
+will be treated as missing.*
+
+**What ships.** `ai_logs/claude_code_log.txt` is the primary submission file —
+all sessions from both team members, chronological, under `# Session N`
+separators. The per-session `.md` transcripts ship alongside it.
+
+**The export is mechanical.** `ai_logs/export_claude_log.py` pulls verbatim user
+and assistant *text* turns from the raw `.jsonl`; tool calls, tool results,
+system/harness messages and reminders are excluded **block-level** (kept whole or
+dropped whole). No hand-editing is possible or performed.
+`ai_logs/rebuild_claude_code_log.py` then regenerates *every* block from the
+per-session `.md` files, so the combined `.txt` cannot drift and repeated
+rebuilds are idempotent.
+
+**Run this last, immediately before zipping.** Session 4 is *this* session — its
+transcript is incomplete by construction until the work stops. From the repo
+root:
+
+```bash
+# 0. BEN, on his machine only (the source .jsonl is on his laptop).
+#    Needed if he has added AI-assisted work since commit `ebb5f38` (Aug 11).
+python ai_logs/export_claude_log.py \
+  ~/.claude/projects/-Users-bvolovelsky-Downloads-lotl-shell-detection-new/54d95d87-de6d-4b85-a4e8-3e2373c8e028.jsonl \
+  ai_logs/claude_session.md
+
+# 1-3. Noam's three sessions -> log Sessions 2, 3, 4
+python ai_logs/export_claude_log.py \
+  ~/.claude/projects/E--lotl-shell-detection/c016bad2-2622-4f28-8980-8734f78daa1e.jsonl \
+  ai_logs/claude_session_noam.md
+python ai_logs/export_claude_log.py \
+  ~/.claude/projects/E--lotl-shell-detection/ef85a27d-db27-4746-960f-095b3fd3c864.jsonl \
+  ai_logs/claude_session_noam2.md
+python ai_logs/export_claude_log.py \
+  ~/.claude/projects/E--lotl-shell-detection/c6d78cd0-b917-4879-9d90-753790734957.jsonl \
+  ai_logs/claude_session_noam3.md
+
+# 4. Rebuild the combined .txt from all four per-session .md files.
+python ai_logs/rebuild_claude_code_log.py
+```
+
+**Then update `ai_logs/README.md`** — this part is manual and is currently out of
+date:
+
+- Refresh the **turn counts** with what the export script prints (Session 4 was
+  last recorded at 18/18 and has grown well past that).
+- **Remove the "Session 4 is still in progress" warning banner** at the top once
+  the final export is taken.
+- **Extend the Session 4 summary.** It currently stops at the Aug-13 appendix
+  work and does not mention: the Ch1 condensation, the page-budget analysis and
+  the `<!-- cols: -->` mechanism, the **cherry-pick** from Ben's `b1e9997` (the
+  existing text says "the merge of Ben's branch", which describes the earlier
+  Aug-10 merge and is now misleading on its own), `body_ch3.md`, or the final
+  assembly.
+- The README already carries the honest note that the models were **Claude Opus
+  4.8 / Sonnet 4.6** (Ben) and **Claude Fable 5 / Opus 5** (Noam), not the
+  "Claude Sonnet" the rubric prompt assumed. Keep it.
+
+**Do not** hand-edit any transcript, and do not tidy the logs. Mistakes,
+corrections and dead ends in the conversation are the evidence the graders asked
+for.
+
+---
+
+## 9. Compliance and close-out
+
+- [ ] **Push the branch** (currently ahead 1).
+- [ ] **Cross-review Ben's chapters.** `WORK_DIVISION.md` requires Noam to read
+      them and flag issues before Aug 14 — i.e. today. Not done.
+- [ ] **Confirm Ben was told what was integrated** (§3). Noam took this on.
+- [ ] Ben re-exports his AI log if he has worked since `ebb5f38`.
+- [ ] **Re-export all AI logs and update `ai_logs/README.md`** (§8) — *last*.
+- [ ] Rebuild docx, verify page counts, build ZIP.
+- [ ] ZIP filename call (§1) — ship the ID-based name rather than block.
+
+---
+
+## 10. Tooling
 
 ### Measuring pages exactly
 
-Scratchpad scripts (session-specific path; recreate if absent):
+Microsoft Word COM automation works on this machine, so page counts are exact.
+**Always measure; never estimate.** Scratchpad scripts (session-specific path —
+recreate if absent):
 
 - `measure_pages.py` — renders a named `report/*.md` with `build_report`'s
   styling at `Pt(11)`, writing `m_<stem>.docx`. **Requires an absolute path, or a
@@ -214,37 +377,31 @@ $usable = $ps.PageHeight - $ps.TopMargin - $ps.BottomMargin
 $frac = [math]::Round($pg - 1 + ($vp - $ps.TopMargin) / $usable, 2)
 ```
 
-Microsoft Word COM automation is available on this machine, so page counts can be
-exact rather than estimated. **Always measure; never estimate.**
+Usage:
 
-### Measured density facts
-
-- 11 pt Calibri body prose at 1.5 spacing ≈ **477 words/page**.
-- A well-packed 2-column 8.5 pt table ≈ **545–693 words/page** — denser than
-  spec-compliant prose, so moving prose into tables *saves* pages.
-- An autofit 5-column table with one long text column ≈ **289 words/page** — the
-  trap that `<!-- cols: -->` exists to fix.
+```powershell
+$env:PYTHONIOENCODING='utf-8'; python <scratch>\measure_pages.py body_ch3.md | Out-Null
+& <scratch>\pages.ps1 <scratch>\m_body_ch3.docx
+```
 
 ### The `<!-- cols: -->` directive
 
-Added to `build_report.py` this session. A line like
+A line like `<!-- cols: 1.30 0.80 1.20 1.15 2.05 -->` immediately before a table
+pins its column widths in inches. Usable text width is **6.50 in** — make the
+numbers sum to that. Applies to the next table only; a blank line between
+directive and table is harmless. See §5 lever 1 for why it matters.
 
-```
-<!-- cols: 1.30 0.80 1.20 1.15 2.05 -->
-```
+### Escaped pipes in tables
 
-immediately before a table pins its column widths in inches; without it Word
-autofits, giving every column a similar width so each row's height is driven by
-its longest cell while the short cells sit half empty. On the Ch1 §1.2 five-column
-mapping table this was worth **−43%** (5.19 → 2.98 pp). The directive applies to
-the next table only, and a blank line between directive and table is harmless.
+`parse_table_row` splits on **unescaped** pipes only, so a literal shell pipe
+inside a cell must be written `\|`. It is unescaped again for display.
 
 ---
 
-## 7. Canonical numbers — read these, never re-derive
+## 11. Canonical numbers — read these, never re-derive
 
-Every figure below is verified against `results/summary.json` and the shipped
-result files. **Do not transcribe metrics from prose; read them from the JSON.**
+Verified against `results/summary.json` and the shipped result files. **Do not
+transcribe metrics from prose; read them from the JSON.**
 
 ### In-domain hold-out
 
@@ -261,8 +418,8 @@ result files. **Do not transcribe metrics from prose; read them from the JSON.**
 | D2 | xgboost | 1319 | 117 | 117 | 362 | 0.7557 | 0.7557 | 0.7557 | 0.0815 |
 | D2 | isolation_forest | 1422 | 14 | 441 | 38 | 0.7308 | 0.0793 | 0.1431 | 0.0097 |
 
-Baseline TF-IDF + LR: **0.8975 / 0.8824**. It is scored over **all** target rows
-rather than the held-out split, so it is indicative, not directly commensurable —
+Baseline TF-IDF + LR: **0.8975 / 0.8824**. Scored over **all** target rows rather
+than the held-out split, so it is indicative and **not** directly commensurable —
 always italicise it and say so.
 
 ### Cross-dataset transfer (D1→D2 / D2→D1)
@@ -283,21 +440,29 @@ sources. Attack: `hacktricks` 1805, `gtfobins` 957, `atomic_red_team` 685,
 
 **Dataset 2** — 9,576 rows (7,661 / 1,915; 479 attack). Benign: `bash_history`
 5027, `commandlinefu` 2155. Attack: **`honeypot` 2394 — the entire D2 attack
-class.** This is why any sentence about "the honeypot corpus" must be scoped
-explicitly to Dataset 2.
+class.** Any sentence about "the honeypot corpus" must be scoped to Dataset 2.
 
-Class ratio 1:3, so the **do-nothing F1 floor is 0.400** — every score is measured
-against it. Split is 80/20 **grouped by command shape**, with zero groups
-straddling. CV is `StratifiedKFold(n_splits=5, shuffle=True, random_state=SEED)`
-— stratified but **ungrouped**. **SMOTE is not used**; imbalance is handled
-cost-sensitively only.
+Class ratio 1:3, so the **do-nothing F1 floor is 0.400**. Split is 80/20
+**grouped by command shape**, zero groups straddling. CV is
+`StratifiedKFold(n_splits=5, shuffle=True, random_state=SEED)` — stratified but
+**ungrouped**. **SMOTE is not used**; imbalance is cost-sensitive only.
+
+### EDA headlines (from `body_ch3.md`, both verified)
+
+Length-alone probe: **AUC 0.611 on D1, 0.430 on D2** — below chance in the
+direction that worked on D1. Three features invert sign across corpora
+(`len_chars` +0.247/−0.171, `n_quotes` +0.081/−0.112, `n_flags` +0.051/−0.125);
+`digit_ratio` is stable (+0.238/+0.234); `n_pipes` and `head_is_lotl` lean benign
+on both. D1 separates 41/43 features at p<0.05, D2 only 35/43. Redundancy
+threshold is the audit's **|ρ| > 0.9** (`ch3_feature_decisions.md:116`), and
+exactly one pair reaches it.
 
 ### Code facts
 
 - **43 engineered features**, canonical list in `src.features.FEATURE_NAMES`.
 - `MODEL_BUILDERS` keys: `cnn1d`, `isolation_forest`, `random_forest`, `xgboost`,
-  `xgboost_hybrid`. **`cnn` and `baseline` are dead keys.** The CNN builder is
-  `build_cnn1d` (`src/models.py:314`) and the class is `CNN1DClassifier`.
+  `xgboost_hybrid`. **`cnn` and `baseline` are dead keys.** CNN builder is
+  `build_cnn1d` (`src/models.py:314`), class `CNN1DClassifier` (`:217`).
 - `src/ingestion.py` exposes `available_datasets()`, `_read(csv_name)` and
   **`load(dataset) -> (train_df, test_df)`**. There is no `load_dataset`.
 - Random Forest ships `n_estimators=400, max_depth=24, max_features="sqrt",
@@ -306,12 +471,12 @@ cost-sensitively only.
 - ShellCore's full citation: Alasmary et al. (2022), *ShellCore: Automating
   Malicious IoT Software Detection by Using Shell Commands Representation*, IEEE
   Internet of Things Journal 9(4):2485–2496, doi:10.1109/JIOT.2021.3086398,
-  preprint arXiv:2103.14221. Prefer the journal venue over the bare arXiv ID;
-  `report/body_ch8.md` currently cites only the arXiv number.
+  preprint arXiv:2103.14221. Prefer the journal venue; `body_ch8.md` currently
+  cites only the arXiv number.
 
 ---
 
-## 8. Hard constraints — do not violate
+## 12. Hard constraints — do not violate
 
 - **Never commit `HF_TOKEN`.** The assignment says so explicitly: read it from an
   environment variable or a `.env` file.
@@ -319,27 +484,29 @@ cost-sensitively only.
 - **The `source` column is never a model input.**
 - **The strings `dataset1` / `dataset2` are banned in `src/*.py` outside
   `ingestion.py`, even in comments** — enforced by `tests/test_pipeline.py:43-48`.
-  `analysis/*.py` is exempt.
+  `analysis/*.py` is exempt. This is the graded "strict dataset dependency rule".
 - **Do not re-run `analysis/ch3_feature_audit.py` to "refresh"
   `report/ch3_feature_decisions.md`.** It overwrites Noam's hand-entered FINAL
   KEEP/KILL verdicts. The audit JSON it consumes is already in
   `results/ch3_feature_audit.json`.
-- `report/ch3_eda_findings.md` is Ben's hand-written prose and is marked never
+- `report/ch3_eda_findings.md` is Ben's hand-written prose, marked never
   machine-overwritten (see the `analysis/ch3_eda.py` docstring).
+- **Never relocate graded prose to an appendix.** The professor scoped appendices
+  to "additional tables and graphs".
 
 ---
 
-## 9. Suggested order of work
+## 13. Suggested order
 
-1. Get Noam's sign-off on the §4 target split.
-2. Cut `body_ch1.md` 6.06 → 2.6 pp.
-3. Write `body_ch3.md` (15 pts) straight to 2.6 pp.
-4. Then Ch7 → Ch2 → Ch4 → Ch5 → Ch6 → bonus, one at a time, each to target, each
-   reviewed by Noam before moving on.
-5. Rewire `build_report.py`; apply the `<!-- cols: -->` directives.
-6. Embed and caption the chosen figures; re-measure.
-7. Cross-review Ben's chapters; send him the §3 integration summary.
-8. Rebuild docx and ZIP, verify page counts.
-9. **Re-export AI logs last**, then submit.
-
-Steps 5–6 depend on the text being frozen, so do not start them early.
+1. **Push.** Then apply the `<!-- cols: -->` directives (§5 lever 1) — free page,
+   no dependency on text being final.
+2. Write **Ch7 → Ch4 → Ch5 → Ch2 → Ch6 → Bonus**, one at a time, each reviewed by
+   Noam before the next. Ch7 first because it is rubric-mandated and its sources
+   are the most finished; Ch6 late because it needs the most aggressive
+   compression and benefits from knowing how much room is left.
+3. Measure every section as it lands; keep a running total against 15.
+4. **One cutting pass** using §5, in lever order. Ch1 absorbs the most.
+5. Embed and caption the chosen figures; re-measure.
+6. Cross-review Ben's chapters.
+7. Rebuild docx and ZIP; verify page counts.
+8. **Re-export AI logs and update `ai_logs/README.md` — last.** Then submit.

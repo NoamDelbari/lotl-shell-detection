@@ -241,11 +241,6 @@ def add_title_page(doc):
     rc.font.size = Pt(12); rc.font.name = "Calibri"
     set_spacing(course, space_before=6, space_after=18)
 
-    grp = doc.add_paragraph(); grp.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    rg = grp.add_run("Group 10")
-    rg.font.size = Pt(12); rg.font.bold = True; rg.font.name = "Calibri"
-    set_spacing(grp, space_before=6, space_after=4)
-
     team = doc.add_paragraph(); team.alignment = WD_ALIGN_PARAGRAPH.CENTER
     rt = team.add_run("Ben Volovelsky · ID 209361864 · bvolovelsky@nvidia.com\n"
                       "Noam Delbari · ID 315005066 · noam.delbari@post.runi.ac.il")

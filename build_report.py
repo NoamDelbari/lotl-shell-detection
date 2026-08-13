@@ -47,6 +47,25 @@ APPENDIX_FILES = [
     ("appendix_b_environment.md",      "PAGE", None),
 ]
 
+# Descriptive caption for every rendered table, in document order (spec: all
+# tables must be captioned). Kept here rather than in the .md sources so the
+# stop_before truncations do not have to be caption-aware.
+TABLE_CAPTIONS = [
+    "In-domain F1, false-positive rate, and D2->D1 transfer F1 for the five detectors and the character n-gram baseline on both datasets.",
+    "Telemetry and feature mapping for three T1059.004-adjacent sub-techniques: shell-log signature, capturing source, engineered features, and whether provenance labelling detects them.",
+    "Feature-and-model extraction matrix comparing Trizna's SLP work with this project across six dimensions.",
+    "Per-feature benign vs. attack variance and variance gap on Dataset 1, ranked by gap.",
+    "Top five Dataset 1 features by XGBoost gain, with what each measures and its MITRE ATT&CK mapping.",
+    "Covariate-shift probe: ROC-AUC of a classifier trained to separate Dataset 1 from Dataset 2 rows using the 43 features alone.",
+    "Cross-dataset performance of all five models (in-domain and both transfer directions) across Accuracy, Precision, Recall/DR, FPR, F1, and ROC-AUC.",
+    "Error-profile comparison of failure modes: a Trizna-style anomaly detector vs. our XGBoost-hybrid and 1D-CNN.",
+    "Dataset 1 - cascade configurations vs. the single best model: F1, precision, recall, FPR, and confusion counts.",
+    "Dataset 2 - cascade configurations vs. the single best model: F1, precision, recall, FPR, and confusion counts.",
+    "Local Llama-3.1-8B arbitration on high-uncertainty edge cases: accuracy, agreement with the model vote, mean latency, and call count per dataset.",
+    "Software frameworks and versions used across the pipeline.",
+]
+_TABLE_I = 0
+
 def set_spacing(para, space_before=0, space_after=6, line_spacing=1.5):
     pf = para.paragraph_format
     pf.space_before = Pt(space_before)
@@ -130,7 +149,19 @@ def add_table(doc, rows):
         for cell in row.cells:
             for p in cell.paragraphs:
                 for run in p.runs: run.font.size = Pt(8.5)
-    doc.add_paragraph()
+    add_table_caption(doc)
+
+
+def add_table_caption(doc):
+    global _TABLE_I
+    cap = TABLE_CAPTIONS[_TABLE_I] if _TABLE_I < len(TABLE_CAPTIONS) else ""
+    _TABLE_I += 1
+    p = doc.add_paragraph()
+    r = p.add_run(f"Table {_TABLE_I}. {cap}")
+    r.italic = True; r.font.name = "Calibri"; r.font.size = Pt(9)
+    pf = p.paragraph_format
+    pf.space_before = Pt(2); pf.space_after = Pt(8)
+    pf.line_spacing_rule = WD_LINE_SPACING.MULTIPLE; pf.line_spacing = 1.0
 
 def page_break(doc):
     pb = doc.add_paragraph()
@@ -255,6 +286,8 @@ def add_title_page(doc):
     page_break(doc)
 
 def main():
+    global _TABLE_I
+    _TABLE_I = 0
     doc = setup_doc()
     add_title_page(doc)
 

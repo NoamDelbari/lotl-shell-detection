@@ -21,22 +21,25 @@ OUT    = ROOT / "Group_10_Report.docx"
 # Every graded chapter is represented (Exec + Ch1-8 + Bonus). stop_before trims
 # each source file to its headline deliverable so all chapters fit the page budget;
 # full versions live in report/*.md (and Group_10_Report_FULL.docx) in the ZIP.
+# Chapters flow continuously (no per-chapter page break) so headings — not blank
+# half-pages — separate them; this reclaims ~4-5 pages vs one-chapter-per-page.
+# stop_before trims each file to its headline deliverable.
 BODY_FILES = [
-    ("exec_summary.md",                None,   None),
-    ("ch1_threat_mapping.md",          "PAGE", None),
-    ("ch2_literature_review.md",       "PAGE", "## Comparative essay"),
-    ("ch3_eda_findings.md",            "PAGE", "Three takeaways"),
-    ("ch4_ranking_findings.md",        "PAGE", "## Surprises versus intuition"),
-    ("ch5_1_unified_schema.md",        "PAGE", "## One column, one contract"),
-    ("ch5_2_distribution_shift.md",    None,   "## Effect shift I"),
-    ("ch5_3_scaling_normalisation.md", None,   "## Why a scaler"),
-    ("ch6_model_justification.md",     "PAGE", "## 6.3 Explicit"),
-    ("ch7_sensitivity_findings.md",    "PAGE", "## Headline answers"),
-    ("ch8_1_error_forensics_ben.md",   "PAGE", None),
-    ("ch8_2_cross_dataset_table.md",   None,   None),
-    ("ch8_3_tops_comparison.md",       None,   "## What Trizna"),
-    ("ch8_4_cascade_analysis.md",      None,   "## Attributing every error"),
-    ("bonus_b3_findings.md",           "PAGE", None),
+    ("exec_summary.md",                None, None),
+    ("ch1_threat_mapping.md",          None, None),
+    ("ch2_literature_review.md",       None, "## Comparative essay"),
+    ("ch3_eda_findings.md",            None, "Variance gap is a measure"),
+    ("ch4_ranking_findings.md",        None, "## Surprises versus intuition"),
+    ("ch5_1_unified_schema.md",        None, "## One column, one contract"),
+    ("ch5_2_distribution_shift.md",    None, "## Effect shift I"),
+    ("ch5_3_scaling_normalisation.md", None, "## Why a scaler"),
+    ("ch6_model_justification.md",     None, "## 6.3 Explicit"),
+    ("ch7_sensitivity_findings.md",    None, "## Headline answers"),
+    ("ch8_1_error_forensics_ben.md",   None, None),
+    ("ch8_2_cross_dataset_table.md",   None, None),
+    ("ch8_3_tops_comparison.md",       None, "## What Trizna"),
+    ("ch8_4_cascade_analysis.md",      None, "## Attributing every error"),
+    ("bonus_b3_findings.md",           None, None),
 ]
 
 APPENDIX_FILES = [

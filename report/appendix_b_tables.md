@@ -1,20 +1,17 @@
 # Appendix B — Supporting Tables
 
 Generated from the shipped artefacts by `python analysis/appendix_b_tables.py`;
-every figure here is read from a result file, none is transcribed. These are the
-tables the body chapters summarise but do not print in full.
+every figure is read from a result file, none is transcribed.
 
-## B.1 Feature importance — full consensus ranking
+## B.1 Feature importance — consensus ranking
 
+**Table B.1 — Dataset 1: top 8 features by consensus rank.**
 `analysis/ch4_ranking.py` scores all 43 features three ways on a held-out
-25% of the training split: Random Forest impurity decrease (MDI), XGBoost average
-gain per split, and permutation importance measured on the Random Forest.
-*Consensus* is the mean of the three per-view ranks, so lower is better. Chapter 4
-discusses the top eight and the disagreement between the three views; the top
-fifteen on each corpus follow.
-
-**Table B.1 — Dataset 1: top 15 features by consensus rank.** 4 of
-the 43 features receive exactly zero XGBoost gain on this corpus.
+25% of the training split — Random Forest impurity decrease (MDI), XGBoost gain
+per split, permutation importance — and *consensus* is the mean of the three
+ranks, so lower is better. 4 features receive
+exactly zero XGBoost gain here. The full 43-row ranking is the shipped
+`report/ch4_feature_ranking.csv`.
 
 | # | feature | RF MDI | XGB gain | permutation | consensus |
 |---:|---|---:|---:|---:|---:|
@@ -26,17 +23,10 @@ the 43 features receive exactly zero XGBoost gain on this corpus.
 | 6 | `n_redirect_out` | 0.0415 | 0.0261 | 0.0116 | 9.00 |
 | 7 | `has_lotl_bin` | 0.0216 | 0.0378 | 0.0045 | 10.00 |
 | 8 | `digit_ratio` | 0.0609 | 0.0152 | 0.0136 | 10.67 |
-| 9 | `head_is_lotl` | 0.0187 | 0.0452 | 0.0026 | 11.33 |
-| 10 | `max_token_len` | 0.0868 | 0.0106 | 0.0125 | 12.33 |
-| 11 | `len_tokens` | 0.0533 | 0.0152 | 0.0034 | 14.00 |
-| 12 | `mean_token_len` | 0.0771 | 0.0099 | 0.0040 | 14.33 |
-| 13 | `n_sensitive_paths` | 0.0259 | 0.0198 | 0.0032 | 14.33 |
-| 14 | `n_flags` | 0.0335 | 0.0124 | 0.0062 | 14.67 |
-| 15 | `len_chars` | 0.0734 | 0.0098 | 0.0037 | 15.33 |
 
-**Table B.2 — Dataset 2: top 15 features by consensus rank.** 8 of
-the 43 features receive exactly zero XGBoost gain here — twice Dataset 1's
-count, and the reason §4.2 treats the ranking as corpus-specific.
+**Table B.2 — Dataset 2: top 8 features by consensus rank.** 8 features
+receive zero gain — twice Dataset 1's count, and the reason §4.2 treats the
+ranking as corpus-specific.
 
 | # | feature | RF MDI | XGB gain | permutation | consensus |
 |---:|---|---:|---:|---:|---:|
@@ -48,83 +38,32 @@ count, and the reason §4.2 treats the ranking as corpus-specific.
 | 6 | `head_is_shell` | 0.0181 | 0.0670 | 0.0092 | 10.33 |
 | 7 | `head_is_lotl` | 0.0254 | 0.0655 | 0.0086 | 10.33 |
 | 8 | `has_evasion_tok` | 0.0257 | 0.0431 | 0.0090 | 11.00 |
-| 9 | `len_chars` | 0.1077 | 0.0127 | 0.0296 | 11.00 |
-| 10 | `has_shell_bin` | 0.0181 | 0.0692 | 0.0052 | 11.33 |
-| 11 | `digit_ratio` | 0.0849 | 0.0140 | 0.0242 | 12.33 |
-| 12 | `special_ratio` | 0.1012 | 0.0096 | 0.0288 | 12.33 |
-| 13 | `mean_token_len` | 0.0934 | 0.0110 | 0.0162 | 13.33 |
-| 14 | `n_flags` | 0.0352 | 0.0149 | 0.0129 | 14.67 |
-| 15 | `has_url` | 0.0208 | 0.0222 | 0.0033 | 15.00 |
 
-## B.2 Feature selection — what was rejected and why
+## B.2 Feature selection — the 68 → 43 funnel
 
-Chapter 3 audits 68 candidate features on the training
-split only and keeps 43. Two rejection rules: a candidate fails the
-**gate** if it shows no usable effect on either corpus at these sample sizes, and
-it is cut as **redundant** if its absolute correlation with a retained feature
-exceeds 0.9 and that feature carries the same signal. Every verdict was ruled
-jointly and is recorded with its evidence in `report/ch3_feature_decisions.md`.
-
-**Table B.3 — Feature funnel.**
+**Table B.3 — Feature funnel: 68 candidates audited,
+25 rejected by reason, 43 retained by family.** A candidate fails
+the **gate** if it shows no usable effect on either corpus at these sample sizes,
+and is **redundant** if it correlates above 0.9 with a retained feature carrying
+the same signal; every verdict is recorded with its evidence in
+`report/ch3_feature_decisions.md`. Two rejections are results in themselves: the
+themed path splits (`n_cred_paths`, `n_proc_paths`, `n_log_paths`) each died while
+their lump `n_sensitive_paths` survived, refuting split-covers-lump; and
+`has_privesc_bin` is class-neutral while positional `head_is_privesc` passes —
+*where* a binary sits matters, *that* it appears does not.
 
 | stage | features |
 |---|---:|
 | Candidates implemented and audited | 68 |
-| — rejected: no effect (gate) | 20 |
-| — rejected: redundant (ρ > 0.9 cluster) | 4 |
-| — rejected: no effect + redundant | 1 |
+| — rejected (25), by reason | no effect (gate) 20 · redundant (ρ > 0.9 cluster) 4 · no effect + redundant 1 |
 | **Final feature set** | **43** |
-| &nbsp;&nbsp;&nbsp;&nbsp;of which shape/size | 4 |
-| &nbsp;&nbsp;&nbsp;&nbsp;of which structure/chaining | 4 |
-| &nbsp;&nbsp;&nbsp;&nbsp;of which network/delivery | 4 |
-| &nbsp;&nbsp;&nbsp;&nbsp;of which binary families | 6 |
-| &nbsp;&nbsp;&nbsp;&nbsp;of which A: head/args | 6 |
-| &nbsp;&nbsp;&nbsp;&nbsp;of which B: exec micro-structure | 8 |
-| &nbsp;&nbsp;&nbsp;&nbsp;of which C: paths/filesystem | 5 |
-| &nbsp;&nbsp;&nbsp;&nbsp;of which D: obfuscation | 6 |
+| &nbsp;&nbsp;of which, by family | shape/size 4 · structure/chaining 4 · network/delivery 4 · binary families 6 · A: head/args 6 · B: exec micro-structure 8 · C: paths/filesystem 5 · D: obfuscation 6 |
 
-**Table B.4 — The 25 rejected candidates.** Rejection is itself a
-result: the themed path splits (`n_cred_paths`, `n_proc_paths`, `n_log_paths`)
-each died while their lump `n_sensitive_paths` survived, refuting the
-split-covers-lump hypothesis; and `has_privesc_bin` is class-neutral while
-positional `head_is_privesc` passes — *where* a binary sits matters, *that* it
-appears does not.
+## B.3 Hyperparameter sensitivity
 
-| candidate | why rejected | signal absorbed by |
-|---|---|---|
-| `token_entropy` | redundant (ρ > 0.9 cluster) | `len_tokens` |
-| `char_entropy` | redundant (ρ > 0.9 cluster) | `len_chars` |
-| `n_redirect_in` | no effect (gate) | — |
-| `n_semicolons` | no effect (gate) | — |
-| `n_and_or` | no effect (gate) | — |
-| `n_backticks_subshell` | no effect (gate) | — |
-| `n_parens` | no effect (gate) | — |
-| `n_braces` | no effect (gate) | — |
-| `n_ipv4` | no effect (gate) | `has_ipv4` |
-| `has_public_ip` | redundant (ρ > 0.9 cluster) | `has_ipv4` |
-| `n_ports` | no effect (gate) | — |
-| `n_enum_bins` | no effect + redundant | `has_enum_bin` |
-| `has_privesc_bin` | no effect (gate) | — |
-| `head_is_fetch` | redundant (ρ > 0.9 cluster) | `has_fetch_bin` |
-| `head_is_enum` | no effect (gate) | — |
-| `n_assign_prefix` | no effect (gate) | — |
-| `n_cred_paths` | no effect (gate) | `n_sensitive_paths` |
-| `n_proc_paths` | no effect (gate) | `n_sensitive_paths` |
-| `n_log_paths` | no effect (gate) | `n_sensitive_paths` |
-| `has_eval` | no effect (gate) | — |
-| `nonprintable_ratio` | no effect (gate) | — |
-| `n_var_assignments` | no effect (gate) | — |
-| `n_var_expansions` | no effect (gate) | — |
-| `n_backslash` | no effect (gate) | — |
-| `subshell_depth` | no effect (gate) | — |
-
-## B.3 Hyperparameter sensitivity — every swept configuration
-
-Chapter 7.3 reports the headline conclusion; these are the runs behind it. Each
-axis is swept one-at-a-time from the shipped configuration, training on the full
-training split and scoring on the held-out test split.
-
-**Table B.5 — XGBoost: all swept configurations.**
+**Table B.4 — XGBoost: all swept configurations.** Each axis is swept
+one-at-a-time from the shipped configuration, training on the full training split
+and scoring on the held-out test split; the same holds for Tables B.5 and B.6.
 
 | hyperparameter | value | Dataset 1 F1 | Dataset 1 FPR | Dataset 2 F1 | Dataset 2 FPR |
 |---|---:|---:|---:|---:|---:|
@@ -142,7 +81,7 @@ training split and scoring on the held-out test split.
 |  | 3.0 | 0.7856 | 0.0717 | 0.7557 | 0.0815 |
 |  | 6.0 | 0.7647 | 0.1076 | 0.7522 | 0.1135 |
 
-**Table B.6 — 1D-CNN: all swept configurations.**
+**Table B.5 — 1D-CNN: all swept configurations.**
 
 | hyperparameter | value | Dataset 1 F1 | Dataset 1 FPR | Dataset 2 F1 | Dataset 2 FPR |
 |---|---:|---:|---:|---:|---:|
@@ -159,54 +98,43 @@ training split and scoring on the held-out test split.
 |  | 3.0 | 0.8293 | 0.0761 | 0.8086 | 0.0912 |
 |  | 6.0 | 0.8060 | 0.1189 | 0.7357 | 0.1811 |
 
-**Table B.7 — Random Forest and Isolation Forest sweeps.** Isolation Forest's
-`contamination` moves only its own internal cut-off; the shipped pipeline scores
-it through the same fixed 0.5 wrapper as every other model, which is the last row
-of each block and the number `results/summary.json` reports.
+**Table B.6 — Random Forest and Isolation Forest sweeps.** Omitted for space, and
+present in `results/ch7_rf_if_sensitivity.json`: `n_estimators` ∈ {50, 200}, which at
+fixed `max_depth` move F1 by at most 0.012, and
+`contamination=0.05`, which sits below the rise on both corpora.
+Contamination moves only Isolation Forest's own cut-off — the shipped pipeline
+scores it through the same fixed 0.5 wrapper as every other model, the last row
+of each block.
 
-| model | dataset | configuration | F1 | recall | FPR | ROC-AUC |
-|---|---|---|---:|---:|---:|---:|
-| Random Forest | Dataset 1 | n_estimators=50, max_depth=None | 0.7806 | 0.7192 | 0.0411 | 0.9290 |
-| Random Forest | Dataset 1 | n_estimators=100, max_depth=None | 0.7843 | 0.7231 | 0.0402 | 0.9306 |
-| Random Forest | Dataset 1 | n_estimators=200, max_depth=None | 0.7845 | 0.7310 | 0.0442 | 0.9308 |
-| Random Forest | Dataset 1 | n_estimators=500, max_depth=None | 0.7850 | 0.7283 | 0.0424 | 0.9301 |
-| Random Forest | Dataset 1 | n_estimators=50, max_depth=10 | 0.7801 | 0.7402 | 0.0525 | 0.9237 |
-| Random Forest | Dataset 1 | n_estimators=100, max_depth=10 | 0.7840 | 0.7480 | 0.0533 | 0.9233 |
-| Random Forest | Dataset 1 | n_estimators=200, max_depth=10 | 0.7868 | 0.7507 | 0.0525 | 0.9231 |
-| Random Forest | Dataset 1 | n_estimators=500, max_depth=10 | 0.7876 | 0.7520 | 0.0525 | 0.9232 |
-| Random Forest | Dataset 1 | n_estimators=50, max_depth=20 | 0.7926 | 0.7297 | 0.0372 | 0.9386 |
-| Random Forest | Dataset 1 | n_estimators=100, max_depth=20 | 0.7963 | 0.7283 | 0.0337 | 0.9408 |
-| Random Forest | Dataset 1 | n_estimators=200, max_depth=20 | 0.7988 | 0.7270 | 0.0310 | 0.9414 |
-| Random Forest | Dataset 1 | n_estimators=500, max_depth=20 | 0.8006 | 0.7297 | 0.0310 | 0.9418 |
-| Random Forest | Dataset 2 | n_estimators=50, max_depth=None | 0.7419 | 0.6931 | 0.0585 | 0.9251 |
-| Random Forest | Dataset 2 | n_estimators=100, max_depth=None | 0.7393 | 0.6868 | 0.0571 | 0.9256 |
-| Random Forest | Dataset 2 | n_estimators=200, max_depth=None | 0.7435 | 0.6868 | 0.0536 | 0.9271 |
-| Random Forest | Dataset 2 | n_estimators=500, max_depth=None | 0.7475 | 0.6952 | 0.0550 | 0.9282 |
-| Random Forest | Dataset 2 | n_estimators=50, max_depth=10 | 0.7430 | 0.7453 | 0.0870 | 0.9160 |
-| Random Forest | Dataset 2 | n_estimators=100, max_depth=10 | 0.7356 | 0.7203 | 0.0794 | 0.9165 |
-| Random Forest | Dataset 2 | n_estimators=200, max_depth=10 | 0.7347 | 0.7140 | 0.0766 | 0.9172 |
-| Random Forest | Dataset 2 | n_estimators=500, max_depth=10 | 0.7311 | 0.7182 | 0.0822 | 0.9184 |
-| Random Forest | Dataset 2 | n_estimators=50, max_depth=20 | 0.7514 | 0.6973 | 0.0529 | 0.9333 |
-| Random Forest | Dataset 2 | n_estimators=100, max_depth=20 | 0.7503 | 0.6931 | 0.0515 | 0.9346 |
-| Random Forest | Dataset 2 | n_estimators=200, max_depth=20 | 0.7559 | 0.7015 | 0.0515 | 0.9357 |
-| Random Forest | Dataset 2 | n_estimators=500, max_depth=20 | 0.7584 | 0.7077 | 0.0529 | 0.9371 |
-| Isolation Forest | Dataset 1 | contamination=0.05 | 0.5488 | 0.4318 | 0.0472 | 0.8120 |
-| Isolation Forest | Dataset 1 | contamination=0.1 | 0.6413 | 0.5971 | 0.0883 | 0.8120 |
-| Isolation Forest | Dataset 1 | contamination=0.2 | 0.6023 | 0.6759 | 0.1893 | 0.8120 |
-| Isolation Forest | Dataset 1 | contamination=0.3 | 0.5638 | 0.7310 | 0.2873 | 0.8120 |
-| Isolation Forest | Dataset 1 | **shipped: fixed 0.5 wrapper** | 0.2492 | 0.1457 | 0.0079 | 0.8120 |
-| Isolation Forest | Dataset 2 | contamination=0.05 | 0.2633 | 0.1649 | 0.0292 | 0.6768 |
-| Isolation Forest | Dataset 2 | contamination=0.1 | 0.3842 | 0.3048 | 0.0940 | 0.6768 |
-| Isolation Forest | Dataset 2 | contamination=0.2 | 0.4615 | 0.4760 | 0.1957 | 0.6768 |
-| Isolation Forest | Dataset 2 | contamination=0.3 | 0.4569 | 0.5595 | 0.2967 | 0.6768 |
-| Isolation Forest | Dataset 2 | **shipped: fixed 0.5 wrapper** | 0.1431 | 0.0793 | 0.0097 | 0.6768 |
+| model | configuration | F1 | recall | FPR | ROC-AUC |
+|---|---|---:|---:|---:|---:|
+| Random Forest, D1 | n_estimators=100, max_depth=None | 0.7843 | 0.7231 | 0.0402 | 0.9306 |
+| Random Forest, D1 | n_estimators=500, max_depth=None | 0.7850 | 0.7283 | 0.0424 | 0.9301 |
+| Random Forest, D1 | n_estimators=100, max_depth=10 | 0.7840 | 0.7480 | 0.0533 | 0.9233 |
+| Random Forest, D1 | n_estimators=500, max_depth=10 | 0.7876 | 0.7520 | 0.0525 | 0.9232 |
+| Random Forest, D1 | n_estimators=100, max_depth=20 | 0.7963 | 0.7283 | 0.0337 | 0.9408 |
+| Random Forest, D1 | n_estimators=500, max_depth=20 | 0.8006 | 0.7297 | 0.0310 | 0.9418 |
+| Random Forest, D2 | n_estimators=100, max_depth=None | 0.7393 | 0.6868 | 0.0571 | 0.9256 |
+| Random Forest, D2 | n_estimators=500, max_depth=None | 0.7475 | 0.6952 | 0.0550 | 0.9282 |
+| Random Forest, D2 | n_estimators=100, max_depth=10 | 0.7356 | 0.7203 | 0.0794 | 0.9165 |
+| Random Forest, D2 | n_estimators=500, max_depth=10 | 0.7311 | 0.7182 | 0.0822 | 0.9184 |
+| Random Forest, D2 | n_estimators=100, max_depth=20 | 0.7503 | 0.6931 | 0.0515 | 0.9346 |
+| Random Forest, D2 | n_estimators=500, max_depth=20 | 0.7584 | 0.7077 | 0.0529 | 0.9371 |
+| Isolation Forest, D1 | contamination=0.1 | 0.6413 | 0.5971 | 0.0883 | 0.8120 |
+| Isolation Forest, D1 | contamination=0.2 | 0.6023 | 0.6759 | 0.1893 | 0.8120 |
+| Isolation Forest, D1 | contamination=0.3 | 0.5638 | 0.7310 | 0.2873 | 0.8120 |
+| Isolation Forest, D1 | **shipped: fixed 0.5 wrapper** | 0.2492 | 0.1457 | 0.0079 | 0.8120 |
+| Isolation Forest, D2 | contamination=0.1 | 0.3842 | 0.3048 | 0.0940 | 0.6768 |
+| Isolation Forest, D2 | contamination=0.2 | 0.4615 | 0.4760 | 0.1957 | 0.6768 |
+| Isolation Forest, D2 | contamination=0.3 | 0.4569 | 0.5595 | 0.2967 | 0.6768 |
+| Isolation Forest, D2 | **shipped: fixed 0.5 wrapper** | 0.1431 | 0.0793 | 0.0097 | 0.6768 |
 
 ## B.4 Confusion matrices behind every headline score
 
-**Table B.8 — Full confusion matrices, in-domain hold-out.** Counts are test-split
-rows; Dataset 1's test split is 3,049 rows (762 attack) and Dataset 2's is 1,915
-(479 attack). The 1:3 attack:benign ratio means a do-nothing classifier that
-flags everything scores F1 0.400, which is the floor every model here must beat.
+**Table B.7 — Full confusion matrices, in-domain hold-out.** Dataset 1's test
+split is 3,049 rows (762 attack), Dataset 2's is 1,915 (479). At that 1:3 ratio a
+do-nothing classifier flagging everything scores F1 0.400 — the floor every model
+here must beat.
 
 | dataset | model | TN | FP | FN | TP | precision | recall | F1 | FPR |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|

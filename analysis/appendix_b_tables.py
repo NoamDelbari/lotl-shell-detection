@@ -3,20 +3,27 @@ appendix_b_tables.py -- generate Appendix B (supporting tables) from the live
 artefacts.
 
 Appendix B holds the evidence the body chapters summarise but cannot afford to
-print in full: the complete feature ranking, the complete record of which
-candidate features were rejected and why, every hyperparameter configuration
-that was swept, and the confusion matrix behind every headline score.
+print in full: the feature ranking, the 68 -> 43 selection funnel, every
+hyperparameter configuration that was swept, and the confusion matrix behind
+every headline score.
 
 Generated rather than hand-written so no number can be mistyped and so the
 appendix follows the artefacts after any re-run.
 
+The appendix shares a hard 5-page allowance with Appendix A, so four things here
+are deliberate budget choices rather than oversights: TOP_N, the omission of a
+per-candidate rejection table (its two findings are stated in the B.2 prose
+instead), RF_N_ESTIMATORS_SHOWN and IF_CONTAMINATION_SKIPPED. Each keeps the
+underlying artefact intact -- nothing is dropped from results/, only from what
+the appendix prints, and each table says in its caption what it leaves out.
+
 Sources:
   report/ch4_feature_ranking.csv       -> B.1, B.2
-  report/ch3_feature_decisions.md      -> B.3, B.4   (read only; never re-run
+  report/ch3_feature_decisions.md      -> B.3        (read only; never re-run
                                           analysis/ch3_feature_audit.py)
-  results/ch7_sensitivity.json         -> B.5, B.6
-  results/ch7_rf_if_sensitivity.json   -> B.7
-  results/summary.json                 -> B.8
+  results/ch7_sensitivity.json         -> B.4, B.5
+  results/ch7_rf_if_sensitivity.json   -> B.6
+  results/summary.json                 -> B.7
 
 Run: python analysis/appendix_b_tables.py
 Writes: report/appendix_b_tables.md
@@ -70,8 +77,16 @@ def zero_gain_count(rows: list, dataset: str) -> int:
                if r["dataset"] == dataset and float(r["xgb_gain"]) == 0.0)
 
 
+# How many features each ranking table prints. Purely a page-budget number -- the
+# shared 5-page appendix allowance does not fit more. Chapter 4 does discuss a
+# couple of features that fall just outside it (max_token_len, len_chars, at
+# consensus ranks 9-10), so the caption points at the full 43-row ranking, which
+# ships as report/ch4_feature_ranking.csv.
+TOP_N = 8
+
+
 # --------------------------------------------------------------------------- #
-# B.3 / B.4 -- the 68 -> 43 feature gate                                       #
+# B.3 -- the 68 -> 43 feature gate                                             #
 # --------------------------------------------------------------------------- #
 KILL_HEADER = re.compile(r"^## Killed candidates")
 
@@ -111,19 +126,7 @@ def kill_reason(verdict: str) -> str:
     return "no effect (gate)"
 
 
-def kill_covered_by(verdict: str) -> str:
-    """The feature that absorbs a killed candidate's signal, if any."""
-    m = re.search(r"keep `([^`]+)`", verdict) or re.search(r"`([^`]+)` (?:carries|covers)", verdict)
-    if m:
-        return f"`{m.group(1)}`"
-    m = re.search(r"lump `([^`]+)` covers", verdict)
-    if m:
-        return f"`{m.group(1)}`"
-    m = re.search(r"cluster with `([^`]+)`", verdict)
-    return f"`{m.group(1)}`" if m else "—"
-
-
-def gate_tables(kept: list, killed: list) -> tuple:
+def gate_table(kept: list, killed: list) -> str:
     reasons = Counter(kill_reason(v) for _, v in killed)
     fam_counts = Counter(f for f, _, _ in kept)
 
@@ -133,16 +136,18 @@ def gate_tables(kept: list, killed: list) -> tuple:
     t3 = ["| stage | features |",
           "|---|---:|",
           f"| Candidates implemented and audited | {len(kept) + len(killed)} |"]
-    for reason, n in sorted(reasons.items(), key=lambda kv: -kv[1]):
-        t3.append(f"| — rejected: {reason} | {n} |")
+    # One line per rejection reason, like one line per family below, is more
+    # appendix allowance than three numbers are worth.
+    t3.append(f"| — rejected ({len(killed)}), by reason | "
+              + " · ".join(f"{r} {n}" for r, n
+                           in sorted(reasons.items(), key=lambda kv: -kv[1]))
+              + " |")
     t3.append(f"| **Final feature set** | **{len(kept)}** |")
-    for fam, n in fam_counts.items():
-        t3.append(f"| &nbsp;&nbsp;&nbsp;&nbsp;of which {fam} | {n} |")
-
-    t4 = ["| candidate | why rejected | signal absorbed by |", "|---|---|---|"]
-    for name, verdict in killed:
-        t4.append(f"| `{name}` | {kill_reason(verdict)} | {kill_covered_by(verdict)} |")
-    return "\n".join(t3), "\n".join(t4)
+    # One row per family would cost eight lines of the appendix allowance for
+    # eight numbers; they fit on one.
+    t3.append("| &nbsp;&nbsp;of which, by family | "
+              + " · ".join(f"{fam} {n}" for fam, n in fam_counts.items()) + " |")
+    return "\n".join(t3)
 
 
 # --------------------------------------------------------------------------- #
@@ -168,26 +173,64 @@ def sweep_table(sens: dict, model: str) -> str:
 
 METRIC_KEYS = ("f1", "recall", "precision", "fpr", "roc_auc")
 
+# Printing the whole 4 x 3 Random Forest grid costs about half a page of the
+# shared appendix allowance and n_estimators barely moves the score, so the table
+# prints the two ends of the swept range. rf_n_estimators_spread() measures, from
+# the data, how much the omitted settings could have changed F1, so the caption
+# states a fact rather than a hope. The full grid stays in the result file.
+RF_N_ESTIMATORS_SHOWN = (100, 500)
+
+# Same reasoning for Isolation Forest: contamination=0.05 flags so little that it
+# sits below the rise on both corpora, and the sweep's shape -- rise, peak,
+# turnover -- is carried entirely by the settings that remain.
+IF_CONTAMINATION_SKIPPED = 0.05
+
+
+def rf_n_estimators_omitted(rf_if: dict) -> list:
+    """The swept n_estimators values the table does not print."""
+    swept = {p["n_estimators"] for pts in rf_if["random_forest"].values()
+             for p in pts}
+    return sorted(swept - set(RF_N_ESTIMATORS_SHOWN))
+
+
+def rf_n_estimators_spread(rf_if: dict) -> float:
+    """Largest F1 range across n_estimators at a fixed dataset and max_depth."""
+    spreads = []
+    for pts in rf_if["random_forest"].values():
+        by_depth: dict = {}
+        for p in pts:
+            by_depth.setdefault(p.get("max_depth"), []).append(p["f1"])
+        spreads += [max(v) - min(v) for v in by_depth.values()]
+    return max(spreads)
+
 
 def rf_if_table(rf_if: dict) -> str:
     """Random Forest sweeps are a flat list; Isolation Forest splits into a
     contamination sweep plus the fixed-threshold operating point actually
     shipped (contamination only moves IF's own cut-off, not our 0.5 wrapper)."""
-    out = ["| model | dataset | configuration | F1 | recall | FPR | ROC-AUC |",
-           "|---|---|---|---:|---:|---:|---:|"]
+    # model and dataset share one column: at seven columns the configuration
+    # strings wrap onto a second line, which costs more appendix allowance than
+    # the separate column is worth.
+    out = ["| model | configuration | F1 | recall | FPR | ROC-AUC |",
+           "|---|---|---:|---:|---:|---:|"]
 
     def row(model, ds, cfg, p):
-        out.append(f"| {MODEL_LABEL[model]} | {DS_LABEL[ds]} | {cfg} | "
+        who = f"{MODEL_LABEL[model]}, {DS_LABEL[ds].replace('Dataset ', 'D')}"
+        out.append(f"| {who} | {cfg} | "
                    f"{p['f1']:.4f} | {p['recall']:.4f} | {p['fpr']:.4f} | "
                    f"{p['roc_auc']:.4f} |")
 
     for ds, pts in rf_if["random_forest"].items():
         for p in pts:
+            if p.get("n_estimators") not in RF_N_ESTIMATORS_SHOWN:
+                continue
             cfg = ", ".join(f"{k}={v}" for k, v in p.items()
                             if k not in METRIC_KEYS)
             row("random_forest", ds, cfg, p)
     for ds, block in rf_if["isolation_forest"].items():
         for p in block["sweep"]:
+            if p.get("contamination") == IF_CONTAMINATION_SKIPPED:
+                continue
             cfg = ", ".join(f"{k}={v}" for k, v in p.items()
                             if k not in METRIC_KEYS)
             row("isolation_forest", ds, cfg, p)
@@ -220,84 +263,75 @@ def main() -> None:
     sens = json.loads((RESULTS / "ch7_sensitivity.json").read_text())
     rf_if = json.loads((RESULTS / "ch7_rf_if_sensitivity.json").read_text())
     summary = json.loads((RESULTS / "summary.json").read_text())
-    t3, t4 = gate_tables(kept, killed)
+    t3 = gate_table(kept, killed)
     n_feat = len(kept)
 
     doc = f"""# Appendix B — Supporting Tables
 
 Generated from the shipped artefacts by `python analysis/appendix_b_tables.py`;
-every figure here is read from a result file, none is transcribed. These are the
-tables the body chapters summarise but do not print in full.
+every figure is read from a result file, none is transcribed.
 
-## B.1 Feature importance — full consensus ranking
+## B.1 Feature importance — consensus ranking
 
+**Table B.1 — Dataset 1: top {TOP_N} features by consensus rank.**
 `analysis/ch4_ranking.py` scores all {n_feat} features three ways on a held-out
-25% of the training split: Random Forest impurity decrease (MDI), XGBoost average
-gain per split, and permutation importance measured on the Random Forest.
-*Consensus* is the mean of the three per-view ranks, so lower is better. Chapter 4
-discusses the top eight and the disagreement between the three views; the top
-fifteen on each corpus follow.
+25% of the training split — Random Forest impurity decrease (MDI), XGBoost gain
+per split, permutation importance — and *consensus* is the mean of the three
+ranks, so lower is better. {zero_gain_count(rows, "dataset1")} features receive
+exactly zero XGBoost gain here. The full {n_feat}-row ranking is the shipped
+`report/ch4_feature_ranking.csv`.
 
-**Table B.1 — Dataset 1: top 15 features by consensus rank.** {zero_gain_count(rows, "dataset1")} of
-the {n_feat} features receive exactly zero XGBoost gain on this corpus.
+{ranking_table(rows, "dataset1", TOP_N)}
 
-{ranking_table(rows, "dataset1", 15)}
+**Table B.2 — Dataset 2: top {TOP_N} features by consensus rank.** {zero_gain_count(rows, "dataset2")} features
+receive zero gain — twice Dataset 1's count, and the reason §4.2 treats the
+ranking as corpus-specific.
 
-**Table B.2 — Dataset 2: top 15 features by consensus rank.** {zero_gain_count(rows, "dataset2")} of
-the {n_feat} features receive exactly zero XGBoost gain here — twice Dataset 1's
-count, and the reason §4.2 treats the ranking as corpus-specific.
+{ranking_table(rows, "dataset2", TOP_N)}
 
-{ranking_table(rows, "dataset2", 15)}
+## B.2 Feature selection — the 68 → {n_feat} funnel
 
-## B.2 Feature selection — what was rejected and why
-
-Chapter 3 audits {len(kept) + len(killed)} candidate features on the training
-split only and keeps {n_feat}. Two rejection rules: a candidate fails the
-**gate** if it shows no usable effect on either corpus at these sample sizes, and
-it is cut as **redundant** if its absolute correlation with a retained feature
-exceeds 0.9 and that feature carries the same signal. Every verdict was ruled
-jointly and is recorded with its evidence in `report/ch3_feature_decisions.md`.
-
-**Table B.3 — Feature funnel.**
+**Table B.3 — Feature funnel: {len(kept) + len(killed)} candidates audited,
+{len(killed)} rejected by reason, {n_feat} retained by family.** A candidate fails
+the **gate** if it shows no usable effect on either corpus at these sample sizes,
+and is **redundant** if it correlates above 0.9 with a retained feature carrying
+the same signal; every verdict is recorded with its evidence in
+`report/ch3_feature_decisions.md`. Two rejections are results in themselves: the
+themed path splits (`n_cred_paths`, `n_proc_paths`, `n_log_paths`) each died while
+their lump `n_sensitive_paths` survived, refuting split-covers-lump; and
+`has_privesc_bin` is class-neutral while positional `head_is_privesc` passes —
+*where* a binary sits matters, *that* it appears does not.
 
 {t3}
 
-**Table B.4 — The {len(killed)} rejected candidates.** Rejection is itself a
-result: the themed path splits (`n_cred_paths`, `n_proc_paths`, `n_log_paths`)
-each died while their lump `n_sensitive_paths` survived, refuting the
-split-covers-lump hypothesis; and `has_privesc_bin` is class-neutral while
-positional `head_is_privesc` passes — *where* a binary sits matters, *that* it
-appears does not.
+## B.3 Hyperparameter sensitivity
 
-{t4}
-
-## B.3 Hyperparameter sensitivity — every swept configuration
-
-Chapter 7.3 reports the headline conclusion; these are the runs behind it. Each
-axis is swept one-at-a-time from the shipped configuration, training on the full
-training split and scoring on the held-out test split.
-
-**Table B.5 — XGBoost: all swept configurations.**
+**Table B.4 — XGBoost: all swept configurations.** Each axis is swept
+one-at-a-time from the shipped configuration, training on the full training split
+and scoring on the held-out test split; the same holds for Tables B.5 and B.6.
 
 {sweep_table(sens, "xgboost")}
 
-**Table B.6 — 1D-CNN: all swept configurations.**
+**Table B.5 — 1D-CNN: all swept configurations.**
 
 {sweep_table(sens, "cnn1d")}
 
-**Table B.7 — Random Forest and Isolation Forest sweeps.** Isolation Forest's
-`contamination` moves only its own internal cut-off; the shipped pipeline scores
-it through the same fixed 0.5 wrapper as every other model, which is the last row
-of each block and the number `results/summary.json` reports.
+**Table B.6 — Random Forest and Isolation Forest sweeps.** Omitted for space, and
+present in `results/ch7_rf_if_sensitivity.json`: `n_estimators` ∈ {{{", ".join(str(n) for n in rf_n_estimators_omitted(rf_if))}}}, which at
+fixed `max_depth` move F1 by at most {rf_n_estimators_spread(rf_if):.3f}, and
+`contamination={IF_CONTAMINATION_SKIPPED}`, which sits below the rise on both corpora.
+Contamination moves only Isolation Forest's own cut-off — the shipped pipeline
+scores it through the same fixed 0.5 wrapper as every other model, the last row
+of each block.
 
 {rf_if_table(rf_if)}
 
 ## B.4 Confusion matrices behind every headline score
 
-**Table B.8 — Full confusion matrices, in-domain hold-out.** Counts are test-split
-rows; Dataset 1's test split is 3,049 rows (762 attack) and Dataset 2's is 1,915
-(479 attack). The 1:3 attack:benign ratio means a do-nothing classifier that
-flags everything scores F1 0.400, which is the floor every model here must beat.
+**Table B.7 — Full confusion matrices, in-domain hold-out.** Dataset 1's test
+split is 3,049 rows (762 attack), Dataset 2's is 1,915 (479). At that 1:3 ratio a
+do-nothing classifier flagging everything scores F1 0.400 — the floor every model
+here must beat.
 
 {confusion_table(summary)}
 """

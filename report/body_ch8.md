@@ -10,7 +10,7 @@ recovers three attacks for 32 extra false alarms. The errors are not independent
 false positives (64% and 48%). Two architectures with disjoint representations
 converging on two-thirds of the same error set locates the residual in the data.
 Full confusion matrices for all ten model × dataset combinations are in
-**Table B.8**.
+**Table B.7**.
 
 The errors sort into two categories (Table 8.1). **False negatives are
 benign-looking LotL** — the curated privilege-escalation and recon one-liners of

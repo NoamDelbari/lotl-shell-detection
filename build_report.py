@@ -224,10 +224,11 @@ def setup_doc():
     for section in doc.sections:
         section.top_margin    = Inches(1.0)
         section.bottom_margin = Inches(1.0)
-        section.left_margin   = Inches(1.1)
-        section.right_margin  = Inches(1.1)
+        section.left_margin   = Inches(1.0)
+        section.right_margin  = Inches(1.0)
     style = doc.styles["Normal"]
-    style.font.name = "Calibri"; style.font.size = Pt(10.5)
+    # Spec: Arial or Calibri, 11 or 12 pt, 1.5 line spacing.
+    style.font.name = "Calibri"; style.font.size = Pt(11)
     for lvl, sz in [(1, 14), (2, 12), (3, 11), (4, 10.5)]:
         hs = doc.styles[f"Heading {lvl}"]
         hs.font.size = Pt(sz); hs.font.bold = True; hs.font.name = "Calibri"

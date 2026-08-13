@@ -13,7 +13,7 @@ from docx.oxml import OxmlElement
 
 ROOT   = Path(__file__).resolve().parent
 REPORT = ROOT / "report"
-OUT    = ROOT / "Group_10_Report.docx"
+OUT    = ROOT / "Group_209361864_315005066_Report.docx"
 
 # each entry: (filename, page_break_before, stop_before_heading)
 # stop_before: stop rendering the file when a line starting with this text is hit
@@ -91,7 +91,11 @@ def parse_table_row(line):
     line = line.strip()
     if line.startswith("|"): line = line[1:]
     if line.endswith("|"):   line = line[:-1]
-    return [c for c in line.split("|")]
+    # split on UNescaped pipes only, so a literal shell pipe written as \| inside
+    # a cell (e.g. `cat /tmp/f\|/bin/sh`) stays in the cell instead of creating a
+    # spurious column; then unescape \| -> | for display.
+    cells = re.split(r'(?<!\\)\|', line)
+    return [c.replace('\\|', '|') for c in cells]
 
 def set_col_widths(tbl, widths):
     """Pin column widths, in inches, instead of letting Word autofit.
@@ -272,17 +276,32 @@ def setup_doc():
 def add_title_page(doc):
     doc.add_paragraph(); doc.add_paragraph()
     title = doc.add_paragraph(); title.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r = title.add_run("LotL Shell Attack Detection\nBinary Classifier")
+    r = title.add_run("AI-Driven Detection of Living-off-the-Land\nUnix Shell Attacks")
     r.font.size = Pt(20); r.font.bold = True; r.font.name = "Calibri"
-    set_spacing(title, space_before=48, space_after=12, line_spacing=1.3)
+    set_spacing(title, space_before=42, space_after=10, line_spacing=1.2)
+
     sub = doc.add_paragraph(); sub.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r2 = sub.add_run("MITRE ATT&CK T1059.004  |  Course 3917\nReichman University — Final Project")
-    r2.font.size = Pt(12); r2.font.name = "Calibri"
-    set_spacing(sub, space_before=6, space_after=6)
-    meta = doc.add_paragraph(); meta.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r3 = meta.add_run("Group 10  |  Ben Volovelsky & Noam Delbari  |  August 2026")
-    r3.font.size = Pt(11); r3.font.name = "Calibri"
-    set_spacing(meta, space_before=24, space_after=0)
+    r2 = sub.add_run("MITRE ATT&CK T1059.004 — Command & Scripting Interpreter: Unix Shell")
+    r2.font.size = Pt(12); r2.font.name = "Calibri"; r2.italic = True
+    set_spacing(sub, space_before=4, space_after=18)
+
+    course = doc.add_paragraph(); course.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    rc = course.add_run("Course: Using AI for Intrusion and Malware Detection (3917)\n"
+                        "Reichman University — Efi Arazi School of Computer Science")
+    rc.font.size = Pt(12); rc.font.name = "Calibri"
+    set_spacing(course, space_before=6, space_after=18)
+
+    team = doc.add_paragraph(); team.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    rt = team.add_run("Ben Volovelsky · ID 209361864 · bvolovelsky@nvidia.com\n"
+                      "Noam Delbari · ID 315005066 · noam.delbari@post.runi.ac.il")
+    rt.font.size = Pt(11); rt.font.name = "Calibri"
+    set_spacing(team, space_before=2, space_after=18)
+
+    date = doc.add_paragraph(); date.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    rd = date.add_run("Date of Submission: August 15, 2026")
+    rd.font.size = Pt(11); rd.font.name = "Calibri"
+    set_spacing(date, space_before=6, space_after=0)
+
     page_break(doc)
 
 def main():

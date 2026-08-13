@@ -112,7 +112,14 @@ def add_table(doc, rows):
         for cell in row.cells:
             for p in cell.paragraphs:
                 for run in p.runs: run.font.size = Pt(8.5)
-    doc.add_paragraph()
+    # Word needs a paragraph after a table (two adjacent tables would merge),
+    # but a default 1.5-spaced one wastes ~26pt per table. A 6pt spacer keeps
+    # the separation without the gap.
+    spacer = doc.add_paragraph()
+    spacer.paragraph_format.space_before = Pt(0)
+    spacer.paragraph_format.space_after  = Pt(0)
+    spacer.paragraph_format.line_spacing_rule = WD_LINE_SPACING.EXACTLY
+    spacer.paragraph_format.line_spacing = Pt(6)
 
 def page_break(doc):
     pb = doc.add_paragraph()
@@ -123,6 +130,11 @@ def render_md(doc, md_text, stop_before=None):
     lines = md_text.split("\n")
     table_rows, code_lines = [], []
     in_code = False
+    # Markdown sources are hard-wrapped, so a paragraph spans several lines.
+    # Buffer consecutive body lines and emit them as ONE Word paragraph --
+    # rendering each source line separately would give every wrapped line its
+    # own paragraph spacing and break the text flow.
+    para_buf, quote_buf, list_buf = [], [], None
 
     def flush_table():
         nonlocal table_rows
@@ -133,44 +145,78 @@ def render_md(doc, md_text, stop_before=None):
         if code_lines: add_code_block(doc, code_lines); code_lines = []
         in_code = False
 
+    def flush_para():
+        nonlocal para_buf
+        if para_buf: add_para(doc, " ".join(para_buf)); para_buf = []
+
+    def flush_quote():
+        nonlocal quote_buf
+        if quote_buf:
+            p = doc.add_paragraph(); add_run_with_fmt(p, " ".join(quote_buf))
+            p.paragraph_format.left_indent = Inches(0.3)
+            for run in p.runs: run.italic = True
+            set_spacing(p, space_before=2, space_after=2)
+            quote_buf = []
+
+    def flush_list():
+        nonlocal list_buf
+        if list_buf:
+            text, level = list_buf
+            add_list_item(doc, " ".join(text), level)
+            list_buf = None
+
+    def flush_text():
+        flush_para(); flush_quote(); flush_list()
+
     for line in lines:
         stripped = line.strip()
 
         if stop_before and stripped.startswith(stop_before):
-            flush_table()
+            flush_text(); flush_table()
             if in_code: flush_code()
             return
 
         if stripped.startswith("```"):
-            if not in_code: flush_table(); in_code = True
+            if not in_code: flush_text(); flush_table(); in_code = True
             else:           flush_code()
             continue
         if in_code: code_lines.append(line); continue
 
         if stripped.startswith("|"):
+            flush_text()
             table_rows.append(parse_table_row(stripped)); continue
         else:
             flush_table()
 
+        if not stripped:                      # blank line ends any text block
+            flush_text(); continue
+
         hm = re.match(r"^(#{1,4})\s+(.*)", stripped)
         if hm:
+            flush_text()
             add_heading(doc, hm.group(2), len(hm.group(1))); continue
 
+        if re.match(r"^---+\s*$", stripped):
+            flush_text(); continue
+
         if stripped.startswith("> "):
-            p = doc.add_paragraph(); add_run_with_fmt(p, stripped[2:])
-            p.paragraph_format.left_indent = Inches(0.3)
-            for run in p.runs: run.italic = True
-            set_spacing(p, space_before=2, space_after=2); continue
+            flush_para(); flush_list()
+            quote_buf.append(stripped[2:]); continue
 
         lm = re.match(r"^(\s*)([-*]|\d+\.)\s+(.*)", line)
         if lm:
-            add_list_item(doc, lm.group(3), len(lm.group(1)) // 2); continue
+            flush_para(); flush_quote(); flush_list()
+            list_buf = ([lm.group(3)], len(lm.group(1)) // 2); continue
 
-        if re.match(r"^---+\s*$", stripped): continue
+        # A plain line: a continuation of whichever block is open, else prose.
+        if list_buf is not None and line.startswith(("  ", "\t")):
+            list_buf[0].append(stripped); continue
+        if quote_buf:
+            quote_buf.append(stripped); continue
+        flush_list()
+        para_buf.append(stripped)
 
-        if stripped: add_para(doc, stripped)
-
-    flush_table()
+    flush_text(); flush_table()
     if in_code: flush_code()
 
 def setup_doc():

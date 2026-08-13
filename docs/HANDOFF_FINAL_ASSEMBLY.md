@@ -552,7 +552,9 @@ exactly one pair reaches it.
 ## 13. Suggested order
 
 1. ~~Push, then apply the `<!-- cols: -->` directives.~~ **Done** — branch in
-   sync, all widths pinned, −0.64 pp banked (§4, §5).
+   sync, all widths pinned. The two savings land in *different* budgets: −0.16 pp
+   off the 15-page body (Ch8) and −0.48 pp off the 5-page appendix allowance.
+   Do not add them together (§4, §5).
 2. Write **Ch7 → Ch4 → Ch5 → Ch2 → Ch6 → Bonus**, one at a time, each reviewed by
    Noam before the next. Ch7 first because it is rubric-mandated and its sources
    are the most finished; Ch6 late because it needs the most aggressive

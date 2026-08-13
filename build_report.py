@@ -93,7 +93,25 @@ def parse_table_row(line):
     if line.endswith("|"):   line = line[:-1]
     return [c for c in line.split("|")]
 
-def add_table(doc, rows):
+def set_col_widths(tbl, widths):
+    """Pin column widths, in inches, instead of letting Word autofit.
+
+    Word's autofit gives every column a broadly similar width, so a row's
+    height is set by its longest cell while the short cells sit half empty.
+    On a five-column mapping table that wastes most of the page. Fixed layout
+    needs the width written onto every cell, not just the column.
+    """
+    tbl.autofit = False
+    layout = OxmlElement("w:tblLayout")
+    layout.set(qn("w:type"), "fixed")
+    tbl._tbl.tblPr.append(layout)
+    for ci, w in enumerate(widths):
+        if ci >= len(tbl.columns): break
+        tbl.columns[ci].width = Inches(w)
+        for cell in tbl.columns[ci].cells:
+            cell.width = Inches(w)
+
+def add_table(doc, rows, col_widths=None):
     data = [r for r in rows if not all(re.match(r"^[-: ]+$", c) for c in r)]
     if not data: return
     ncols = max(len(r) for r in data)
@@ -112,6 +130,7 @@ def add_table(doc, rows):
         for cell in row.cells:
             for p in cell.paragraphs:
                 for run in p.runs: run.font.size = Pt(8.5)
+    if col_widths: set_col_widths(tbl, col_widths)
     # Word needs a paragraph after a table (two adjacent tables would merge),
     # but a default 1.5-spaced one wastes ~26pt per table. A 6pt spacer keeps
     # the separation without the gap.
@@ -135,10 +154,18 @@ def render_md(doc, md_text, stop_before=None):
     # rendering each source line separately would give every wrapped line its
     # own paragraph spacing and break the text flow.
     para_buf, quote_buf, list_buf = [], [], None
+    # `<!-- cols: 1.2 0.9 ... -->` on the line before a table pins its column
+    # widths in inches; without it Word autofits. Applies to the next table only.
+    pending_widths = None
 
     def flush_table():
-        nonlocal table_rows
-        if table_rows: add_table(doc, table_rows); table_rows = []
+        nonlocal table_rows, pending_widths
+        if table_rows:
+            add_table(doc, table_rows, col_widths=pending_widths)
+            table_rows = []
+            # cleared only once the table it belongs to has been emitted, so a
+            # blank line between the directive and the table is harmless
+            pending_widths = None
 
     def flush_code():
         nonlocal code_lines, in_code
@@ -181,6 +208,13 @@ def render_md(doc, md_text, stop_before=None):
             else:           flush_code()
             continue
         if in_code: code_lines.append(line); continue
+
+        cm = re.match(r"^<!--\s*cols:\s*([\d.\s]+?)\s*-->$", stripped)
+        if cm:
+            flush_text(); flush_table()
+            pending_widths = [float(w) for w in cm.group(1).split()]; continue
+        if stripped.startswith("<!--"):       # any other comment is not content
+            continue
 
         if stripped.startswith("|"):
             flush_text()

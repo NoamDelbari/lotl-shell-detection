@@ -45,7 +45,7 @@ chronological order with `# Session N` separators:
   Chapter 3 Dataset-1 chapter plus a full retrain of every model on the
   43-feature set, and the Chapter 6 RF/IF model justification with
   first-hand-verified citations
-- **Session 4** (Aug 10–12, Claude Opus 5 — Noam, **still running**): Chapter 1
+- **Session 4** (Aug 10–13, Claude Opus 5 — Noam, **still running**): Chapter 1
   (deep-dive threat analysis, the four ATT&CK mapping rows, and §1.3 rationale
   for all 43 features), Chapter 5 in full (unified schema, cross-dataset
   distribution shift, scaling/normalisation), Noam's Chapter 2 half — the
@@ -63,7 +63,15 @@ chronological order with `# Session N` separators:
   discrepancy analysis), Chapter 8.1 rewritten with a newly measured
   hybrid-versus-CNN error overlap, Chapter 7.2 extended with a measured
   comparison of grouped hold-out against ungrouped CV, and nine stale or
-  unregenerable artefacts removed from the tree
+  unregenerable artefacts removed from the tree — then (Aug 13) a
+  reproducibility pass on the submission: the Bonus B.3 evaluation script
+  repaired (it crashed on import and could not have produced the shipped
+  Ollama result, whose prompt was recovered forensically from the verdict
+  texts), one wrong pooled accuracy in the shipped B.3 JSON corrected against
+  its own per-case data, a generator written for the Chapter 8.1 error-overlap
+  artefact that had none, and both appendices assembled — Appendix A (execution
+  instructions plus the verified environment tables) and Appendix B (supporting
+  tables, generated from the artefacts rather than transcribed)
 
 ## Per-session markdown transcripts (same content)
 
@@ -91,7 +99,7 @@ chronological order with `# Session N` separators:
 
 ### [`claude_session_noam3.md`](claude_session_noam3.md) — Noam's session 3 (log Session 4)
 
-- User turns: **15** · Assistant turns: **15** — **snapshot of a session that
+- User turns: **18** · Assistant turns: **18** — **snapshot of a session that
   is still open**; these counts will grow, so re-export before submission
 - Source session log: `~/.claude/projects/E--lotl-shell-detection/c6d78cd0-b917-4879-9d90-753790734957.jsonl`
 

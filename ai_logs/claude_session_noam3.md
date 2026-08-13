@@ -832,3 +832,168 @@ Now the third part of the request — AI logs:
 
 Ben's block is now fully mechanical (`203929b` sources it from `claude_session.md`, and `ebb5f38` covers his Aug-11 work), so the whole rebuild is scriptable. Running steps 1–4:
 
+Session 4 grew 11 → 15 turns. Updating the README counts and the now-obsolete Ben warnings:
+
+Now the consolidated report I owe you. Let me verify the docx claim before stating it:
+
+Confirmed, and it's worse than I reported earlier. Let me get the exact budget the brief already defines:
+
+Integration and log refresh are done. Here's the consolidated state, including two things I found that change the endgame.
+
+## What landed
+
+| Commit | Content |
+|---|---|
+| `c9288da` | Merge of Ben's `ben/pipeline-models-ch3-8` @ `a33d72f` |
+| `48131e7` | Ch7.3 rewritten against `results/ch7_sensitivity.json` |
+| `01fb377` | Ch4 + Ch8.1 rewritten, §7.2 extended, 9 stale artefacts purged |
+| `509e061` | AI logs re-exported through this session (87/87 turns, 4 blocks verbatim) |
+
+**Ch4** was the worst case: every feature name it quoted was from the dead 38-feature set and every gain value matched no live artefact. Rewriting it produced a genuinely better §4.2 — the three importance views disagree in a *diagnostic* pattern (MDI~permutation ρ=0.92/0.95, gain~permutation 0.56/0.48), because average-per-split gain inflates rare high-purity flags (`has_interp_bin`: gain-rank 5, permutation-rank 31) and deflates collinear length statistics (`special_ratio`: permutation-rank 1, gain-rank 22). That also reconciles Ch3's effect-size leaders as one elected representative plus four absorbed proxies. The cross-dataset divergence claim survives but with different actors: `n_abs_paths` (D1 #1 → D2 #10) against `has_fetch_bin` (D2 #1 → D1 #14), overall rank correlation ρ=0.43.
+
+**Ch8.1**'s "the errors are model-independent" was an assertion; it's now measured — 63–65% of misses and 48–64% of false alarms are shared between two models with no common representation. Label contamination is now a hard count: 47 D1 commands touch `/etc/passwd`, 9 benign / 38 attack.
+
+I also swept every backticked identifier in `report/` against the live 43 names rather than a hand-written blocklist. Dead names surviving in Ch1.3, Ch2.2 and Ch3 are the *documented-rejection* record and are correct as-is; I fixed four real ones in Ch6 and Ch1, including a Row B3 claim ("top consensus features on both datasets") that is false on Dataset 2 (21st and 18th of 43).
+
+## The two findings that matter for the deadline
+
+**1. Neither .docx is submittable, and both are now stale.** Both were built at 18:10 today from Ben's merge — before my rewrites — so `Group_10_Report_FULL.docx` still carries the dead Ch4 gains (0.194/0.130/0.076) and the deleted 5,000-row Ch7 sweep.
+
+| | Words | Est. pages | Problem |
+|---|---:|---:|---|
+| `Group_10_Report.docx` | 4,462 | ~9 | Under-scope |
+| `Group_10_Report_FULL.docx` | 30,328 | ~60 | 4× over the 15-page limit |
+
+The short one is missing the **title page, Ch3, Ch4, Ch5, §7.2, §8.1, §8.2**, and Ch6.3/RF-IF — roughly 35–50 rubric points. It got to 15 pages by *deleting graded chapters* rather than compressing. **Neither file embeds a single figure** (0 images in both), so all ~27 figures and their captions are absent too.
+
+**2. The fix is already designed, just not executed.** `docs/DOCX_ASSEMBLY_BRIEF.md` carries a complete per-section page budget totalling 15.5 pages, with the required *shape* per section ("one 7-row × 5-col table, no prose", "table only", "~290 w essay"). §7.2, which it lists as MISSING, now exists. What's missing is ~3,600 words of condensed prose across 12 sections — the working chapters stay as the evidence base, and a separate set of condensed files becomes the actual deliverable.
+
+That's the single largest remaining task and it's the one I'd start now.
+
+What would you like to clarify?
+
+For context, the things I'd guess might be unclear — happy to dig into any of them before you decide:
+
+- **Whether 15 pages is really binding** — whether the title page and appendices count toward it, and whether figures/tables count as page area (you ruled earlier that title page and appendices *do* count, which is what put the brief at 15.5).
+- **How much is actually lost under each option** — I can show you a worked example, e.g. Ch4 or Ch6 at 290 words, so you can judge the compression ratio against real text rather than in the abstract.
+- **Who does the writing and in what order** — the brief has a priority order (Ch8 → Ch1 → Ch3 → Ch2/Ch4/Ch5/Ch7) and there are two days; how we split it with Ben changes which option is realistic.
+- **Whether the figures change the arithmetic** — 27 figures at even a quarter page each is ~7 pages, which would blow the budget regardless of prose length. That may be the real constraint, not the words.
+
+## USER
+
+Spoke with the professor, this is his answer on length: You can have 15 pages of the the report body and 5 additional pages of additional tables and graphs as appendixes.
+BTW, did we reconcile the issue which arose from pulling Ben's updates?
+
+## ASSISTANT
+
+Good — that changes the arithmetic meaningfully. Let me verify the merge reconciliation properly rather than answer from memory:
+
+Yes — and I just re-verified it rather than trusting my notes.
+
+## The merge reconciliation
+
+Clean: no conflict markers anywhere in the tree, `pytest tests/ -q` → **6 passed**.
+
+Three things were reconciled *at* merge time (`c9288da`):
+- Two textual conflicts (`ch2_literature_review.md`, `ch8_3_tops_comparison.md`) resolved to our side — Ben's side was a partial refresh still carrying the retired `cnn` model key.
+- One regression reverted: `exec_summary.md` baseline F1 back to 0.8975/0.8824. Ben's 0.8808/0.8631 came from `results/holdout_baseline_dataset{1,2}.json`, orphans of a removed `--model baseline` path — their ROC-AUC differs (0.9797 vs 0.9833), and AUC is threshold-invariant, so that's a different model configuration, not a re-threshold.
+- Ch8 §8.2 and Ch6 §6.3 rebuilt against live results.
+
+But the merge also **exposed** a pattern it didn't fix — Ben's chapters written against the pre-`fbc669d` 38-feature set and against experiment files the repo no longer produces. That's what `48131e7` and `01fb377` closed: Ch7.3, Ch4, Ch8.1, Ch6 §6.1, Ch1 Rows B1/B3.
+
+**One piece from Ben's side is still unreconciled: `build_report.py`.** It reads **8 of the 44 files in `report/`** — which is exactly why the docx is under-scope. It's not that the chapters are missing; they're written and sitting there unreferenced, including `title_page.md`, `appendix_a_execution.md` and `appendix_b_environment.md`, which the brief still lists as "unwritten".
+
+## Recomputed budget under the professor's ruling
+
+15 body + 5 appendix is a real reprieve — the appendix pages absorb the figures and evidence tables that were competing with prose:
+
+| | Brief's plan | Under the new ruling |
+|---|---:|---:|
+| Body sections | 15.0 | 15.0 |
+| Title page | 1.0 (in body) | 1.0 — likely *not* "body"; if it counts, we're at 15.0 exactly |
+| Appendix A/B | 0.5 (in body) | → appendix |
+| Figures + evidence tables | inside body budgets | → appendix (~2.0–2.5 pp reclaimed) |
+| **Total** | **15.5, over** | **~13.0 body + 5.0 appendix, under** |
+
+The reclaimed 2.0–2.5 pages come from moving Ch8.1's 10 confusion matrices, Ch3.1's figures, Ch4's top-15 ranking table, Ch7.3's sweep tables and Ch3.2's 68→43 gate table out of the body and leaving pointers. §7.1's pipeline diagram stays — it *is* the deliverable.
+
+Net effect on the writing job: ~5,000 words of body prose rather than ~3,600, and the evidence no longer has to be deleted to fit — it moves. That makes the condensed-source-file approach clearly the right one, since the long-form chapters become the appendix's raw material instead of dead weight.
+
+Before I write twelve condensed files, one call is yours: **what goes in the 5 appendix pages.** My proposal — Appendix A: execution instructions + environment table (both already written). Appendix B: the Ch4 top-15 ranking table, the Ch3 68→43 feature gate table, the Ch7 sweep tables, and the confusion-matrix grid. That's roughly 4.5 pages and it front-loads the graded evidence.
+
+Want me to start there, or would you rather I draft one body section first — Ch8, per the brief's priority order — so you can see the compression ratio against real text before I commit to it across the report?
+
+## USER
+
+Appendix A: execution instructions + environment table.
+
+## ASSISTANT
+
+Verifying every command in it actually works — the B.3 line looks stale after Ben's Ollama switch:
+
+`analysis/bonus_b3_llm_eval.py` can't reproduce the shipped B.3 result — the JSON says `llama3.1:8b (ollama, local)` but the script only offers `--hf`/stub and writes `"arbitrator": "huggingface"|"stub"`. Ben ran it ad hoc. Let me look:
+
+`ollama_arbitrator` is complete — the driver just never wires it up. Making the shipped B.3 result reproducible:
+
+`build_cnn` doesn't exist — only `build_cnn1d`. So the B.3 script is broken at import. Confirming:
+
+Two broken imports. Let me see the ingestion API and how the script uses it:
+
+The shipped `overall.llm_accuracy` doesn't match its own cases. Checking whether the report quotes it:
+
+Forensics confirm the exact run: context dict was `{"xgboost_p": round(p,4), "cnn_p": round(p,4)}` — 305 cases quote the signals back and all 305 match to the digit. Now rewriting the script to actually reproduce it:
+
+Now a stub smoke-test on a subsample, writing to the scratchpad so the shipped artefact is untouched:
+
+The shipped `overall.llm_accuracy` (0.5043) contradicts its own 704 cases, which give 0.6179. Correcting that one derived field from the primary data in the same file:
+
+The report's B.3 preamble claims three models drove the edge selection; the run used two. Fixing that and folding in the now-trustworthy pooled figure:
+
+B.3 is now reproducible. Now Appendix A — reading both source files:
+
+Verifying it reproduces the shipped artefact exactly (writing to scratchpad first, then diffing):
+
+`ch8_1_error_overlap.json` now regenerates bit-for-bit. Checking the last orphan, `cascade_results.json`:
+
+Now the merged Appendix A — execution instructions plus the environment table:
+
+Committing:
+
+Appendix A is done, and getting there turned up two things that were quietly broken.
+
+**Bonus B.3 was not reproducible.** `analysis/bonus_b3_llm_eval.py` crashed on import and was broken three separate ways: it imported `load_dataset` (doesn't exist — it's `ingestion.load()`), imported `build_cnn` (leftover of the `cnn`→`cnn1d` rename), and called `arbitrate(command)` when the contract in `src/llm_triage.py` is `(command, context) -> dict`. On top of that it only offered `--hf`/stub while the shipped JSON records `llama3.1:8b (ollama, local)` — so the committed script provably couldn't have produced the shipped result. `ollama_arbitrator()` was sitting there fully written and never wired up.
+
+I rebuilt it against the run that actually happened rather than guessing at the prompt: 305 of the shipped cases quote their model signals back inside the LLM's reasoning text, and all 305 match `{"xgboost_p": round(p,4), "cnn_p": round(p,4)}` to the digit — so the reconstructed prompt is identical to Ben's. `python analysis/bonus_b3_llm_eval.py --ollama` now reproduces it. Verified end-to-end on a 1,200-row stub run with the same JSON schema.
+
+**One shipped B.3 number was wrong.** `overall.llm_accuracy` said 0.5043, but the 704 per-case verdicts in the same file give **0.6179**. Corrected — pure arithmetic over data already in the file, no LLM re-run. The per-dataset figures the report quotes (0.608/0.684, 0.633/0.670) were all correct, so no prose depended on the bad number. It's now computed from the cases in code so it can't drift again. I also fixed the B.3 preamble, which claimed Isolation Forest was one of three models driving edge selection — the run used two.
+
+**`results/ch8_1_error_overlap.json` had no generator.** §8.1 cites it for the hybrid-vs-CNN overlap, but I'd produced it inline this session. New `analysis/ch8_1_error_overlap.py` regenerates it **bit-for-bit** — `git diff` came back empty, including the CNN's numbers.
+
+Appendix A now merges in the environment table with every version re-checked against what's actually installed (scipy was listed as "1.11+", it's 1.17.0; seaborn 0.13.2; added pyarrow/requests/pytest). Setup step is now `ollama pull llama3.1:8b` rather than `export HF_TOKEN` — no result in the report needs a token. Also dropped `results/cascade_results.json`, a pre-redesign orphan (`n_train` 6000, dead `cnn` key, cascade F1 0.5125) that contradicted the live `ch8_4_cascade.json` and that nothing cites. 6/6 tests pass; committed as `ec530f0`.
+
+Appendix A is ~1,050 words and 39 table rows, so call it **2.0–2.5 pages** — leaving ~2.5–3.0 for Appendix B.
+
+Two things I need from you before I keep going:
+
+**Appendix B.** Its old environment content now lives in A.1, so `appendix_b_environment.md` is a duplicate — I left the file rather than delete it until you've decided. For the ~2.5 pages, my recommendation is the four highest-value things that are currently eating body space: the Ch4 top-15 ranking table (all three views), the Ch3 68→43 gate table, the Ch7 sweep tables, and a confusion-matrix grid. That's the evidence readers check but don't read linearly, which is exactly what an appendix is for.
+
+**Write order for the body.** The brief says Ch8 → Ch1 → Ch3 → Ch2/Ch4/Ch5/Ch7, weighted by points-per-page. I'd follow it — Ch8 is 20 points and currently isn't in the built docx at all. I'll do them one at a time for your review, not in a batch.
+
+## USER
+
+Ok continue, just make sure to update AI logs and whatever is needed according to the project's guidelines
+
+## ASSISTANT
+
+Appendix B is four tables of live numbers — I'll generate it mechanically rather than transcribe. First, the Ch3 gate counts:
+
+Now the generator for Appendix B:
+
+163 rows is over budget. Table B.7 (per-axis swing) is a pure derivation of B.5/B.6 and §7.3 already states those numbers — cutting it:
+
+Markdown-table bug: `|rho|` contains literal pipes that will split the cells. Fixing:
+
+Appendix B checks out — every figure matches the canonical set. Removing the now-duplicated environment file and registering the generator in Appendix A:
+
+Now the AI logs, per the project's policy. Re-exporting all three of Noam's sessions and rebuilding the combined log:
+

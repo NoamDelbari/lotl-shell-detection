@@ -110,6 +110,7 @@ Results are written to `results/` as JSON; `python main.py all` also refreshes
 | Ch8.2 — cross-dataset transfer heat-map | `python analysis/ch8_2_transfer_heatmap.py` |
 | Ch8.4 — cascade ablation | `python analysis/ch8_4_cascade.py` then `python analysis/ch8_4_cascade_forensics.py` |
 | Bonus B.3 — LLM triage evaluation | `python analysis/bonus_b3_llm_eval.py --ollama` |
+| Appendix B — supporting tables | `python analysis/appendix_b_tables.py` |
 
 The B.3 command is the one that produced the shipped
 `results/bonus_b3_edge_eval.json`: 704 local LLM calls at ~11 s each, ≈2.2 h.

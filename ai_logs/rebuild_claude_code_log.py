@@ -43,8 +43,9 @@ SESSION3_HEADER = (
 )
 SESSION4_HEADER = (
     "# Session 4 -- Noam: Ch1/Ch2/Ch5 rubric splits, Ch8.1/8.3/8.4 forensics, "
-    "executive summary, Ben merge & the Ch4/Ch7/Ch8.1 rewrite against live "
-    "artefacts (Aug 10-12, 2026, Claude Opus 5)"
+    "executive summary, Ben merge, the Ch4/Ch7/Ch8.1 rewrite against live "
+    "artefacts, the Bonus B.3 reproducibility repair & the appendices "
+    "(Aug 10-13, 2026, Claude Opus 5)"
 )
 SESSION4_NOTE = (
     "*SESSION STILL IN PROGRESS at export time -- this block is a snapshot; "

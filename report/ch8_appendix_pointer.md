@@ -1,0 +1,3 @@
+## 8.1 Forensic error analysis and 8.4 Hybrid cascade — see Appendix C
+
+The sample-level forensic error categorization for every model (§8.1) and the full three-stage hybrid-cascade analysis (§8.4) — the negative-result verdict, per-stage error attribution, the stub-arbitrator behaviour, and the threshold-dominance test showing a single stage-2 cutoff matches the whole cascade — are presented in **Appendix C**. Headline numbers: the full cascade (F1 0.8685 / 0.8396) is the weakest of its four configurations, and 3 single thresholds (0.65/0.66/0.67) match or beat it on Dataset 1; the confusion matrices for all four models on both datasets are in `report/figures/`.

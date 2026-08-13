@@ -38,34 +38,36 @@ BODY_FILES = [
     ("ch6_2_rf_if.md",                 None, None),   # RF + IF (models 3 & 4), concise
     ("ch7_sensitivity_findings.md",    None, "## Headline answers"),
     ("ch7_2_class_imbalance.md",       None, None),   # 7.2 class-imbalance defense
-    ("ch8_1_error_forensics_ben.md",   None, "## cnn1d/dataset1"),   # trimmed to rebalance
     ("ch8_2_cross_dataset_table.md",   None, None),
     ("ch8_3_tops_comparison.md",       None, "## What Trizna"),
-    ("ch8_4_cascade_analysis.md",      None, "## Attributing every error"),
+    ("ch8_appendix_pointer.md",        None, None),   # 8.1 & 8.4 relocated to Appendix C
     ("bonus_b3_findings.md",           None, None),
 ]
 
 APPENDIX_FILES = [
     ("appendix_a_code_execution.md",   None,   None),
     ("appendix_b_environment.md",      "PAGE", None),
+    ("appendix_c_supplementary.md",    "PAGE", None),   # Ch8.1 + Ch8.4 detail moved here
+    ("ch8_1_error_forensics_ben.md",   None,   None),
+    ("ch8_4_cascade_analysis.md",      None,   "## Attributing every error"),
 ]
 
-# Descriptive caption for every rendered table, in document order (spec: all
-# tables must be captioned). Kept here rather than in the .md sources so the
-# stop_before truncations do not have to be caption-aware.
-TABLE_CAPTIONS = [
-    "In-domain F1, false-positive rate, and D2->D1 transfer F1 for the five detectors and the character n-gram baseline on both datasets.",
-    "Telemetry and feature mapping for three T1059.004-adjacent sub-techniques: shell-log signature, capturing source, engineered features, and whether provenance labelling detects them.",
-    "Feature-and-model extraction matrix comparing Trizna's SLP work with this project across six dimensions.",
-    "Per-feature benign vs. attack variance and variance gap on Dataset 1, ranked by gap.",
-    "Top five Dataset 1 features by XGBoost gain, with what each measures and its MITRE ATT&CK mapping.",
-    "Covariate-shift probe: ROC-AUC of a classifier trained to separate Dataset 1 from Dataset 2 rows using the 43 features alone.",
-    "Cross-dataset performance of all five models (in-domain and both transfer directions) across Accuracy, Precision, Recall/DR, FPR, F1, and ROC-AUC.",
-    "Error-profile comparison of failure modes: a Trizna-style anomaly detector vs. our XGBoost-hybrid and 1D-CNN.",
-    "Dataset 1 - cascade configurations vs. the single best model: F1, precision, recall, FPR, and confusion counts.",
-    "Dataset 2 - cascade configurations vs. the single best model: F1, precision, recall, FPR, and confusion counts.",
-    "Local Llama-3.1-8B arbitration on high-uncertainty edge cases: accuracy, agreement with the model vote, mean latency, and call count per dataset.",
-    "Software frameworks and versions used across the pipeline.",
+# Table captions keyed by a distinctive substring of the table's HEADER row, so
+# captions stay correct even when sections are reordered or moved to an appendix.
+# Numbering ("Table N.") is assigned in document order at render time.
+CAPTION_BY_KEY = [
+    ("transfer F1",     "In-domain F1, false-positive rate, and D2->D1 transfer F1 for the five detectors and the character n-gram baseline on both datasets."),
+    ("Sub-technique",   "Telemetry and feature mapping for three T1059.004-adjacent sub-techniques: shell-log signature, capturing source, engineered features, and whether provenance labelling detects them."),
+    ("Dimension",       "Feature-and-model extraction matrix comparing Trizna's SLP work with this project across six dimensions."),
+    ("Variance gap",    "Per-feature benign vs. attack variance and variance gap on Dataset 1, ranked by gap."),
+    ("What it measures","Top five Dataset 1 features by XGBoost gain, with what each measures and its MITRE ATT&CK mapping."),
+    ("rows scored",     "Covariate-shift probe: ROC-AUC of a classifier trained to separate Dataset 1 from Dataset 2 rows using the 43 features alone."),
+    ("Recall/DR",       "Cross-dataset performance of all five models (in-domain and both transfer directions) across Accuracy, Precision, Recall/DR, FPR, F1, and ROC-AUC."),
+    ("Failure mode",    "Error-profile comparison of failure modes: a Trizna-style anomaly detector vs. our XGBoost-hybrid and 1D-CNN."),
+    ("Dataset 1 (n =",  "Dataset 1 - cascade configurations vs. the single best model: F1, precision, recall, FPR, and confusion counts."),
+    ("Dataset 2 (n =",  "Dataset 2 - cascade configurations vs. the single best model: F1, precision, recall, FPR, and confusion counts."),
+    ("edge cases",      "Local Llama-3.1-8B arbitration on high-uncertainty edge cases: accuracy, agreement with the model vote, mean latency, and call count per dataset."),
+    ("Library",         "Software frameworks and versions used across the pipeline."),
 ]
 _TABLE_I = 0
 
@@ -152,13 +154,13 @@ def add_table(doc, rows):
         for cell in row.cells:
             for p in cell.paragraphs:
                 for run in p.runs: run.font.size = Pt(8.5)
-    add_table_caption(doc)
+    add_table_caption(doc, " | ".join(c.strip() for c in data[0]))
 
 
-def add_table_caption(doc):
+def add_table_caption(doc, header_text):
     global _TABLE_I
-    cap = TABLE_CAPTIONS[_TABLE_I] if _TABLE_I < len(TABLE_CAPTIONS) else ""
     _TABLE_I += 1
+    cap = next((text for key, text in CAPTION_BY_KEY if key in header_text), "")
     p = doc.add_paragraph()
     r = p.add_run(f"Table {_TABLE_I}. {cap}")
     r.italic = True; r.font.name = "Calibri"; r.font.size = Pt(9)

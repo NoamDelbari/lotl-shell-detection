@@ -1,4 +1,4 @@
-# Chapter 1 — Threat & Telemetry Mapping (my 3 rows)
+# Chapter 1 — Threat & Telemetry Mapping
 
 Three MITRE ATT&CK sub-techniques observed in the dataset, mapped from shell telemetry to the source that captures them, to the engineered features (from `src/features.py` `FEATURE_NAMES`) that encode them, to whether a **provenance-labeled** classifier can detect them reliably. The three are chosen to span the detectability spectrum: one cleanly detectable, one detectable-but-confounded, one effectively undetectable by content. Detectability claims are grounded in the error forensics of [`report/ch8_findings.md`](ch8_findings.md) and the source descriptions in [`docs/DATA_CARD.md`](../docs/DATA_CARD.md).
 

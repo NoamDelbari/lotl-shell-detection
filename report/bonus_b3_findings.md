@@ -1,4 +1,4 @@
-# Bonus B.3 — LLM verdict evaluation on edge cases (Ben)
+# Bonus B.3 — LLM verdict evaluation on edge cases
 
 Arbitrator: **Llama 3.1-8B (llama3.1:8b via Ollama, local inference)**. Edge cases = primary models (XGBoost, 1D-CNN, Isolation Forest) disagree (score gap ≥ 0.4) or any is unconfident (score in [0.35, 0.65]).
 

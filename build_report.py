@@ -28,14 +28,17 @@ BODY_FILES = [
     ("exec_summary.md",                None, None),
     ("ch1_threat_mapping.md",          None, None),
     ("ch2_literature_review.md",       None, "## Comparative essay"),
+    ("ch2_4_comparative_essay.md",     None, None),   # 2 papers + 3 essay questions
     ("ch3_eda_findings.md",            None, "Variance gap is a measure"),
     ("ch4_ranking_findings.md",        None, "## Surprises versus intuition"),
     ("ch5_1_unified_schema.md",        None, "## One column, one contract"),
     ("ch5_2_distribution_shift.md",    None, "## Effect shift I"),
     ("ch5_3_scaling_normalisation.md", None, "## Why a scaler"),
     ("ch6_model_justification.md",     None, "## 6.3 Explicit"),
+    ("ch6_2_rf_if.md",                 None, None),   # RF + IF (models 3 & 4), concise
     ("ch7_sensitivity_findings.md",    None, "## Headline answers"),
-    ("ch8_1_error_forensics_ben.md",   None, None),
+    ("ch7_2_class_imbalance.md",       None, None),   # 7.2 class-imbalance defense
+    ("ch8_1_error_forensics_ben.md",   None, "## cnn1d/dataset1"),   # trimmed to rebalance
     ("ch8_2_cross_dataset_table.md",   None, None),
     ("ch8_3_tops_comparison.md",       None, "## What Trizna"),
     ("ch8_4_cascade_analysis.md",      None, "## Attributing every error"),

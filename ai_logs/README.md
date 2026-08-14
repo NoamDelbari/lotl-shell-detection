@@ -12,16 +12,14 @@ always **block-level** — a harness-generated block is either kept whole or
 dropped whole. Nothing in the user or assistant text was altered, shortened,
 or paraphrased.
 
-> ⚠️ **Two sessions are not final yet.** **Session 4**'s transcript below is a
-> snapshot taken while that session was still open — it was exported on Aug 13
-> and the session ran on until Aug 14, so it is *incomplete by construction*.
-> **Session 5** is the session doing the final assembly and cannot export itself
-> until it ends, so it is **not in the log at all yet**. Re-run the export and
-> log rebuild (see [Regenerating the transcripts](#regenerating-the-transcripts-do-this-right-before-submission))
-> **immediately before submission**, refresh the turn counts on this page with
-> whatever the script prints then, and delete this banner. Until then
-> `rebuild_claude_code_log.py` prints a `NOT FINAL` line for each outstanding
-> session every time it runs.
+**All five sessions were re-exported immediately before submission and every
+block is final.** One limit is worth stating plainly, because it cannot be
+engineered away: **Session 5 exported itself from inside itself**, so its
+transcript stops at the export command. The only thing missing from it is the
+wrap-up that came after — that export, the rebuild of `claude_code_log.txt`, the
+turn-count refresh on this page, the ZIP build and the final commit. The block
+says so in its own header note. Nothing else in any session is omitted, and
+`rebuild_claude_code_log.py` now runs clean with no `NOT FINAL` lines.
 
 ## Primary submission file
 
@@ -88,8 +86,13 @@ chronological order with `# Session N` separators:
   handoff document written
 - **Session 5** (Aug 14, Claude Opus 5 — Noam): final assembly — the table
   column-width pass across Chapter 8 and both appendices, the remaining body
-  chapters, the cutting pass, figure embedding and captioning, and the docx and
-  ZIP build
+  chapters, the cutting pass that took the body from 21.86 to 15.00 measured
+  pages, figure embedding and captioning in Appendix B.5, the
+  `WORK_DIVISION.md`-mandated **non-owner cross-review of all ten body
+  sections** (which found and fixed two substantive errors: an understated
+  cross-dataset transfer loss in §8.2 and a redundancy claim in §3.4 that had
+  conflated Pearson with Spearman), the handover documents for Ben and for
+  final assembly, and the docx and ZIP build
 
 ## Per-session markdown transcripts (same content)
 
@@ -117,17 +120,21 @@ chronological order with `# Session N` separators:
 
 ### [`claude_session_noam3.md`](claude_session_noam3.md) — Noam's session 3 (log Session 4)
 
-- User turns: **18** · Assistant turns: **18** — ⚠️ **stale snapshot.** Exported
-  Aug 13 09:50; the session then ran on until Aug 14 00:06, so roughly fourteen
-  hours of it are missing from this file. The session is now closed, so a
-  re-export will be final. These counts will grow.
+- User turns: **30** · Assistant turns: **30** — session closed and re-exported
+  in full on Aug 14. The earlier shipped file was a 18-turn snapshot taken
+  Aug 13 09:50 while the session ran on until Aug 14 00:06; those final fourteen
+  hours (the page-budget work and the cherry-pick from Ben's branch) are in this
+  file now.
 - Source session log: `~/.claude/projects/E--lotl-shell-detection/c6d78cd0-b917-4879-9d90-753790734957.jsonl`
 
 ### [`claude_session_noam4.md`](claude_session_noam4.md) — Noam's session 4 (log Session 5)
 
-- ⚠️ **Not exported yet** — this is the final-assembly session, which cannot
-  export itself until it ends. Turn counts to be filled in from the export
-  script's output during the final pass.
+- User turns: **4** · Assistant turns: **4** — the low turn count is a property
+  of the format, not of the session: consecutive same-role messages are merged
+  into one turn, and this session ran four long instructions to completion with
+  little back-and-forth in between. Exported from inside itself, so it stops at
+  the export command (see the note at the top of this page and in the block's
+  own header).
 - Source session log: `~/.claude/projects/E--lotl-shell-detection/ee2b076e-3a93-4533-ba3b-27270b88db69.jsonl`
 
 ## Regenerating the transcripts (do this right before submission)
@@ -167,9 +174,11 @@ python ai_logs/export_claude_log.py \
   ~/.claude/projects/E--lotl-shell-detection/ee2b076e-3a93-4533-ba3b-27270b88db69.jsonl \
   ai_logs/claude_session_noam4.md
 
-# 5. Clear IN_PROGRESS in rebuild_claude_code_log.py once the exports above are
-#    the final ones, then rebuild the combined .txt: Ben's block plus the four
-#    freshly exported Noam blocks under their `# Session N` separators.
+# 5. Rebuild the combined .txt: Ben's block plus the four freshly exported Noam
+#    blocks under their `# Session N` separators. IN_PROGRESS in
+#    rebuild_claude_code_log.py is now empty, as it must be at submission time;
+#    put a session back in it only if that session is genuinely reopened, and
+#    empty it again after the re-export.
 python ai_logs/rebuild_claude_code_log.py
 ```
 
@@ -191,6 +200,12 @@ a mid-session snapshot and every registered session whose export is missing;
 **a clean run with no `NOT FINAL` lines is the signal that the log is
 submittable.** After re-running, update the turn counts above with the numbers
 the export script prints for each session.
+
+Session 5 is listed in `SELF_EXPORTED` rather than `IN_PROGRESS`, which stamps
+its block with the self-export disclosure quoted at the top of this page instead
+of a "re-export before submitting" note. That distinction is deliberate: a
+snapshot is fixable by re-exporting, a final session's missing tail is not —
+re-exporting only moves the cut a few turns later.
 
 These logs are provided in full to satisfy the project rubric's requirement
 for complete, unedited AI tool logs.

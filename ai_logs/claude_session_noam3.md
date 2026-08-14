@@ -997,3 +997,512 @@ Appendix B checks out — every figure matches the canonical set. Removing the n
 
 Now the AI logs, per the project's policy. Re-exporting all three of Noam's sessions and rebuilding the combined log:
 
+All four blocks verbatim, 93/93 turns. Updating the README counts and Session 4 description:
+
+Both appendices are done and committed. Now the body, starting with Ch8. Surveying what exists:
+
+Ch8's ten source files total ~11,600 words for a 2.5-page budget. Reading the primary ones:
+
+Now I have everything for Ch8. Writing the condensed body section.
+
+Four tables are structurally clean, but prose is ~1,150 words against the brief's ~800-word budget for Ch8. Tightening.
+
+Word is available — I can measure real page counts instead of guessing. Let me check the builder's styling.
+
+6 pages against a 2.5-page budget. Let me find what's consuming it.
+
+Found it — `render_md` creates one Word paragraph per *source line*, so every hard-wrapped markdown line becomes its own paragraph. That inflates length and breaks paragraph flow in every docx built so far.
+
+4 pages now (was 6). Content is still ~1.5 pages long. Cutting prose while keeping every number and claim.
+
+Let me quantify precisely what the budget buys, so the cut is informed.
+
+Tables cost only 0.85 pages; prose is 2.77. Cutting prose to let the tables carry the evidence.
+
+Now a real content cut of ~250 words to land Ch8 near 3.0 pages.
+
+Measured, not estimated — and one of these corrects an earlier estimate of mine. Let me check what the assignment says appendices must contain.
+
+Ch8 body section is written and committed. Two things came out of it that change the plan.
+
+## `report/body_ch8.md` — first condensed body section
+
+Ten Ch8 source files (~11,600 words) compressed into one section, **measured at 3.52 pages**. The sources stay in the tree as the working record. Four tables carry the evidence; the confusion-matrix grid points at Appendix B instead of being repeated.
+
+| § | Lead claim | Table |
+|---|---|---|
+| 8.1 | Both models fail on the *same* commands — 59 shared FN, 61 shared FP — so the residual is in the label boundary, not model capacity | 8.1: errors by source corpus |
+| 8.2 | On D2→D1 **all six models score below the do-nothing floor of 0.400**; cause measured (source-separability 0.821 vs 0.298) | 8.2: transfer, with the baseline-basis caveat |
+| 8.3 | ShellCore's 20-point lead decomposes **≈10 representation / ≈10 corpus-and-protocol**; we confirm their thesis, reject their protocol | 8.3: two-step decomposition |
+| 8.4 | Negative result: cascade is the *weakest* of four configurations; `p ≥ 0.65` on stage 2 alone beats it. Oracle band = +3.7 F1 | 8.4: ablation + oracle ceiling |
+
+The `/etc/passwd` contamination evidence (47 commands, 9 benign / 38 attack) and the `chmod +s` point both survived the cut — they're the strongest thing in the chapter.
+
+## A real bug in `build_report.py`
+
+`render_md()` created one Word paragraph per **source line**. Our markdown is hard-wrapped, so every wrapped line became its own paragraph — no text flow, and Ch8 rendered at **6.0 pages instead of 3.7**. Every docx built so far has this. Fixed: lines now buffer and flush as one paragraph. Also replaced the full 1.5-spaced empty paragraph after each table with a 6pt spacer.
+
+## Measured page counts — this corrects an estimate I gave you
+
+I set up exact measurement through Word (`ComputeStatistics` + fractional last-page position) instead of estimating. My earlier "appendices ≈ 4.5–5 pages, inside the allowance" was wrong:
+
+| File | Measured | Budget |
+|---|---:|---:|
+| Appendix A — execution | **2.94 pp** | — |
+| Appendix B — tables | **5.18 pp** | — |
+| **Appendices total** | **8.12 pp** | **5 pp** |
+| Ch8 body | 3.52 pp | 2.5 pp |
+| Exec summary | 1.29 pp | 1.0 pp |
+
+Appendices are **3.1 pages over** the professor's hard allowance.
+
+**My recommendation:** leave Ch8 at ~3.5 and take the space out of the appendices. Ch8 is 20 points — the largest single block — and the assembly brief explicitly says not to solve the budget by shrinking it; 3.5 pages is 23% of the body for 20% of the grade. Meanwhile Appendix A is 2.94 pages of *prose and code blocks*, but the professor's allowance is for "tables and graphs" — so it's both the least defensible and the easiest cut. Concretely: compress A to the two environment tables plus one command table (~1.2 pp), and drop Appendix B's Table B.4 (the 25 rejected candidates, 36 rows — B.3's funnel already states the outcome), landing the pair near 5.
+
+Want me to make those appendix cuts, or would you rather protect the appendices and squeeze Ch8 instead? Either way, tell me if Ch8 itself needs changes before I move to Ch1.
+
+## USER
+
+Yes make appendix cuts
+
+## ASSISTANT
+
+Making both cuts. Appendix B is generated, so I'll edit the generator, not its output.
+
+Appendix B: dropping B.4 (27 rows), top-15 → top-10, and trimming prose. Let me see the generator's helper sections.
+
+Now the generator edits — drop the 27-row rejected-candidates table, tighten the ranking tables, and renumber contiguously.
+
+Now the document body — renumbering B.5–B.8 down to B.4–B.7 and trimming prose.
+
+Appendix B: 153 → 116 rows. Now compressing Appendix A.
+
+A is 2.23 and B 4.41 — still 2.3 over. Cutting further, starting with A.
+
+A is 1.96. Cutting further — folding the trailing notes into a table (8.5pt beats 11pt/1.5 prose) and tightening what's left.
+
+A is 1.71 (from 2.94). Now B — measuring where its 4.41 pages sit.
+
+Now the prose pass on the document body:
+
+B is 3.79 (from 5.18); A + B = 5.50. Closing the last 0.5.
+
+5.16 run-on. Taking the last 0.16 out.
+
+4.97 — inside the allowance. Making the caption state both omissions honestly:
+
+`max_token_len` and `len_chars` sit at ranks 9–10 and Chapter 4 does discuss them, so the TOP_N rationale in the code was wrong — correcting it:
+
+Appendices are done and committed (`307a6e9`). Measured with Word, at the styling we'll actually ship:
+
+| | before | after |
+|---|---:|---:|
+| Appendix A | 2.94 pp | 1.63 pp |
+| Appendix B | 5.18 pp | 3.33 pp |
+| **A + B combined** | **8.12 pp** | **4.97 pp** |
+
+Inside the professor's 5 pages — with one caveat: that 4.97 assumes **B runs on directly after A** rather than starting a fresh page. Giving each its own page break costs 6 physical pages instead of 5.
+
+**What actually came out.** Appendix A: the 13-row per-package list became 4 role-grouped rows; §A.2–A.6 became one 16-command table; the three trailing notes became Table A.4, so the same content sits at table size instead of 11pt/1.5 prose. The `ch3_feature_audit.py` warning and the "token is never committed" statement survive verbatim.
+
+Appendix B stays generated, so it re-derives after any model re-run. I dropped the 27-row rejected-candidates table (its two real findings moved into B.2's prose), and set three budget constants: `TOP_N = 8`, RF grid at `n_estimators ∈ {100, 500}`, IF `contamination=0.05` omitted. **Every caption states what its table leaves out** — B.6 reports, computed from the data rather than asserted, that the omitted `n_estimators` settings move F1 by at most 0.012.
+
+**One correction worth your attention:** I first justified `TOP_N = 8` as "Chapter 4 only argues about the top eight." Checking `ch4_ranking_findings.md`, that's false — Ch4 discusses `max_token_len` and `len_chars`, which sit at consensus ranks 9–10. The constant stays (it's the page budget), but the code comment now says so plainly, and when I write Ch4 I'll cite the shipped `ch4_feature_ranking.csv` rather than Table B.1 for those two.
+
+Also fixed along the way: `build_report.py` was rendering at Calibri **10.5**, out of spec — now 11, margins 1.1″ → 1.0″. And Ch8's confusion-matrix cross-reference followed the renumbering to Table B.7. Tests: 6 passed.
+
+**Before I start Ch1, one number you should see.** Ch8 measures 3.52 of the 15 body pages. Split evenly, the remaining eleven-and-a-half pages have to hold the exec summary, Ch1–Ch7 and Bonus B.3 — which fits only if nothing carries a figure, and there are 33 PNGs in `report/figures/` with none embedded yet.
+
+My recommendation: **write Ch1 now and reconcile at the end** rather than pre-emptively re-cutting Ch8. Cutting Ch8 today means guessing at the other chapters' true sizes; the measuring harness makes an end-of-writing reconciliation cheap and accurate, and Ch8 is the section most able to absorb a later trim. Starting on Ch1 unless you'd rather I re-cut Ch8 first.
+
+## USER
+
+write Ch1 now and reconcile at the end
+
+## ASSISTANT
+
+Working inline — you stopped workflow fan-outs earlier and the section-by-section review policy is itself graded, so Ch1 gets written here where you can see it.
+
+All five Ch1 sources are read. Writing the condensed chapter now — 7 mapping rows in the mandated 5-column schema, with §1.3's eight families collapsed into a two-column table to save width.
+
+§1.2 alone measures **5.19 pages** at only 1,498 words — the mandated 5-column table packs at 289 words/page, while §1.3's 2-column table manages 545. The cause is structural: with autofit, all five columns get similar widths, so each row's height is driven by the 100-word explanation cell while the telemetry and feature columns sit half-empty. Let me fix the renderer rather than gut the content.
+
+Now wire the directive into the markdown parser:
+
+Now the renderer supports pinned widths. Rewriting Ch1 with tighter cells and width directives:
+
+Width pinning alone took Ch1 from 9.22 → 6.30 pages (§1.2 fell 5.19 → 2.98). Now trimming the text to fit Ch1's actual share of the 15-page body:
+
+Only 0.24 pages from a 172-word trim — the cut needs to be far deeper. Before gutting a 15-point chapter, let me check whether width pinning rescues Ch8 too, since that changes the arithmetic:
+
+Ch8 barely benefits (3.52 → 3.36) — its tables are numeric and already packed. Let me test the appendix, since freed appendix space could host one of Ch1's tables:
+
+Verified — `head_is_lotl` is gain-rank 4 on both corpora (0.045 / 0.066). Restoring the figures since they're now first-hand confirmed:
+
+Ch1 is written and measured. Here's where things stand — and there's a budget problem that needs your call before I cut further.
+
+## Ch1 is drafted — `report/body_ch1.md`, 6.06 pages, 3,060 words
+
+- **§1.1** — four paragraphs: the technique and why the narrow waist matters; why LotL defeats file-based detection *by construction* (fork/execve against a vendor-hashed binary — the hash, the signature and the allow-list all answer "is this program trustworthy?" with yes, and only argv differs); why the command string is therefore the right telemetry; and the provenance-labeling premise with its three measured costs.
+- **§1.2** — the mandated 5-column mapping table, 7 rows: reverse/bind shell, download-and-execute, trusted-binary abuse + host discovery, obfuscation, staging, credentials-in-files, sudo privesc. That's Ben's 3 and your 4 (T1027.010 / T1548.003 / T1552.001 / T1074.001, as you actually wrote them, not the T1202 the brief proposed). Ben's detectability verdicts (YES / PARTIALLY / NO) survive as bold lead-ins inside column 5, since the mandated schema has no room for a 6th column.
+- **§1.3** — the 68→43 funnel in eight families, two columns: design premise → what the measurement returned.
+
+One verification worth flagging: I doubted Ben's claim that `head_is_lotl` is top-4 by gain on both corpora and checked it against `ch4_feature_ranking.csv`. He's right — gain-rank 4 on both, 0.045 / 0.066. I'd confused it with `has_lotl_bin` (rank 6, 0.038). The claim is restored with its figures.
+
+## The renderer now supports fixed column widths
+
+A `<!-- cols: 1.30 0.80 1.20 1.15 2.05 -->` line before a table pins its widths in inches instead of letting Word autofit. This matters more than it sounds: autofit gave all five columns similar widths, so every row's height was driven by the ~100-word explanation cell while the telemetry and feature columns sat half empty. §1.2 dropped **5.19 → 2.98 pages (−43%)**; the whole chapter went **9.22 → 6.06**. On the combined appendix it's **4.97 → 4.49**, which frees half a page inside your 5-page cap. Ch8 barely moves (3.52 → 3.36) because its tables are numeric and already dense.
+
+## The budget arithmetic — this is the problem
+
+| Section | rubric pts | measured pages | proportional share of 15pp |
+|---|---:|---:|---:|
+| Exec summary | 5 | 1.26 | 0.68 |
+| Ch1 | 15 | 6.06 | 2.05 |
+| Ch8 | 20 | 3.52 | 2.73 |
+| **Total** | **40 / 110** | **10.84 / 15** | **5.46** |
+
+Three finished sections carry 36% of the points and consume **72% of the body**. Total `report/*.md` source is 53,656 words across 47 files — at this density the full body would run ~30 pages. And text trimming is a weak lever: cutting 172 words from Ch1 moved it 0.24 pages. Getting Ch1 to its proportional 2.05 pages means deleting about two-thirds of it.
+
+**My recommendation: weight the budget toward the heavy chapters rather than splitting it point-proportionally.** Concretely — Ch1 2.6, Ch3 2.6, Ch8 2.8, exec summary 0.7 (= 8.7 pages protecting 55 of 110 points), leaving ~6.3 pages for Ch2/Ch4/Ch5/Ch6/Ch7 and the bonus at roughly 1.0 each. Ch6 is 5 points across 4,793 words in three files, so it collapses to one page without losing anything that scores; Ch4's ranking detail already lives in Appendix B. The alternative — proportional cuts everywhere — strips Ch1 of the per-feature evidence that is precisely what earns its 15 points, and leaves the light chapters padded.
+
+Two things I'd add to that. First, worth one message to the professor: his ruling says "5 additional pages of *additional tables and graphs* as appendixes," which doesn't say whether body tables count against the 15. Cheap to ask, and if tables are exempt the whole problem dissolves. I'd assume "15 means 15" and plan for it regardless. Second, 33 figures exist in `report/figures/` and none are embedded yet — six of them with captions costs about 1.5 pages, so that has to come out of the 15 too, not on top of it.
+
+Tell me the target for Ch1 and I'll cut it to that, then move to Ch3.
+
+## USER
+
+Whats the problem now? Shortly
+
+## ASSISTANT
+
+Three finished sections eat 10.84 of your 15 body pages but only cover 40 of 110 rubric points. Everything left — Ch2, Ch3, Ch4, Ch5, Ch6, Ch7, bonus, plus figures — has to fit in the remaining 4.16 pages. It doesn't.
+
+I need one decision from you: how many pages Ch1 gets. My recommendation is **2.6** (down from 6.06).
+
+## USER
+
+Lets maybe find where to cut after finishing writing. 1 step before, Ben has uploaded new changes to his branch with modifications to the final paper. So lets first check his changes.
+
+## ASSISTANT
+
+Good call — let me pull his branch and see what's changed before we touch the budget.
+
+Ben's branch moved `a33d72f → b1e9997` — that's exactly the point we last integrated from. Let me see what's new.
+
+Ben has been busy — and he's solved the same page-budget problem independently, which means we now have two competing solutions. Let me read what he actually did.
+
+Clean divergence from the shared point. Four files changed on both sides — let me check the content ones, especially his "fix stale Ch4/Ch6 feature names+numbers" claim, since we regenerated those on the 43-feature set.
+
+Ben's Ch6 fix is real — he replaced genuinely stale feature names (`shell_bins`, `redirect_count`, `char_count`) with correct 43-set ones, and his gains match Table B.1 exactly. Let me verify the two new factual claims I can't take on trust: his hyperparameters and the ShellCore venue.
+
+Both verified against source: RF `n_estimators=400, max_depth=24, max_features="sqrt", class_weight="balanced_subsample"` and IF `n_estimators=300, max_samples=0.8, contamination=0.25` match `src/models.py:135-174` exactly, and ShellCore is indeed IEEE IoT J. 9(4) 2022. Last one — his biggest deletion:
+
+Checked all seven commits. Summary:
+
+## What Ben did well — take these
+
+- **Title page is complete**: both IDs (Ben 209361864, you 315005066), both emails, correct course name. That closes an open TODO. ZIP and docx renamed to `Group_209361864_315005066_*`.
+- **He fixed real bugs in Ch4 and Ch6.** Those chapters still cited feature names that don't exist in the 43-set — `shell_bins` 0.194, `redirect_count` 0.130, `pipe_count`, `path_proc`, `char_count`, `token_len_max`. He replaced them with the real ones, and I checked every number against `ch4_feature_ranking.csv`: `n_abs_paths` 0.181, `has_dev_null` 0.111, `has_shell_bin` 0.097, D2's `has_fetch_bin` 0.093 — all correct. He also corrected the Ch6 headline metrics to the canonical 0.876/0.848 and 0.860/0.838.
+- **Three new sections closing rubric gaps**: `ch2_4_comparative_essay.md` (second paper + the three essay questions), `ch6_2_rf_if.md`, `ch7_2_class_imbalance.md`. I verified his RF/IF hyperparameters against `src/models.py:135-174` — exact match — and the ShellCore venue (IEEE IoT J. 9(4) 2022) is right; our `body_ch8.md` only cites the arXiv number, so his is the better citation.
+- **Escaped-pipe fix** in `parse_table_row` so `\|` inside a cell doesn't create a phantom column. We need that.
+- **Dropping per-chapter page breaks** — reclaims 4–5 pages. Adopt immediately.
+
+## The collision
+
+We both rebuilt `build_report.py` for the same page problem, in different directions. He truncates the *original* chapter files with `stop_before`; we write purpose-condensed body files. We both independently added paragraph joining. Four files changed on both sides: `build_report.py`, `ch4_ranking_findings.md`, `ch6_model_justification.md`, `bonus_b3_findings.md`.
+
+Also two naming clashes: his `appendix_a_code_execution.md` + `appendix_b_environment.md` split what our `appendix_a_execution.md` combined, and his Appendix B slot is taken by *environment* while ours is the *supporting tables*. And his auto-caption machinery would double-caption our files, which already carry hand-written `**Table 1.1 — …**` captions.
+
+## The one thing I'd push back on
+
+Appendix C. He moved Ch8.1 forensics and Ch8.4 cascade — graded body prose — into an appendix, leaving a pointer paragraph in the body. The professor's words were "5 additional pages of **additional tables and graphs** as appendixes." That's not narrative overflow, and Ch8 is the 20-point chapter. A grader reading the body finds a signpost where the analysis should be.
+
+**My recommendation:** keep Ben's file skeleton, his title page, his fixes and his page-break decision, but drop Appendix C — our `body_ch8.md` already holds all four Ch8 subsections in the body at 3.52 pages, which solves the same problem without moving graded content out. Then his Appendix B (environment) folds into our Appendix A, freeing slot B for the supporting tables.
+
+Want me to do the merge on that basis?
+
+## USER
+
+If we accept Ben's changes, expect appendix C, what will we override that we've already fixed/written?
+
+## ASSISTANT
+
+Let me get the precise answer — what we changed in the four overlapping files.
+
+Concrete answer — four files would lose our work, plus one silent drop:
+
+**1. `build_report.py`** — we'd lose the `<!-- cols: -->` fixed column widths. That's the single change that made Ch1 fit (9.22 → 6.06) and the appendix fit (4.97 → 4.49). His version has no width control.
+
+**2. `report/ch6_model_justification.md`** — the biggest loss, on two levels:
+- Our rebuilt **§6.3** goes away: the shipped-vs-sweep tables, the "the sweep scores on the test hold-out, so it's a sensitivity readout not a selection procedure" note, the honest non-adoption of `dropout=0.1`, and the corrected values — `max_depth` 6/7 not 12, `n_estimators` 400/500 not 200, `weight_decay` 1e-5, `CNN1DClassifier` not `CNNClassifier`. Ben's file still carries the old stale §6.3.
+- Worse, **his build truncates Ch6 at `"## 6.3 Explicit"`** — so §6.3 never renders at all. "Explicit hyperparameter choices and rationale" is a named rubric item.
+- Our §6.1 is also marginally ahead of his: real Ch7 F1 spans (0.765–0.789 / 0.746–0.763) where he kept the stale "~0.71–0.735".
+
+**3. `report/ch4_ranking_findings.md`** — we'd drop from three importance views to one. Ours has the MDI + gain + permutation consensus table, the no-leakage statement ("fitted inside the training split only"), and a numbered caption. His is gain-only top-5. Both fixed the stale names correctly; ours is the fuller chapter.
+
+**4. `report/bonus_b3_findings.md`** — we'd lose the pooled row and the corrected edge-case definition. The old text said three models including Isolation Forest; ours says the two primary models, which is what the code does. His only change there is dropping "(Ben)" from the title — worth keeping.
+
+**5. Not overridden, just invisible:** `body_ch1.md`, `body_ch8.md`, `appendix_a_execution.md`, `appendix_b_tables.md` and `title_page.md` aren't in his file lists, so they'd simply not render.
+
+One extra hazard: his auto-caption keys match on header substrings, and our Ch4 header contains "What it measures" — so his machinery would stamp our 8-row consensus table with the caption "Top five Dataset 1 features by XGBoost gain," which is wrong for it.
+
+**So: merge file-by-file, not wholesale.** Take from Ben — the title page, the escaped-pipe fix, no per-chapter page breaks, the three new sections (Ch2.4, Ch6.2, Ch7.2), his BODY_FILES skeleton, the renames. Keep ours — the width control, Ch6, Ch4, bonus B.3. Nothing in that split is contested; the two sides fixed different things.
+
+Want me to execute that merge?
+
+## USER
+
+Did he fix only things he was respobsible for? Can we just take some of his fixes instead..
+
+## ASSISTANT
+
+Let me check the actual work split rather than guess.
+
+Checked `WORK_DIVISION.md` as reflected in NOAM_TODO. **No — roughly half his changes are outside his lane.**
+
+**Inside it:** `bonus_b3_findings.md` and `ch1_threat_mapping.md` (title lines only), and his §6.1 XGBoost/CNN prose.
+
+**Outside it:**
+- The Ch4/Ch6 number refresh — NOAM_TODO:394 records the scope decision explicitly: *"Noam absorbs every re-run and number-refresh below… what is still genuinely Ben's is net-new writing."*
+- `ch6_2_rf_if.md` — RF/IF is your §6.4–6.6; we already have `ch6_rf_if_justification.md`.
+- `ch7_2_class_imbalance.md` — we have `ch7_2_imbalance_validation.md`.
+- `ch2_4_comparative_essay.md` — the ShellCore vertex is yours (`ch2_3_comparative_contribution_noam.md`).
+- Both appendices — docx assembly and appendices are yours, and you specifically scoped Appendix A to me.
+- **Appendix C is the sharpest one**: it relocates Ch8.4, and NOAM_TODO:413 already corrected this once in writing — *"Owner corrected: Noam, not Ben. WORK_DIVISION.md assigns 8.4 cascading ensemble to Noam; Ben only drafted the file."*
+
+The cause is on our side, though: our four commits are unpushed, so Ben was working from `a33d72f` and could not see any of it. Those gaps genuinely looked open to him.
+
+**Yes — cherry-pick. The minimal set worth taking is four things:**
+
+1. **The title page block** in `build_report.py` — both IDs, emails, correct course name. Nothing of ours competes.
+2. **The escaped-pipe fix** in `parse_table_row` — our Ch4 table already writes `\|` in a cell and needs it to render.
+3. **`appendix_b_environment.md`** — net-new, and he got the two-machine description right, which fixes the error NOAM_TODO:335 flagged. One correction needed: it lists imbalanced-learn's role as "leakage-safe SMOTE / sampling" and we don't use SMOTE.
+4. **`ch2_4_comparative_essay.md`** — net-new and fills a real rubric gap (two papers + the three essay questions). It's in your lane, so you should read it before it ships, but it's good and its numbers check out.
+
+Everything else we already have in equal or better form. One honest caveat: his `ch6_2_rf_if.md` and `ch7_2_class_imbalance.md` are *condensed* where ours are long — given the page squeeze, they may be the better body versions even though ours are more complete. Worth a look when we do the cutting rather than deciding now.
+
+Want me to take those four?
+
+## USER
+
+Ok looks good
+
+## ASSISTANT
+
+Committing our work first so nothing's at risk, then reading our Appendix A to see how Ben's environment content should land.
+
+Our Appendix A already covers Ben's environment content — both machines, with exact versions rather than his `>=` lower bounds. Taking his file would be a downgrade, so I'm skipping item 3 and taking the other three. Let me read the current renderer.
+
+Now the three cherry-picks.
+
+Now the third pick — Ben's comparative essay:
+
+Builds clean. Now aligning the artefact filenames with Ben's rename:
+
+Typo in the message from shell escaping — fixing it:
+
+Done — three of the four are in.
+
+**Taken** (`5a5bb61`):
+- **Title page** — real course name, both IDs, both emails, submission date.
+- **Escaped-pipe fix** — tested on the actual Ch4 row: `| 3 | n_pipes | 0.057 | Number of \| pipe stages | — |` now parses to 5 cells with the pipe staying inside cell 4.
+- **`ch2_4_comparative_essay.md`** — as-is. Worth your read since Ch2 is your lane, but its numbers check out.
+
+**Dropped item 3.** I said Ben's environment appendix was net-new — that was wrong, I hadn't re-read ours at the time. Our `appendix_a_execution.md` already has both machines with exact versions (`scikit-learn 1.8.0`, `xgboost 3.2.0`, `torch 2.11.0`) where his gives `>=` lower bounds, so taking his would have been a downgrade. It also would have brought in a claim that imbalanced-learn is there for SMOTE, which we don't use.
+
+Also renamed the artefacts to `Group_209361864_315005066_*`. Build smoke-tests clean.
+
+Two things for you:
+
+**The ZIP name is a guess.** The spec says `Group_X1_X2_Final_Project.zip`. Ben read X1/X2 as the two student IDs and dropped "Group 10" entirely. That's the natural reading and I followed it, but it's a submission-critical filename — if you can confirm with the professor, worth doing.
+
+**We should push now.** This whole duplication happened because our four commits never left this machine, so Ben was building against `a33d72f` and every gap looked open. He's also going to keep working from his branch, so he needs to know what we took and what we didn't — otherwise he'll re-do Appendix C.
+
+Want me to push, and draft a short note to Ben on what was integrated?
+
+## USER
+
+What else is left in the project?
+
+## ASSISTANT
+
+Let me check the current state rather than recite old notes.
+
+Here's the full picture.
+
+## Body sections: 3 of 9 done
+
+| Section | pts | state |
+|---|---:|---|
+| Exec summary | 5 | ✅ 1.26 pp |
+| Ch1 | 15 | ✅ 6.06 pp |
+| Ch8 | 20 | ✅ 3.52 pp |
+| Ch2 | 10 | ❌ 5 source files, incl. Ben's new essay |
+| Ch3 | 15 | ❌ D1 + D2 halves + feature decisions |
+| Ch4 | ~10 | ❌ `ch4_ranking_findings.md` is good, needs condensing |
+| Ch5 | 10 | ❌ three files (5.1/5.2/5.3) |
+| Ch6 | 5 | ❌ ~4,800 words across 3 files → collapse to 6.1/6.2 |
+| Ch7 | 10 | ❌ sensitivity + RF/IF + imbalance + pipeline figure |
+| Bonus | +10 | ❌ content exists, needs a body slot |
+
+**Six sections carrying 55 points are unwritten, and the three that are done already use 72% of the 15 pages.** That's the whole problem in one line.
+
+## Assembly work
+
+1. **`build_report.py` rewire** — `BODY_FILES` still lists the stale 8 files. It doesn't know about `body_ch1.md`, `body_ch8.md`, `title_page.md` or either appendix, and it still truncates Ch6 at `"## 6.3 Explicit"`, which silently drops a graded rubric item.
+2. **Figures — 33 PNGs, 0 embedded, 0 captioned.** The spec requires descriptive captions on every figure. This is the biggest untouched chunk of work and it costs pages we don't have.
+3. **Apply `<!-- cols: -->`** to both appendices and Ch8 — validated on scratch copies (4.97 → 4.49 and 3.52 → 3.36), not yet written to the repo.
+4. **The page reconcile itself** — 15 body + 5 appendix.
+
+## Compliance and close-out
+
+5. **Cross-review** — `WORK_DIVISION.md` requires you to read Ben's chapters and flag issues before Aug 14. Not done.
+6. **Push, and tell Ben what we took** — otherwise he rebuilds Appendix C and we do this again.
+7. **Re-export AI logs immediately before zipping** — graded, and must be last.
+8. **Rebuild docx + ZIP, verify page count** with the Word harness.
+9. **Confirm the ZIP filename** reading.
+
+## What I'd do with the time
+
+Push first — it's two minutes and it stops Ben duplicating more work. Then the critical path is **Ch3 (15 pts) → Ch7 → Ch2 → Ch4 → Ch5 → Ch6 → bonus**, writing each one straight to its page target instead of writing long and cutting twice, which is what cost us on Ch1. Figures and the `build_report` rewire come after the text is frozen, because both depend on final page counts.
+
+That order means deciding the budget now rather than at the end. My recommendation stands: Ch1 2.6, Ch3 2.6, Ch8 2.8, exec 0.7, ~1.0 each for the rest. Say the word and I'll cut Ch1 to 2.6 and start Ch3 at 2.6.
+
+## USER
+
+Push. Then provide context to new session to run over the missing sections, fix all the assembly, compliance work mentioned
+
+## ASSISTANT
+
+Pushed — `ced6e83..5a5bb61`. Now let me gather the last few exact facts for the handoff.
+
+The `build_report.py` edits didn't make it into that commit — I staged the renamed artefacts but not the file itself. Committing them now:
+
+Now the handoff document.
+
+Let me verify the line references I put in the handoff.
+
+All references check out. Updating the stale project-state memory, then committing.
+
+Pushed and in sync. Three commits went up: the cherry-pick, a fix (the `build_report.py` edits had been left unstaged — the commit renamed the artefacts but not the file), and the handoff.
+
+**`docs/HANDOFF_FINAL_ASSEMBLY.md`** is written and committed. It's self-contained — a new session can start from it cold. Nine sections:
+
+1. **Deliverable and deadline** — the professor's ruling verbatim, formatting spec, and the unresolved ZIP-name question flagged as unresolved rather than settled.
+2. **How to work here** — section-by-section with your sign-off, no workflow fan-outs, logs are graded, `PYTHONIOENCODING=utf-8`, no heredocs in PowerShell.
+3. **Repo state + the Ben decision** — a table of what we took, what we rejected and the reason for each, so nobody re-derives it. Includes the honest note that his condensed Ch6.2/Ch7.2 may beat ours as *body* versions once we're cutting.
+4. **The page budget** — the measured arithmetic, the ~505 words/page density fact, and the target split marked clearly as *not yet approved by you*.
+5. **What's left** — the 3-of-9 body table with the source files for each unwritten chapter, plus assembly and compliance work.
+6. **Tooling** — the Word measurement harness, the density numbers, and how `<!-- cols: -->` works.
+7. **Canonical numbers** — the full metrics table, transfer scores, corpus composition, and code facts. I re-verified every line reference in it: `SEED` at `src/__init__.py:17`, `build_cnn1d` at `src/models.py:314`, the dataset-name ban at `tests/test_pipeline.py:43`.
+8. **Hard constraints** — HF_TOKEN, the untracked ShellCore PDF, the `source` column, the `ch3_feature_audit.py` warning.
+9. **Suggested order**, with the note that figures and the renderer rewire must wait until the text is frozen.
+
+Two things the new session will hit immediately, both needing you:
+
+- **The target split is unapproved.** It's the first item in the suggested order because everything downstream depends on it.
+- **Ben still doesn't know what we integrated.** He's the likeliest source of another collision, and he's actively working.
+
+I also refreshed the project memory so it points at the handoff instead of carrying a stale copy of the state.
+
+## USER
+
+"The target split is unapproved" - What does it mean? ; "Ben still doesn't know what we integrated." - I'll update him
+
+## ASSISTANT
+
+It means I proposed a page allowance per section and you've never actually said yes to it:
+
+| Section | pts | now | proposed |
+|---|---:|---:|---:|
+| Exec summary | 5 | 1.26 | 0.7 |
+| Ch1 | 15 | 6.06 | 2.6 |
+| Ch3 | 15 | — | 2.6 |
+| Ch8 | 20 | 3.52 | 2.8 |
+| Ch2, Ch4, Ch5, Ch6, Ch7, Bonus | 55 | — | ~1.0 each |
+
+That's the number each section gets written to. It matters because it's the difference between writing Ch3 once at 2.6 pages and writing it at 5 then cutting it twice.
+
+There's a real tension I should name: you said earlier "let's find where to cut after finishing writing," and my recommendation is the opposite — write each remaining section straight to its target. Ch1 is the argument for my side. It came in at 9.22, the column-width fix got it to 6.06 for free, and it still needs to lose more than half again. That's three passes over one chapter with a day left, and six chapters to go.
+
+So the decision is really two things: **do you want per-section targets at all**, and **are these the right numbers**. If you'd rather keep writing at natural length and cut at the end, that's a legitimate call — it just means budgeting time for a large cutting pass on Aug 14, and it's your call to make, not mine.
+
+Good on Ben. The essentials for him: we cherry-picked rather than merged; we took his title page, the escaped-pipe fix and the Ch2.4 essay; we did **not** take Appendix C (Ch8.1/8.4 stay in the body — 8.4 is yours per `WORK_DIVISION.md`, and the professor scoped appendices to tables and graphs); and his `BODY_FILES` truncates Ch6 before §6.3, which is graded, so that scheme isn't being used either. Branch `noam/ch7-rf-if-sweeps` is pushed now, so he can see all of it.
+
+## USER
+
+I don't know yet what targets I want per section. Lets start from something sensible and if it exceeds (like Ch1 which probably would need to) we will cut after finishing the writing.
+
+## ASSISTANT
+
+Good — that's a workable middle. Targets as a starting aim, not a gate; reconcile in one pass at the end. Adopting them as written, with Ch1 left at 6.06 for now.
+
+Next up is Ch3 — 15 points, the biggest unwritten chapter. Let me read the sources and what the rubric asks of it.
+
+Before writing, let me verify the D1 half is actually clean — NOAM_TODO flagged 11 extinct feature names in it.
+
+D1 is clean — the `char_entropy` mention is the legitimate explanation of why it was cut. Now D2:
+
+Both halves are strong and factually clean. Writing Ch3 now — the framing that earns its 15 points is the cross-corpus comparison, since the two datasets disagree about the direction of the signal, which is the empirical foundation for Ch5.2 and Ch8.2.
+
+Drafted. Now measuring it exactly with the Word harness.
+
+3.55 pages, 1,415 words. Let me spot-check the figures I carried across from the two source files before showing it to you.
+
+One real error to fix: I asserted a ≥0.95 near-duplicate band, but the feature audit's actual cluster threshold is `|ρ| > 0.9` (`ch3_feature_decisions.md:116`) — and D2's `len_chars`~`len_tokens` at 0.906 *does* cross it. I also mixed D1 and D2 correlation values in one sentence without attribution. Rewriting §3.4 accurately:
+
+PowerShell here-string doesn't feed stdin; using the Bash tool with a heredoc as before.
+
+**Chapter 3 is drafted and committed (`5bdcc6b`) — `report/body_ch3.md`, 3.62 pages, 1,442 words.**
+
+**How I framed it.** The two EDA halves are individually good but individually unremarkable — "attacks are longer, here are some effect sizes." What makes them worth 15 points is that *they disagree*, so I built the chapter around that:
+
+- **§3.1** the two corpora side by side (Table 3.1), plus the split protocol and why grouping by *shape* rather than by *source* was the deliberate choice.
+- **§3.2** the headline: attacks are longer on D1 (length-alone probe AUC 0.611) and *shorter* on D2 (AUC 0.430 — below chance in the direction that worked on D1). This is the cleanest possible preview of the Ch8.2 transfer collapse, delivered three chapters early.
+- **§3.3** per-corpus leaders (Table 3.2), then the cross-corpus sign table (Table 3.3) separating *stable* (`digit_ratio`), *inverted* (`len_chars`, `n_quotes`, `n_flags`) and *reinforced-benign* (`n_pipes`, `head_is_lotl`) — landing on "presence of LotL vocabulary is an anti-signal on both corpora."
+- **§3.4** redundancy, **§3.5** the three things the EDA commits the model to (conjunctions not subsets → hybrid; scale handling → Ch5.3; sign-flipping features are the transfer liability).
+
+It deliberately does **not** restate the 68→43 funnel or the eight feature families — Ch1 §1.3 and Appendix B Table B.3 already carry those.
+
+**One correction made while drafting.** I'd written that nothing reaches a "≥0.95 near-duplicate band." The audit's actual threshold is `|ρ| > 0.9` (`ch3_feature_decisions.md:116`), and D2's `len_chars`~`len_tokens` at 0.906 *does* cross it. §3.4 now states that plainly and explains why both members were kept anyway — the audit spent its cut inside that cluster on the entropy proxies. I also un-pooled the correlation values, which were mixing D1 and D2 numbers in one sentence. Everything else I asserted was verified against the source files first-hand.
+
+**Where the budget stands.** Four of nine body sections done: exec 1.26 + Ch1 6.06 + Ch8 3.52 + Ch3 3.62 = **14.46 of 15 pages, carrying 55 of 110 points.** Ch2, Ch4, Ch5, Ch6, Ch7 and the bonus — the other 55 points — are still unwritten. Per your call we keep writing and cut at the end; I'm flagging the number, not reopening the decision.
+
+One encouraging detail for that eventual cut: Ch3 runs at 398 words/page against a 477 w/p prose baseline, meaning the tables are currently costing more page than their content warrants. Table 3.3's wide "Reading" column is the main offender. That's page recoverable through formatting and prose-folding rather than through deleting findings — a cheaper lever than the one we'll need on Ch1.
+
+Ch7 is next (10 points, four source files) unless you want to review Ch3 first.
+
+## USER
+
+Provide context for new session how to handle rest of the sections, rules, AI logs policy and everything needed
+
+## ASSISTANT
+
+Let me refresh the facts before rewriting the handoff — the existing one predates Ch3 and doesn't cover the AI-log procedure in enough detail.
+
+Facts refreshed. Rewriting the handoff to be current and complete.
+
+**Handoff rewritten, committed (`9875854`), and the branch is pushed and in sync.** It's at `docs/HANDOFF_FINAL_ASSEMBLY.md` — a fresh session should read §1, §2, §4, §5 before touching anything.
+
+**What's new versus the previous version** (which predated Ch3 and was mostly an inventory):
+
+**§5 — a cutting playbook.** This is the part that matters most. The endgame is a ~40–45% cut, and the natural instinct — delete findings — is the worst available option, because prose only trims at ~505 words/page. The levers are ranked by what they cost:
+
+1. Pin table column widths with `<!-- cols: -->` — free, measured at −43% on one Ch1 table, and still unapplied to both appendices and Ch8.
+2. Use words-per-page as a diagnostic against the 477 w/p prose baseline. Anything below that is losing page to layout, not content — Ch3 sits at 398, so it has recoverable page in it.
+3. Convert prose into dense tables (545–693 w/p — *denser* than prose, and the spec asks for tables anyway).
+4. Delete cross-chapter duplication.
+5. Delete content last, from Ch1 first — it's 42% of the body for 15 of 110 points.
+
+**§6 — per-chapter angles, not just file lists.** Each remaining chapter gets the argument it should make, which rubric requirement it discharges, and the boundary that keeps Ch1/Ch3/Ch4 from re-treading each other. It also records what actually made Ch3 work: its two sources disagreed, and the chapter was built on that disagreement rather than summarising them in sequence.
+
+**§8 — the AI-log policy in full.** The assignment text verbatim (including "submissions with no logs but obvious AI fingerprints will be treated as undisclosed AI use"), the exact export/rebuild commands including Ben's machine-only step, and — the part that was missing — the **manual `ai_logs/README.md` updates that are currently out of date**: stale turn counts, a "Session 4 still in progress" banner that must come off, and a Session 4 summary that says *"the merge of Ben's branch"* when the recent work was a cherry-pick. That's a real accuracy problem in a graded disclosure file.
+
+**Also recorded:** your governing budget decision, quoted, so it doesn't get relitigated; the four-deliverable list from the assignment; and the two shell gotchas that each cost a cycle here (no heredocs in the PowerShell tool; `git commit -F -` silently turns a PowerShell here-string into a pathspec).
+
+**One recommendation in it you should know about.** On the `Group_X1_X2_Final_Project.zip` naming question — given today's date, the handoff says ship the ID-based name rather than block on the professor. You and Ben independently read the template the same way, which is the best evidence available, and the title page already carries "Group 10" plus both names and IDs. Ask if there's time; submit either way.
+
+Memory updated to match.
+
+Two things in §9 are time-sensitive and only you can move: the **cross-review of Ben's chapters** (`WORK_DIVISION.md` puts it before Aug 14), and confirming **Ben knows what was integrated**.
+

@@ -155,3 +155,26 @@ here must beat.
 |  | Random Forest | 1362 | 74 | 145 | 334 | 0.8186 | 0.6973 | 0.7531 | 0.0515 |
 |  | XGBoost | 1319 | 117 | 117 | 362 | 0.7557 | 0.7557 | 0.7557 | 0.0815 |
 |  | Isolation Forest | 1422 | 14 | 441 | 38 | 0.7308 | 0.0793 | 0.1431 | 0.0097 |
+
+## B.5 EDA figures behind Chapter 3
+
+**Figure B.1 — Command-length distributions, Dataset 1 (top) and Dataset 2
+(bottom), by class.** Together they carry §3.2's central result: the
+attacks-are-longer regularity that holds on the curated corpus reverses on
+operational telemetry, and a length-only probe falls from AUC 0.611 to 0.430 —
+below chance, in the direction that worked on Dataset 1.
+
+<!-- fig-width: 3.2 -->
+![Dataset 1 command-length distribution by class](figures/ch3_length_hist_dataset1.png)
+
+<!-- fig-width: 3.2 -->
+![Dataset 2 command-length distribution by class](figures/ch3_length_hist_dataset2.png)
+
+**Figure B.2 — Dataset-1 feature correlation heat-map over the 43 shipped
+features.** The single dominant block is the size cluster of §3.4 —
+`len_chars` ~ `len_tokens`, Pearson 0.897 here and 0.906 on Dataset 2. No pair
+among the shipped 43 crosses the audit's Spearman |ρ| > 0.9 line; that cut was
+spent upstream, on `char_entropy` and `token_entropy`.
+
+<!-- fig-width: 3.9 -->
+![Dataset 1 feature correlation heat-map](figures/ch3_corr_heatmap_dataset1.png)

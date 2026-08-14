@@ -64,7 +64,11 @@ USABLE_IN = 8.5 - 2 * MARGIN_IN      # 6.9 in of text width on US Letter
 DEFAULT_FIG_WIDTH = 3.0
 MAX_FIG_WIDTH = USABLE_IN
 
-def set_spacing(para, space_before=0, space_after=6, line_spacing=1.5):
+# space_after is 3 pt, not Word's 8 or the 6 this used to carry. The spec fixes
+# the font size and the 1.5 line spacing; inter-paragraph spacing is not
+# specified, and at 1.5 spacing the blank half-line already separates paragraphs
+# without it. Measured on the assembled body: 6 -> 3 pt is worth 0.23 pages.
+def set_spacing(para, space_before=0, space_after=3, line_spacing=1.5):
     pf = para.paragraph_format
     pf.space_before = Pt(space_before)
     pf.space_after  = Pt(space_after)
@@ -171,8 +175,13 @@ def add_table(doc, rows, col_widths=None):
             cell = tbl.cell(ri, ci); cell.text = ""
             p = cell.paragraphs[0]
             add_run_with_fmt(p, cell_text.strip())
-            p.paragraph_format.space_before = Pt(1)
-            p.paragraph_format.space_after  = Pt(1)
+            # No intra-cell paragraph spacing. Tables are ~60% of this body, so
+            # 1 pt above and below every cell was costing 2 pt per row across
+            # ~110 body rows -- 0.45 of a page, measured. Word's own cell margins
+            # (0.08 in left/right, 0 top/bottom) and the 8.5 pt line's leading
+            # still keep the text off the gridlines.
+            p.paragraph_format.space_before = Pt(0)
+            p.paragraph_format.space_after  = Pt(0)
             if ri == 0:
                 for run in p.runs: run.bold = True
     for row in tbl.rows:

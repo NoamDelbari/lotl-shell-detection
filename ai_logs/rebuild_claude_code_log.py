@@ -56,7 +56,8 @@ SESSION4_HEADER = (
 )
 SESSION5_HEADER = (
     "# Session 5 -- Noam: final report assembly -- table column-width pass, the "
-    "remaining body chapters, the cutting pass, figure embedding and the "
+    "remaining body chapters, the cutting pass to the 15+5 page budget, figure "
+    "embedding, the non-owner cross-review of all ten body sections and the "
     "docx/ZIP build (Aug 14, 2026, Claude Opus 5)"
 )
 
@@ -68,14 +69,30 @@ SNAPSHOT_NOTE = (
 
 # Sessions whose .md is a mid-session snapshot rather than a final export.
 #
-# Session 4 is in here on evidence, not caution: claude_session_noam3.md was
-# written 2026-08-13 09:50 while its .jsonl kept growing until 2026-08-14 00:06,
-# so roughly fourteen hours of that session are not in the shipped log yet.
+# Session 4 was in here on evidence, not caution: claude_session_noam3.md had
+# been written 2026-08-13 09:50 while its .jsonl kept growing until 2026-08-14
+# 00:06. That session is now closed and re-exported in full (18 -> 30 turns), so
+# the set is empty and no block carries the re-export note.
 #
-# EMPTY THIS SET after the final re-export, immediately before zipping. The note
-# it drives is a disclosure statement about completeness, so it has to be true at
-# submission time -- in both directions.
-IN_PROGRESS = {4, 5}
+# KEEP IT EMPTY unless a session is genuinely re-openable. The note it drives is
+# a disclosure statement about completeness, so it has to be true at submission
+# time -- in both directions.
+IN_PROGRESS = set()
+
+# The last session cannot contain its own ending. Session 5 exported itself from
+# inside itself, so its transcript necessarily stops at the export command and
+# the short wrap-up after it is absent. That is a permanent, unfixable property
+# of any final session -- re-exporting only moves the cut later -- so it gets a
+# precise disclosure instead of the "re-export before submitting" note above,
+# and it is deliberately NOT a `NOT FINAL` condition.
+TAIL_NOTE = (
+    "*This session exported itself, so the transcript below necessarily stops "
+    "at the export command. What happened afterwards and is therefore absent: "
+    "this export, the rebuild of ai_logs/claude_code_log.txt, the turn-count "
+    "refresh in ai_logs/README.md, the submission ZIP build and the final "
+    "commit. Nothing else about the session is omitted.*"
+)
+SELF_EXPORTED = {5}
 
 # (session number, header, transcript produced by the exporter)
 BLOCKS = [
@@ -129,6 +146,8 @@ def main() -> None:
         parts.append("---\n\n" + header + "\n\n")
         if n in IN_PROGRESS:
             parts.append(SNAPSHOT_NOTE + "\n\n\n")
+        elif n in SELF_EXPORTED:
+            parts.append(TAIL_NOTE + "\n\n\n")
         parts.append(md.read_text(encoding="utf-8").rstrip("\n") + "\n")
         parts.append("\n")  # blank line before the next `---` separator
         included.append(n)

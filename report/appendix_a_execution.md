@@ -14,7 +14,7 @@ floating-point non-determinism.
 |---|---|---|
 | OS · Python | macOS, Apple M3 Pro · 3.11 | Windows 11 Home (26200) · 3.11.9 |
 | Compute | Apple-silicon GPU: PyTorch **MPS** for the 1D-CNN, Ollama GPU inference for Bonus B.3 | CPU only — `torch` CPU wheel |
-| Results produced | pipeline skeleton; `xgboost`, `xgboost_hybrid`, `cnn1d` + sweeps; Figure 7.1; Bonus B.3 | 43-feature selection; Ch3 EDA; `random_forest`, `isolation_forest` + sweeps; Ch6; Ch8.1/8.3/8.4; all result files |
+| Results produced | pipeline skeleton; `xgboost`, `xgboost_hybrid`, `cnn1d` + sweeps; the pipeline diagram (`report/figures/ch7_pipeline.png`, cut from the body for space); Bonus B.3 | 43-feature selection; Ch3 EDA; `random_forest`, `isolation_forest` + sweeps; Ch6; Ch8.1/8.3/8.4; all result files |
 
 **Table A.2 — Library versions behind the shipped numbers (Environment B, where
 `results/` was last regenerated).** `requirements.txt` uses `>=` rather than

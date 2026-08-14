@@ -13,7 +13,7 @@ ranks, so lower is better. 4 features receive
 exactly zero XGBoost gain here. The full 43-row ranking is the shipped
 `report/ch4_feature_ranking.csv`.
 
-<!-- cols: 0.40 1.60 0.90 0.90 1.05 0.95 -->
+<!-- cols: 0.45 1.79 1.01 1.01 1.18 1.06 -->
 | # | feature | RF MDI | XGB gain | permutation | consensus |
 |---:|---|---:|---:|---:|---:|
 | 1 | `n_abs_paths` | 0.1243 | 0.1806 | 0.0342 | 1.67 |
@@ -29,7 +29,7 @@ exactly zero XGBoost gain here. The full 43-row ranking is the shipped
 receive zero gain — twice Dataset 1's count, and the reason §4.2 treats the
 ranking as corpus-specific.
 
-<!-- cols: 0.40 1.60 0.90 0.90 1.05 0.95 -->
+<!-- cols: 0.45 1.79 1.01 1.01 1.18 1.06 -->
 | # | feature | RF MDI | XGB gain | permutation | consensus |
 |---:|---|---:|---:|---:|---:|
 | 1 | `has_fetch_bin` | 0.0583 | 0.0927 | 0.0302 | 3.00 |
@@ -142,7 +142,7 @@ split is 3,049 rows (762 attack), Dataset 2's is 1,915 (479). At that 1:3 ratio 
 do-nothing classifier flagging everything scores F1 0.400 — the floor every model
 here must beat.
 
-<!-- cols: 0.85 1.10 0.42 0.42 0.42 0.42 0.75 0.65 0.55 0.55 -->
+<!-- cols: 0.90 1.17 0.45 0.45 0.45 0.45 0.80 0.69 0.58 0.56 -->
 | dataset | model | TN | FP | FN | TP | precision | recall | F1 | FPR |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|
 | Dataset 1 | XGBoost-hybrid | 2192 | 95 | 94 | 668 | 0.8755 | 0.8766 | 0.8761 | 0.0415 |

@@ -31,7 +31,7 @@ legitimately use. This is a ceiling, not a deficiency.
 corpus for the two strongest models.** "shared" counts commands both get wrong;
 attack rows are false negatives, benign rows false positives.
 
-<!-- cols: 0.95 1.35 0.95 1.05 0.95 0.85 -->
+<!-- cols: 1.01 1.44 1.01 1.12 1.01 0.91 -->
 | Class | Source corpus | rows in test | hybrid err. | CNN err. | shared |
 |---|---|---:|---:|---:|---:|
 | attack (FN) | `hacktricks` | 344 | 59 | 51 | 35 |
@@ -123,9 +123,13 @@ our models are untested against evasion — a genuine gap in this work.
 ## 8.4 Hybrid behavioural cascade
 
 **This is a negative result and is reported as one.** The three-stage cascade
-(Isolation Forest pre-filter → XGBoost-hybrid → LLM arbitration on the
-[0.35, 0.65] uncertainty band) is the *weakest* of the four configurations
-buildable from its own components, on both datasets (Table 8.4). Every stage
+(Isolation Forest pre-filter → XGBoost-hybrid → arbitration on the [0.35, 0.65]
+uncertainty band) is the *weakest* of the four configurations buildable from its
+own components, on both datasets (Table 8.4). **Stage 3 here is the offline stub,
+not a live model:** it returned malicious on 0 of 146 routed rows (D1) and 2 of
+101 (D2), so it is within rounding of an all-benign policy, and the recall the
+cascade gives up is largely its doing. The live Llama-3.1-8B arbitrator on this
+same band is measured in the bonus section. Every stage
 removes about as many true detections as false alarms — on Dataset 1, −31 FP for
 −34 TP — so it buys precision by returning recall at par. Stage 1 clears only
 6.8% / 4.3% of traffic, because its threshold is calibrated to retain 0.99 of

@@ -54,14 +54,21 @@ the same call. It is still unconfirmed with the professor.
 
 These are project rules, not style preferences.
 
-- **Work section by section, interactively.** Explain the reasoning, recommend a
-  default, and let Noam make the call before moving on. **Never batch-automate
-  whole chapters unattended.**
-- **No Workflow / Agent fan-outs for section writing.** Noam stopped these
-  explicitly and **re-confirmed on Aug 14** — after running `/effort ultracode`,
-  which turns fan-outs on, he said section writing stays inline and interactive
-  regardless. So the ultracode reminder does not override this; do not raise it
-  again. Verify inline.
+- **Fan-outs: prohibited for most of the project, then authorised on Aug 14.**
+  Noam stopped Workflow/Agent fan-outs early on and re-confirmed the ban on the
+  morning of Aug 14 (*"section writing should stay inline and interactive
+  regardless"*). **Later the same day he reversed it**, with the deadline in
+  sight: *"Run and finish whats left with workflow… you can have a subagent which
+  replicates my decisions."* So the remaining six sections were written by a
+  fan-out with a Noam-proxy reviewer on each chapter. **This reversal is scoped to
+  the final assembly push.** It is not a general licence — if work continues past
+  submission, ask again rather than assuming.
+- **Whatever the mode, results get verified inline.** The fan-out authorisation
+  changed who drafts, not who checks. Every number still gets read out of the
+  artefact.
+- **Never batch-automate a chapter and ship it unread.** Explain the reasoning,
+  recommend a default, and let Noam make the call on anything he has not
+  pre-delegated.
 - **Noam prefers a recommended default in prose** over an options menu, and has
   declined `AskUserQuestion` before. Give the recommendation, then the reasoning.
 - **This transcript is itself a graded deliverable** — see §8. Everything said

@@ -1651,8 +1651,11 @@ a number copied into prose.
   collection style (see "Measured outcomes" above), and its labels carry the
   provenance noise measured in "What the label MEANS". Neither dataset dominates
   the other; quote both. (On size: Dataset 1 has {d1['total']:,} rows and Dataset 2
-  has {d2['total']:,}, so **Dataset 2 is the larger of the two** — any sentence that
-  calls Dataset 2 "smaller" is simply false, whatever it goes on to argue.)
+  has {d2['total']:,}, so **{'Dataset 1' if d1['total'] > d2['total'] else 'Dataset 2'}
+  is the larger of the two**. That comparison is computed from this build rather
+  than asserted: the sentence used to hardcode the opposite conclusion and stayed
+  in the card unchanged after the row counts moved, so it stated the reverse of
+  the two numbers printed immediately before it.)
 - **`shape()` is lossy and is not a security control.** It blanks quoted strings,
   base64/hex blobs, numbers, variable names, random-looking alphanumeric runs and
   the arbitrary file name directly below a scratch or home directory (`/tmp/…`,

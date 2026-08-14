@@ -1,0 +1,96 @@
+{
+  "dataset1": {
+    "dataset": "dataset1",
+    "with_llm_stub": true,
+    "cascade": {
+      "accuracy": 0.937028533945556,
+      "precision": 0.9083094555873925,
+      "recall": 0.8320209973753281,
+      "f1": 0.8684931506849315,
+      "fpr": 0.027984258854394404,
+      "tn": 2223,
+      "fp": 64,
+      "fn": 128,
+      "tp": 634,
+      "roc_auc": 0.9710827029874436,
+      "pr_auc": 0.9475656500078232,
+      "tpr_at_fpr_1e-2": 0.7401574803149606,
+      "tpr_at_fpr_1e-3": 0.5669291338582677
+    },
+    "xgboost_hybrid_reference": {
+      "accuracy": 0.9380124631026566,
+      "precision": 0.8754914809960681,
+      "recall": 0.8766404199475065,
+      "f1": 0.8760655737704918,
+      "fpr": 0.041539134236991695,
+      "tn": 2192,
+      "fp": 95,
+      "fn": 94,
+      "tp": 668,
+      "roc_auc": 0.9794263938476864,
+      "pr_auc": 0.9539545457449013,
+      "tpr_at_fpr_1e-2": 0.7427821522309711,
+      "tpr_at_fpr_1e-3": 0.5669291338582677
+    },
+    "routing": {
+      "stage2_supervised": 2696,
+      "stage3_llm": 146,
+      "stage1_clear": 207
+    },
+    "n_cleared_stage1": 207,
+    "n_to_stage2": 2842,
+    "stage1_retain_recall": 0.99,
+    "stage1_clear_below_calibrated": 0.0033328939023991463,
+    "stage2_uncertain": [
+      0.35,
+      0.65
+    ]
+  },
+  "dataset2": {
+    "dataset": "dataset2",
+    "with_llm_stub": true,
+    "cascade": {
+      "accuracy": 0.9237597911227154,
+      "precision": 0.8863109048723898,
+      "recall": 0.7974947807933194,
+      "f1": 0.8395604395604396,
+      "fpr": 0.034122562674094706,
+      "tn": 1387,
+      "fp": 49,
+      "fn": 97,
+      "tp": 382,
+      "roc_auc": 0.9598702612801743,
+      "pr_auc": 0.9255106186840286,
+      "tpr_at_fpr_1e-2": 0.6784968684759917,
+      "tpr_at_fpr_1e-3": 0.524008350730689
+    },
+    "xgboost_hybrid_reference": {
+      "accuracy": 0.9242819843342036,
+      "precision": 0.8508403361344538,
+      "recall": 0.8455114822546973,
+      "f1": 0.8481675392670157,
+      "fpr": 0.04944289693593315,
+      "tn": 1365,
+      "fp": 71,
+      "fn": 74,
+      "tp": 405,
+      "roc_auc": 0.9679832927233498,
+      "pr_auc": 0.9319120755937523,
+      "tpr_at_fpr_1e-2": 0.6826722338204593,
+      "tpr_at_fpr_1e-3": 0.5260960334029228
+    },
+    "routing": {
+      "stage1_clear": 83,
+      "stage2_supervised": 1731,
+      "stage3_llm": 101
+    },
+    "n_cleared_stage1": 83,
+    "n_to_stage2": 1832,
+    "stage1_retain_recall": 0.99,
+    "stage1_clear_below_calibrated": 0.003245400712612909,
+    "stage2_uncertain": [
+      0.35,
+      0.65
+    ]
+  }
+}

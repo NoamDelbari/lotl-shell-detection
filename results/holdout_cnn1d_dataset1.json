@@ -1,0 +1,77 @@
+{
+  "model": "cnn1d",
+  "dataset": "dataset1",
+  "seconds": 50.3,
+  "metrics": {
+    "accuracy": 0.92850114791735,
+    "precision": 0.8408521303258145,
+    "recall": 0.8805774278215223,
+    "f1": 0.8602564102564103,
+    "fpr": 0.055531263664188896,
+    "tn": 2160,
+    "fp": 127,
+    "fn": 91,
+    "tp": 671,
+    "roc_auc": 0.9751086536133137,
+    "pr_auc": 0.9441932307744162,
+    "tpr_at_fpr_1e-2": 0.7244094488188977,
+    "tpr_at_fpr_1e-3": 0.4763779527559055
+  },
+  "per_source": {
+    "atomic_red_team": {
+      "class": "malicious",
+      "n": 133,
+      "recall": 0.8796992481203008
+    },
+    "bash6k": {
+      "class": "benign",
+      "n": 116,
+      "fpr": 0.12931034482758622
+    },
+    "bash_instruct": {
+      "class": "benign",
+      "n": 785,
+      "fpr": 0.005095541401273885
+    },
+    "gtfobins": {
+      "class": "malicious",
+      "n": 189,
+      "recall": 0.8835978835978836
+    },
+    "hacktricks": {
+      "class": "malicious",
+      "n": 344,
+      "recall": 0.8517441860465116
+    },
+    "linlm": {
+      "class": "benign",
+      "n": 145,
+      "fpr": 0.2206896551724138
+    },
+    "nl2bash": {
+      "class": "benign",
+      "n": 306,
+      "fpr": 0.12091503267973856
+    },
+    "payloads": {
+      "class": "malicious",
+      "n": 15,
+      "recall": 1.0
+    },
+    "quasarnix": {
+      "class": "malicious",
+      "n": 58,
+      "recall": 1.0
+    },
+    "slp": {
+      "class": "malicious",
+      "n": 23,
+      "recall": 0.9130434782608695
+    },
+    "tldr": {
+      "class": "benign",
+      "n": 935,
+      "fpr": 0.04171122994652406
+    }
+  }
+}

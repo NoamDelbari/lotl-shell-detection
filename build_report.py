@@ -20,7 +20,7 @@ OUT    = ROOT / "Group_209361864_315005066_Report.docx"
 
 # Every graded chapter is represented (Exec + Ch1-8 + Bonus). stop_before trims
 # each source file to its headline deliverable so all chapters fit the page budget;
-# full versions live in report/*.md (and the *_Report_FULL.docx) in the ZIP.
+# full versions live in report/*.md in the ZIP.
 # Chapters flow continuously (no per-chapter page break) so headings — not blank
 # half-pages — separate them; this reclaims ~4-5 pages vs one-chapter-per-page.
 # stop_before trims each file to its headline deliverable.

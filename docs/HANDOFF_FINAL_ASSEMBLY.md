@@ -216,6 +216,32 @@ of short numeric cells scores low w/p by construction. Ch8 at 380 is four numeri
 tables, not sloppy layout, and its widths are already pinned — do not expect
 lever 2 to pay there. Ch3 at 398 remains the real candidate.
 
+**Two levers were tested and are dead — do not spend time on them again.**
+
+- **Paragraph `space_after` (6 pt → 4 / 3 / 2 pt).** Measured on `body_ch1.md`:
+  **5.74 → 5.74 → 5.74 → 5.73 pp.** Essentially nothing. The reason is
+  structural: Ch1 is two large tables plus about eight body paragraphs, so
+  per-paragraph spacing has almost nothing to act on. Not worth a global style
+  change anywhere in this report.
+- **Font size and line spacing** are already at the spec minimum (Calibri 11 pt,
+  1.5). Table cells are already at 8.5 pt. There is no headroom here.
+
+Margins (currently 1.0 in) are *not* fixed by the spec and would give roughly
+10% at 0.8 in — but every `<!-- cols: -->` directive in the report is written to
+sum to the 6.50 in usable width, so changing margins invalidates all of them.
+**Not worth the breakage this close to the deadline.**
+
+### Ch1 anatomy — measured, so the cut can be aimed
+
+| Part | pp | words | w/p | verdict |
+|---|---:|---:|---:|---|
+| §1.1 technique/telemetry/labels (prose) | 1.31 | 633 | 483 | at the prose baseline; the provenance paragraph is the long one |
+| §1.2 the seven-row mapping table | 2.55 | 1252 | 491 | biggest single item; the "Detailed Explanation" column is where the marks are |
+| §1.3 eight feature families | 1.76 | 1171 | **665** | **already maximally dense** — a packed 2-column table; cutting text here is the least efficient page-per-word in the report |
+
+So Ch1's cut has to come from §1.1 prose and from tightening the §1.2
+explanations — **not** from §1.3, where 665 words must go to buy one page.
+
 **3. Convert prose to dense tables.**
 Because a packed table beats prose on density, moving argument into tables
 *saves* page while often reading better. This is also what the formatting spec
@@ -267,8 +293,8 @@ Ch4's rubric weight was not captured by the original grep of the assignment PDF;
 
 ## 7. Assembly
 
-1. **Rewire `build_report.py`.** Read on Aug 14; the state is worse than this
-   section previously said.
+1. ~~Rewire `build_report.py`.~~ **Done (`576ece7`).** What was wrong, kept as
+   the record of why the shipped docx must not be submitted:
 
    `BODY_FILES` (line 21) lists seven stale pre-condensation files and **not one
    of the condensed `body_ch*.md`**. Ch4 and Ch5 have no entry at all.
@@ -293,24 +319,70 @@ Ch4's rubric weight was not captured by the original grep of the assignment PDF;
    the title page in code, already carrying the real course name and both names,
    IDs and emails. **`report/title_page.md` is redundant**; leave it or delete
    it, but do not wire it in and get two title pages.
-2. **Embed and caption figures — 33 PNGs in `report/figures/`, currently 0
-   embedded and 0 captioned.** ⚠️ **`build_report.py` has no image support at
-   all** — no `add_picture` call, no figure syntax in `render_md`, no caption
-   machinery. This is a code task before it is an editorial one: a markdown
-   image directive, a sized `add_picture`, and a caption paragraph style. Budget
-   accordingly; it is not a config change.
 
-   The spec requires a descriptive caption on every figure. Budget ~1.5 pp for
-   ~6. Best candidates: `ch7_pipeline.png` (architecture),
-   `ch8_transfer_heatmap.png`, `ch4_ranking_dataset{1,2}.png`,
-   `ch3_class_balance.png`. Leave the eight `ch8_confusion_*.png` in the ZIP and
-   reference them — Table B.7 already carries every matrix.
+   **What `576ece7` changed:** `BODY_FILES` is now the ten condensed sections;
+   `APPENDIX_FILES` is the two real appendices with B running on after A; the
+   `"## 6.3 Explicit"` stop is gone; the synthetic "Appendix — Supplementary
+   Analysis" heading is gone (both appendix files carry their own H1).
+
+   **Plus one lever that was not in this plan and is worth more than it sounds:
+   every inter-chapter page break was removed.** Ten body files at one `"PAGE"`
+   each strands up to several pages of whitespace inside a 15-page allowance. The
+   14 pt coloured Heading 1 is break enough. The only page break left in the
+   document is the one that starts Appendix A.
+
+   **And a missing section is now a hard error rather than a printed `SKIP`.**
+   Same failure class as the AI-log omission fixed in `fa8a873`: a clean-looking
+   build with a graded section silently absent from it. Verified — the guard
+   fired and named all six unwritten sections.
+2. ~~Write image support into the builder.~~ **Done** — `![](figures/x.png)`
+   renders as a centred sized picture, `<!-- fig-width: N -->` overrides
+   `DEFAULT_FIG_WIDTH` (3.0 in), and a missing image is **fatal** so a dangling
+   "Figure N.M" caption cannot ship.
+
+   **Figure placement is the open question, and it is expensive.** Measured:
+   `ch7_pipeline.png` at 3.0 in costs **~0.40 pp** including its caption.
+
+   ⚠️ **Two corrections to earlier notes here.** First, `ch7_pipeline.png` is
+   **not** the training pipeline — it depicts the three-stage *inference cascade*
+   (Isolation Forest pre-filter → XGBoost-hybrid → Llama 3.1-8B arbitration on
+   the [0.35, 0.65] band). It illustrates **Ch8.4 / the Bonus**, not Ch7, and a
+   caption calling it "ingestion → featurization → scaling" would be wrong.
+   Second, it is near-square (1873 × 1785), so width *is* height: at 3.0 in its
+   own labels render around 4.6 pt and the italic footnote around 3.2 pt —
+   **illegible.** Legibility needs ~5.5 in, which costs **~0.65 pp**.
+
+   **Recommendation: no figures in the body.** The professor's 5 extra pages are
+   scoped to *"additional tables and graphs"*, which makes the appendix their
+   correct home, and body space is the binding constraint. Add figures to
+   Appendix B only if headroom survives the cutting pass — it is 0.51 pp today,
+   so that is one figure at most. Everything else ships inside the ZIP, where all
+   33 PNGs already are. Table B.7 already carries every confusion matrix, so the
+   eight `ch8_confusion_*.png` are redundant in print regardless.
 3. ~~Apply the `<!-- cols: -->` directives.~~ **Done** — Ch8 and both appendices
    pinned, Appendix B regenerated from the edited
    `analysis/appendix_b_tables.py`, output verified byte-identical to the
    previously validated scratch version. Only *new* tables still need one.
 4. **Rebuild the docx and ZIP**, then confirm page counts with the Word harness
    before declaring the budget met.
+
+   `build_zip.py` is new (`576ece7`) and replaces the hand-assembled ZIP, which
+   had drifted — it still carried the old `Group_10_Report.docx` name and was
+   missing `tests/` and `analysis/` entirely.
+
+   ```bash
+   python build_report.py && python build_zip.py
+   ```
+
+   It takes its file list from **`git ls-files`**, which is the safety property:
+   anything deliberately untracked stays out by construction —
+   `docs/refs/shellcore_arxiv_2103.14221.pdf` (arXiv licensing) and any `.env`
+   holding `HF_TOKEN`. Three gates run before it writes: required deliverables
+   present, no credential patterns in any shipped file, and a loud warning when
+   the `.docx` is older than the report sources it renders. Two tracked files are
+   excluded on purpose — the previous ZIP (it would nest a 3 MB copy of a wrong
+   submission inside the new one) and `*_Report_FULL.docx` (a second, longer
+   build that only invites the grader to mark the wrong file).
 
 Steps 2 and 4 depend on frozen text.
 

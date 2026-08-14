@@ -16,6 +16,8 @@ Both are assembled from public sources (no single public corpus carries both cla
 
 Labels are **provenance-based, never lexical** — a command is malicious because of where it came from, not because it matches a keyword. Full provenance, licences, processing and caveats: [`docs/DATA_CARD.md`](docs/DATA_CARD.md).
 
+**Datasets are not included in this submission ZIP.** The four `dataset/*.csv` files (and the large raw corpora) are excluded to keep the archive small — every source is public and rebuildable. To reproduce them locally, run `cd scripts && python build_dataset.py`, which downloads the attack sources (HackTricks, GTFOBins, Atomic Red Team, QuasarNix, SLP, PayloadsAllTheThings) and the benign sources (tldr-pages, bash-instruct, nl2bash, LinLM, bash6k, commandlinefu, real `.bash_history`), plus the Cowrie SSH-honeypot captures for Dataset 2, and rebuilds `dataset/` deterministically (`SEED = 42`). Per-source URLs, licences and processing steps are documented in [`docs/DATA_CARD.md`](docs/DATA_CARD.md).
+
 ## Repo layout
 
 ```

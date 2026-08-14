@@ -383,7 +383,7 @@ def add_title_page(doc):
     set_spacing(course, space_before=6, space_after=18)
 
     team = doc.add_paragraph(); team.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    rt = team.add_run("Ben Volovelsky · ID 209361864 · bvolovelsky@nvidia.com\n"
+    rt = team.add_run("Ben Volovelsky · ID 209361864 · ben.volovelsky@post.runi.ac.il\n"
                       "Noam Delbari · ID 315005066 · noam.delbari@post.runi.ac.il")
     rt.font.size = Pt(11); rt.font.name = "Calibri"
     set_spacing(team, space_before=2, space_after=18)

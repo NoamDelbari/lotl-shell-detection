@@ -16,6 +16,21 @@ Both are assembled from public sources (no single public corpus carries both cla
 
 Labels are **provenance-based, never lexical** — a command is malicious because of where it came from, not because it matches a keyword. Full provenance, licences, processing and caveats: [`docs/DATA_CARD.md`](docs/DATA_CARD.md).
 
+## What's in this submission
+
+One ZIP — `Group_209361864_315005066_Final_Project.zip` — assembled by `python build_zip.py`:
+
+| Path | What it is |
+|---|---|
+| `Group_209361864_315005066_Report.docx` | The graded report (15-page body + appendix), built from `report/` by `build_report.py` |
+| `main.py`, `src/`, `analysis/`, `scripts/`, `tests/` | The pipeline: feature extraction, the five models, the cascade, and every analysis that produced a reported number |
+| `results/` | Machine-readable model outputs the report tables are read from |
+| `report/` | Report sources (Markdown) and every figure |
+| `ai_logs/claude_code_log.txt` | The full, unedited AI-tool conversation log (course policy) |
+| `README.md`, `PIPELINE.md`, `docs/` | This file, the pipeline walkthrough, and the data-card / baseline / known-issues references |
+
+**The datasets are not shipped in the ZIP.** `dataset/` (the four derived CSVs) and `scripts/raw/extracted/*.cm` (the downloaded source corpora, ~5 MB) are excluded to keep the submission to code + report. They are reproduced *exactly* by the [Quickstart](#quickstart) below: `scripts/build_dataset.py` re-downloads the public sources and rebuilds every excluded file (seeded, `SEED = 42`). Full provenance and licences: [`docs/DATA_CARD.md`](docs/DATA_CARD.md).
+
 ## Repo layout
 
 ```
@@ -27,7 +42,6 @@ scripts/
   raw/                    build inputs (extracted/*.cm vendored; rest re-downloads)
 docs/
   Final_Project_AI_Driven_Intrusion_Detection.pdf   the assignment spec (rubric inside)
-  WORK_DIVISION.md        who does what, deadlines, ground rules
   DATA_CARD.md            dataset provenance and processing
   BASELINE.md             baseline scores + regression probes
   KNOWN_ISSUES.md         audit trail of confounds found and fixed (P1–P8)
@@ -58,17 +72,19 @@ on macOS with an Apple M3 Pro. Noam's results (Random Forest, Isolation Forest,
 Ch3 EDA figures, Ch4 ranking figures, Ch6 sub-sample probe, Ch7 RF/IF sweeps,
 Ch8 RF/IF forensics) were produced on Windows 11, CPU only.
 
-## Where the project is, and where it's going
+## What was delivered
 
-**Done:** datasets built and audited (leakage, label-circularity and shortcut probes), preliminary baseline with confound analysis, approved proposal.
+Every stage below is complete and written up in the report (chapter in brackets):
 
-**Next (due Aug 15, 2026 — see [`docs/WORK_DIVISION.md`](docs/WORK_DIVISION.md) for owners and dates):**
+1. Engineered 43-feature extractor over raw command text + per-corpus EDA (Ch 1–3)
+2. Tree-based feature ranking against domain intuition, three importance views (Ch 4)
+3. Unified schema, distribution-shift and scaling analysis (Ch 5)
+4. Model-selection justification for all five detectors (Ch 6)
+5. Dataset-agnostic pipeline; five models — XGBoost, XGBoost-hybrid, 1D-CNN, Random Forest, Isolation Forest — with k-fold CV and hyperparameter sensitivity (Ch 7)
+6. Forensic error analysis, cross-dataset transfer, literature benchmarking, cascading ensemble (Ch 8)
+7. Bonus: local Llama-3.1-8B triage layer for edge-case arbitration (Bonus B.3)
 
-1. Engineered feature extractor over raw command text + per-dataset EDA (Ch1–3)
-2. Tree-based feature ranking vs domain intuition (Ch4)
-3. Modular dataset-agnostic pipeline; four models — XGBoost, 1D-CNN, Random Forest, Isolation Forest — with k-fold CV and hyperparameter sensitivity (Ch6–7)
-4. Forensic error analysis, cross-dataset transfer, cascading ensemble (Ch8)
-5. Bonus: LLM triage layer for edge-case arbitration (HF Inference)
+Re-run everything from the [Quickstart](#quickstart); rebuild the report with `python build_report.py` and the submission ZIP with `python build_zip.py`.
 
 ## AI usage
 

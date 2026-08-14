@@ -1,5 +1,17 @@
 # Chapter 7 — Pipeline, Models and Hyperparameter Sensitivity
 
+The shipped detector is the **three-stage cascade** of Figure 7.1. This chapter
+specifies the five models it is built from and their hyperparameter sensitivity;
+§8.4 ablates the cascade itself.
+
+<!-- fig-width: 2.8 -->
+![Figure 7.1 — Three-stage cascade detector](figures/ch7_pipeline.png)
+
+**Figure 7.1 — Three-stage cascade detector.** Raw command → Isolation Forest
+bulk-benign filter (stage 1) → XGBoost-hybrid (stage 2: P(attack) > 0.65 →
+attack, < 0.35 → benign) → LLM arbitration on the 0.35–0.65 edge band. Bands are
+the shipped `CascadeDetector` defaults (`src/ensemble.py`).
+
 ## 7.1 Explicit configuration, no library defaults
 
 **Table 7.1 — The five shipped models (`src/models.py`): every value is explicit

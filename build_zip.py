@@ -15,6 +15,20 @@ redistributing it is not ours to grant under the arXiv licence, and a `.env`
 holding HF_TOKEN would be untracked for the same class of reason. A glob-based
 walk would have swept up both.
 
+**Two tracked things are still held back** (`EXCLUDE`, `EXCLUDE_PREFIXES`), each
+for a stated reason rather than by taste:
+
+  * the **datasets** -- `dataset/` (the four derived CSVs) and
+    `scripts/raw/extracted/*.cm` (the ~5 MB of downloaded source corpora). The
+    assignment asks for the code and a note on how the data was obtained, not
+    the data itself; `README.md` documents the one-command rebuild
+    (`scripts/build_dataset.py`) that regenerates every excluded file exactly.
+  * a handful of **internal working notes** (per-partner TODO/brief/handoff
+    files, the `superpowers/` planning scratch, one report notes file). They are
+    scaffolding for us, not deliverables, and only clutter a graded submission.
+
+Everything a grader needs to read, run or reproduce the project still ships.
+
 Three gates run before anything is written, because every one of them has a
 failure mode that is invisible in the finished ZIP:
 
@@ -34,16 +48,34 @@ ROOT = Path(__file__).resolve().parent
 DOCX = ROOT / "Group_209361864_315005066_Report.docx"
 OUT = ROOT / "Group_209361864_315005066_Final_Project.zip"
 
-# Tracked, but deliberately not shipped.
+# Tracked, but deliberately not shipped -- exact paths.
 EXCLUDE = {
-    # The previous submission ZIP. Including it would nest a 3 MB copy of an
-    # older, wrong submission inside the new one.
+    # The previous submission ZIP. Including it would nest a copy of an older
+    # submission inside the new one.
     "Group_209361864_315005066_Final_Project.zip",
     # A second, longer .docx. The report has a hard 15-page limit, so shipping
     # an alternative full-length build alongside it only invites the grader to
     # mark the wrong file.
     "Group_209361864_315005066_Report_FULL.docx",
+    # Internal working notes -- scaffolding, not deliverables.
+    "docs/NOAM_TODO.md",
+    "docs/WORK_DIVISION.md",
+    "docs/NOAM_PROMPTS.md",
+    "docs/NOAM_WRITING_BRIEF.md",
+    "docs/BEN_UPDATE.md",
+    "docs/HANDOFF_FINAL_ASSEMBLY.md",
+    "docs/DOCX_ASSEMBLY_BRIEF.md",
+    "report/ch4_ranking_notes.md",
 }
+
+# Tracked, but not shipped -- whole subtrees, matched by path prefix.
+EXCLUDE_PREFIXES = (
+    # The datasets. Rebuilt by scripts/build_dataset.py; README documents how.
+    "dataset/",
+    "scripts/raw/",
+    # Planning/spec scratch from the design phase.
+    "docs/superpowers/",
+)
 
 REQUIRED = [
     "main.py",
@@ -64,13 +96,17 @@ TEXT_SUFFIXES = {".py", ".md", ".txt", ".json", ".csv", ".yml", ".yaml",
                  ".cfg", ".ini", ".toml", ".sh", ".ps1"}
 
 
+def is_excluded(path: str) -> bool:
+    return path in EXCLUDE or path.startswith(EXCLUDE_PREFIXES)
+
+
 def tracked_files():
-    """Every file git tracks, as repo-relative POSIX paths."""
+    """Every file git tracks, as repo-relative POSIX paths, minus EXCLUDE(S)."""
     out = subprocess.run(
         ["git", "ls-files", "-z"],
         cwd=ROOT, check=True, capture_output=True,
     ).stdout.decode("utf-8")
-    return sorted(p for p in out.split("\0") if p and p not in EXCLUDE)
+    return sorted(p for p in out.split("\0") if p and not is_excluded(p))
 
 
 def check_required(names) -> None:
@@ -152,7 +188,9 @@ def main() -> None:
     print(f"\nWrote {OUT.name}: {len(entries)} files, {size_mb:.1f} MB")
     print("  report:   " + DOCX.name)
     print("  ai logs:  ai_logs/claude_code_log.txt")
-    print("  excluded: " + ", ".join(sorted(EXCLUDE)))
+    print("  excluded (datasets, rebuildable): " + ", ".join(EXCLUDE_PREFIXES))
+    print("  excluded (working notes / duplicates): "
+          + ", ".join(sorted(EXCLUDE)))
     print("  untracked files are excluded by construction "
           "(docs/refs/ and any .env stay out)")
 

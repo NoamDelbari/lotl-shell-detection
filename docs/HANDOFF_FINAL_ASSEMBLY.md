@@ -260,18 +260,41 @@ Ch4's rubric weight was not captured by the original grep of the assignment PDF;
 
 ## 7. Assembly
 
-1. **Rewire `build_report.py`.** `BODY_FILES` (line 21) still lists the stale
-   pre-condensation eight and knows nothing about `body_ch1.md`, `body_ch3.md`,
-   `body_ch8.md`, `title_page.md`, `appendix_a_execution.md` or
-   `appendix_b_tables.md`. It must read `title_page.md`, `exec_summary.md`,
-   `body_ch1.md` … `body_ch8.md`, `bonus_b3_findings.md`, then the two
-   appendices. **Remove the `"## 6.3 Explicit"` truncation stop** — it drops a
-   graded rubric item. Decide whether Appendix B page-breaks after A or runs on;
-   **running on is what makes the two fit in 5 pages.**
-   `OUT` is already `Group_209361864_315005066_Report.docx` (line 16).
+1. **Rewire `build_report.py`.** Read on Aug 14; the state is worse than this
+   section previously said.
+
+   `BODY_FILES` (line 21) lists seven stale pre-condensation files and **not one
+   of the condensed `body_ch*.md`**. Ch4 and Ch5 have no entry at all.
+
+   **`APPENDIX_FILES` (line 31) is the more serious one.** It contains
+   `ch2_literature_review.md` — a *body* chapter that `BODY_FILES` already
+   renders — and `ch8_4_cascade_analysis.md`. Neither real appendix is in it. So
+   the currently shipped `Group_209361864_315005066_Report.docx` (built Aug 13)
+   **prints Chapter 2 twice**: truncated at `"## Comparative essay"` in the body,
+   then in full under an "Appendix — Supplementary Analysis" heading. Do not
+   ship that file; it is not merely out of date.
+
+   Target: `exec_summary.md`, `body_ch1.md` … `body_ch8.md`,
+   `bonus_b3_findings.md`, then `appendix_a_execution.md` and
+   `appendix_b_tables.md`. **Remove the `"## 6.3 Explicit"` truncation stop** —
+   it drops a graded rubric item. Appendix B should **run on** after A rather
+   than page-break; that is what makes the two fit in 5 pages.
+
+   Two corrections to earlier notes here: `OUT` is already
+   `Group_209361864_315005066_Report.docx` (line 16) — that part was right — but
+   the builder does **not** need `title_page.md`. `add_title_page()` generates
+   the title page in code, already carrying the real course name and both names,
+   IDs and emails. **`report/title_page.md` is redundant**; leave it or delete
+   it, but do not wire it in and get two title pages.
 2. **Embed and caption figures — 33 PNGs in `report/figures/`, currently 0
-   embedded and 0 captioned.** The spec requires a descriptive caption on every
-   one. Budget ~1.5 pp for ~6. Best candidates: `ch7_pipeline.png` (architecture),
+   embedded and 0 captioned.** ⚠️ **`build_report.py` has no image support at
+   all** — no `add_picture` call, no figure syntax in `render_md`, no caption
+   machinery. This is a code task before it is an editorial one: a markdown
+   image directive, a sized `add_picture`, and a caption paragraph style. Budget
+   accordingly; it is not a config change.
+
+   The spec requires a descriptive caption on every figure. Budget ~1.5 pp for
+   ~6. Best candidates: `ch7_pipeline.png` (architecture),
    `ch8_transfer_heatmap.png`, `ch4_ranking_dataset{1,2}.png`,
    `ch3_class_balance.png`. Leave the eight `ch8_confusion_*.png` in the ZIP and
    reference them — Table B.7 already carries every matrix.

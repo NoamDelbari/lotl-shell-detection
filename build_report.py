@@ -17,21 +17,43 @@ OUT    = ROOT / "Group_209361864_315005066_Report.docx"
 
 # each entry: (filename, page_break_before, stop_before_heading)
 # stop_before: stop rendering the file when a line starting with this text is hit
-
+#
+# These are the CONDENSED body sections (report/body_*.md), not the long
+# per-topic working drafts they were written from. The drafts stay in report/ as
+# the source material and are deliberately not rendered.
+#
+# Chapters deliberately RUN ON rather than starting a new page. Ten body files at
+# one page break each would strand up to several pages of whitespace inside a
+# 15-page allowance; the 14 pt coloured Heading 1 is enough of a break. The only
+# page break in the document is the one before Appendix A.
+#
+# No entry carries a stop_before. The previous list truncated Ch6 at
+# "## 6.3 Explicit", which silently dropped a graded rubric item from the output.
 BODY_FILES = [
-    ("exec_summary.md",              None,    None),
-    ("ch1_threat_mapping.md",        "PAGE",  None),
-    ("ch2_literature_review.md",     "PAGE",  "## Comparative essay"),
-    ("ch6_model_justification.md",   "PAGE",  "## 6.3 Explicit"),
-    ("ch7_sensitivity_findings.md",  "PAGE",  "## Headline answers"),
-    ("ch8_3_tops_comparison.md",     "PAGE",  "## What Trizna"),
-    ("bonus_b3_findings.md",         "PAGE",  None),
+    ("exec_summary.md",  None, None),
+    ("body_ch1.md",      None, None),
+    ("body_ch2.md",      None, None),
+    ("body_ch3.md",      None, None),
+    ("body_ch4.md",      None, None),
+    ("body_ch5.md",      None, None),
+    ("body_ch6.md",      None, None),
+    ("body_ch7.md",      None, None),
+    ("body_ch8.md",      None, None),
+    ("body_bonus.md",    None, None),
 ]
 
+# Appendix B runs on directly after A -- that is what makes the two fit inside
+# the professor's 5-page appendix allowance. Both files carry their own
+# `# Appendix A/B` H1, so no synthetic appendix heading is added here.
 APPENDIX_FILES = [
-    ("ch2_literature_review.md",         "PAGE",  None),
-    ("ch8_4_cascade_analysis.md",        None,    "## Attributing every error"),
+    ("appendix_a_execution.md", "PAGE", None),
+    ("appendix_b_tables.md",    None,   None),
 ]
+
+# Figures are sized in inches. ch7_pipeline.png is near-square (1873x1785), so
+# width is height here: 3.0 in of width costs ~2.9 in of page.
+DEFAULT_FIG_WIDTH = 3.0
+MAX_FIG_WIDTH = 6.5          # usable text width between the 1 in margins
 
 def set_spacing(para, space_before=0, space_after=6, line_spacing=1.5):
     pf = para.paragraph_format
@@ -144,6 +166,30 @@ def add_table(doc, rows, col_widths=None):
     spacer.paragraph_format.line_spacing_rule = WD_LINE_SPACING.EXACTLY
     spacer.paragraph_format.line_spacing = Pt(6)
 
+def add_figure(doc, rel_path, width=None):
+    """Render `![alt](figures/x.png)` as a centred, sized picture.
+
+    The builder had no image support of any kind before this, so every figure in
+    report/figures/ was shipping only inside the ZIP. Width is capped at the
+    usable text width; height follows from the aspect ratio, which is why a
+    near-square diagram is expensive and the default is deliberately small.
+
+    A missing image is fatal rather than skipped -- a silently absent figure
+    leaves a dangling "Figure N.M" caption in a graded document.
+    """
+    path = (REPORT / rel_path).resolve()
+    if not path.exists():
+        raise SystemExit(f"ERROR: figure not found: {rel_path} (looked in {path})")
+    w = min(width or DEFAULT_FIG_WIDTH, MAX_FIG_WIDTH)
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.add_run().add_picture(str(path), width=Inches(w))
+    # 1.5 spacing on a picture paragraph pads the image top and bottom for no
+    # reason; single spacing keeps the figure tight against its caption.
+    p.paragraph_format.space_before = Pt(4)
+    p.paragraph_format.space_after  = Pt(2)
+    p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.SINGLE
+
 def page_break(doc):
     pb = doc.add_paragraph()
     br = OxmlElement("w:br"); br.set(qn("w:type"), "page")
@@ -161,6 +207,9 @@ def render_md(doc, md_text, stop_before=None):
     # `<!-- cols: 1.2 0.9 ... -->` on the line before a table pins its column
     # widths in inches; without it Word autofits. Applies to the next table only.
     pending_widths = None
+    # `<!-- fig-width: 3.5 -->` before an image line overrides DEFAULT_FIG_WIDTH
+    # for that one figure.
+    pending_fig_width = None
 
     def flush_table():
         nonlocal table_rows, pending_widths
@@ -217,7 +266,17 @@ def render_md(doc, md_text, stop_before=None):
         if cm:
             flush_text(); flush_table()
             pending_widths = [float(w) for w in cm.group(1).split()]; continue
+        fm = re.match(r"^<!--\s*fig-width:\s*([\d.]+)\s*-->$", stripped)
+        if fm:
+            pending_fig_width = float(fm.group(1)); continue
         if stripped.startswith("<!--"):       # any other comment is not content
+            continue
+
+        im = re.match(r"^!\[[^\]]*\]\(([^)]+)\)$", stripped)
+        if im:
+            flush_text(); flush_table()
+            add_figure(doc, im.group(1), pending_fig_width)
+            pending_fig_width = None
             continue
 
         if stripped.startswith("|"):
@@ -304,32 +363,45 @@ def add_title_page(doc):
 
     page_break(doc)
 
+def check_sources() -> None:
+    """Fail before building if any listed section is missing.
+
+    This used to `print("SKIP")` and carry on, which meant a renamed or
+    not-yet-written chapter produced a clean-looking .docx with a graded section
+    silently absent from it. Same failure class as an unregistered AI-log
+    session: cheap to detect, expensive to miss.
+    """
+    missing = [f for f, _, _ in BODY_FILES + APPENDIX_FILES
+               if not (REPORT / f).exists()]
+    if missing:
+        raise SystemExit(
+            "ERROR: these sections are listed in build_report.py but do not "
+            f"exist: {', '.join(missing)}. Write them, or remove the entry -- "
+            "do not build a report with a section silently missing."
+        )
+
 def main():
+    check_sources()
     doc = setup_doc()
     add_title_page(doc)
 
     first = True
     for filename, brk, stop_before in BODY_FILES:
-        path = REPORT / filename
-        if not path.exists():
-            print(f"  SKIP: {filename}"); continue
         if brk == "PAGE" and not first:
             page_break(doc)
-        render_md(doc, path.read_text(encoding="utf-8"), stop_before=stop_before)
+        render_md(doc, (REPORT / filename).read_text(encoding="utf-8"),
+                  stop_before=stop_before)
         print(f"  BODY: {filename}" + (f" [stop before '{stop_before}']" if stop_before else ""))
         first = False
 
-    page_break(doc)
-    ah = doc.add_heading("Appendix — Supplementary Analysis", level=1)
-    set_spacing(ah, space_before=10, space_after=6, line_spacing=1.15)
-
+    # Both appendix files carry their own `# Appendix A/B` heading, so the only
+    # thing needed here is the page break that starts the appendix -- it is
+    # declared on the Appendix A entry.
     for filename, brk, stop_before in APPENDIX_FILES:
-        path = REPORT / filename
-        if not path.exists():
-            print(f"  SKIP: {filename}"); continue
         if brk == "PAGE":
             page_break(doc)
-        render_md(doc, path.read_text(encoding="utf-8"), stop_before=stop_before)
+        render_md(doc, (REPORT / filename).read_text(encoding="utf-8"),
+                  stop_before=stop_before)
         print(f"  APPENDIX: {filename}" + (f" [stop before '{stop_before}']" if stop_before else ""))
 
     doc.save(OUT)

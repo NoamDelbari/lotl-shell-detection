@@ -12,11 +12,16 @@ always **block-level** — a harness-generated block is either kept whole or
 dropped whole. Nothing in the user or assistant text was altered, shortened,
 or paraphrased.
 
-> ⚠️ **Session 4 is still in progress.** Its transcript below is a snapshot
-> taken mid-session, so it is *incomplete by construction*. Re-run the export
-> and log rebuild (see [Regenerating Noam's transcripts](#regenerating-noams-transcripts-do-this-right-before-submission))
-> **immediately before submission**, and refresh the turn counts on this page
-> with whatever the script prints then.
+> ⚠️ **Two sessions are not final yet.** **Session 4**'s transcript below is a
+> snapshot taken while that session was still open — it was exported on Aug 13
+> and the session ran on until Aug 14, so it is *incomplete by construction*.
+> **Session 5** is the session doing the final assembly and cannot export itself
+> until it ends, so it is **not in the log at all yet**. Re-run the export and
+> log rebuild (see [Regenerating the transcripts](#regenerating-the-transcripts-do-this-right-before-submission))
+> **immediately before submission**, refresh the turn counts on this page with
+> whatever the script prints then, and delete this banner. Until then
+> `rebuild_claude_code_log.py` prints a `NOT FINAL` line for each outstanding
+> session every time it runs.
 
 ## Primary submission file
 
@@ -45,7 +50,7 @@ chronological order with `# Session N` separators:
   Chapter 3 Dataset-1 chapter plus a full retrain of every model on the
   43-feature set, and the Chapter 6 RF/IF model justification with
   first-hand-verified citations
-- **Session 4** (Aug 10–13, Claude Opus 5 — Noam, **still running**): Chapter 1
+- **Session 4** (Aug 10–14, Claude Opus 5 — Noam): Chapter 1
   (deep-dive threat analysis, the four ATT&CK mapping rows, and §1.3 rationale
   for all 43 features), Chapter 5 in full (unified schema, cross-dataset
   distribution shift, scaling/normalisation), Noam's Chapter 2 half — the
@@ -71,7 +76,20 @@ chronological order with `# Session N` separators:
   its own per-case data, a generator written for the Chapter 8.1 error-overlap
   artefact that had none, and both appendices assembled — Appendix A (execution
   instructions plus the verified environment tables) and Appendix B (supporting
-  tables, generated from the artefacts rather than transcribed)
+  tables, generated from the artefacts rather than transcribed) — and finally
+  (Aug 13–14) the move from chapter drafts to a page-budgeted report: the
+  professor's 15-body-plus-5-appendix ruling turned into a measured budget using
+  Word COM page counts rather than estimates, the `<!-- cols: -->` column-width
+  mechanism added to the docx builder after autofit was measured to cost 43% of
+  a five-column table's height, both appendices cut to the 5-page allowance, the
+  condensed `body_ch1.md` and `body_ch3.md` body sections written, a
+  **cherry-pick** (not a merge) of four changes from Ben's `b1e9997` with the
+  rest deliberately declined and each refusal recorded, and the final-assembly
+  handoff document written
+- **Session 5** (Aug 14, Claude Opus 5 — Noam): final assembly — the table
+  column-width pass across Chapter 8 and both appendices, the remaining body
+  chapters, the cutting pass, figure embedding and captioning, and the docx and
+  ZIP build
 
 ## Per-session markdown transcripts (same content)
 
@@ -99,9 +117,18 @@ chronological order with `# Session N` separators:
 
 ### [`claude_session_noam3.md`](claude_session_noam3.md) — Noam's session 3 (log Session 4)
 
-- User turns: **18** · Assistant turns: **18** — **snapshot of a session that
-  is still open**; these counts will grow, so re-export before submission
+- User turns: **18** · Assistant turns: **18** — ⚠️ **stale snapshot.** Exported
+  Aug 13 09:50; the session then ran on until Aug 14 00:06, so roughly fourteen
+  hours of it are missing from this file. The session is now closed, so a
+  re-export will be final. These counts will grow.
 - Source session log: `~/.claude/projects/E--lotl-shell-detection/c6d78cd0-b917-4879-9d90-753790734957.jsonl`
+
+### [`claude_session_noam4.md`](claude_session_noam4.md) — Noam's session 4 (log Session 5)
+
+- ⚠️ **Not exported yet** — this is the final-assembly session, which cannot
+  export itself until it ends. Turn counts to be filled in from the export
+  script's output during the final pass.
+- Source session log: `~/.claude/projects/E--lotl-shell-detection/ee2b076e-3a93-4533-ba3b-27270b88db69.jsonl`
 
 ## Regenerating the transcripts (do this right before submission)
 
@@ -130,23 +157,40 @@ python ai_logs/export_claude_log.py \
   ~/.claude/projects/E--lotl-shell-detection/ef85a27d-db27-4746-960f-095b3fd3c864.jsonl \
   ai_logs/claude_session_noam2.md
 
-# 3. Noam session 3 (the in-progress one) -> log "Session 4"
+# 3. Noam session 3 -> log "Session 4"
 python ai_logs/export_claude_log.py \
   ~/.claude/projects/E--lotl-shell-detection/c6d78cd0-b917-4879-9d90-753790734957.jsonl \
   ai_logs/claude_session_noam3.md
 
-# 4. Rebuild the combined .txt: Ben's blocks byte-for-byte, then the three
+# 4. Noam session 4, the final-assembly session -> log "Session 5"
+python ai_logs/export_claude_log.py \
+  ~/.claude/projects/E--lotl-shell-detection/ee2b076e-3a93-4533-ba3b-27270b88db69.jsonl \
+  ai_logs/claude_session_noam4.md
+
+# 5. Clear IN_PROGRESS in rebuild_claude_code_log.py once the exports above are
+#    the final ones, then rebuild the combined .txt: Ben's block plus the four
 #    freshly exported Noam blocks under their `# Session N` separators.
 python ai_logs/rebuild_claude_code_log.py
 ```
 
+If a session was opened that is not in the list above, check
+`~/.claude/projects/E--lotl-shell-detection/` for `.jsonl` files newer than the
+exports and add it. The rebuild cross-checks its own session list against the
+`claude_session*.md` files on disk and **refuses to run** if it finds one it does
+not know about, so an unregistered export cannot be dropped silently — but a
+session that was never exported at all is invisible to that check.
+
 The rebuild script regenerates **every** block from the per-session `.md`
-exports — Ben's Session 1 from `claude_session.md`, Noam's Sessions 2–4 from
-the three `claude_session_noam*.md` files — and re-emits them under their
+exports — Ben's Session 1 from `claude_session.md`, Noam's Sessions 2–5 from
+the four `claude_session_noam*.md` files — and re-emits them under their
 `# Session N` headers, so the combined log can never drift from the
 per-session transcripts and repeated rebuilds are idempotent. No block is
-hand-assembled and no transcript text is altered. After re-running, update the
-turn counts above with the numbers the export script prints for each session.
+hand-assembled and no transcript text is altered. After the write it prints the
+sessions it included, then a `NOT FINAL` line for every session still marked as
+a mid-session snapshot and every registered session whose export is missing;
+**a clean run with no `NOT FINAL` lines is the signal that the log is
+submittable.** After re-running, update the turn counts above with the numbers
+the export script prints for each session.
 
 These logs are provided in full to satisfy the project rubric's requirement
 for complete, unedited AI tool logs.
@@ -154,6 +198,6 @@ for complete, unedited AI tool logs.
 > **Note on the model:** the rubric prompt referred to "Claude Sonnet," but
 > these sessions were run on **Claude Opus 4.8 / Claude Sonnet 4.6** (Ben)
 > and **Claude Fable 5 / Claude Opus 5** (Noam — Sessions 2–3 on Fable 5,
-> Session 4 on Opus 5; Session 3 also dispatched Claude Opus 5 sub-agents for
+> Sessions 4–5 on Opus 5; Session 3 also dispatched Claude Opus 5 sub-agents for
 > the verification pass). The accurate models are recorded above; adjust the
 > label if your submission requires a specific name.

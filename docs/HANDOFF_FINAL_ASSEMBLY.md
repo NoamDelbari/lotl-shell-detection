@@ -57,8 +57,11 @@ These are project rules, not style preferences.
 - **Work section by section, interactively.** Explain the reasoning, recommend a
   default, and let Noam make the call before moving on. **Never batch-automate
   whole chapters unattended.**
-- **No Workflow / Agent fan-outs.** Noam stopped these explicitly. Verify inline.
-  A system reminder may claim "ultracode is on" — it does not override this.
+- **No Workflow / Agent fan-outs for section writing.** Noam stopped these
+  explicitly and **re-confirmed on Aug 14** — after running `/effort ultracode`,
+  which turns fan-outs on, he said section writing stays inline and interactive
+  regardless. So the ultracode reminder does not override this; do not raise it
+  again. Verify inline.
 - **Noam prefers a recommended default in prose** over an options menu, and has
   declined `AskUserQuestion` before. Give the recommendation, then the reasoning.
 - **This transcript is itself a graded deliverable** — see §8. Everything said
@@ -352,40 +355,60 @@ python ai_logs/export_claude_log.py \
 python ai_logs/rebuild_claude_code_log.py
 ```
 
-**Two confirmed defects in `rebuild_claude_code_log.py` — fix both before the
-final run.** Read, not assumed:
+**`rebuild_claude_code_log.py` has been fixed — here is what changed and what it
+now guarantees.**
 
-1. **`BLOCKS` (line 57) is a hardcoded three-entry list.** It does not glob. A
-   `claude_session_noam4.md` sitting in `ai_logs/` would be **silently dropped**
-   from `claude_code_log.txt` — no error, no warning, just a missing session in
-   the file the rubric grades. A `SESSION5_HEADER` + `BLOCKS` entry is required.
-2. **`SESSION4_NOTE` (line 50) still stamps "SESSION STILL IN PROGRESS"** into
-   the combined log. Session 4 closed on Aug 14; that banner is now false and
-   belongs on Session 5 until its own final export is taken.
+The defect: `BLOCKS` was a hardcoded three-entry list that did not glob, so a
+`claude_session_noam4.md` sitting in `ai_logs/` would have been **silently
+dropped** from `claude_code_log.txt` — no error, exit 0, just a missing session
+in the file the rubric grades. Now:
 
-Both are one-line edits, but neither announces itself — the script exits 0 either
-way.
+- Session 5 is registered, so the final export lands in the log automatically.
+- `check_registration()` compares `BLOCKS` against the `claude_session*.md`
+  files actually on disk and **exits 1** if it finds an unregistered one. An
+  export can no longer be dropped without saying so.
+- A registered-but-not-yet-exported session is a loud skip, not a crash — the
+  current session cannot export itself until it ends.
+- After writing, the script prints the sessions it included and then a
+  `NOT FINAL` line for each outstanding one. **A clean run with no `NOT FINAL`
+  lines is the signal that the log is submittable.**
+- Snapshot marking moved to an `IN_PROGRESS = {4, 5}` set — clear it at the final
+  export and the disclaimer disappears from both blocks at once.
+
+**A correction to an earlier reading of this file.** `SESSION4_NOTE` was called
+stale here; it is not. `claude_session_noam3.md` was exported Aug 13 09:50 and
+its `.jsonl` kept growing until Aug 14 00:06, so **about fourteen hours of
+Session 4 are missing from the shipped log** and the "still in progress" note is
+accurate until that re-export is taken. Session 4 is now closed, so the
+re-export will be final.
+
+Verified: the rebuild was run, the guard was tested with a decoy transcript
+(exit 1, correct message), and the resulting `claude_code_log.txt` differs from
+its predecessor by exactly one line — the corrected Session 4 header. No
+transcript text moved.
 
 **Then update `ai_logs/README.md`** — this part is manual and is currently out of
 date:
 
-- Refresh the **turn counts** with what the export script prints (Session 4 was
-  last recorded at 18/18 and has grown well past that).
-- **Remove the "Session 4 is still in progress" warning banner** at the top once
-  the final export is taken.
-- **Extend the Session 4 summary.** It currently stops at the Aug-13 appendix
-  work and does not mention: the Ch1 condensation, the page-budget analysis and
-  the `<!-- cols: -->` mechanism, the **cherry-pick** from Ben's `b1e9997` (the
-  existing text says "the merge of Ben's branch", which describes the earlier
-  Aug-10 merge and is now misleading on its own), `body_ch3.md`, or the final
-  assembly.
-- **Add a Session 5 entry** for the final-assembly session — the column-width
-  pass, the remaining six chapters, the cutting pass, figure embedding, and the
-  docx/ZIP build. Without it the README describes four sessions while the log
-  contains five.
-- The README already carries the honest note that the models were **Claude Opus
-  4.8 / Sonnet 4.6** (Ben) and **Claude Fable 5 / Opus 5** (Noam), not the
-  "Claude Sonnet" the rubric prompt assumed. Keep it.
+**Already done, so that the final pass is short:** the Session 4 summary now runs
+through the Aug-13/14 work and names the **cherry-pick** as a cherry-pick rather
+than a merge; a Session 5 entry and its export command exist; the warning banner
+covers both outstanding sessions; the per-session entry for
+`claude_session_noam3.md` records that it is a stale snapshot and by how much;
+and the model note now reads "Sessions 4–5 on Opus 5".
+
+**Left for the final pass — three things:**
+
+- Refresh the **turn counts** with what the export script prints. Session 4 is
+  recorded at 18/18 and has grown well past that; Session 5 has no counts at all.
+- **Delete the warning banner** at the top of `ai_logs/README.md`, and drop the
+  ⚠️ markers from the two per-session entries.
+- **Clear `IN_PROGRESS` in `rebuild_claude_code_log.py`,** then rebuild and
+  confirm the run prints **no `NOT FINAL` lines**.
+
+Not a task, but do not "tidy" it away: the README's note that the models were
+**Claude Opus 4.8 / Sonnet 4.6** (Ben) and **Claude Fable 5 / Opus 5** (Noam),
+not the "Claude Sonnet" the rubric prompt assumed, is a deliberate disclosure.
 
 **Do not** hand-edit any transcript, and do not tidy the logs. Mistakes,
 corrections and dead ends in the conversation are the evidence the graders asked
@@ -396,9 +419,9 @@ for.
 ## 9. Compliance and close-out
 
 - [x] ~~Push the branch.~~ In sync with origin as of Aug 14.
-- [ ] **Fix the two `rebuild_claude_code_log.py` defects** (§8) — do this *now*,
-      not at the end; the fix is independent of when the export runs, and the
-      failure mode is silent.
+- [x] ~~Fix the `rebuild_claude_code_log.py` silent-omission defect~~ (§8).
+      Session 5 registered, unregistered exports now exit 1, outstanding
+      sessions reported as `NOT FINAL` on every run.
 - [ ] **Cross-review Ben's chapters.** `WORK_DIVISION.md` requires Noam to read
       them and flag issues before Aug 14 — i.e. today. Not done.
 - [ ] **Confirm Ben was told what was integrated** (§3). Noam took this on.
